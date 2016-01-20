@@ -1,0 +1,118 @@
+/* ==========================================================================
+    11.4 Blog Listing Styles
+   ========================================================================== */
+
+/* 11.4.1 Blog Listing Main Class */
+.blog-listing{
+	position: relative;
+}
+
+/* 11.4.2 Post Filter */
+.post-filter ul li:first-child:before{
+	content: none;
+}
+.post-filter{
+	position: absolute;
+	top: 13px;
+	right: 9px;
+	&:hover{
+		ul{
+			top: 0;
+			.transition(.4s);
+			opacity: 1;
+			visibility: visible;
+		}
+		a.trigger{
+			background: @gray-lighter;
+			color: @gray;	
+		}
+	}
+	ul{
+		position: relative;
+		top: -60px;
+			.transition(.4s);
+			opacity: 0;
+			visibility: hidden;
+		li{
+			float: left;
+			list-style: none;
+			&:before{
+				content: "|";
+				color: lighten(@gray, 40%);
+
+			}
+		}
+		a{
+			font-family: @font-family-serif;
+			font-size:ceil((@font-size-base * 1.1));
+			color: @gray;
+			padding: 6px 10px 8px 10px;
+
+			&:hover{
+				background: @gray-darker;
+				color: @gray-lighter;
+			}
+		}
+	}
+	.trigger{
+		font-size: 25px;
+		display: inline-block;
+		background: @gray-light;
+		color: #fff;
+		right: -75px;
+		top: -13px;
+		padding: 10px;
+		position: absolute;
+	}
+}
+
+.post{
+	margin-top: 25px;
+	margin-bottom: 25px;
+	h4{
+		margin-top: 20px; 
+		a{
+			color: @gray-darker;
+			&:hover{
+				color:lighten(@gray-darker, 35%);
+			}
+		}
+	}
+}
+.post-date{
+	font-family: @font-family-serif;
+}
+.post-tag{
+	color:lighten(@text-color, 35%);
+	&:before{
+		content: "| ";
+	}
+}
+.post-title{
+	margin-top: 20px;
+}
+
+/* 11.4.3 Pagination Styles */
+.pagination {
+	cursor: default;
+	.active{
+		background: #e2e0db;
+		color:      #ffffff;
+		cursor:     default;
+	}
+	a{
+		font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+		color:       #cac7c2;
+		display:     inline-block;
+		font-size:   18px;
+		font-weight: 700;
+		padding:     7px 15px;
+		background:  #ecebe9;
+		text-decoration: none;
+		&:hover{
+			text-decoration: none;
+			background:      #e2e0db;
+			color:           #ffffff;
+		}
+	}
+}

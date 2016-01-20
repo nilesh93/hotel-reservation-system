@@ -1,0 +1,39 @@
+/* ==========================================================================
+    11.3 Post Single Styles
+   ========================================================================== */
+
+/* 11.3.1 Post Single main Styles */
+.post-single{
+	position: relative;
+	.sharing{
+		position: absolute;
+		top: 0px;
+		right: -@wrapper-padding;
+		a{
+			font-size: 25px;
+			padding: 10px;
+			background: @gray-light;
+			color:#fff;
+			display: block;
+			&:hover{
+				background: @gray-dark;
+			}
+		}
+	}
+	.author{/* 11.3.2 Author Styles */
+		margin-top: 60px;
+		margin-bottom: 60px;
+		padding-top: 40px;
+		border-top: 1px solid @gray-light;
+		img{
+			border-radius: 50%;
+			-wekit-border-radius: 50%;
+			-moz-border-radius: 50%;
+			-o-border-radius: 50%;
+			-ms-border-radius: 50%;
+		}
+		h4{
+			margin-top: 30px;
+		}
+	}
+}

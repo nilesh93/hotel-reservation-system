@@ -1,0 +1,245 @@
+/* ==========================================================================
+    8. Footer Styles
+
+    ## All Footer related styles come under here.
+   ========================================================================== */
+
+
+/* 8.1 FooterBox Styles */
+
+.footerbox{
+	// margin-top: 50px;
+	background: #dadcdd;
+	padding: 15px 0;
+	i{
+		color: #999999;
+		position: relative;
+		top: -1px;
+	}
+	.date{
+		color: #999999;
+		font-weight: 700;
+		margin-left: 8px;
+	}
+	h3{
+		margin-bottom: 0px;
+		color: #333333;
+	}
+}
+.footerbox-social{
+	cursor: default;
+	padding-top: 27px;
+	a{
+		font-size: 24px;
+		margin-right: 14px;
+			i{
+				.transition(.2s);
+				&:hover{
+					color: darken(#999999, 30%);
+					.transition(.2s);
+				}
+			}
+	}
+}
+/* 8.2 FooterCarousel Styles */
+.footercarousel{
+	padding: 15px 0px 15px 20px;
+	border-left: 1px solid #c6c8c8; 
+	.footercarousel-controls{
+		position: absolute;
+		right: -65px;
+		bottom: -15px;
+		padding: 16px 15px 16px 15px; 
+		background: #c2c9cc;
+		&:hover{
+			background: @brand-primary;
+		}
+		i{
+			font-size: 21px;
+			color: #ffffff;
+		}
+	}
+	.top{
+		bottom: 40px;
+		padding-left: 16px;
+		padding-right: 16px;
+		right: -65px;
+	}
+}
+
+.footercarousel .carousel-inner {
+    height: 100%;
+}
+ 
+.carousel.footercarousel .item {
+    -webkit-transition: 0.6s ease-in-out top;
+    -moz-transition: 0.6s ease-in-out top;
+    -ms-transition: 0.6s ease-in-out top;
+    -o-transition: 0.6s ease-in-out top;
+    transition: 0.6s ease-in-out top;
+}
+ 
+.carousel.footercarousel .active {
+    top: 0;
+}
+ 
+.carousel.footercarousel .next {
+    top: 100px;
+}
+ 
+.carousel.footercarousel .prev {
+    top: -100px;
+}
+ 
+.carousel.footercarousel .next.left,
+.carousel.footercarousel .prev.right {
+    top: 0;
+}
+ 
+.carousel.footercarousel .active.left {
+    top: -100px;
+}
+ 
+.carousel.footercarousel .active.right {
+    top: 100px;
+}
+ 
+.carousel.footercarousel .item {
+    left: 0;
+}
+ 
+.carousel.footercarousel .carousel-control {
+    width: 100%;
+    bottom: inherit;
+    top: inherit;
+}
+ 
+.carousel.footercarousel .carousel-control.left {
+    top: 0;
+}
+
+/* 8.3 footerbox subscribe styles */
+.footerbox-subscribe{
+	position: relative;
+	margin-top: 17px;
+	input{
+		color: #b3b4b4;
+		background: #e9e9e9;
+		border: 4px solid #d2d4d4;
+		width: 100%;
+		padding: 10px 10px;
+		font-weight: 400;
+		font-family: @font-family-serif;
+	}
+	button{
+		background: none;
+		border: none;
+		position: absolute;
+		right: 10px;
+		top: 15px;
+		i{
+			color: #cccccc;
+		}
+	}
+}
+
+/* 8.4 Main Footer */
+
+#footer{
+	padding: 80px 0;
+	background: @footer;
+	border-bottom: 2px solid lighten(@footer, 20%);
+	p{
+		font-size: 0.85em;
+		color: #999999;
+	}
+}
+
+/* 8.5 copyright section */
+
+.copyright-section{
+	min-height: 50px;
+	background: #0e1a22;
+}
+
+.footer-social{
+	.clearfix();
+	margin-top: 16px;
+	@media (max-width:@screen-lg-min) {
+		margin-top: 8px;
+	}
+	@media (max-width:@screen-sm-min) {
+		display: table;
+		margin: 0 auto;
+		margin-top: 15px;
+	}
+	a{
+		display: block;
+		text-align: center;
+		line-height: 23px;
+		font-size: 15px;
+		float: left;
+		color: #0e1a22;
+		background: #999999;
+		.rounded(50%);
+		height: 23px;
+		width: 23px;
+		margin-right: 10px;
+		@media (max-width:@screen-lg-min) {
+			margin-top: 10px;
+		}
+		&:hover{
+			background: #ffffff;
+		}
+	}
+}
+
+.copyright{
+	font-size: 0.85em;
+	color: #999999;
+	text-align: right;
+	margin-top: 18px; 
+	@media (max-width:@screen-sm-min) {
+		display: table;
+		margin: 0 auto;
+		margin-top: 15px; 
+		margin-bottom: 20px;
+	}
+}
+
+.footer-nav{
+	.clearfix();
+	@media (max-width:@screen-sm-min) {
+		display: table;
+		margin: 0 auto;
+	}
+	ul{
+		margin: 0;
+		padding: 0;
+		margin-top: 24px;
+	}
+	li{
+		list-style: none;
+		float: left;
+		&:last-child{
+			a{
+				border-right: none;
+			}
+		}
+	}
+	a{
+		font-size: 0.85em;
+		display: block;
+		color: #999999;
+		line-height: 0.6;
+		border-right: 1px solid #999999;
+		padding: 0 10px;
+		@media (max-width:@screen-lg-min) {
+			line-height: 1;
+			padding: 0 5px;
+		}
+		&:hover{
+			color: #ffffff;
+		}
+	}
+}

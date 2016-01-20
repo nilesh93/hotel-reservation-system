@@ -1,0 +1,119 @@
+<div class="portfolioslider">
+  <div id="portfolioslider-1" class="owl-carousel portfolioslider">
+    
+    <div class="portfolio-item">
+      <div class="portfolio-img">
+        <img src="img/preview-images/recent_posts_01.jpg" alt="themesgravity">
+        <div class="img-overlay"><i class="fa fa-bars"></i></div><!-- /img-overlay -->
+      </div><!-- /portfolio-img -->
+      <div class="portfolio-content">
+        <h4><a href="#">Botanical Garden of Zagreb</a></h4>
+        <hr>
+        <span class="portfolio-category">UI/UX</span>
+      </div><!-- /portfolio-content -->
+    </div><!-- /portfolio-item -->
+
+    <div class="portfolio-item">
+      <div class="portfolio-img">
+        <img src="img/preview-images/recent_posts_02.jpg" alt="themesgravity">
+        <div class="img-overlay"><i class="fa fa-bars"></i></div><!-- /img-overlay -->
+      </div><!-- /portfolio-img -->
+      <div class="portfolio-content">
+        <h4><a href="#">Botanical Garden of Zagreb</a></h4>
+        <hr>
+        <span class="portfolio-category">UI/UX</span>
+      </div><!-- /portfolio-content -->
+    </div><!-- /portfolio-item -->
+
+    <div class="portfolio-item">
+      <div class="portfolio-img">
+        <img src="img/preview-images/recent_posts_03.jpg" alt="themesgravity">
+        <div class="img-overlay"><i class="fa fa-bars"></i></div><!-- /img-overlay -->
+      </div><!-- /portfolio-img -->
+      <div class="portfolio-content">
+        <h4><a href="#">Botanical Garden of Zagreb</a></h4>
+        <hr>
+        <span class="portfolio-category">UI/UX</span>
+      </div><!-- /portfolio-content -->
+    </div><!-- /portfolio-item -->
+    
+    <div class="portfolio-item">
+      <div class="portfolio-img">
+        <img src="img/preview-images/recent_posts_04.jpg" alt="themesgravity">
+        <div class="img-overlay"><i class="fa fa-bars"></i></div><!-- /img-overlay -->
+      </div><!-- /portfolio-img -->
+      <div class="portfolio-content">
+        <h4><a href="#">Botanical Garden of Zagreb</a></h4>
+        <hr>
+        <span class="portfolio-category">UI/UX</span>
+      </div><!-- /portfolio-content -->
+    </div><!-- /portfolio-item -->
+
+    <div class="portfolio-item">
+      <div class="portfolio-img">
+        <img src="img/preview-images/recent_posts_02.jpg" alt="themesgravity">
+        <div class="img-overlay"><i class="fa fa-bars"></i></div><!-- /img-overlay -->
+      </div><!-- /portfolio-img -->
+      <div class="portfolio-content">
+        <h4><a href="#">Botanical Garden of Zagreb</a></h4>
+        <hr>
+        <span class="portfolio-category">UI/UX</span>
+      </div><!-- /portfolio-content -->
+    </div><!-- /portfolio-item -->
+
+    <div class="portfolio-item">
+      <div class="portfolio-img">
+        <img src="img/preview-images/recent_posts_03.jpg" alt="themesgravity">
+        <div class="img-overlay"><i class="fa fa-bars"></i></div><!-- /img-overlay -->
+      </div><!-- /portfolio-img -->
+      <div class="portfolio-content">
+        <h4><a href="#">Botanical Garden of Zagreb</a></h4>
+        <hr>
+        <span class="portfolio-category">UI/UX</span>
+      </div><!-- /portfolio-content -->
+    </div><!-- /portfolio-item -->
+
+    <div class="portfolio-item">
+      <div class="portfolio-img">
+        <img src="img/preview-images/recent_posts_04.jpg" alt="themesgravity">
+        <div class="img-overlay"><i class="fa fa-bars"></i></div><!-- /img-overlay -->
+      </div><!-- /portfolio-img -->
+      <div class="portfolio-content">
+        <h4><a href="#">Botanical Garden of Zagreb</a></h4>
+        <hr>
+        <span class="portfolio-category">UI/UX</span>
+      </div><!-- /portfolio-content -->
+    </div><!-- /portfolio-item -->
+  </div><!-- /owl-carousel -->
+
+  <div class="portfolioslider-controls">
+      <div class="owl-menu-hover"><i class="fa fa-bars"></i></div><!-- /owl-menu -->
+      <div class="owl-next-hover"><i class="fa fa-arrow-circle-o-right"></i></div>
+      <div class="owl-prev-hover"><i class="fa fa-arrow-circle-o-left"></i></div>
+      <span class="hover-text"><small>Hover</small></span>
+      <span class="hover-prev"><small>Previous item</small></span>
+      <span class="hover-index"><small>Portfolio index</small></span>
+      <span class="hover-next"><small>Next Item</small></span>
+      <hr>
+  </div><!-- /recent-posts-controls -->
+  
+</div><!-- /portfolioslider -->
+
+<script type="text/javascript">
+$(document).ready(function() {
+  
+  $("#portfolioslider-1").owlCarousel({
+    responsive: false,
+    items: 4,
+    navigation: false,
+    scrollPerPage: false,
+    autoPlay: true,
+  });
+    // ADDING NEXT AND PREVIOUS BUTTONS
+  var owl = $("#portfolioslider-1").data('owlCarousel');
+  $('.owl-next-hover').on('click',function(){owl.next();});
+  $('.owl-prev-hover').on('click',function(){owl.prev();});
+
+});
+</script>
+

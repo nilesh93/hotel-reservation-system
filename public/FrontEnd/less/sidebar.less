@@ -1,0 +1,50 @@
+/* ==========================================================================
+    7. Sidebar Styles
+
+    ## All sidebar related styles come under here.
+   ========================================================================== */
+
+.left-sidebar aside#sidebar{
+	text-align: right;
+	float: left;
+}
+
+.right-sidebar aside#sidebar{
+	text-align: left;
+	float: right;
+}
+
+aside#sidebar{
+	max-width: 165px;
+	width: 100%;
+	padding-top: 50px;
+	@media (max-width:@screen-md-min) {
+		max-width: 125px;
+	}
+	@media (max-width:@screen-sm-min) {
+		display: table;
+		margin: 0 auto;
+		float: none!important;
+	}
+}
+
+
+/* 5.1 Sidebar Menu Widget */
+
+aside#sidebar .widget-recent-posts{
+	ul{
+		padding-left: 0px;
+	}
+	li{
+		list-style: none;
+		padding: 8px 0 8px 0;
+	}
+	a{
+		font-size: ceil(@font-size-base *1.1);
+		color: lighten(@text-color, 35%);
+		&:hover{
+			color:@gray-darker;
+			text-decoration: none;
+		}
+	}
+}

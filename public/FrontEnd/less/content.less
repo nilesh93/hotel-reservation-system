@@ -1,0 +1,80 @@
+/* ==========================================================================
+    6. Content Styles
+
+    ## All the styles inside the main content area comes under here
+   ========================================================================== */
+
+.left-sidebar #content{
+	float: left;
+	// border-left: 3px solid #cccccc;
+	margin-left: 59px;
+	padding-left: 67px;
+	background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#d2dcdf), to(transparent));
+    background-image: -webkit-linear-gradient(#d2dcdf, transparent);
+    background-image:
+        -moz-linear-gradient(#d2dcdf, transparent),
+        -moz-linear-gradient(#d2dcdf, transparent)
+    ;
+    background-image:
+        -o-linear-gradient(#d2dcdf, transparent),
+        -o-linear-gradient(#d2dcdf, transparent)
+    ;
+    background-image: 
+        linear-gradient(#d2dcdf, transparent),
+        linear-gradient(#d2dcdf, transparent)
+    ;
+    -moz-background-size:3px 100%;
+    background-size:3px 100%;
+    background-repeat:no-repeat;
+}
+.right-sidebar #content{
+	float: left;
+	// border-right: 3px solid #cccccc;
+	margin-right: 59px;
+	padding-right: 67px;
+	background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#d2dcdf), to(transparent));
+    background-image: -webkit-linear-gradient(#d2dcdf, transparent);
+    background-image:
+        -moz-linear-gradient(#d2dcdf, transparent),
+        -moz-linear-gradient(#d2dcdf, transparent)
+    ;
+    background-image:
+        -o-linear-gradient(#d2dcdf, transparent),
+        -o-linear-gradient(#d2dcdf, transparent)
+    ;
+    background-image: 
+        linear-gradient(#d2dcdf, transparent),
+        linear-gradient(#d2dcdf, transparent)
+    ;
+    -moz-background-size:3px 100%;
+    background-size:3px 100%;
+    background-repeat:no-repeat;
+    background-position:100% 0, 100% 0;
+}
+#content{
+	padding-top: 50px;
+	max-width: 915px;
+	width: 100%;
+	padding-bottom: 50px;
+    @media (max-width:@screen-lg-min) {
+        max-width: 715px;
+    }
+    @media (max-width:@screen-md-min) {
+        max-width: 575px;
+        margin-left: 20px!important;
+        padding-left: 20px!important;
+    }
+    @media (max-width:@screen-sm-min) {
+        float: none;
+        display: block;
+        width: 100%;
+        border: none;
+        background-size:0px!important;
+        margin: 0px;
+        padding: 0px;
+        margin-top: 30px!important;
+        padding-right: 40px;
+        max-width: 100%;
+    }
+}
+
