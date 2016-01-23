@@ -18,6 +18,9 @@
         <link href="BackEnd/assets/css/icons.css" rel="stylesheet" type="text/css" />
         <link href="BackEnd/assets/css/pages.css" rel="stylesheet" type="text/css" />
         <link href="BackEnd/assets/css/responsive.css" rel="stylesheet" type="text/css" />
+        <link href="cdn.datatables.net/1.10.10/css/jquery.dataTables.min.css" rel="stylesheet" type="text/css" />
+
+       
 
         <!-- HTML5 Shiv and Respond.js IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -578,7 +581,12 @@
         </script>
 
         <!-- jQuery  -->
+       
+
+
+
         <script src="BackEnd/assets/js/jquery.min.js"></script>
+         <script src="//cdn.datatables.net/1.10.10/js/jquery.dataTables.min.js"></script>
         <script src="BackEnd/assets/js/bootstrap.min.js"></script>
         <script src="BackEnd/assets/js/detect.js"></script>
         <script src="BackEnd/assets/js/fastclick.js"></script>
