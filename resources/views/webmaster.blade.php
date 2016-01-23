@@ -133,18 +133,9 @@
 
 				
 				
-				
-				
-				<section class="head-v1   clearfix">
-					
-					 <div class="container-fluid">
-					
-					@yield('section_content')
-					</div>
-					
-				</section><!-- /head-v3 -->
+
 					<div class="container-fluid">
-					@yield('outside_content')
+					@yield('content')
 					</div>
 				 
 			<div class="footerbox" style="margin-top:1%">
