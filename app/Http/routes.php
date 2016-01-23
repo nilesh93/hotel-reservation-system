@@ -19,3 +19,12 @@ Route::get('/', function () {
 Route::get('/admin', function () {
     return view('Admin.Demo');
 });
+
+Route::get('/room_packages', function () {
+    return view('Website.test');
+});
+
+Route::get('/halls', function () {
+    return view('Website.Halls');
+});
+
