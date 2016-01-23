@@ -49,7 +49,7 @@ ADMIN DEMO
                 <input class="form-control" id="search" oninput="navigate()"  placeholder="Enter Item Code" type="text">
             </div>-->
             <div class="col-lg-1" style="padding-left:0cm;">
-                <button type="button" class="btn btn-primary btn-default" onclick="add_promotions()">Add Promotions</button>
+                <button type="button" class="btn btn-primary btn-default" onclick="add_promotions_modal()">Add Promotions</button>
             </div>
 </div>
     </form>
@@ -94,68 +94,66 @@ ADMIN DEMO
 
                     <div class="row">
                         <div class="form-group">
-                            <label for="quantity" class="col-lg-5 control-label">Item Quantity</label>
+                            <label for="quantity" class="col-lg-5 control-label">Promotion Name</label>
                             <div class="col-lg-6">
-                                <input class="form-control" id="quantity" placeholder="Item Quantity" type="Number">
+                                <input class="form-control" id="prom_name" placeholder="Promotion Name" type="text">
                             </div>
                         </div>
                     </div>
 
                     <div class="row">
                         <div class="form-group">
-                            <label for="item" class="col-lg-5 control-label">Item</label>
+                            <label for="item" class="col-lg-5 control-label">Promotion Descrition</label>
                             <div class="col-lg-6">
-                                <input class="form-control" id="item_name" placeholder="Item Name" type="text">
+                                <input class="form-control" id="prom_description" placeholder="Promotion Descrition" type="text">
                             </div>
                         </div>
                     </div>
 
                     <div class="row">
                             <div class="form-group">
-                                <label for="description" class="col-lg-5 control-label">Description</label>
-                                <div class="col-lg-6">
-                                    <input class="form-control" id="description" placeholder="Description" type="text">
+                                <label for="description" class="col-lg-5 control-label">Start Date</label>
+                                <div class='input-group date' id='datetimepicker1'>
+                                    <input type='text' class="form-control" id='start_date'/>
+                                    <span class="input-group-addon">
+                                     <span class="glyphicon glyphicon-calendar"></span>
+                                    </span>
                                 </div>
                             </div>
                     </div>
 
                         <div class="row">
                             <div class="form-group">
-                                <label for="uvalue" class="col-lg-5 control-label">Unit Value</label>
-                                <div class="col-lg-6">
-                                    <input class="form-control" id="uvalue" placeholder="Description" type="number">
+                                <label for="description" class="col-lg-5 control-label">Start Date</label>
+                                <div class='input-group date' id='datetimepicker2'>
+                                    <input type='text' class="form-control" id='end_date'/>
+                                    <span class="input-group-addon">
+                                     <span class="glyphicon glyphicon-calendar"></span>
+                                    </span>
                                 </div>
                             </div>
                         </div>
 
                         <div class="row">
                             <div class="form-group">
-                                <label for="discount" class="col-lg-5 control-label">Discount(rate)</label>
+                                <label for="discount" class="col-lg-5 control-label">Rate</label>
                                 <div class="col-lg-6">
-                                    <input class="form-control" onblur="ltotalcal()" id="discount" placeholder="Discount" type="number">
+                                    <input class="form-control" id="prom_rate" placeholder="Rate" type="number">
                                 </div>
                             </div>
                         </div>
-
-                        <div class="row">
-                            <div class="form-group">
-                                <label for="ltotall" class="col-lg-5 control-label">Line Total</label>
-                                <div class="col-lg-6">
-                                    <input type="number" disabled  id="ltotaltxt" class="form-control"></label>
-                                </div>
-                            </div>
-                        </div>
-
                 </div>
-                <div class="alert alert-dismissible alert-success" id="addedsuccessfully" hidden="true">                   <button type="button" class="close" data-dismiss="alert">×</button>
+                <div class="alert alert-dismissible alert-success" id="addedsuccessfully" hidden="true">                   
+                    <button type="button" class="close" data-dismiss="alert">×</button>
                 <strong> Added Successfully!</strong>  
                 </div>
-                <div class="alert alert-dismissible alert-success" id="adderror" hidden="true">                   <button type="button" class="close" data-dismiss="alert">×</button>
+                <div class="alert alert-dismissible alert-success" id="adderror" hidden="true">                   
+                    <button type="button" class="close" data-dismiss="alert">×</button>
                 <strong> Adding Fail!</strong>  
                 </div>
                 <div class="modal-footer">
-                    <button type="button" onclick="addcheckitem()" class="btn btn-primary" name="submit" >Add Item</button>
-                    <button type="button" class="btn btn-default" onclick="hidemessage()" data-dismiss="modal">Close</button>
+                    <button type="button" onclick="add_promotion()" class="btn btn-primary" name="submit" >Add Promotion</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                     </form>
                 </div>
             </div>
@@ -175,9 +173,35 @@ ADMIN DEMO
 
     });
 
- function add_promotions(){
+ function add_promotions_modal(){
         $("#add_promotions_modal").modal("show");
     }
+
+$(function () {
+                $('#datetimepicker1').datetimepicker();
+            });
+$(function () {
+                $('#datetimepicker2').datetimepicker();
+            });
+
+function add_promotion(){
+    var promo_name=$('#prom_name').val();
+    var promo_description=$('#prom_description').val();
+    var promo_start=$('#start_date').val();
+    var promo_end=$('#end_date').val();
+    var promo_rate=$('#prom_rate').val();
+    var data="promo_name="+promo_name+"&promo_description="+promo_description+"&promo_start="+promo_start+"&promo_end="+promo_end+"&promo_rate="+promo_rate;
+    
+    $.ajax({
+        type:"get",
+        url:"addpromotion",
+        data:data,
+        success:function(ss){
+            dataLoad();
+        }
+    });
+  
+}
 
 function dataLoad(){
 

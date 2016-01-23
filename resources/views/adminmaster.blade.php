@@ -18,7 +18,7 @@
         <link href="BackEnd/assets/css/icons.css" rel="stylesheet" type="text/css" />
         <link href="BackEnd/assets/css/pages.css" rel="stylesheet" type="text/css" />
         <link href="BackEnd/assets/css/responsive.css" rel="stylesheet" type="text/css" />
-        <link href="cdn.datatables.net/1.10.10/css/jquery.dataTables.min.css" rel="stylesheet" type="text/css" />
+        <link href="BackEnd/assets/css/jquery.dataTables.min.css" rel="stylesheet" type="text/css" />
 
        
 
@@ -585,6 +585,7 @@
 
 
 
+
         <script src="BackEnd/assets/js/jquery.min.js"></script>
          <script src="//cdn.datatables.net/1.10.10/js/jquery.dataTables.min.js"></script>
         <script src="BackEnd/assets/js/bootstrap.min.js"></script>
@@ -596,6 +597,10 @@
         <script src="BackEnd/assets/js/wow.min.js"></script>
         <script src="BackEnd/assets/js/jquery.nicescroll.js"></script>
         <script src="BackEnd/assets/js/jquery.scrollTo.min.js"></script>
+
+        <script src="BackEnd/assets/js/moment.min.js"></script>
+        <script src="BackEnd/assets/js/collapse.js"></script>
+        <script src="BackEnd/assets/js/bootstrap-datetimepicker.min.js"></script>
 
 
         <script src="BackEnd/assets/js/jquery.core.js"></script>
