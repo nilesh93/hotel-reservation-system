@@ -58,7 +58,7 @@ DEMO PAGE
 
 								<div class="widget widget-advertisement">
 	<h5>Advertisement</h5>
-		<a href="#" class="ad-img"><img src="img/preview-images/ad_campari.jpg" alt="themesgravity"></a>
+		<a href="#" class="ad-img"><img src="FrontEnd/img/preview-images/ad_campari.jpg" alt="themesgravity"></a>
 		<a href="#" class="ad-link"><small>Advertise with us!</small></a>
 </div><!-- /widget-advertisement -->
 								<div class="widget widget-projects">
@@ -71,19 +71,19 @@ DEMO PAGE
 	  <div class="carousel-inner">
 
 	    <div class="item active">
-	      <img src="img/preview-images/widgets_03.jpg" alt="themesgravity">
+	      <img src="FrontEnd/img/preview-images/widgets_03.jpg" alt="themesgravity">
 	      <h4>Web Design</h4>
 	      <!-- <p class="project-category">Web Design</p> -->
 	    </div><!-- /item -->
 
 	    <div class="item">
-	      <img src="img/preview-images/widgets_04.jpg" alt="themesgravity">
+	      <img src="FrontEnd/img/preview-images/widgets_04.jpg" alt="themesgravity">
 	      <h4>Web Design</h4>
 	      <!-- <p class="project-category">Web Design</p> -->
 	    </div><!-- /item -->
 
 	    <div class="item">
-	      <img src="img/preview-images/widgets_05.jpg" alt="themesgravity">
+	      <img src="FrontEnd/img/preview-images/widgets_05.jpg" alt="themesgravity">
 	      <h4>Web Design</h4>
 	      <!-- <p class="project-category">Web Design</p> -->
 	    </div><!-- /item -->
@@ -111,19 +111,19 @@ DEMO PAGE
 	  <div class="carousel-inner">
 
 	    <div class="item active">
-	      <img src="img/preview-images/widgets_06.jpg" alt="themesgravity">
+	      <img src="FrontEnd/img/preview-images/widgets_06.jpg" alt="themesgravity">
 	      <h4>UI/UX</h4>
 	      <!-- <p class="project-category">UI/UX</p> -->
 	    </div><!-- /item -->
 
 	    <div class="item">
-	      <img src="img/preview-images/widgets_09.jpg" alt="themesgravity">
+	      <img src="FrontEnd/img/preview-images/widgets_09.jpg" alt="themesgravity">
 	      <h4>UI/UX</h4>
 	      <!-- <p class="project-category">UI/UX</p> -->
 	    </div><!-- /item -->
 
 	    <div class="item">
-	      <img src="img/preview-images/widgets_10.jpg" alt="themesgravity">
+	      <img src="FrontEnd/img/preview-images/widgets_10.jpg" alt="themesgravity">
 	      <h4>UI/UX</h4>
 	      <!-- <p class="project-category">UI/UX</p> -->
 	    </div><!-- /item -->
@@ -151,19 +151,19 @@ DEMO PAGE
 	  <div class="carousel-inner">
 
 	    <div class="item">
-	      <img src="img/preview-images/widgets_05.jpg" alt="themesgravity">
+	      <img src="FrontEnd/img/preview-images/widgets_05.jpg" alt="themesgravity">
 	      <h4>Illustrations</h4>
 	      <!-- <p class="project-category">Illustrations Production</p> -->
 	    </div><!-- /item -->
 
 	    <div class="item">
-	      <img src="img/preview-images/widgets_06.jpg" alt="themesgravity">
+	      <img src="FrontEnd/img/preview-images/widgets_06.jpg" alt="themesgravity">
 	      <h4>Illustrations</h4>
 	      <!-- <p class="project-category">Illustrations Production</p> -->
 	    </div><!-- /item -->
 
 	    <div class="item active">
-	      <img src="img/preview-images/widgets_10.jpg" alt="themesgravity">
+	      <img src="FrontEnd/img/preview-images/widgets_10.jpg" alt="themesgravity">
 	      <h4>Illustrations</h4>
 	      <!-- <p class="project-category">Illustrations Production</p> -->
 	    </div><!-- /item -->
@@ -191,19 +191,19 @@ DEMO PAGE
 	  <div class="carousel-inner">
 
 	    <div class="item">
-	      <img src="img/preview-images/widgets_09.jpg" alt="themesgravity">
+	      <img src="FrontEnd/img/preview-images/widgets_09.jpg" alt="themesgravity">
 	      <h4>Editorial Design</h4>
 	      <!-- <p class="project-category">Editorial Design</p> -->
 	    </div><!-- /item -->
 
 	    <div class="item">
-	      <img src="img/preview-images/widgets_04.jpg" alt="themesgravity">
+	      <img src="FrontEnd/img/preview-images/widgets_04.jpg" alt="themesgravity">
 	      <h4>Editorial Design</h4>
 	      <!-- <p class="project-category">Editorial Design</p> -->
 	    </div><!-- /item -->
 
 	    <div class="item active">
-	      <img src="img/preview-images/widgets_03.jpg" alt="themesgravity">
+	      <img src="FrontEnd/img/preview-images/widgets_03.jpg" alt="themesgravity">
 	      <h4>Editorial Design</h4>
 	      <!-- <p class="project-category">Editorial Design</p> -->
 	    </div><!-- /item -->
@@ -231,19 +231,19 @@ DEMO PAGE
 	  <div class="carousel-inner">
 
 	    <div class="item">
-	      <img src="img/preview-images/widgets_06.jpg" alt="themesgravity">
+	      <img src="FrontEnd/img/preview-images/widgets_06.jpg" alt="themesgravity">
 	      <h4>Studio</h4>
 	      <!-- <p class="project-category">Studio Photography</p> -->
 	    </div><!-- /item -->
 
 	    <div class="item">
-	      <img src="img/preview-images/widgets_03.jpg" alt="themesgravity">
+	      <img src="FrontEnd/img/preview-images/widgets_03.jpg" alt="themesgravity">
 	      <h4>Studio</h4>
 	      <!-- <p class="project-category">Studio Photography</p> -->
 	    </div><!-- /item -->
 
 	    <div class="item active">
-	      <img src="img/preview-images/widgets_04.jpg" alt="themesgravity">
+	      <img src="FrontEnd/img/preview-images/widgets_04.jpg" alt="themesgravity">
 	      <h4>Studio</h4>
 	      <!-- <p class="project-category">Studio Photography</p> -->
 	    </div><!-- /item -->
@@ -271,19 +271,19 @@ DEMO PAGE
 	  <div class="carousel-inner">
 
 	    <div class="item">
-	      <img src="img/preview-images/widgets_10.jpg" alt="themesgravity">
+	      <img src="FrontEnd/img/preview-images/widgets_10.jpg" alt="themesgravity">
 	      <h4>Develop</h4>
 	      <!-- <p class="project-category">Develop</p> -->
 	    </div><!-- /item -->
 
 	    <div class="item">
-	      <img src="img/preview-images/widgets_09.jpg" alt="themesgravity">
+	      <img src="FrontEnd/img/preview-images/widgets_09.jpg" alt="themesgravity">
 	      <h4>Develop</h4>
 		<!-- <p class="project-category">Develop</p> -->
 	    </div><!-- /item -->
 
 	    <div class="item active">
-	      <img src="img/preview-images/widgets_04.jpg" alt="themesgravity">
+	      <img src="FrontEnd/img/preview-images/widgets_04.jpg" alt="themesgravity">
 	      <h4>Develop</h4>
 	      <!-- <p class="project-category">Develop</p> -->
 	    </div><!-- /item -->
@@ -331,7 +331,7 @@ DEMO PAGE
 
 								<article class="room-post row">
 									<div class="col-sm-7 col-md-7 col-lg-7">
-										<img src="img/preview-images/rooms_01.jpg" alt="themesgravity">
+										<img src="FrontEnd/img/preview-images/rooms_01.jpg" alt="themesgravity">
 									</div><!-- /end three columns -->
 									<div class="col-sm-5 col-md-5 col-lg-5">
 
@@ -358,7 +358,7 @@ DEMO PAGE
 
 								<article class="room-post row">
 									<div class="col-sm-7 col-md-7 col-lg-7">
-										<img src="img/preview-images/rooms_02.jpg" alt="themesgravity">
+										<img src="FrontEnd/img/preview-images/rooms_02.jpg" alt="themesgravity">
 									</div><!-- /end three columns -->
 									<div class="col-sm-5 col-md-5 col-lg-5">
 
@@ -385,7 +385,7 @@ DEMO PAGE
 
 								<article class="room-post row">
 									<div class="col-sm-7 col-md-7 col-lg-7">
-										<img src="img/preview-images/rooms_03.jpg" alt="themesgravity">
+										<img src="FrontEnd/img/preview-images/rooms_03.jpg" alt="themesgravity">
 									</div><!-- /end three columns -->
 									<div class="col-sm-5 col-md-5 col-lg-5">
 
@@ -412,7 +412,7 @@ DEMO PAGE
 
 								<article class="room-post row">
 									<div class="col-sm-7 col-md-7 col-lg-7">
-										<img src="img/preview-images/rooms_04.jpg" alt="themesgravity">
+										<img src="FrontEnd/img/preview-images/rooms_04.jpg" alt="themesgravity">
 									</div><!-- /end three columns -->
 									<div class="col-sm-5 col-md-5 col-lg-5">
 
