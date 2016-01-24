@@ -40,7 +40,7 @@ Route::get('admin_getroom_types', 'RoomController@getroom_types');
 
 Route::get('admin_promotions','PromotionsController@promotions');
 
-
+ 
 
 Route::get('/get-customer', function() {
     $result = DB::table('promotions')->get();
