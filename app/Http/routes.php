@@ -19,7 +19,54 @@ Route::get('admin', function () {
     return view('Admin.Demo');
 });             
 
- 
+Route::get('/admin', function () {
+    return view('Admin.Demo');
+});
+
+
+/*
+|--------------------------------------------------------------------------
+| Rish Routes
+|--------------------------------------------------------------------------
+|
+|
+*/
+
+Route::get('/room_packages','PagesController@rooms');
+
+Route::post('/room_packages/room_availability','RoomAvailabiltyController@check_room_availabilty');
+
+Route::get('/room_packages/room_availability','PagesController@room_availabilty');
+
+Route::get('/halls','PagesController@halls');
+
+Route::get('/halls','PagesController@halls');
+
+
+
+
+
+/*
+|
+|
+|--------------------------------------------------------------------------
+| End Rish Routes
+|--------------------------------------------------------------------------
+*/
+
+
+
+
+
+
+/*
+|--------------------------------------------------------------------------
+| Nilesh Routes
+|--------------------------------------------------------------------------
+|
+|
+*/
+
 Route::get('admin_rooms', 'RoomController@rooms');
 
 
@@ -28,16 +75,59 @@ Route::get('admin_getroom_types', 'RoomController@getroom_types');
 Route::get('admin_room_add', 'RoomController@room_add');
 Route::get('admin_roomtype_add','RoomController@admin_roomtype_add' ); 
 
+ 
+
+
+
+
+/*
+|
+|
+|--------------------------------------------------------------------------
+| End Nilesh Routes
+|--------------------------------------------------------------------------
+*/
+
+
+
+/*
+|--------------------------------------------------------------------------
+| Vishan Routes
+|--------------------------------------------------------------------------
+|
+|
+*/
+
+
+/*
+|
+|
+|--------------------------------------------------------------------------
+| End Vishan Routes
+|--------------------------------------------------------------------------
+*/
+
+
+
+/*
+|--------------------------------------------------------------------------
+| Nipuna Routes
+|--------------------------------------------------------------------------
+|
+|
+*/
+
 
 Route::get('admin_promotions','PromotionsController@promotions');
 
+ 
 
 
+Route::get('/get-customer', function() {
+    $result = DB::table('promotions')->get();
 
-Route::get('/get-customer', function(){
-	$result = DB::table('promotions')->get();
-    
     return response()->json(['count' => count($result), 'data' => $result]);
+
 });
 
 Route::get('/get-customer', function(){
@@ -47,14 +137,23 @@ Route::get('/get-customer', function(){
 
 
 Route::get('/addpromotion',function() {
-
     $promotion_name = Input::get('promo_name');
     $promotion_description = Input::get('promo_description');
     $date_from = Input::get('promo_start');
     $date_to = Input::get('promo_end');
     $rate = Input::get('promo_rate');
-   
+
     DB::table('promotions')->insert(array('promotion_name'=> $promotion_name,'promotion_description'=> $promotion_description,'date_from'=> $date_from,'date_to'=> $date_to,'rate'=> $rate));
     return 1;
 
 });
+
+
+/*
+|
+|
+|--------------------------------------------------------------------------
+| End Nipuna Routes
+|--------------------------------------------------------------------------
+*/
+

@@ -10,7 +10,23 @@ DEMO PAGE
 
 @endsection
 
+@section('links')
 
+		<!--Links for dropdowns-->
+<script src="{{URL::asset('FrontEnd/js/vendor/jquery-1.11.0.min.js')}}"></script>
+
+
+
+<!-- These links the date picker-->
+<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+
+<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+
+
+
+
+
+@endsection
 
 
 @section('css')
@@ -25,17 +41,19 @@ DEMO PAGE
 
 @section('content')
 
-<div class="row">
+	<input type="date" id="datepicker" placeholder="Select the date" name="arrival" value="@if(session('arrival_date')){{ session('arrival_date') }} @else {{ old('arrival')}} @endif"/>
+
+	<div class="row">
 
 <div class="col-md-4" id="">
 								<div class="widget widget-search-form">
 	<h5>Search Form</h5>
-	
+
 	<form role="search" method="get">
 	    <input type="text" name="s" placeholder="Search..">
 	    <button type="submit"><span class="glyphicon glyphicon-search"></span></button>
 	</form>
-	
+
 </div><!-- /widget-search-form -->
 
 								<div class="widget widget-advertisement">
@@ -427,10 +445,12 @@ DEMO PAGE
 									<a href="#"><i class="icon-right-open"></i></a>
 
 								</div><!-- /pagination -->
-								
+
 							</div>
- 
+
 </div>
+
+
 @endsection
 
 
@@ -440,7 +460,21 @@ DEMO PAGE
 
 <script>
 
-function hello(){
+
+	//datepicker
+	$("#datepicker").datepicker({
+		dateFormat:'yy-mm-dd',
+		minDate:0,
+		changeMonth: true,
+		changeYear: true,
+		defaultDate:new Date(),
+
+
+
+	});
+
+
+	function hello(){
     
    alert("Refer the coding to see where javascript should be written you fucktard!"); 
     

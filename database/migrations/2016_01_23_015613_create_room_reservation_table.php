@@ -13,8 +13,8 @@ class CreateRoomReservationTable extends Migration
     public function up()
     {
         Schema::create('ROOM_RESERVATION', function (Blueprint $table) {
+
             $table->increments('room_reservation_id');
-            $table->dateTime('date_created');
             $table->longText('remarks');
             $table->dateTime('check_in');
             $table->dateTime('check_out');
@@ -23,8 +23,12 @@ class CreateRoomReservationTable extends Migration
             $table->integer('num_of_rooms');
             $table->integer('num_of_nights');
             $table->double('total_amount');
-            $table->char('type', 50);
+            $table->char('type', 50)->nullable();
+            $table->string('promo_code')->nullable();
             $table->integer('cus_id')->unsigned();
+            $table->string('status')->nullable();
+            $table->timestamps();
+            $table->softDeletes();
 
            // $table->foreign('cus_id')->references('cus_id')->on('CUSTOMER');
 
