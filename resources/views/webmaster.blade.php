@@ -99,7 +99,6 @@
           </ul>
         </li>
         <li><a href="#">Shortcodes</a></li>
-        <li><a href="#">Widgets</a></li>
         <li><a href="#">Pages</a>
           <ul>
             <li><a href="#">Typography</a></li>
@@ -113,13 +112,7 @@
         <li><a href="#">Hotel</a></li>
 		<li><a href="{!! url('/halls') !!}">Halls</a></li>
         <li><a href="{!! url('/room_packages') !!}">Rooms</a>
-          <ul>
-            <li><a href="#">Room Post Type Sidebar</a></li>
-            <li><a href="#">Room Post Fullwidth</a></li>
-            <li><a href="#">Room Listing</a></li>
-            <li><a href="#">Room Type Listing</a></li>
-            <li><a href="#">Room Reservation</a></li>
-          </ul>
+
         </li>
 
         <li><a href="#">Home</a>
@@ -303,11 +296,15 @@
 
 		<!-- jQuery -->
 		<!-- <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script> -->
+{{--
 
 		<script src="{{URL::asset('FrontEnd/js/vendor/jquery-1.11.0.min.js')}}"></script>
+--}}
 
 		<!-- CUSTOM JavaScript so you can use jQuery or $ before it has been loaded in the footer. -->
+{{--
 		<script>(function($,d){$.each(readyQ,function(i,f){$(f)});$.each(bindReadyQ,function(i,f){$(d).bind("ready",f)})})(jQuery,document)</script>
+--}}
 
 		<!-- Google Maps Plugin -->
 	 <!--	<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?libraries=geometry"></script>

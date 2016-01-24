@@ -13,15 +13,6 @@ Function Halls
 
 @section('links')
 
-		<!--Links for dropdowns-->
-<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-
-
-
-<!-- These links the date picker-->
-<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
-
-<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
 
 
 
@@ -196,6 +187,11 @@ Function Halls
 	<br>
 	<br>
 	<br>
+
+
+	<script src="{{URL::asset('FrontEnd/js/vendor/jquery-1.11.0.min.js')}}"></script>
+	<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+	<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
 @endsection
 
 

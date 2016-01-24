@@ -20,11 +20,11 @@ Route::get('/admin', function () {
     return view('Admin.Demo');
 });
 
-Route::get('/room_packages', function () {
-    return view('Website.test');
-});
+Route::get('/room_packages','PagesController@rooms');
 
-Route::get('/halls', function () {
-    return view('Website.Halls');
-});
+Route::post('/room_packages/room_availability','RoomAvailabiltyController@check_room_availabilty');
+
+Route::get('/room_packages/room_availability','PagesController@room_availabilty');
+
+Route::get('/halls','PagesController@halls');
 
