@@ -19,8 +19,8 @@ class CreateRatesTable extends Migration
             $table->double('rates');
             $table->longText('remarks');
 
-            $table->foreign('room_type_id')->references('room_type_id')->on('ROOM_TYPES');
-            $table->foreign('meal_type_id')->references('meal_type_id')->on('MEAL_TYPES');
+           // $table->foreign('room_type_id')->references('room_type_id')->on('ROOM_TYPES');
+           // $table->foreign('meal_type_id')->references('meal_type_id')->on('MEAL_TYPES');
 
         });
     }

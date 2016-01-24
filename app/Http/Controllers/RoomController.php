@@ -2,86 +2,53 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use DB;
+use Illuminate\Http\Request;
+use App\Room;
+use App\RoomType;
+ 
+
 
 class RoomController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
+  
+    
+    
+    public function rooms(Request $request){
+        
+        
+        return view('nilesh.rooms');
+        
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
+    public function getrooms(Request $request){
+        
+        
+        $rooms = DB::select(DB::raw("SELECT A.*, (SELECT TYPE_NAME FROM ROOM_TYPES WHERE ROOM_TYPE_ID = A.ROOM_TYPE_ID) FROM ROOMS A"));
+        
+        return response()->json(['count' => count($rooms), 'data' => $rooms]);
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
     }
+    
+    public function getroom_types(Request $request){
+        
+        $types = DB::select(DB::raw("SELECT A.*, (SELECT COUNT(*) FROM ROOMS WHERE ROOMS.room_type_id = A.room_type_id)as 'Count' FROM ROOM_TYPES A
+ "));
+        
+        return response()->json(['count' => count($types), 'data' => $types]);
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
+        
+        
     }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
+   
+    
+     
+    
+    
+    
+    
+    
+    
 }

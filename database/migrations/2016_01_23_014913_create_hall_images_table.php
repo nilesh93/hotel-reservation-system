@@ -17,7 +17,7 @@ class CreateHallImagesTable extends Migration
             $table->binary('content');  //change to medium blob in the DB
             $table->char('hall_id', 5);
 
-            $table->foreign('hall_id')->references('hall_id')->on('HALLS');
+           // $table->foreign('hall_id')->references('hall_id')->on('HALLS');
         });
     }
 

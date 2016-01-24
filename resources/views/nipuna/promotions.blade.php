@@ -170,6 +170,9 @@ ADMIN DEMO
 <script>
 	$('document').ready(function(){
 
+        
+        document.getElementById("management").click();
+        document.getElementById("PR").setAttribute("class","active");
         dataLoad();
 
 

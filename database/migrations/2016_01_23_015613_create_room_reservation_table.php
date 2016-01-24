@@ -26,7 +26,7 @@ class CreateRoomReservationTable extends Migration
             $table->char('type', 50);
             $table->integer('cus_id')->unsigned();
 
-            $table->foreign('cus_id')->references('cus_id')->on('CUSTOMER');
+           // $table->foreign('cus_id')->references('cus_id')->on('CUSTOMER');
 
         });
     }

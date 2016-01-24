@@ -20,9 +20,9 @@ class CreateRoomReservationBlockTable extends Migration
             $table->integer('rate_code')->unsigned();
             $table->primary(['room_num', 'room_reservation_id']);
 
-            $table->foreign('room_num')->references('room_num')->on('ROOMS');
-            $table->foreign('room_reservation_id')->references('room_reservation_id')->on('ROOM_RESERVATION');
-            $table->foreign('rate_code')->references('rate_code')->on('RATES');
+            //$table->foreign('room_num')->references('room_num')->on('ROOMS');
+            //$table->foreign('room_reservation_id')->references('room_reservation_id')->on('ROOM_RESERVATION');
+            //$table->foreign('rate_code')->references('rate_code')->on('RATES');
         });
     }
 

@@ -18,8 +18,8 @@ class CreateRoomImagesTable extends Migration
             $table->char('room_num', 5);
             $table->integer('room_type_id')->unsigned();
 
-            $table->foreign('room_num')->references('room_num')->on('ROOMS');
-            $table->foreign('room_type_id')->references('room_type_id')->on('ROOM_TYPES');
+          //  $table->foreign('room_num')->references('room_num')->on('ROOMS');
+          //  $table->foreign('room_type_id')->references('room_type_id')->on('ROOM_TYPES');
         });
     }
 

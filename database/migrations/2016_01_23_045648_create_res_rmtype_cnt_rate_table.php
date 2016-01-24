@@ -19,9 +19,9 @@ class CreateResRmtypeCntRateTable extends Migration
             $table->integer('count');
             $table->primary(['room_reservation_id', 'room_type_id']);
 
-            $table->foreign('room_reservation_id')->references('room_reservation_id')->on('ROOM_RESERVATION');
-            $table->foreign('room_type_id')->references('room_type_id')->on('ROOM_TYPES');
-            $table->foreign('rate_code')->references('rate_code')->on('RATES');
+           // $table->foreign('room_reservation_id')->references('room_reservation_id')->on('ROOM_RESERVATION');
+           // $table->foreign('room_type_id')->references('room_type_id')->on('ROOM_TYPES');
+           // $table->foreign('rate_code')->references('rate_code')->on('RATES');
         });
     }
 

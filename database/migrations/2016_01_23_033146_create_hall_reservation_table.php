@@ -21,8 +21,8 @@ class CreateHallReservationTable extends Migration
             $table->integer('cus_id')->unsigned();
             $table->char('hall_id', 5);
 
-            $table->foreign('cus_id')->references('cus_id')->on('CUSTOMER');
-            $table->foreign('hall_id')->references('hall_id')->on('HALLS');
+           // $table->foreign('cus_id')->references('cus_id')->on('CUSTOMER');
+           // $table->foreign('hall_id')->references('hall_id')->on('HALLS');
         });
     }
 
