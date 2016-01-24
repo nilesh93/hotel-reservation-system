@@ -8,5 +8,7 @@ class Room extends Model
 {
     //
     protected $table = 'ROOMS';
+    public $timestamps = false;
     protected $id = 'room_id';
+    
 }

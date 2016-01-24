@@ -15,28 +15,30 @@ Route::get('/', function () {
     return view('Website.Demo');
 });
 
+Route::get('admin', function () {
+    return view('Admin.Demo');
+});             
 
  
 Route::get('admin_rooms', 'RoomController@rooms');
 
-<<<<<<< HEAD
+
 Route::get('admin_getrooms', 'RoomController@getrooms');
 Route::get('admin_getroom_types', 'RoomController@getroom_types');
- 
+Route::get('admin_room_add', 'RoomController@room_add');
+Route::get('admin_roomtype_add','RoomController@admin_roomtype_add' ); 
 
 
 Route::get('admin_promotions','PromotionsController@promotions');
 
 
-Route::get('/admin', function () {
-    return view('Admin.Demo');
-});
+
 
 Route::get('/get-customer', function(){
 	$result = DB::table('promotions')->get();
     
     return response()->json(['count' => count($result), 'data' => $result]);
-=======
+});
 
 Route::get('/get-customer', function(){
 	$result = DB::table('promotions')->get();
@@ -54,7 +56,5 @@ Route::get('/addpromotion',function() {
    
     DB::table('promotions')->insert(array('promotion_name'=> $promotion_name,'promotion_description'=> $promotion_description,'date_from'=> $date_from,'date_to'=> $date_to,'rate'=> $rate));
     return 1;
->>>>>>> origin/master
-
 
 });

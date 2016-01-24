@@ -172,6 +172,9 @@ ADMIN DEMO
         document.getElementById("management").click();
         document.getElementById("PR").setAttribute("class","active");
         dataLoad();
+        
+        
+        
 
 
     });
