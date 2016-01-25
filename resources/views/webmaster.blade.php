@@ -5,12 +5,16 @@
 
 		<title>@yield('title')</title>
 
+
 		<!-- SEO -->
 		<meta charset="utf-8">
 		<meta name="keywords" content="">
 		<meta name="description" content="">
 		<meta name="author" content="">
 
+
+
+		@yield('links')
 		<!-- initializing looks -->
         <!--[if IE]><meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'><![endif]-->
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -24,8 +28,8 @@
 		<!-- Stylesheet -->
 		 <link rel="stylesheet" href="{{URL::asset('FrontEnd/css/styles.css')}}">
 		 <link rel="stylesheet" href="{{URL::asset('FrontEnd/css/font-awesome/css/font-awesome.min.css')}}">
-	 
-		
+
+
 		@yield('css')
 		<!-- Custom Stylesheet == Make sure u put all ur css changes in this file == -->
 
@@ -46,7 +50,7 @@
 					<div class="row">
 						<div class="col-sm-4 col-md-4 col-lg-4">
 
-							<a class="logo" href=""><!-- check css to update logo --></a><!-- /logo -->
+							<a class="logo" href="" ><!-- check css to update logo --></a><img src="{{URL::asset('FrontEnd/img/amalya-logo.png')}}" alt=""><!-- /logo -->
 
 						</div><!-- /4 columns -->
 
@@ -98,8 +102,9 @@
             <!-- <li><a href="#">Blog Post Right Sidebar</a></li> -->
           </ul>--}}
         </li>
-        <li><a href="#">Contact</a></li>
-        <li><a href="#">Widgets</a></li>
+
+        <li><a href="#">Shortcodes</a></li>
+
         <li><a href="#">Pages</a>
           <ul>
             <li><a href="#">Typography</a></li>
@@ -111,15 +116,11 @@
           </ul>
         </li>
         <li><a href="#">Hotel</a></li>
-        <li><a href="#">Rooms</a>
-          <ul>
-            <li><a href="#">Room Post Type Sidebar</a></li>
-            <li><a href="#">Room Post Fullwidth</a></li>
-            <li><a href="#">Room Listing</a></li>
-            <li><a href="#">Room Type Listing</a></li>
-            <li><a href="#">Room Reservation</a></li>
-          </ul>
+		<li><a href="{!! url('/halls') !!}">Halls</a></li>
+        <li><a href="{!! url('/room_packages') !!}">Rooms</a>
+
         </li>
+
         <li><a href="/">Home</a>
           <ul>
             <li><a href="#">Home Version 1</a></li>
@@ -168,22 +169,22 @@
 
 									<div class="item active">
 										<i class="fa fa-calendar-o"></i><small class="date">AUGUST 26th</small>
-										<h3>Experience Ocean View World of Hospitality</h3>
+										<h3>Experience Amalya Reach World of Hospitality</h3>
 									</div><!-- /item -->
 
 									<div class="item">
 										<i class="fa fa-calendar-o"></i><small class="date">AUGUST 26th</small>
-										<h3>Experience Ocean View World of Hospitality</h3>
+										<h3>Experience Amalya Reach World of Hospitality</h3>
 									</div><!-- /item -->
 
 									<div class="item">
 										<i class="fa fa-calendar-o"></i><small class="date">AUGUST 26th</small>
-										<h3>Experience Ocean View World of Hospitality</h3>
+										<h3>Experience Amalya Reach World of Hospitality</h3>
 									</div><!-- /item -->
 
 									<div class="item">
 										<i class="fa fa-calendar-o"></i><small class="date">AUGUST 26th</small>
-										<h3>Experience Ocean View World of Hospitality</h3>
+										<h3>Experience Amalya Reach World of Hospitality</h3>
 									</div><!-- /item -->
 
 								</div><!-- /carousel-inner -->
@@ -203,7 +204,7 @@
 				<div class="container">
 					<div class="row">
 						<div class="col-sm-3 col-md-3 col-lg-3">
-							<img src="{{URL::asset('FrontEnd/img/footer-logo.png')}}" alt="">
+							<img src="{{URL::asset('FrontEnd/img/amalya-logo.png')}}" alt="">
 							<br>
 							<br>
 							<p>Vivamus lacus libero, ultrices and well non ullamcorper as, tempus sit amer enim. Suspendisse at supermarket and semper ispum Suspeat all web design</p>
@@ -290,7 +291,7 @@
 							</nav>
 						</div><!-- /col-md-5 -->
 						<div class="col-sm-4 col-md-4 col-lg-4">
-							<p class="copyright">&copy;2014 Ocean View - ThemesGravity. All Rights Reserved</p>
+							<p class="copyright">&copy;2016 Amalya Reach - ThemesGravity. All Rights Reserved</p>
 						</div><!-- /col-md-4 -->
 					</div><!-- /row -->
 				</div><!-- /container -->
@@ -301,56 +302,59 @@
 
 		<!-- jQuery -->
 		<!-- <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script> -->
-		
+{{--
+
 		<script src="{{URL::asset('FrontEnd/js/vendor/jquery-1.11.0.min.js')}}"></script>
-		 
+--}}
+
 		<!-- CUSTOM JavaScript so you can use jQuery or $ before it has been loaded in the footer. -->
+{{--
 		<script>(function($,d){$.each(readyQ,function(i,f){$(f)});$.each(bindReadyQ,function(i,f){$(d).bind("ready",f)})})(jQuery,document)</script>
+--}}
 
 		<!-- Google Maps Plugin -->
 	 <!--	<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?libraries=geometry"></script>
-		
-		 
+
+
 		<!-- <script src="{{URL::asset('FrontEnd/js/vendor/maplace.min.js')}}"></script>
 		<!-- Bootstrap JavaScript -->
 		<script src="{{URL::asset('FrontEnd/bootstrap/js/bootstrap.min.js')}}"></script>
-	 
+
 
 		<!-- Custom Bootstrap Select Dropdown Javascript -->
 		<script src="{{URL::asset('FrontEnd/js/vendor/bootstrap-select.min.js')}}"></script>
-		 
+
 
 		<!-- Custom Bootstrap Datepicker Javascript -->
 		<script src="{{URL::asset('FrontEnd/js/vendor/picker.js')}}"></script>
 		<script src="{{URL::asset('FrontEnd/js/vendor/picker.date.js')}}"></script>
-	 
+
 
 		<!-- Main JavaScript File for the theme -->
 		<script src="{{URL::asset('FrontEnd/js/scripts.js')}}"></script>
-	 
+
 
 		<!-- Shortcodes JavaScript File for the theme -->
-            <script src="{{URL::asset('FrontEnd/js/shortcodes.js')}}"></script>
-		 
 
+		<script src="{{URL::asset('FrontEnd/js/shortcodes.js')}}"></script>
 		<!-- widgets/footer-widgets JavaScript File for the theme -->
 		<script src="{{URL::asset('FrontEnd/js/widgets.js')}}"></script>
 		<script src=''></script>
 
 		<!-- Newsletter Shortcode DEPENDANCY JS -->
-		 
+
 		<script src="{{URL::asset('FrontEnd/js/vendor/classie.js')}}"></script>
 		<script src="{{URL::asset('FrontEnd/js/vendor/modernizr.custom.js')}}"></script>
 
 		<!-- Newsletter Shortcode main JS -->
-		 
+
 		<script src="{{URL::asset('FrontEnd/js/vendor/newsletter.js')}}"></script>
 
 		<!-- Owl Carousel Main Js File -->
-	 
+
 		<script src="{{URL::asset('FrontEnd/js/vendor/owl.carousel.js')}}"></script>
-		
-		
+
+
 		@yield('js')
 
 		<!-- loginModal -->

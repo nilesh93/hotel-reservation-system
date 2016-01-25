@@ -15,9 +15,9 @@ class CreateHallImagesTable extends Migration
         Schema::create('HALL_IMAGES', function (Blueprint $table) {
             $table->increments('hall_image_id');
             $table->binary('content');  //change to medium blob in the DB
-            $table->char('hall_id', 5);
+            $table->integer('hall_id')->unsigned();
 
-            $table->foreign('hall_id')->references('hall_id')->on('HALLS');
+           // $table->foreign('hall_id')->references('hall_id')->on('HALLS');
         });
     }
 

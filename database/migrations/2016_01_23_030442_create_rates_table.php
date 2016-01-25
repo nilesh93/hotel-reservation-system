@@ -16,11 +16,15 @@ class CreateRatesTable extends Migration
             $table->increments('rate_code');
             $table->integer('room_type_id')->unsigned();
             $table->integer('meal_type_id')->unsigned();
-            $table->double('rates');
+            $table->double('double_rates')->nullable();
+            $table->double('single_rates')->nullable();
+            $table->double('triple_rates')->nullable();
             $table->longText('remarks');
+            $table->timestamps();
+            $table->softDeletes();
 
-            $table->foreign('room_type_id')->references('room_type_id')->on('ROOM_TYPES');
-            $table->foreign('meal_type_id')->references('meal_type_id')->on('MEAL_TYPES');
+           // $table->foreign('room_type_id')->references('room_type_id')->on('ROOM_TYPES');
+           // $table->foreign('meal_type_id')->references('meal_type_id')->on('MEAL_TYPES');
 
         });
     }

@@ -10,7 +10,23 @@ DEMO PAGE
 
 @endsection
 
+@section('links')
 
+		<!--Links for dropdowns-->
+<script src="{{URL::asset('FrontEnd/js/vendor/jquery-1.11.0.min.js')}}"></script>
+
+
+
+<!-- These links the date picker-->
+<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+
+<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+
+
+
+
+
+@endsection
 
 
 @section('css')
@@ -25,22 +41,24 @@ DEMO PAGE
 
 @section('content')
 
-<div class="row">
+	<input type="date" id="datepicker" placeholder="Select the date" name="arrival" value="@if(session('arrival_date')){{ session('arrival_date') }} @else {{ old('arrival')}} @endif"/>
+
+	<div class="row">
 
 <div class="col-md-4" id="">
 								<div class="widget widget-search-form">
 	<h5>Search Form</h5>
-	
+
 	<form role="search" method="get">
 	    <input type="text" name="s" placeholder="Search..">
 	    <button type="submit"><span class="glyphicon glyphicon-search"></span></button>
 	</form>
-	
+
 </div><!-- /widget-search-form -->
 
 								<div class="widget widget-advertisement">
 	<h5>Advertisement</h5>
-		<a href="#" class="ad-img"><img src="img/preview-images/ad_campari.jpg" alt="themesgravity"></a>
+		<a href="#" class="ad-img"><img src="FrontEnd/img/preview-images/ad_campari.jpg" alt="themesgravity"></a>
 		<a href="#" class="ad-link"><small>Advertise with us!</small></a>
 </div><!-- /widget-advertisement -->
 								<div class="widget widget-projects">
@@ -53,19 +71,19 @@ DEMO PAGE
 	  <div class="carousel-inner">
 
 	    <div class="item active">
-	      <img src="img/preview-images/widgets_03.jpg" alt="themesgravity">
+	      <img src="FrontEnd/img/preview-images/widgets_03.jpg" alt="themesgravity">
 	      <h4>Web Design</h4>
 	      <!-- <p class="project-category">Web Design</p> -->
 	    </div><!-- /item -->
 
 	    <div class="item">
-	      <img src="img/preview-images/widgets_04.jpg" alt="themesgravity">
+	      <img src="FrontEnd/img/preview-images/widgets_04.jpg" alt="themesgravity">
 	      <h4>Web Design</h4>
 	      <!-- <p class="project-category">Web Design</p> -->
 	    </div><!-- /item -->
 
 	    <div class="item">
-	      <img src="img/preview-images/widgets_05.jpg" alt="themesgravity">
+	      <img src="FrontEnd/img/preview-images/widgets_05.jpg" alt="themesgravity">
 	      <h4>Web Design</h4>
 	      <!-- <p class="project-category">Web Design</p> -->
 	    </div><!-- /item -->
@@ -93,19 +111,19 @@ DEMO PAGE
 	  <div class="carousel-inner">
 
 	    <div class="item active">
-	      <img src="img/preview-images/widgets_06.jpg" alt="themesgravity">
+	      <img src="FrontEnd/img/preview-images/widgets_06.jpg" alt="themesgravity">
 	      <h4>UI/UX</h4>
 	      <!-- <p class="project-category">UI/UX</p> -->
 	    </div><!-- /item -->
 
 	    <div class="item">
-	      <img src="img/preview-images/widgets_09.jpg" alt="themesgravity">
+	      <img src="FrontEnd/img/preview-images/widgets_09.jpg" alt="themesgravity">
 	      <h4>UI/UX</h4>
 	      <!-- <p class="project-category">UI/UX</p> -->
 	    </div><!-- /item -->
 
 	    <div class="item">
-	      <img src="img/preview-images/widgets_10.jpg" alt="themesgravity">
+	      <img src="FrontEnd/img/preview-images/widgets_10.jpg" alt="themesgravity">
 	      <h4>UI/UX</h4>
 	      <!-- <p class="project-category">UI/UX</p> -->
 	    </div><!-- /item -->
@@ -133,19 +151,19 @@ DEMO PAGE
 	  <div class="carousel-inner">
 
 	    <div class="item">
-	      <img src="img/preview-images/widgets_05.jpg" alt="themesgravity">
+	      <img src="FrontEnd/img/preview-images/widgets_05.jpg" alt="themesgravity">
 	      <h4>Illustrations</h4>
 	      <!-- <p class="project-category">Illustrations Production</p> -->
 	    </div><!-- /item -->
 
 	    <div class="item">
-	      <img src="img/preview-images/widgets_06.jpg" alt="themesgravity">
+	      <img src="FrontEnd/img/preview-images/widgets_06.jpg" alt="themesgravity">
 	      <h4>Illustrations</h4>
 	      <!-- <p class="project-category">Illustrations Production</p> -->
 	    </div><!-- /item -->
 
 	    <div class="item active">
-	      <img src="img/preview-images/widgets_10.jpg" alt="themesgravity">
+	      <img src="FrontEnd/img/preview-images/widgets_10.jpg" alt="themesgravity">
 	      <h4>Illustrations</h4>
 	      <!-- <p class="project-category">Illustrations Production</p> -->
 	    </div><!-- /item -->
@@ -173,19 +191,19 @@ DEMO PAGE
 	  <div class="carousel-inner">
 
 	    <div class="item">
-	      <img src="img/preview-images/widgets_09.jpg" alt="themesgravity">
+	      <img src="FrontEnd/img/preview-images/widgets_09.jpg" alt="themesgravity">
 	      <h4>Editorial Design</h4>
 	      <!-- <p class="project-category">Editorial Design</p> -->
 	    </div><!-- /item -->
 
 	    <div class="item">
-	      <img src="img/preview-images/widgets_04.jpg" alt="themesgravity">
+	      <img src="FrontEnd/img/preview-images/widgets_04.jpg" alt="themesgravity">
 	      <h4>Editorial Design</h4>
 	      <!-- <p class="project-category">Editorial Design</p> -->
 	    </div><!-- /item -->
 
 	    <div class="item active">
-	      <img src="img/preview-images/widgets_03.jpg" alt="themesgravity">
+	      <img src="FrontEnd/img/preview-images/widgets_03.jpg" alt="themesgravity">
 	      <h4>Editorial Design</h4>
 	      <!-- <p class="project-category">Editorial Design</p> -->
 	    </div><!-- /item -->
@@ -213,19 +231,19 @@ DEMO PAGE
 	  <div class="carousel-inner">
 
 	    <div class="item">
-	      <img src="img/preview-images/widgets_06.jpg" alt="themesgravity">
+	      <img src="FrontEnd/img/preview-images/widgets_06.jpg" alt="themesgravity">
 	      <h4>Studio</h4>
 	      <!-- <p class="project-category">Studio Photography</p> -->
 	    </div><!-- /item -->
 
 	    <div class="item">
-	      <img src="img/preview-images/widgets_03.jpg" alt="themesgravity">
+	      <img src="FrontEnd/img/preview-images/widgets_03.jpg" alt="themesgravity">
 	      <h4>Studio</h4>
 	      <!-- <p class="project-category">Studio Photography</p> -->
 	    </div><!-- /item -->
 
 	    <div class="item active">
-	      <img src="img/preview-images/widgets_04.jpg" alt="themesgravity">
+	      <img src="FrontEnd/img/preview-images/widgets_04.jpg" alt="themesgravity">
 	      <h4>Studio</h4>
 	      <!-- <p class="project-category">Studio Photography</p> -->
 	    </div><!-- /item -->
@@ -253,19 +271,19 @@ DEMO PAGE
 	  <div class="carousel-inner">
 
 	    <div class="item">
-	      <img src="img/preview-images/widgets_10.jpg" alt="themesgravity">
+	      <img src="FrontEnd/img/preview-images/widgets_10.jpg" alt="themesgravity">
 	      <h4>Develop</h4>
 	      <!-- <p class="project-category">Develop</p> -->
 	    </div><!-- /item -->
 
 	    <div class="item">
-	      <img src="img/preview-images/widgets_09.jpg" alt="themesgravity">
+	      <img src="FrontEnd/img/preview-images/widgets_09.jpg" alt="themesgravity">
 	      <h4>Develop</h4>
 		<!-- <p class="project-category">Develop</p> -->
 	    </div><!-- /item -->
 
 	    <div class="item active">
-	      <img src="img/preview-images/widgets_04.jpg" alt="themesgravity">
+	      <img src="FrontEnd/img/preview-images/widgets_04.jpg" alt="themesgravity">
 	      <h4>Develop</h4>
 	      <!-- <p class="project-category">Develop</p> -->
 	    </div><!-- /item -->
@@ -313,7 +331,7 @@ DEMO PAGE
 
 								<article class="room-post row">
 									<div class="col-sm-7 col-md-7 col-lg-7">
-										<img src="img/preview-images/rooms_01.jpg" alt="themesgravity">
+										<img src="FrontEnd/img/preview-images/rooms_01.jpg" alt="themesgravity">
 									</div><!-- /end three columns -->
 									<div class="col-sm-5 col-md-5 col-lg-5">
 
@@ -340,7 +358,7 @@ DEMO PAGE
 
 								<article class="room-post row">
 									<div class="col-sm-7 col-md-7 col-lg-7">
-										<img src="img/preview-images/rooms_02.jpg" alt="themesgravity">
+										<img src="FrontEnd/img/preview-images/rooms_02.jpg" alt="themesgravity">
 									</div><!-- /end three columns -->
 									<div class="col-sm-5 col-md-5 col-lg-5">
 
@@ -367,7 +385,7 @@ DEMO PAGE
 
 								<article class="room-post row">
 									<div class="col-sm-7 col-md-7 col-lg-7">
-										<img src="img/preview-images/rooms_03.jpg" alt="themesgravity">
+										<img src="FrontEnd/img/preview-images/rooms_03.jpg" alt="themesgravity">
 									</div><!-- /end three columns -->
 									<div class="col-sm-5 col-md-5 col-lg-5">
 
@@ -394,7 +412,7 @@ DEMO PAGE
 
 								<article class="room-post row">
 									<div class="col-sm-7 col-md-7 col-lg-7">
-										<img src="img/preview-images/rooms_04.jpg" alt="themesgravity">
+										<img src="FrontEnd/img/preview-images/rooms_04.jpg" alt="themesgravity">
 									</div><!-- /end three columns -->
 									<div class="col-sm-5 col-md-5 col-lg-5">
 
@@ -427,10 +445,12 @@ DEMO PAGE
 									<a href="#"><i class="icon-right-open"></i></a>
 
 								</div><!-- /pagination -->
-								
+
 							</div>
- 
+
 </div>
+
+
 @endsection
 
 
@@ -440,7 +460,21 @@ DEMO PAGE
 
 <script>
 
-function hello(){
+
+	//datepicker
+	$("#datepicker").datepicker({
+		dateFormat:'yy-mm-dd',
+		minDate:0,
+		changeMonth: true,
+		changeYear: true,
+		defaultDate:new Date(),
+
+
+
+	});
+
+
+	function hello(){
     
    alert("Refer the coding to see where javascript should be written you fucktard!"); 
     
