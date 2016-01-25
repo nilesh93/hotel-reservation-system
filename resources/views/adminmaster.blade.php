@@ -19,7 +19,12 @@
         <link href="BackEnd/assets/css/pages.css" rel="stylesheet" type="text/css" />
         <link href="BackEnd/assets/css/responsive.css" rel="stylesheet" type="text/css" />
         <link href="BackEnd/assets/plugins/datatables/jquery.dataTables.min.css" rel="stylesheet" type="text/css" />
-       
+
+        <link href="BackEnd/assets/plugins/timepicker/bootstrap-timepicker.min.css" rel="stylesheet">
+        <link href="BackEnd/assets/plugins/mjolnic-bootstrap-colorpicker/dist/css/bootstrap-colorpicker.min.css" rel="stylesheet">
+        <link href="BackEnd/assets/plugins/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css" rel="stylesheet">
+        <link href="BackEnd/assets/plugins/clockpicker/dist/jquery-clockpicker.min.css" rel="stylesheet">
+        <link href="BackEnd/assets/plugins/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">
 
         <!-- HTML5 Shiv and Respond.js IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -38,7 +43,7 @@
     <body class="fixed-left">
 
         <!-- Begin page -->
-        <div id="wrapper">
+        <div id="wrapper" class="forced ">
 
             <!-- Top Bar Start -->
             <div class="topbar">
@@ -175,9 +180,7 @@
                                 <li class="hidden-xs">
                                     <a href="#" id="btn-fullscreen" class="waves-effect waves-light"><i class="icon-size-fullscreen"></i></a>
                                 </li>
-                                <li class="hidden-xs">
-                                    <a href="#" class="right-bar-toggle waves-effect waves-light"><i class="icon-settings"></i></a>
-                                </li>
+                              
                                 <li class="dropdown">
                                     <a href="" class="dropdown-toggle profile" data-toggle="dropdown" aria-expanded="true"><img src="BackEnd/assets/images/users/avatar-1.jpg" alt="user-img" class="img-circle"> </a>
                                     <ul class="dropdown-menu">
@@ -211,12 +214,12 @@
                                 <ul class="list-unstyled">
                                     <li id="RM"><a href="admin_rooms">Room Management</a></li>
                                     <li id="HM"><a href="dashboard_2.html">Hall Management</a></li>
-                                     <li id="PR"><a href="admin_promotions">Promotions Management</a></li>
-                                    </ul>
+                                    <li id="PR"><a href="admin_promotions">Promotions Management</a></li>
+                                </ul>
                             </li>
-                           
 
-                          </ul>
+
+                        </ul>
                         <div class="clearfix"></div>
                     </div>
                     <div class="clearfix"></div>
@@ -243,9 +246,9 @@
                                 </ol>
                             </div>
                             <div class="col-md-7">
-                            @yield('page_buttons')
-                            
-                            
+                                @yield('page_buttons')
+
+
                             </div>
                         </div>
 
@@ -258,130 +261,16 @@
                         </div>
 
 
-                    </div> <!-- container -->
+                    </div> <!-- end of container -->
 
                 </div> <!-- content -->
 
                 <footer class="footer">
-                    {{date('Y')}} © Ubold.
+                    {{date('Y')}} © SEP_SE_WE_003.
                 </footer>
 
             </div>
-            <!-- ============================================================== -->
-            <!-- End Right content here -->
-            <!-- ============================================================== -->
-
-
-            <!-- Right Sidebar -->
-            <!--  <div class="side-bar right-bar nicescroll">
-<h4 class="text-center">Chat</h4>
-<div class="contact-list nicescroll">
-<ul class="list-group contacts-list">
-<li class="list-group-item">
-<a href="#">
-<div class="avatar">
-<img src="assets/images/users/avatar-1.jpg" alt="">
-</div>
-<span class="name">Chadengle</span>
-<i class="fa fa-circle online"></i>
-</a>
-<span class="clearfix"></span>
-</li>
-<li class="list-group-item">
-<a href="#">
-<div class="avatar">
-<img src="assets/images/users/avatar-2.jpg" alt="">
-</div>
-<span class="name">Tomaslau</span>
-<i class="fa fa-circle online"></i>
-</a>
-<span class="clearfix"></span>
-</li>
-<li class="list-group-item">
-<a href="#">
-<div class="avatar">
-<img src="assets/images/users/avatar-3.jpg" alt="">
-</div>
-<span class="name">Stillnotdavid</span>
-<i class="fa fa-circle online"></i>
-</a>
-<span class="clearfix"></span>
-</li>
-<li class="list-group-item">
-<a href="#">
-<div class="avatar">
-<img src="assets/images/users/avatar-4.jpg" alt="">
-</div>
-<span class="name">Kurafire</span>
-<i class="fa fa-circle online"></i>
-</a>
-<span class="clearfix"></span>
-</li>
-<li class="list-group-item">
-<a href="#">
-<div class="avatar">
-<img src="assets/images/users/avatar-5.jpg" alt="">
-</div>
-<span class="name">Shahedk</span>
-<i class="fa fa-circle away"></i>
-</a>
-<span class="clearfix"></span>
-</li>
-<li class="list-group-item">
-<a href="#">
-<div class="avatar">
-<img src="assets/images/users/avatar-6.jpg" alt="">
-</div>
-<span class="name">Adhamdannaway</span>
-<i class="fa fa-circle away"></i>
-</a>
-<span class="clearfix"></span>
-</li>
-<li class="list-group-item">
-<a href="#">
-<div class="avatar">
-<img src="assets/images/users/avatar-7.jpg" alt="">
-</div>
-<span class="name">Ok</span>
-<i class="fa fa-circle away"></i>
-</a>
-<span class="clearfix"></span>
-</li>
-<li class="list-group-item">
-<a href="#">
-<div class="avatar">
-<img src="assets/images/users/avatar-8.jpg" alt="">
-</div>
-<span class="name">Arashasghari</span>
-<i class="fa fa-circle offline"></i>
-</a>
-<span class="clearfix"></span>
-</li>
-<li class="list-group-item">
-<a href="#">
-<div class="avatar">
-<img src="assets/images/users/avatar-9.jpg" alt="">
-</div>
-<span class="name">Joshaustin</span>
-<i class="fa fa-circle offline"></i>
-</a>
-<span class="clearfix"></span>
-</li>
-<li class="list-group-item">
-<a href="#">
-<div class="avatar">
-<img src="assets/images/users/avatar-10.jpg" alt="">
-</div>
-<span class="name">Sortino</span>
-<i class="fa fa-circle offline"></i>
-</a>
-<span class="clearfix"></span>
-</li>
-</ul>  
-</div>
-</div> -->
-            <!-- /Right-bar -->
-
+          
 
         </div>
         <!-- END wrapper -->
@@ -391,12 +280,12 @@
         </script>
 
         <!-- jQuery  -->
-       
+
 
 
 
         <script src="BackEnd/assets/js/jquery.min.js"></script>
-      
+
         <script src="BackEnd/assets/js/bootstrap.min.js"></script>
         <script src="BackEnd/assets/js/detect.js"></script>
         <script src="BackEnd/assets/js/fastclick.js"></script>
@@ -416,6 +305,17 @@
         <!-- Sweet-Alert  -->
         <script src="BackEnd/assets/plugins/sweetalert/dist/sweetalert.min.js"></script>
         <script src="BackEnd/assets/pages/jquery.sweet-alert.init.js"></script>
+
+        <script src="BackEnd/assets/js/moment.min.js"></script>
+        <script src="BackEnd/assets/js/collapse.js"></script>
+        <script src="BackEnd/assets/js/bootstrap-datetimepicker.min.js"></script>
+        
+        <script src="BackEnd/assets/plugins/moment/moment.js"></script>
+     	<script src="BackEnd/assets/plugins/timepicker/bootstrap-timepicker.min.js"></script>
+     	<script src="BackEnd/assets/plugins/mjolnic-bootstrap-colorpicker/dist/js/bootstrap-colorpicker.min.js"></script>
+     	<script src="BackEnd/assets/plugins/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
+     	<script src="BackEnd/assets/plugins/clockpicker/dist/jquery-clockpicker.min.js"></script>
+     	<script src="BackEnd/assets/plugins/bootstrap-daterangepicker/daterangepicker.js"></script>
 
 
         @yield('js')
