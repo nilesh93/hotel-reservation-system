@@ -212,7 +212,7 @@ function dataLoad(){
         oTable.destroy();
 
         $('#dd').DataTable( {
-            "ajax": "get-customer",
+            "ajax": "admin_promotions/promotions",
             "columns": [
                 { "data": "promotion_code" },
                 { "data": "promotion_name"},
