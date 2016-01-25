@@ -6,9 +6,13 @@ use Illuminate\Database\Eloquent\Model;
 
 class Customer extends Model
 {
+    //
+
     protected $table = 'CUSTOMER';
 
     protected $primaryKey = 'cus_id';
+ 
+    public $timestamps  = false;
 
     protected $fillable = [
         'name',
@@ -24,5 +28,8 @@ class Customer extends Model
         'country'
     ];
 
-    public $timestamps = false;
+    public function ROOM_RESERVATION()
+    {
+        return $this->hasMany('App\ROOM_RESERVATION','room_reservation_id');
+  }
 }
