@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class CUSTOMER extends Model
+class Customer extends Model
 {
     //
 
@@ -27,9 +27,6 @@ class CUSTOMER extends Model
         'zip_code',
         'country'
     ];
-
-    public $timestamps = false;
-    
 
     public function ROOM_RESERVATION()
     {
