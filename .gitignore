@@ -5,3 +5,9 @@ Homestead.json
 /config/database.php
 /config/app.php
 .env
+
+.idea/workspace.xml
+
+
+
+
