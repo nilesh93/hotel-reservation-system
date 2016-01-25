@@ -70,6 +70,7 @@ class AuthController extends Controller
             /*'name' => $data['name'],*/
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
+            'role' => "guest"
         ]);
 
         Customer::create([
@@ -89,13 +90,28 @@ class AuthController extends Controller
         return $user;
     }
 
-    //https://laracasts.com/discuss/channels/laravel/how-best-to-redirect-admins-from-users-after-login-authentication
-    protected function authenticated( $user)
+    /**
+     * Redirect a logged in user to the appropriate start page depending on the role.
+     * @link https://laracasts.com/discuss/channels/laravel/how-best-to-redirect-admins-from-users-after-login-authentication
+     *
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
+    protected function authenticated(/*$user*/)
     {
-        if($user->role == 'admin') {
-            return redirect('/admin');
-        }
+        if(Auth::check()){
+            if(Auth::user()->role == "admin") {
 
-        return redirect('/');
+                return redirect('/admin');
+            }
+            return redirect('/');
+        }
     }
+
+    /**
+     * Redirect a successfully registered new user to the start page.
+     * Applicable only to 'guest' role.
+     *
+     * @var string
+     */
+    protected $redirectPath = '/';
 }
