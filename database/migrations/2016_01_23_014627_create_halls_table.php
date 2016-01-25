@@ -13,13 +13,16 @@ class CreateHallsTable extends Migration
     public function up()
     {
         Schema::create('HALLS', function (Blueprint $table) {
-            $table->char('hall_id', 5);
+            $table->increments('hall_id');
+            $table->char('hall_num', 15);
             $table->double('hall_size');
             $table->longText('remarks');
             $table->integer('capacity_from');
             $table->integer('capacity_to');
+            $table->timestamps();
+            $table->softDeletes();
 
-            $table->primary('hall_id');
+           // $table->primary('hall_id');
         });
     }
 
