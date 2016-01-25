@@ -25,4 +25,9 @@ class Customer extends Model
     ];
 
     public $timestamps = false;
+    
+    public function ROOM_RESERVATION()
+    {
+        return $this->hasMany('App\ROOM_RESERVATION','room_reservation_id');
+    }
 }
