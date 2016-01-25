@@ -90,15 +90,21 @@
 						<div class="col-sm-8 col-lg-offset-4 col-md-12 col-lg-8">
   <nav id="main-nav">
     <ul>
-        <li><a href="#">Contact</a></li>
-        <li><a href="#" >Blog</a>
-          <ul>
+		@if(Auth::check())
+			<li><a href="{{URL::to('auth/logout')}}">Log out</a></li>
+		@else
+			<li><a href="{{URL::to('auth/register')}}">Sign up</a></li>
+			<li><a href="{{URL::to('auth/login')}}">Login</a>
+		@endif
+          {{--<ul>
             <li><a href="#">Blog Listing</a></li>
             <li><a href="#">Blog Post Left Sidebar</a></li>
             <!-- <li><a href="#">Blog Post Right Sidebar</a></li> -->
-          </ul>
+          </ul>--}}
         </li>
+
         <li><a href="#">Shortcodes</a></li>
+
         <li><a href="#">Pages</a>
           <ul>
             <li><a href="#">Typography</a></li>
@@ -115,7 +121,7 @@
 
         </li>
 
-        <li><a href="#">Home</a>
+        <li><a href="/">Home</a>
           <ul>
             <li><a href="#">Home Version 1</a></li>
             <li><a href="#">Home Version 2</a></li>
@@ -329,9 +335,8 @@
 
 
 		<!-- Shortcodes JavaScript File for the theme -->
+
 		<script src="{{URL::asset('FrontEnd/js/shortcodes.js')}}"></script>
-
-
 		<!-- widgets/footer-widgets JavaScript File for the theme -->
 		<script src="{{URL::asset('FrontEnd/js/widgets.js')}}"></script>
 		<script src=''></script>
@@ -351,6 +356,41 @@
 
 
 		@yield('js')
+
+		<!-- loginModal -->
+		{{--<div id="loginModal" class="modal fade" role="dialog">
+			<div class="modal-dialog" style="width: 30%">
+
+				<!-- Modal content-->
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+						<h4 class="modal-title">Login</h4>
+					</div>
+					<div class="modal-body">
+						<form role="form" action="#" method="post">
+							<div class="form-group">
+								<label for="email">Email address:</label>
+								<input type="email" class="form-control col-xs-4" id="email" name="email">
+							</div>
+							<div class="form-group">
+								<label for="pwd">Password:</label>
+								<input type="password" class="form-control col-xs-4" id="pwd" name="pwd">
+							</div>
+                            <br>
+							<div class="checkbox">
+								<label><input type="checkbox"> Remember me</label>
+							</div>
+					</div>
+					<div class="modal-footer">
+						<button type="submit" class="btn btn-success">Login</button>
+						</form>
+						<button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+					</div>
+				</div>
+
+			</div>
+		</div>--}}
 
 	</body>
 </html>
