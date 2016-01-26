@@ -308,7 +308,7 @@
 
         <script src="BackEnd/assets/js/moment.min.js"></script>
         <script src="BackEnd/assets/js/collapse.js"></script>
-        <script src="BackEnd/assets/js/bootstrap-datetimepicker.min.js"></script>
+        <script src="BackEnd/assets/plugins/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
         
         <script src="BackEnd/assets/plugins/moment/moment.js"></script>
      	<script src="BackEnd/assets/plugins/timepicker/bootstrap-timepicker.min.js"></script>
