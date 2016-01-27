@@ -1,0 +1,46 @@
+/* ==========================================================================
+    2. Basic Styles
+
+    ## All basic styles which affects the direct functionality/looks of the
+    ## template comes under here.
+   ========================================================================== */
+
+/* 2.1 Resetting Fonts */
+html{
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+/* 2.2 Site Wide Images Styles */
+
+img{
+  max-width: 100%
+}
+img.pull-left{
+  margin: 7px 30px 16px 0;
+}
+img.pull-right{
+  margin: 7px 0 16px 30px;
+}
+
+/* 2.3 Body Styles */
+
+body{
+	background: url('../img/pattern_light.png');
+  overflow-x: hidden;
+}
+
+/* 2.4 Fixes */
+
+.bootstrap-select{
+  @media (max-width:@screen-sm-min){
+    margin-bottom: 20px!important;
+  }
+}
+.datepicker{
+  @media (max-width:@screen-sm-min){
+    margin-bottom: 20px!important;
+  }
+}
+

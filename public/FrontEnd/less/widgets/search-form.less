@@ -1,0 +1,56 @@
+#sidebar .widget-search-form{
+	form{
+		margin-top: 20px;
+		position: relative;
+	}
+	input{
+		font-size: 0.9em;
+		width: 100%;
+		.rounded(5px);
+		border: none;
+		color: #bec4cc;
+		border: 1px solid #cececf;
+		padding: 10px;
+		padding-right: 30px;
+		.placeholder(#bec4cc);
+	}
+	button{
+		background: none;
+		color: #bec4cc;
+		border: none;
+		position: absolute;
+		top: 10px;
+		right: 5px;
+	}
+}
+
+#footer .widget-search-form{
+	form{
+		margin-top: 20px;
+		position: relative;
+	}
+	input{
+		width: 100%;
+		border: none;
+		font-size: 0.9em;
+		color: #999999;
+		background: lighten(@footer, 10%);
+		border: none;
+		padding: 15px;
+		padding-right: 35px;
+		padding-top: 16px;
+		.placeholder(#999999);
+		&:first-child{
+			margin-bottom: 15px;
+		}
+	}
+	button{
+		font-size: 17px;
+		background: none;
+		color: #bec4cc;
+		border: none;
+		position: absolute;
+		top: 14px;
+		right: 5px;
+	}
+}

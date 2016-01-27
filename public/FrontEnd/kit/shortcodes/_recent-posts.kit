@@ -1,0 +1,116 @@
+<div class="recent-posts">
+	<div id="recent-posts-1" class="owl-carousel">
+	  <div class="post-item">
+	  	<div class="post-img">
+	  		<img src="img/preview-images/recent_posts_01.jpg" alt="themesgravity">
+	  		<div class="img-overlay"><i class="fa fa-bars"></i></div><!-- /img-overlay -->
+	  	</div><!-- /post-img -->
+	  	<div class="post-content">
+		  	<span class="post-category">UI/UX</span>
+		  	<hr>
+		  	<h4><a href="#">Botanical Garden of Zagreb</a></h4>
+		  	<p>Reebok is emerging as a leader in group and fit. As their very biger network of partnering fitness professionals.</p>
+		</div><!-- /post-content -->
+	  </div><!-- /post-item -->
+	  <div class="post-item">
+	  	<div class="post-img">
+	  		<img src="img/preview-images/recent_posts_02.jpg" alt="themesgravity">
+	  		<div class="img-overlay"><i class="fa fa-bars"></i></div><!-- /img-overlay -->
+	  	</div><!-- /post-img -->
+	  	<div class="post-content">
+		  	<span class="post-category">Digital Printing</span>
+		  	<hr>
+		  	<h4><a href="#">Botanical Garden of Zagreb</a></h4>
+		  	<p>Reebok is emerging as a leader in group and fit. As their very biger network of partnering fitness professionals.</p>
+		</div><!-- /post-content -->
+	  </div><!-- /post-item -->
+	  <div class="post-item">
+	  	<div class="post-img">
+	  		<img src="img/preview-images/recent_posts_03.jpg" alt="themesgravity">
+	  		<div class="img-overlay"><i class="fa fa-bars"></i></div><!-- /img-overlay -->
+	  	</div><!-- /post-img -->
+	  	<div class="post-content">
+		  	<span class="post-category">Branding &amp; Packaging</span>
+		  	<hr>
+		  	<h4><a href="#">Botanical Garden of Zagreb</a></h4>
+		  	<p>Reebok is emerging as a leader in group and fit. As their very biger network of partnering fitness professionals.</p>
+		</div><!-- /post-content -->
+	  </div><!-- /post-item -->
+	  <div class="post-item">
+	  	<div class="post-img">
+	  		<img src="img/preview-images/recent_posts_04.jpg" alt="themesgravity">
+	  		<div class="img-overlay"><i class="fa fa-bars"></i></div><!-- /img-overlay -->
+	  	</div><!-- /post-img -->
+	  	<div class="post-content">
+		  	<span class="post-category">Web Development</span>
+		  	<hr>
+		  	<h4><a href="#">Botanical Garden of Zagreb</a></h4>
+		  	<p>Reebok is emerging as a leader in group and fit. As their very biger network of partnering fitness professionals.</p>
+		</div><!-- /post-content -->
+	  </div><!-- /post-item -->
+	  <div class="post-item">
+	  	<div class="post-img">
+	  		<img src="img/preview-images/recent_posts_03.jpg" alt="themesgravity">
+		  	<div class="img-overlay"><i class="fa fa-bars"></i></div><!-- /img-overlay -->
+	  	</div><!-- /post-img -->
+	  	<div class="post-content">
+		  	<span class="post-category">Web Design</span>
+		  	<hr>
+		  	<h4><a href="#">Botanical Garden of Zagreb</a></h4>
+		  	<p>Reebok is emerging as a leader in group and fit. As their very biger network of partnering fitness professionals.</p>
+		</div><!-- /post-content -->
+	  </div><!-- /post-item -->
+	  <div class="post-item">
+	  	<div class="post-img">
+	  		<img src="img/preview-images/recent_posts_02.jpg" alt="themesgravity">
+		  	<div class="img-overlay"><i class="fa fa-bars"></i></div><!-- /img-overlay -->
+	  	</div><!-- /post-img -->
+	  	<div class="post-content">
+		  	<span class="post-category">UI/UX</span>
+		  	<hr>
+		  	<h4><a href="#">Botanical Garden of Zagreb</a></h4>
+		  	<p>Reebok is emerging as a leader in group and fit. As their very biger network of partnering fitness professionals.</p>
+		</div><!-- /post-content -->
+	  </div><!-- /post-item -->
+	  <div class="post-item">
+	  	<div class="post-img">
+	  		<img src="img/preview-images/recent_posts_01.jpg" alt="themesgravity">
+		  	<div class="img-overlay"><i class="fa fa-bars"></i></div><!-- /img-overlay -->
+	  	</div><!-- /post-img -->
+	  	<div class="post-content">
+		  	<span class="post-category">UI/UX</span>
+		  	<hr>
+		  	<h4><a href="#">Botanical Garden of Zagreb</a></h4>
+		  	<p>Reebok is emerging as a leader in group and fit. As their very biger network of partnering fitness professionals.</p>
+		</div><!-- /post-content -->
+	  </div><!-- /post-item -->
+	</div><!-- /owl-carousel -->
+	<div class="recent-posts-controls">
+		<div class="owl-menu-hover"><i class="fa fa-bars"></i></div><!-- /owl-menu -->
+		<div class="owl-next-hover"><i class="fa fa-arrow-circle-o-right"></i></div>
+		<div class="owl-prev-hover"><i class="fa fa-arrow-circle-o-left"></i></div>
+		<span class="hover-text"><small>Hover</small></span>
+		<span class="hover-prev"><small>Previous item</small></span>
+		<span class="hover-index"><small>Blog index</small></span>
+		<span class="hover-next"><small>Next Item</small></span>
+		<hr>
+	</div><!-- /recent-posts-controls -->
+</div><!-- /recent-posts -->
+
+<script type="text/javascript">
+$(document).ready(function() {
+  
+	$("#recent-posts-1").owlCarousel({
+		responsive: false,
+		items: 4,
+		navigation: false,
+		scrollPerPage: false,
+		autoPlay: true,
+	});
+  	// ADDING NEXT AND PREVIOUS BUTTONS
+	var owl = $("#recent-posts-1").data('owlCarousel');
+	$('.owl-next-hover').on('click',function(){owl.next();});
+	$('.owl-prev-hover').on('click',function(){owl.prev();});
+
+});
+</script>
