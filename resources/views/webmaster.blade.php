@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -12,7 +13,15 @@
 		<meta name="description" content="">
 		<meta name="author" content="">
 
+		<?php
 
+
+		$roomtypes = DB::table('ROOM_TYPES')->get();
+		$halls = DB::table('HALLS')->get();
+
+
+
+		?>
 
 		@yield('links')
 		<!-- initializing looks -->
@@ -29,7 +38,7 @@
 		 <link rel="stylesheet" href="{{URL::asset('FrontEnd/css/styles.css')}}">
 		 <link rel="stylesheet" href="{{URL::asset('FrontEnd/css/font-awesome/css/font-awesome.min.css')}}">
 
-
+		<link rel="stylesheet" href="{{URL::asset('FrontEnd/dp/jquery-ui.css')}}">
 		@yield('css')
 		<!-- Custom Stylesheet == Make sure u put all ur css changes in this file == -->
 
@@ -39,8 +48,7 @@
 		<![endif]-->
 
 		<!-- CUSTOM JavaScript so you can use jQuery or $ before it has been loaded in the footer. -->
-		<script>(function(w,d,u){w.readyQ=[];w.bindReadyQ=[];function p(x,y){if(x=="ready"){w.bindReadyQ.push(y);}else{w.readyQ.push(x);}};var a={ready:p,bind:p};w.$=w.jQuery=function(f){if(f===d||f===u){return a}else{p(f)}}})(window,document)</script>
-
+		<!-- <script>(function(w,d,u){w.readyQ=[];w.bindReadyQ=[];function p(x,y){if(x=="ready"){w.bindReadyQ.push(y);}else{w.readyQ.push(x);}};var a={ready:p,bind:p};w.$=w.jQuery=function(f){if(f===d||f===u){return a}else{p(f)}}})(window,document)</script>-->
 	</head>
 
 	<body>
@@ -90,15 +98,21 @@
 						<div class="col-sm-8 col-lg-offset-4 col-md-12 col-lg-8">
   <nav id="main-nav">
     <ul>
-        <li><a href="#">Contact</a></li>
-        <li><a href="#" >Blog</a>
-          <ul>
+		@if(Auth::check())
+			<li><a href="{{URL::to('auth/logout')}}">Log out</a></li>
+		@else
+			<li><a href="{{URL::to('auth/register')}}">Sign up</a></li>
+			<li><a href="{{URL::to('auth/login')}}">Login</a>
+		@endif
+          {{--<ul>
             <li><a href="#">Blog Listing</a></li>
             <li><a href="#">Blog Post Left Sidebar</a></li>
             <!-- <li><a href="#">Blog Post Right Sidebar</a></li> -->
-          </ul>
+          </ul>--}}
         </li>
+
         <li><a href="#">Shortcodes</a></li>
+
         <li><a href="#">Pages</a>
           <ul>
             <li><a href="#">Typography</a></li>
@@ -110,12 +124,26 @@
           </ul>
         </li>
         <li><a href="#">Hotel</a></li>
-		<li><a href="{!! url('/halls') !!}">Halls</a></li>
+		
+		<li><a href="{!! url('/halls') !!}">Halls</a>
+			<ul>
+
+				@foreach($halls as $hall)
+					<li><a href="#">{{ $hall->title }}</a></li>
+				@endforeach
+			</ul>
+		</li>
         <li><a href="{!! url('/room_packages') !!}">Rooms</a>
 
-        </li>
+			<ul>
 
-        <li><a href="#">Home</a>
+				@foreach($roomtypes as $roomtype)
+					<li><a href="#">{{ $roomtype->type_name}}</a></li>
+				@endforeach
+			</ul>
+		</li>
+
+        <li><a href="/">Home</a>
           <ul>
             <li><a href="#">Home Version 1</a></li>
             <li><a href="#">Home Version 2</a></li>
@@ -295,11 +323,15 @@
 		</section><!-- /wrapper -->
 
 		<!-- jQuery -->
-		<!-- <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script> -->
-{{--
+
+
+
+
+
 
 		<script src="{{URL::asset('FrontEnd/js/vendor/jquery-1.11.0.min.js')}}"></script>
---}}
+
+		<script src="{{URL::asset('FrontEnd/dp/jquery-ui.js')}}"></script>
 
 		<!-- CUSTOM JavaScript so you can use jQuery or $ before it has been loaded in the footer. -->
 {{--
@@ -329,9 +361,8 @@
 
 
 		<!-- Shortcodes JavaScript File for the theme -->
+
 		<script src="{{URL::asset('FrontEnd/js/shortcodes.js')}}"></script>
-
-
 		<!-- widgets/footer-widgets JavaScript File for the theme -->
 		<script src="{{URL::asset('FrontEnd/js/widgets.js')}}"></script>
 		<script src=''></script>
@@ -351,6 +382,42 @@
 
 
 		@yield('js')
+
+
+		<!-- loginModal -->
+		{{--<div id="loginModal" class="modal fade" role="dialog">
+			<div class="modal-dialog" style="width: 30%">
+
+				<!-- Modal content-->
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+						<h4 class="modal-title">Login</h4>
+					</div>
+					<div class="modal-body">
+						<form role="form" action="#" method="post">
+							<div class="form-group">
+								<label for="email">Email address:</label>
+								<input type="email" class="form-control col-xs-4" id="email" name="email">
+							</div>
+							<div class="form-group">
+								<label for="pwd">Password:</label>
+								<input type="password" class="form-control col-xs-4" id="pwd" name="pwd">
+							</div>
+                            <br>
+							<div class="checkbox">
+								<label><input type="checkbox"> Remember me</label>
+							</div>
+					</div>
+					<div class="modal-footer">
+						<button type="submit" class="btn btn-success">Login</button>
+						</form>
+						<button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+					</div>
+				</div>
+
+			</div>
+		</div>--}}
 
 	</body>
 </html>

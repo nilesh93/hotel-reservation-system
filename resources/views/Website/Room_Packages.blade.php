@@ -1,9 +1,6 @@
 @extends('webmaster')
 
 
-
-
-
 @section('title')
 
 Room Packages
@@ -12,6 +9,7 @@ Room Packages
 
 
 @section('css')
+
 
 
 @endsection
@@ -39,7 +37,9 @@ Room Packages
 
 					<div class="row">
 						<div class="col-sm-12 col-md-12 col-lg-12">
-							<input type="date" class="form-control" id="datepicker" value="Check In Date" name="check_in"/>
+
+							<i class="fa fa-calendar"></i>
+								<input type="date" class="form-control" id="datepicker" value="Check In Date" name="check_in"/>
 
 						</div><!-- /col-md-12 -->
 					</div><!-- /row -->
@@ -49,6 +49,7 @@ Room Packages
 					<div class="row">
 
 						<div class="col-sm-12 col-md-12 col-lg-12">
+							<i class="fa fa-calendar"></i>
 							<input type="date" class="form-control" Value="Check Out Date" id="datepicker1"  name="check_out"/>
 
 						</div><!-- /col-md-12 -->
@@ -56,9 +57,34 @@ Room Packages
 
 					<br>
 
-
+							<div class="row">
+								<div class="col-sm-6 col-md-6 col-lg-6">
+									<select class="selectpicker">
+										<option>Adults</option>
+										<option>1</option>
+										<option>2</option>
+										<option>3</option>
+										<option>4</option>
+									</select>
+								</div><!-- /col-md-6 -->
+								<div class="col-sm-6 col-md-6 col-lg-6">
+									<select class="selectpicker">
+										<option>Kids</option>
+										<option>1</option>
+										<option>2</option>
+										<option>3</option>
+										<option>4</option>
+									</select>
+								</div><!-- /col-md-6 -->
+							</div><!-- /row -->
 
 					<br>
+
+							<div class="row">
+								<div class="col-sm-12 col-md-12 col-lg-12">
+									<input class="form-control input-lg" type="text" placeholder="Enter Promo Code">
+								</div><!-- /col-md-12 -->
+							</div><!-- /row -->
 
 					<div class="row">
 
@@ -76,61 +102,45 @@ Room Packages
 
 	<div class="row">
 		<div class="col-md-12">
-			<div class="row">
+
+			@foreach($room_types as $room_type)
 				<div class="col-sm-3 col-md-3 col-lg-3">
 					<div class="roombox">
 						<div class="room-image">
 							<img src="FrontEnd/img/superior_rooms/superior2.png" alt="themesgravity">
-							<h4><a href="#">superior single</a></h4>
+							<h4><a style="text-decoration: none" onclick="showModal({{$room_type->room_type_id}})" href="#">{{ $room_type->type_name }}</a></h4>
 						</div><!-- /room-image -->
 						<div class="room-content">
 							<p class="room-price"><small>From 169$ per nights</small></p>
 							<hr>
-							<p>Enjoy downtown San Francisco in a charming hotel that is surrounded by shoopping and restaurants.</p>
-						</div><!-- /room-content -->
-					</div><!-- /roombox -->
-				</div><!-- /col-sm-3 -->
-				<div class="col-sm-3 col-md-3 col-lg-3">
-					<div class="roombox">
-						<div class="room-image">
-							<img src="FrontEnd/img/luxury_rooms/luxury1.png" alt="themesgravity">
-							<h4><a href="#">luxury double</a></h4>
-						</div><!-- /room-image -->
-						<div class="room-content">
-							<p class="room-price"><small>From 179$ per nights</small></p>
-							<hr>
-							<p>Enjoy downtown San Francisco in a charming hotel that is surrounded by shoopping and restaurants.</p>
-						</div><!-- /room-content -->
-					</div><!-- /roombox -->
-				</div><!-- /col-sm-3 -->
-				<div class="col-sm-3 col-md-3 col-lg-3">
-					<div class="roombox">
-						<div class="room-image">
-							<img src="FrontEnd/img/superior_rooms/superior3.png" alt="themesgravity">
-							<h4><a href="#">guest rooms</a></h4>
-						</div><!-- /room-image -->
-						<div class="room-content">
-							<p class="room-price"><small>From 279$ per nights</small></p>
-							<hr>
-							<p>Enjoy downtown San Francisco in a charming hotel that is surrounded by shoopping and restaurants.</p>
-						</div><!-- /room-content -->
-					</div><!-- /roombox -->
-				</div><!-- /col-sm-3 -->
-				<div class="col-sm-3 col-md-3 col-lg-3">
-					<div class="roombox">
-						<div class="room-image">
-							<img src="FrontEnd/img/deluxe_rooms/deluxe1.png" alt="themesgravity">
-							<h4><a href="#">Deluxe rooms</a></h4>
-						</div><!-- /room-image -->
-						<div class="room-content">
-							<p class="room-price"><small>From 279$ per nights</small></p>
-							<hr>
-							<p>Enjoy downtown San Francisco in a charming hotel that is surrounded by shoopping and restaurants.</p>
+							<p>{{ $room_type->description }}</p>
 						</div><!-- /room-content -->
 					</div><!-- /roombox -->
 				</div><!-- /col-sm-3 -->
 
-			</div>
+
+				<div class="modal fade" id="{{$room_type->room_type_id}}">
+					<div class="modal-dialog">
+						<div class="modal-content">
+							<div class="modal-header">
+								<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&close;</button>
+								<h4 class="modal-title">Modal title</h4>
+							</div>
+							<div class="modal-body">
+								<p>One fine body…</p>
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+								<button type="button" class="btn btn-primary">Save changes</button>
+							</div>
+						</div>
+					</div>
+				</div>
+
+
+
+			@endforeach
+		</div>
 		</div>
 
 	</div>
@@ -141,10 +151,6 @@ Room Packages
 	<br>
 	<br>
 
-
-	<script src="{{URL::asset('FrontEnd/js/vendor/jquery-1.11.0.min.js')}}"></script>
-	<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
-	<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
 
 @endsection
 
@@ -247,11 +253,14 @@ Room Packages
 
 		}
 	});
-function hello(){
-    
-   alert("Refer the coding to see where javascript should be written you fucktard!"); 
-    
-    
+function showModal(id){
+
+
+	var temp = '#'+id;
+
+	$(temp).modal('show');
+
+
 }
 
 

@@ -14,9 +14,5 @@ class ROOM_RESERVATION extends Model
 
     public $timestamps  = false;
 
-    public function CUSTOMER()
-    {
-        return $this->belongsTo('App\CUSTOMER', 'room_reservation_id');
-    }
 
 }

@@ -112,70 +112,29 @@ Function Halls
 
 					<div class="row">
 
-						<div class="col-sm-6 col-md-6 col-lg-6">
-							<div class="roombox">
-								<div class="room-image">
-									<img src="{{URL::asset('FrontEnd/img/Hall_images/hall1.jpg')}}"  alt="themesgravity">
-									<h4><a href="#">Pool Side Ball Room</a></h4>
-								</div><!-- /room-image -->
-								<div class="room-content">
-									{{--<p class="room-price"><small>From 209$ per night</small></p>--}}
-									<hr>
-									<p>150 - 300 Seating Capacity</p>
-								</div><!-- /room-content -->
-							</div><!-- /roombox -->
-						</div><!-- /col-sm-8 -->
+						@foreach($halls as $hall)
+							<div class="col-sm-6 col-md-6 col-lg-6">
+								<div class="roombox">
+									<div class="room-image">
+										<img src="{{URL::asset('FrontEnd/img/Hall_images/hall1.jpg')}}"  alt="themesgravity">
+										<h4><a href="#">{{ $hall->title }}</a></h4>
+									</div><!-- /room-image -->
+									<div class="room-content">
+										<p class="room-price"><small>From 209$ per night</small></p>
+										<hr>
+										<p>{{ $hall->capacity_from }} - {{ $hall->capacity_to }} Seating Capacity</p>
+									</div><!-- /room-content -->
+								</div><!-- /roombox -->
+							</div><!-- /col-sm-6 -->
 
-						<div class="col-sm-6 col-md-6 col-lg-6">
-							<div class="roombox">
-								<div class="room-image">
-									<img src="{{URL::asset('FrontEnd/img/Hall_images/hall2.jpg')}}"  alt="themesgravity">
-									<h4><a href="#">Silver Ball Room</a></h4>
-								</div><!-- /room-image -->
-								<div class="room-content">
-									{{--<p class="room-price"><small>From 209$ per night</small></p>--}}
-									<hr>
-									<p>150 - 300 Seating Capacity</p>
-								</div><!-- /room-content -->
-							</div><!-- /roombox -->
-						</div><!-- /col-sm-8 -->
+
+						@endforeach
 
 					</div><!-- /row -->
 
 
-					<br><br>
 
-					<div class="row">
 
-						<div class="col-sm-6 col-md-6 col-lg-6">
-							<div class="roombox">
-								<div class="room-image">
-									<img src="{{URL::asset('FrontEnd/img/Hall_images/hall3.jpg')}}"  alt="themesgravity">
-									<h4><a href="#">Samro Reception</a></h4>
-								</div><!-- /room-image -->
-								<div class="room-content">
-									{{--<p class="room-price"><small>From 209$ per night</small></p>--}}
-									<hr>
-									<p>150 - 300 Seating Capacity</p>
-								</div><!-- /room-content -->
-							</div><!-- /roombox -->
-						</div><!-- /col-sm-8 -->
-
-						<div class="col-sm-6 col-md-6 col-lg-6">
-							<div class="roombox">
-								<div class="room-image">
-									<img src="{{URL::asset('FrontEnd/img/Hall_images/hall4.jpg')}}"  alt="themesgravity">
-									<h4><a href="#">Grand Ball Room</a></h4>
-								</div><!-- /room-image -->
-								<div class="room-content">
-									{{--<p class="room-price"><small>From 209$ per night</small></p>--}}
-									<hr>
-									<p>200 - 400 Seating Capacity</p>
-								</div><!-- /room-content -->
-							</div><!-- /roombox -->
-						</div><!-- /col-sm-8 -->
-
-					</div><!-- /row -->
 
 
 				</section><!-- content -->
@@ -189,9 +148,6 @@ Function Halls
 	<br>
 
 
-	<script src="{{URL::asset('FrontEnd/js/vendor/jquery-1.11.0.min.js')}}"></script>
-	<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
-	<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
 @endsection
 
 
