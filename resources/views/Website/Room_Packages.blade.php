@@ -39,7 +39,7 @@ Room Packages
 						<div class="col-sm-12 col-md-12 col-lg-12">
 
 							<i class="fa fa-calendar"></i>
-								<input type="date" class="form-control" id="datepicker" value="Check In Date" name="check_in"/>
+								<input type="date" class="form-control" id="datepicker" value="Check In Date" name="check_in" placeholder="Check In Date" />
 
 						</div><!-- /col-md-12 -->
 					</div><!-- /row -->
@@ -50,7 +50,7 @@ Room Packages
 
 						<div class="col-sm-12 col-md-12 col-lg-12">
 							<i class="fa fa-calendar"></i>
-							<input type="date" class="form-control" Value="Check Out Date" id="datepicker1"  name="check_out"/>
+							<input type="date" class="form-control" Value="Check Out Date" id="datepicker1"  name="check_out" placeholder="Check Out Date" />
 
 						</div><!-- /col-md-12 -->
 					</div><!-- /row -->
@@ -59,26 +59,41 @@ Room Packages
 
 							<div class="row">
 								<div class="col-sm-6 col-md-6 col-lg-6">
-									<select class="selectpicker">
-										<option>Adults</option>
-										<option>1</option>
-										<option>2</option>
-										<option>3</option>
-										<option>4</option>
+									<select class="form-control "  name="adults" id="adults">
+
+										<option value="Adults">Adults</option>
+										@for($i=1;$i<31;$i++)
+											<option value={{ $i}}>{{$i}}</option>
+										@endfor
 									</select>
 								</div><!-- /col-md-6 -->
 								<div class="col-sm-6 col-md-6 col-lg-6">
-									<select class="selectpicker">
-										<option>Kids</option>
-										<option>1</option>
-										<option>2</option>
-										<option>3</option>
-										<option>4</option>
+									<select class="form-control"  name="children" id="children">
+										<option value="Kids">Kids</option>
+										@for($i=0;$i<21;$i++)
+											<option value={{ $i}}>{{$i}}</option>
+										@endfor
 									</select>
 								</div><!-- /col-md-6 -->
 							</div><!-- /row -->
 
 					<br>
+							<div class="row">
+
+								<div class="col-sm-12 col-md-12 col-lg-12">
+									<select class="form-control "  name="ono_of_rooms" id="ono_of_rooms">
+										<option value="No. of Rooms">No. of Rooms</option>
+
+										@for($i=1;$i< 13;$i++)
+											<option value={{ $i}}>{{$i}}</option>
+										@endfor
+									</select>
+								</div>
+							</div>	<!-- /row -->
+
+					<br>
+
+
 
 							<div class="row">
 								<div class="col-sm-12 col-md-12 col-lg-12">
@@ -152,6 +167,8 @@ Room Packages
 	<br>
 
 
+
+
 @endsection
 
 
@@ -161,7 +178,7 @@ Room Packages
 
 <script>
 
-	//datepicker
+	// script code for date picker 1
 	$("#datepicker").datepicker({
 		dateFormat:'yy-mm-dd',
 		minDate:0,
@@ -218,6 +235,7 @@ Room Packages
 		dateFormat:'yy-mm-dd',
 		changeMonth: true,
 		changeYear: true,
+		minDate:0,
 
 
 		onClose:function(){
@@ -253,7 +271,183 @@ Room Packages
 
 		}
 	});
-function showModal(id){
+
+
+	$('#ono_of_rooms').on('change',function(e){
+		console.log(e);
+
+		var rooms=parseInt(e.target.value);
+
+
+		//console.log(po);
+
+
+		var adult=document.getElementById('adults').value;
+
+		var children = document.getElementById('children').value;
+
+
+		var possibleoccupants = parseInt(rooms)*3;
+
+		var totaloccupants = parseInt(adult) + parseInt(children);
+
+
+
+		if( totaloccupants > possibleoccupants )
+		{
+
+			swal({
+				title: "<div class='alert alert-danger'> <strong>Warning! </strong> </div>",
+				text: "<span style='color:#ff2222'> Occupancy is exceeded for room type. Additional Rooms need to be booked for requested number of occupants.  <span>",
+				html: true });
+
+
+			var setrooms = totaloccupants/3;
+			var remainder = totaloccupants%3;
+
+			if(remainder == 0)
+			{
+				document.getElementById('ono_of_rooms').value = setrooms;
+
+			}
+			else{
+				document.getElementById('ono_of_rooms').value = parseInt(setrooms) + 1;
+
+
+			}
+		}
+
+
+		if(rooms > totaloccupants)
+		{
+			swal({
+				title: "<div class='alert alert-danger'> <strong>Warning! </strong> </div>",
+				text: "<span style='color:#ff2222'> The specified number of room(s)  must not exceed the specified number of Occupants. <span>",
+				html: true });
+			document.getElementById('ono_of_rooms').value = parseInt(adult);
+		}
+
+	});
+
+
+
+
+	$('#adults').on('change',function(e){
+		console.log(e);
+
+		var adult=parseInt(e.target.value);
+		//console.log(po);
+
+
+		var rooms=document.getElementById('ono_of_rooms').value;
+		var children = document.getElementById('children').value;
+
+
+		var possibleoccupants = parseInt(rooms)*3;
+
+		var totaloccupants = parseInt(adult) + parseInt(children);
+
+		var setrooms = totaloccupants/3;
+		var remainder = totaloccupants%3;
+
+		if(setrooms < 13) {
+			if (totaloccupants > possibleoccupants) {
+				$('#adultmodalpopup').modal('show');
+				if (remainder == 0) {
+					document.getElementById('ono_of_rooms').value = setrooms;
+				}
+				else {
+					document.getElementById('ono_of_rooms').value = parseInt(setrooms) + 1;
+				}
+			}
+
+			if (rooms > totaloccupants) {
+				$('#roommodalpopup').modal('show');
+
+				if (remainder == 0) {
+					document.getElementById('ono_of_rooms').value = setrooms;
+				}
+				else {
+					document.getElementById('ono_of_rooms').value = parseInt(setrooms) + 1;
+				}
+			}
+		}
+		else{
+
+			$('#exceedmodalpopup').modal('show');
+			document.getElementById('ono_of_rooms').value = 1;
+			document.getElementById('adults').value = 1;
+			document.getElementById('children').value =0;
+
+		}
+
+	});
+
+
+	$('#children').on('change',function(e){
+		console.log(e);
+
+		var children=parseInt(e.target.value);
+		//console.log(po);
+
+
+		var rooms=document.getElementById('ono_of_rooms').value;
+		var adult = document.getElementById('adults').value;
+
+		var totaloccupants = parseInt(adult) + children;
+		var possibleoccupants = parseInt(rooms)*3;
+		var setrooms = totaloccupants/3;
+		var remainder = totaloccupants%3;
+
+
+
+
+		if(setrooms < 13) {
+			if (totaloccupants > possibleoccupants) {
+				$('#adultmodalpopup').modal('show');
+
+				if (remainder == 0) {
+					document.getElementById('ono_of_rooms').value = setrooms;
+				}
+				else {
+					document.getElementById('ono_of_rooms').value = parseInt(setrooms) + 1;
+				}
+			}
+
+
+			if (rooms > totaloccupants) {
+				$('#roommodalpopup').modal('show');
+
+				if (remainder == 0) {
+					document.getElementById('ono_of_rooms').value = setrooms;
+				}
+				else {
+					document.getElementById('ono_of_rooms').value = parseInt(setrooms) + 1;
+				}
+			}
+
+		}
+		else{
+
+			$('#exceedmodalpopup').modal('show');
+			document.getElementById('ono_of_rooms').value = 1;
+			document.getElementById('adults').value = 1;
+			document.getElementById('children').value =0;
+
+		}
+
+
+
+	});
+
+
+
+
+
+
+
+
+	function showModal(id){
 
 
 	var temp = '#'+id;

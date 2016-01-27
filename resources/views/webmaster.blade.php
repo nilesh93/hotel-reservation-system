@@ -31,6 +31,9 @@
         <!-- Animate Styles -->
         <link rel="stylesheet" href="{{URL::asset('FrontEnd/css/vendor/animate.css')}}">
 
+		<!-- Sweet  Alert -->
+		<link rel="stylesheet" href="{{URL::asset('FrontEnd/sweetalert/sweetalert.css')}}">
+
 		<!-- Fonts -->
 		<link href='http://fonts.googleapis.com/css?family=Playfair+Display|Sintony:400,700' rel='stylesheet' type='text/css'>
 
@@ -379,6 +382,9 @@
 		<!-- Owl Carousel Main Js File -->
 
 		<script src="{{URL::asset('FrontEnd/js/vendor/owl.carousel.js')}}"></script>
+
+		<!-- Sweet Alert -->
+		<script src="{{URL::asset('FrontEnd/sweetalert/sweetalert.min.js')}}"></script>
 
 
 		@yield('js')
