@@ -15,6 +15,7 @@ class CreateHallsTable extends Migration
         Schema::create('HALLS', function (Blueprint $table) {
             $table->increments('hall_id');
             $table->char('hall_num', 15);
+            $table->string('title');
             $table->double('hall_size');
             $table->longText('remarks');
             $table->integer('capacity_from');
