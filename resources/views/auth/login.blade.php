@@ -30,7 +30,11 @@
                     <label><input type="checkbox" name="remember"> Remember me</label>
                 </div>
                 <button type="submit" class="btn btn-success">Login</button>
+                <a href="{{URL::to('password/email')}}" class="text-info">Forgot your password?</a>
             </form>
+
+
+
         </div>
         <div class="row">
             <div class="col-lg-12">
