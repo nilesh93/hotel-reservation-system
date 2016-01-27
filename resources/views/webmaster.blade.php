@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -12,7 +13,15 @@
 		<meta name="description" content="">
 		<meta name="author" content="">
 
+		<?php
 
+
+		$roomtypes = DB::table('ROOM_TYPES')->get();
+		$halls = DB::table('HALLS')->get();
+
+
+
+		?>
 
 		@yield('links')
 		<!-- initializing looks -->
@@ -22,6 +31,9 @@
         <!-- Animate Styles -->
         <link rel="stylesheet" href="{{URL::asset('FrontEnd/css/vendor/animate.css')}}">
 
+		<!-- Sweet  Alert -->
+		<link rel="stylesheet" href="{{URL::asset('FrontEnd/sweetalert/sweetalert.css')}}">
+
 		<!-- Fonts -->
 		<link href='http://fonts.googleapis.com/css?family=Playfair+Display|Sintony:400,700' rel='stylesheet' type='text/css'>
 
@@ -29,7 +41,7 @@
 		 <link rel="stylesheet" href="{{URL::asset('FrontEnd/css/styles.css')}}">
 		 <link rel="stylesheet" href="{{URL::asset('FrontEnd/css/font-awesome/css/font-awesome.min.css')}}">
 
-
+		<link rel="stylesheet" href="{{URL::asset('FrontEnd/dp/jquery-ui.css')}}">
 		@yield('css')
 		<!-- Custom Stylesheet == Make sure u put all ur css changes in this file == -->
 
@@ -39,8 +51,7 @@
 		<![endif]-->
 
 		<!-- CUSTOM JavaScript so you can use jQuery or $ before it has been loaded in the footer. -->
-		<script>(function(w,d,u){w.readyQ=[];w.bindReadyQ=[];function p(x,y){if(x=="ready"){w.bindReadyQ.push(y);}else{w.readyQ.push(x);}};var a={ready:p,bind:p};w.$=w.jQuery=function(f){if(f===d||f===u){return a}else{p(f)}}})(window,document)</script>
-
+		<!-- <script>(function(w,d,u){w.readyQ=[];w.bindReadyQ=[];function p(x,y){if(x=="ready"){w.bindReadyQ.push(y);}else{w.readyQ.push(x);}};var a={ready:p,bind:p};w.$=w.jQuery=function(f){if(f===d||f===u){return a}else{p(f)}}})(window,document)</script>-->
 	</head>
 
 	<body>
@@ -116,10 +127,24 @@
           </ul>
         </li>
         <li><a href="#">Hotel</a></li>
-		<li><a href="{!! url('/halls') !!}">Halls</a></li>
+		
+		<li><a href="{!! url('/halls') !!}">Halls</a>
+			<ul>
+
+				@foreach($halls as $hall)
+					<li><a href="#">{{ $hall->title }}</a></li>
+				@endforeach
+			</ul>
+		</li>
         <li><a href="{!! url('/room_packages') !!}">Rooms</a>
 
-        </li>
+			<ul>
+
+				@foreach($roomtypes as $roomtype)
+					<li><a href="#">{{ $roomtype->type_name}}</a></li>
+				@endforeach
+			</ul>
+		</li>
 
         <li><a href="/">Home</a>
           <ul>
@@ -301,11 +326,15 @@
 		</section><!-- /wrapper -->
 
 		<!-- jQuery -->
-		<!-- <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script> -->
-{{--
+
+
+
+
+
 
 		<script src="{{URL::asset('FrontEnd/js/vendor/jquery-1.11.0.min.js')}}"></script>
---}}
+
+		<script src="{{URL::asset('FrontEnd/dp/jquery-ui.js')}}"></script>
 
 		<!-- CUSTOM JavaScript so you can use jQuery or $ before it has been loaded in the footer. -->
 {{--
@@ -354,8 +383,12 @@
 
 		<script src="{{URL::asset('FrontEnd/js/vendor/owl.carousel.js')}}"></script>
 
+		<!-- Sweet Alert -->
+		<script src="{{URL::asset('FrontEnd/sweetalert/sweetalert.min.js')}}"></script>
+
 
 		@yield('js')
+
 
 		<!-- loginModal -->
 		{{--<div id="loginModal" class="modal fade" role="dialog">

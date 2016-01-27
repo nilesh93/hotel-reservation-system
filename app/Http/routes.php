@@ -1,5 +1,7 @@
 <?php
 
+use App\ROOM_TYPE;
+use App\HALL;
 /*
 |--------------------------------------------------------------------------
 | Application Routes
@@ -12,7 +14,10 @@
 */
 
 Route::get('/', function () {
-    return view('Website.Demo');
+    $room_types = ROOM_TYPE::get();
+    //inorder to load the halls navigation bar list
+    $halls = HALL::get();
+    return view('Website.Demo',["room_types"=>$room_types,"halls"=>$halls]);
 });
 
 Route::get('admin', function () {
@@ -40,8 +45,6 @@ Route::get('/room_packages/room_availability','PagesController@room_availabilty'
 Route::get('/halls','PagesController@halls');
 
 Route::get('/halls','PagesController@halls');
-
-
 
 
 
