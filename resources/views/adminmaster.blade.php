@@ -6,25 +6,25 @@
         <meta name="description" content="A fully featured admin theme which can be used to build CRM, CMS, etc.">
         <meta name="author" content="Coderthemes">
 
-        <link rel="shortcut icon" href="assets/images/favicon_1.ico">
+        <link rel="shortcut icon" href="#">
 
         <title>@yield('title')</title>
 
-        <link href="BackEnd/assets/plugins/sweetalert/dist/sweetalert.css" rel="stylesheet" type="text/css">
+        <link href="{{URL::asset('BackEnd/assets/plugins/sweetalert/dist/sweetalert.css')}}" rel="stylesheet" type="text/css">
 
-        <link href="BackEnd/assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
-        <link href="BackEnd/assets/css/core.css" rel="stylesheet" type="text/css" />
-        <link href="BackEnd/assets/css/components.css" rel="stylesheet" type="text/css" />
-        <link href="BackEnd/assets/css/icons.css" rel="stylesheet" type="text/css" />
-        <link href="BackEnd/assets/css/pages.css" rel="stylesheet" type="text/css" />
-        <link href="BackEnd/assets/css/responsive.css" rel="stylesheet" type="text/css" />
-        <link href="BackEnd/assets/plugins/datatables/jquery.dataTables.min.css" rel="stylesheet" type="text/css" />
+        <link href="{{URL::asset('BackEnd/assets/css/bootstrap.min.css')}}" rel="stylesheet" type="text/css" />
+        <link href="{{URL::asset('BackEnd/assets/css/core.css')}}" rel="stylesheet" type="text/css" />
+        <link href="{{URL::asset('BackEnd/assets/css/components.css')}}" rel="stylesheet" type="text/css" />
+        <link href="{{URL::asset('BackEnd/assets/css/icons.css')}}" rel="stylesheet" type="text/css" />
+        <link href="{{URL::asset('BackEnd/assets/css/pages.css')}}" rel="stylesheet" type="text/css" />
+        <link href="{{URL::asset('BackEnd/assets/css/responsive.css')}}" rel="stylesheet" type="text/css" />
+        <link href="{{URL::asset('BackEnd/assets/plugins/datatables/jquery.dataTables.min.css')}}" rel="stylesheet" type="text/css" />
 
-        <link href="BackEnd/assets/plugins/timepicker/bootstrap-timepicker.min.css" rel="stylesheet">
-        <link href="BackEnd/assets/plugins/mjolnic-bootstrap-colorpicker/dist/css/bootstrap-colorpicker.min.css" rel="stylesheet">
-        <link href="BackEnd/assets/plugins/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css" rel="stylesheet">
-        <link href="BackEnd/assets/plugins/clockpicker/dist/jquery-clockpicker.min.css" rel="stylesheet">
-        <link href="BackEnd/assets/plugins/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">
+        <link href="{{URL::asset('BackEnd/assets/plugins/timepicker/bootstrap-timepicker.min.css" rel="stylesheet')}}">
+        <link href="{{URL::asset('BackEnd/assets/plugins/mjolnic-bootstrap-colorpicker/dist/css/bootstrap-colorpicker.min.css')}}" rel="stylesheet">
+        <link href="{{URL::asset('BackEnd/assets/plugins/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css')}}" rel="stylesheet">
+        <link href="{{URL::asset('BackEnd/assets/plugins/clockpicker/dist/jquery-clockpicker.min.css')}}" rel="stylesheet">
+        <link href="{{URL::asset('BackEnd/assets/plugins/bootstrap-daterangepicker/daterangepicker.css')}}" rel="stylesheet">
 
         <!-- HTML5 Shiv and Respond.js IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -36,7 +36,7 @@
 <![endif]-->
 
         @yield('css')
-        <script src="BackEnd/assets/js/modernizr.min.js"></script>
+        <script src="{{URL::asset('BackEnd/assets/js/modernizr.min.js')}}"></script>
 
     </head>
 
@@ -180,7 +180,7 @@
                                 <li class="hidden-xs">
                                     <a href="#" id="btn-fullscreen" class="waves-effect waves-light"><i class="icon-size-fullscreen"></i></a>
                                 </li>
-                              
+
                                 <li class="dropdown">
                                     <a href="" class="dropdown-toggle profile" data-toggle="dropdown" aria-expanded="true"><img src="BackEnd/assets/images/users/avatar-1.jpg" alt="user-img" class="img-circle"> </a>
                                     <ul class="dropdown-menu">
@@ -270,7 +270,7 @@
                 </footer>
 
             </div>
-          
+
 
         </div>
         <!-- END wrapper -->
@@ -284,38 +284,38 @@
 
 
 
-        <script src="BackEnd/assets/js/jquery.min.js"></script>
+        <script src="{{URL::asset('BackEnd/assets/js/jquery.min.js')}}"></script>
 
-        <script src="BackEnd/assets/js/bootstrap.min.js"></script>
-        <script src="BackEnd/assets/js/detect.js"></script>
-        <script src="BackEnd/assets/js/fastclick.js"></script>
-        <script src="BackEnd/assets/js/jquery.slimscroll.js"></script>
-        <script src="BackEnd/assets/js/jquery.blockUI.js"></script>
-        <script src="BackEnd/assets/js/waves.js"></script>
-        <script src="BackEnd/assets/js/wow.min.js"></script>
-        <script src="BackEnd/assets/js/jquery.nicescroll.js"></script>
-        <script src="BackEnd/assets/js/jquery.scrollTo.min.js"></script>
-        <script src="BackEnd/assets/plugins/datatables/jquery.dataTables.min.js"></script>
-        <script src="BackEnd/assets/plugins/datatables/dataTables.bootstrap.js"></script>
+        <script src="{{URL::asset('BackEnd/assets/js/bootstrap.min.js')}}"></script>
+        <script src="{{URL::asset('BackEnd/assets/js/detect.js')}}"></script>
+        <script src="{{URL::asset('BackEnd/assets/js/fastclick.js')}}"></script>
+        <script src="{{URL::asset('BackEnd/assets/js/jquery.slimscroll.js')}}"></script>
+        <script src="{{URL::asset('BackEnd/assets/js/jquery.blockUI.js')}}"></script>
+        <script src="{{URL::asset('BackEnd/assets/js/waves.js')}}"></script>
+        <script src="{{URL::asset('BackEnd/assets/js/wow.min.js')}}"></script>
+        <script src="{{URL::asset('BackEnd/assets/js/jquery.nicescroll.js')}}"></script>
+        <script src="{{URL::asset('BackEnd/assets/js/jquery.scrollTo.min.js')}}"></script>
+        <script src="{{URL::asset('BackEnd/assets/plugins/datatables/jquery.dataTables.min.js')}}"></script>
+        <script src="{{URL::asset('BackEnd/assets/plugins/datatables/dataTables.bootstrap.js')}}"></script>
 
 
-        <script src="BackEnd/assets/js/jquery.core.js"></script>
-        <script src="BackEnd/assets/js/jquery.app.js"></script>
+        <script src="{{URL::asset('BackEnd/assets/js/jquery.core.js')}}"></script>
+        <script src="{{URL::asset('BackEnd/assets/js/jquery.app.js')}}"></script>
 
         <!-- Sweet-Alert  -->
-        <script src="BackEnd/assets/plugins/sweetalert/dist/sweetalert.min.js"></script>
-        <script src="BackEnd/assets/pages/jquery.sweet-alert.init.js"></script>
+        <script src="{{URL::asset('BackEnd/assets/plugins/sweetalert/dist/sweetalert.min.js')}}"></script>
+        <script src="{{URL::asset('BackEnd/assets/pages/jquery.sweet-alert.init.js')}}"></script>
 
-        <script src="BackEnd/assets/js/moment.min.js"></script>
-        <script src="BackEnd/assets/js/collapse.js"></script>
-        <script src="BackEnd/assets/plugins/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
-        
-        <script src="BackEnd/assets/plugins/moment/moment.js"></script>
-     	<script src="BackEnd/assets/plugins/timepicker/bootstrap-timepicker.min.js"></script>
-     	<script src="BackEnd/assets/plugins/mjolnic-bootstrap-colorpicker/dist/js/bootstrap-colorpicker.min.js"></script>
-     	<script src="BackEnd/assets/plugins/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
-     	<script src="BackEnd/assets/plugins/clockpicker/dist/jquery-clockpicker.min.js"></script>
-     	<script src="BackEnd/assets/plugins/bootstrap-daterangepicker/daterangepicker.js"></script>
+        <script src="{{URL::asset('BackEnd/assets/js/moment.min.js')}}"></script>
+        <script src="{{URL::asset('BackEnd/assets/js/collapse.js')}}"></script>
+        <script src="{{URL::asset('BackEnd/assets/plugins/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js')}}"></script>
+
+        <script src="{{URL::asset('BackEnd/assets/plugins/moment/moment.js')}}"></script>
+        <script src="{{URL::asset('BackEnd/assets/plugins/timepicker/bootstrap-timepicker.min.js')}}"></script>
+        <script src="{{URL::asset('BackEnd/assets/plugins/mjolnic-bootstrap-colorpicker/dist/js/bootstrap-colorpicker.min.js')}}"></script>
+        <script src="{{URL::asset('BackEnd/assets/plugins/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js')}}"></script>
+        <script src="{{URL::asset('BackEnd/assets/plugins/clockpicker/dist/jquery-clockpicker.min.js')}}"></script>
+        <script src="{{URL::asset('BackEnd/assets/plugins/bootstrap-daterangepicker/daterangepicker.js')}}"></script>
 
 
         @yield('js')
