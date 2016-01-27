@@ -184,10 +184,10 @@ ADMIN DEMO
     }
 
 $(function () {
-                $('#datetimepicker1').datetimepicker();
+                $('#datetimepicker1').datepicker();
             });
 $(function () {
-                $('#datetimepicker2').datetimepicker();
+                $('#datetimepicker2').datepicker();
             });
 
 function add_promotion(){
@@ -200,7 +200,7 @@ function add_promotion(){
     
     $.ajax({
         type:"get",
-        url:"addpromotion",
+        url:"admin_promotions/addpromotion",
         data:data,
         success:function(ss){
             dataLoad();
@@ -215,7 +215,7 @@ function dataLoad(){
         oTable.destroy();
 
         $('#dd').DataTable( {
-            "ajax": "get-customer",
+            "ajax": "admin_promotions/promotions",
             "columns": [
                 { "data": "promotion_code" },
                 { "data": "promotion_name"},
