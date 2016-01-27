@@ -72,7 +72,7 @@ Route::get('admin_rooms', 'RoomController@rooms');
 Route::get('admin_getrooms', 'RoomController@getrooms');
 Route::get('admin_getroom_types', 'RoomController@getroom_types');
 Route::get('admin_room_add', 'RoomController@room_add');
-Route::get('admin_roomtype_add','RoomController@admin_roomtype_add' ); 
+Route::get('admin_roomtype_add','RoomController@admin_roomtype_add');
 
  
 
