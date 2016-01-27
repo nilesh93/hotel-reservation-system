@@ -1,0 +1,90 @@
+.home-v3{
+	background: #ffffff;
+	#main-nav{
+		background: #ffffff;
+		border: none;
+		&:before{
+			display: none;
+		}
+	}
+	.main-header{
+		border: none;
+	}
+	.booking-area{
+		background: rgba(0, 0, 0, 0.7)!important;
+		position: absolute;
+		bottom: 0px;
+		width: 100%;
+	}
+	.big-slider{
+		.container{
+			position: relative;
+		}
+	}
+	.big-slider{
+	position: relative;
+	.carousel-text{
+		position: absolute;
+		top: auto;
+		bottom: 150px;
+		right: 0px;
+	}
+	img{
+		min-width: 100%;
+	}
+	h1,h2,h3,h4,h5,h6{
+		color: #ffffff;
+	}
+	h2{
+		font-size: 30px;
+		margin-left: 70px;
+		background: rgba(0, 0, 0, 0.7)!important;
+		padding: 5px 10px 8px 10px;
+	}
+	.carousel-indicators {
+		left: auto;
+		right: -117px;
+		bottom: 220px;
+		li{
+			border: none;
+			color: #c7c7c8;
+			background: #c7c7c8;
+		}
+		li.active{
+			background: #ffffff;
+		}
+	}
+}
+.carousel-nav {
+	position: absolute;
+	top: 40%;
+	color: #ffffff;
+	background: rgba(0, 0, 0, 0.5);
+	padding: 20px;
+	-webkit-border-radius: 50%;
+	-moz-border-radius: 50%;
+	border-radius: 50%;
+	height: 60px;
+	width: 60px;
+	text-align: center;
+	z-index: 1000000;
+	&:hover{
+		background: rgba(0, 0, 0, 1);
+	}
+}
+.right{
+	right: 5%;
+}
+.left{
+	left: 5%;
+}
+}
+
+@media (max-width:@screen-lg-min) {
+.home-v3 .booking-area {
+		background: #ffffff!important;
+		position: static; 
+		bottom: 0px;
+		width: 100%;
+	}	
+}

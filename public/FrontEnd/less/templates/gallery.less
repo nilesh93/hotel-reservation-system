@@ -1,0 +1,166 @@
+/* ==========================================================================
+    11.2 Gallery Styles
+   ========================================================================== */
+
+.gallery{
+	position: relative;
+	.img-large{
+		margin-top: 30px;
+		display:    none;
+		position:   relative;
+		a.cross{
+			top: 20px;
+			position: absolute;
+			left: 30px;
+			font-size: 25px;
+			border: 3px solid #ffffff;
+			color: #fff;
+			-webkit-border-radius: 50%;
+			-moz-border-radius: 50%;			
+			-o-border-radius: 50%;
+			-ms-border-radius:50%;
+			background: rgba(0,0,0,0.3);
+			cursor: pointer;
+			&:hover{
+				background: rgba(0,0,0,0.7);
+			}
+		}
+		a.plus{
+			top: 65px;
+			position: absolute;
+			left: 30px;
+			font-size: 25px;
+			border: 3px solid #ffffff;
+			color: #fff;
+			-webkit-border-radius: 50%;
+			-moz-border-radius: 50%;			
+			-o-border-radius: 50%;
+			-ms-border-radius:50%;
+			background: rgba(0, 0, 0, 0.3);
+			cursor: pointer;
+			&:hover{
+				background: rgba(0,0,0,0.7);
+			}
+		}
+		a.prev{
+			font-size: 36px;
+			top: 20px;
+			position: absolute;
+			right: 95px;
+			padding: 0px;
+			background: rgba(0,0,0,0.4);
+			-webkit-border-radius: 50%;
+			-moz-border-radius: 50%;			
+			-o-border-radius: 50%;
+			-ms-border-radius:50%;
+			color: #ffffff;
+			cursor: pointer;
+			&:hover{
+				background: rgba(0,0,0,0.7);
+			}
+		}
+		a.next{
+			font-size: 36px;
+			top: 20px;
+			position: absolute;
+			right: 30px;
+			padding: 0px;
+			background: rgba(0,0,0,0.4);
+			border-radius: 50%;
+			-webkit-border-radius: 50%;
+			-moz-border-radius: 50%;			
+			-o-border-radius: 50%;
+			-ms-border-radius:50%;
+			color: #ffffff;
+			cursor: pointer;
+			&:hover{
+				background: rgba(0,0,0,0.7);
+			}
+		}
+		p.caption{
+			position: absolute;
+			bottom: 0px;
+			color: #fff;
+			background: rgba(0,0,0,0.7);
+			width: 100%;
+			margin-bottom: 0px;
+			padding: 10px 30px 10px 30px;
+			}
+	}
+	.img-small{
+		margin-top: 27px;
+		display:    block;
+		opacity:    .63;
+	  	filter:     alpha(opacity=63); 
+		cursor:     pointer;
+		&:hover{
+			opacity: 1;
+			filter:  alpha(opacity=100); 
+		}
+	}
+	.small-active{
+		opacity: 1!important;
+		filter:  alpha(opacity=100); 
+		&:hover{
+			opacity: 1;
+			filter:  alpha(opacity=100); 
+		}
+	}
+}
+
+.gallery-filter{
+	position: absolute;
+	top: 13px;
+	right: 9px;
+	width: 273px;
+	ul{
+		display: none;
+		z-index: 99999999;
+		position: relative;
+		right: -20px;
+		top: -22px;
+		padding-top: 3px;
+		/*padding-left: 90px;*/
+		padding-bottom: 226px;
+		padding-right: 10px;
+		background: #ffffff;
+		text-align: right;
+		li{
+			list-style: none;
+			margin: 10px 0px;
+		}
+		a{
+			font-family: @font-family-serif;
+			font-size:ceil((@font-size-base * 1.1));
+			color:@text-color ;
+			padding: 3px 40px 6px 20px;
+			&:hover{
+				background: @gray;
+				color: @gray-lighter;
+			}
+		}
+	}
+	.trigger{
+		font-size: 25px;
+		display: inline-block;
+		background: @gray-light;
+		color: #fff;
+		right: -75px;
+		top: -13px;
+		padding: 10px;
+		position: absolute;
+		&:hover{
+			background: @gray-lighter;
+			color: @gray;
+		}
+	}
+	.active{
+		background: @gray-lighter;
+		color: @gray;
+	}
+}
+
+// Margin Fix
+.gallery .img-small[data-id="1"],.gallery .img-small[data-id="2"],.gallery .img-small[data-id="3"],{
+	margin-top: 0px;
+}

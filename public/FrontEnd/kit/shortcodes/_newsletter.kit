@@ -1,0 +1,55 @@
+<form id="newsletter" class="newsletter" autocomplete="off">
+	<div class="newsletter-inner">
+		<div class="newsletter-wrap">
+			<span class="number">
+				<span class="number-current"></span>
+				<span class="number-total"></span>
+			</span>
+			<span class="error-message"></span>
+			<ol class="questions">
+				<li>
+					<span><label for="q1">Enter your First Name to receive our Newsletters!</label></span>
+					<input id="q1" name="q1" type="text"/>
+				</li>
+				<li>
+					<span><label for="q2">Enter your Second Name to receive our Newsletters!</label></span>
+					<input id="q2" name="q2" type="text"/>
+				</li>
+				<li>
+					<span><label for="q3">And now your Email Address?</label></span>
+					<input id="q3" name="q3" type="text"/>
+				</li>
+			</ol><!-- /questions -->
+			<button class="submit" type="submit">Send answers</button>
+			<button class="next"><i class="fa fa-arrow-circle-o-right"></i></button>
+		</div><!-- /newsletter-wrap -->
+		<div class="progress"></div>
+	</div><!-- /newsletter-inner -->
+	<span class="final-message">Thank you for your submission! You will receive an email from us shortly..</span>
+</form><!-- /newsletter -->
+
+<script>
+	jQuery(document).ready(function($){
+
+		var theForm = document.getElementById( 'newsletter' );
+
+		new stepsForm( theForm, {
+		onSubmit : function( form ) {
+			// hide form
+			classie.addClass( theForm.querySelector( '.newsletter-inner' ), 'hide' );
+
+			/*
+			form.submit()
+			or
+			AJAX request (maybe show loading indicator while we don't have an answer..)
+			*/
+
+			// let's just simulate something...
+			var messageEl = theForm.querySelector( '.final-message' );
+			// messageEl.innerHTML = 'Thank you! We\'ll be in touch.';
+			classie.addClass( messageEl, 'show' );
+		}
+		} );
+
+	});
+</script>

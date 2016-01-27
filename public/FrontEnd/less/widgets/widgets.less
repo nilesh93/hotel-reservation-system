@@ -1,0 +1,109 @@
+/* ==========================================================================
+    12. Widgets Styles
+
+    ## All the styles related to each and every widgets used in the template.
+   ========================================================================== */
+
+
+/* 12.1 Widgets Base Styling */
+
+#sidebar .widget{
+	margin-top: 50px;
+  @media (max-width:@screen-md-min) {
+    // max-width: 165px;
+    // display: table;
+    // margin: 0 auto;
+  }
+	&:first-child{
+		margin-top: 0px;
+	}
+	h5{
+    font-size: 1.2em;
+		font-family: @font-family-serif;
+		padding-bottom: 10px;
+		border-bottom: 4px solid #f0f1f1;
+		margin-bottom: 0; 
+	}
+}
+
+#footer .widget{
+  margin-top: 50px;
+  @media (max-width:@screen-sm-min) {
+    margin-top: 30px!important;
+  }
+  &:first-child{
+    margin-top: 0px;
+  }
+  h5{
+    font-size: 1.05em;
+    font-weight: 700;
+    color: #ffffff;
+    font-family: @font-family-sans-serif;
+    text-transform: uppercase;
+    padding-bottom: 10px;
+    border-bottom: 4px solid lighten(@footer, 8%);
+    margin-bottom: 0; 
+  }
+}
+
+
+
+//== Importing Dependancies
+//
+//## Importing Required Files
+
+    
+
+    /* 12.2 Sidebar Widget Styles */
+   	@import "sidebar-menu";
+
+   	/* 12.3 Post Categories Styles */
+   	@import "post-categories";
+
+   	/* 12.4 Latest Posts Styles */
+   	@import "latest-posts";
+
+   	/* 12.5 Search Form Styles */
+   	@import "search-form";
+
+   	/* 12.6 Featured Box Styles */
+   	@import "featured-box";
+
+    /* 12.7 Featured Box Styles */
+    @import "services";
+
+    /* 12.8 Featured Box Styles */
+    @import "twitter";
+
+    /* 12.9 Contact Styles */
+    @import "contact";
+
+    /* 12.10 infobox light Styles */
+    @import "infobox-light";
+
+    /* 12.11 testimonials Styles */
+    @import "testimonials";
+
+    /* 12.12 advertisement Styles */
+    @import "advertisement";
+
+    /* 12.13 newsletter Styles */
+    @import "newsletter";
+
+    /* 12.14 button Styles */
+    @import "button";
+
+    /* 12.15 infobox Styles */
+    @import "infobox-dark";
+
+    /* 12.16 projects Styles */
+    @import "projects";
+
+    /* 12.17 gallery Styles */
+    @import "gallery";
+
+    /* 12.18 images Styles */
+    @import "images";
+
+    /* 12.19 featured Styles */
+    @import "featured";
