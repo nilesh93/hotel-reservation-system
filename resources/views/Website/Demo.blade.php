@@ -6,7 +6,7 @@
 
 @section('title')
 
-DEMO PAGE
+Home
 
 @endsection
 
