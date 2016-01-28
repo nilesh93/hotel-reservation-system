@@ -215,6 +215,7 @@
                                     <li id="RM"><a href="admin_rooms">Room Management</a></li>
                                     <li id="HM"><a href="dashboard_2.html">Hall Management</a></li>
                                     <li id="PR"><a href="admin_promotions">Promotions Management</a></li>
+                                    <li id="MM"><a href="admin_menus">Menus Management</a></li>
                                 </ul>
                             </li>
 

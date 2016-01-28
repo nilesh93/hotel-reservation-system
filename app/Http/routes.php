@@ -127,6 +127,7 @@ Route::post('auth/register', 'Auth\AuthController@postRegister');
 
 
 Route::controller('admin_promotions','PromotionsController');
+Route::controller('admin_menus','MenusController');
 
 /*
 |
