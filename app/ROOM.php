@@ -3,12 +3,13 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use SoftDeletes;
 
 class Room extends Model
 {
 
     
-    use SoftDeletes;
+
     
     protected $table = 'ROOMS';
     public $timestamps = false;

@@ -138,19 +138,13 @@ ROOM MANAGEMENT
                 <div class="modal-body">
 
 
-                    <div class="form-group">
 
-                        <label class="col-lg-3 control-label">Room No</label>
-
-                        <div class="col-lg-9"><input placeholder="Enter Room Number" class="form-control" type="number" required id="rnum" name="rnum">
-                        </div>
-                    </div>
 
                     <div class="form-group">
                         <label class="col-lg-3 control-label">Room Type</label>
 
-                        <div class="col-lg-9"> <select class="form-control" id="rtype" name="rtype">
-                            <option value="0">Add Later</option>
+                        <div class="col-lg-9"> <select class="form-control" onchange="getRoomNum(this.value)" id="rtype" name="rtype" required>
+
 
 
                             </select>
@@ -159,12 +153,22 @@ ROOM MANAGEMENT
 
                     <div class="form-group">
 
-                        <label class="col-lg-3 control-label">Size</label>
+                        <label class="col-lg-3 control-label">Room No</label>
 
-                        <div class="col-lg-9"><input placeholder="Enter Room Size" class="form-control" type="text" required id="rsize" name="rsize">
+                        <div class="col-lg-9"><input placeholder="Enter Room Number" class="form-control" type="text" required id="rnum" name="rnum" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+
+                        <label class="col-lg-3 control-label">Size (SqFt)</label>
+
+                        <div class="col-lg-9"><input type="text" placeholder="Enter Room Size" class="form-control" type="text" required id="rsize" name="rsize" pattern="[-+]?[0-9]*\.?[0-9]+" title="Float value needed" >
 
                         </div>               
                     </div>
+
+                    <input type="text"  id="max" name="max" hidden="true">
 
                     <div class="form-group">
                         <label class="col-lg-3 control-label">Status</label>
@@ -292,8 +296,7 @@ ROOM MANAGEMENT
             dataLoad();
             loadTypes();
 
-
-
+          
 
         });
 
@@ -459,7 +462,7 @@ ROOM MANAGEMENT
 
                 success : function(data){
 
-                    var body = "";
+                    var body = "<option value='0'> Select Type </option>";
                     console.log(data.data);
                     for(var i = 0; i<data.data.length; i++){
 
@@ -521,6 +524,50 @@ ROOM MANAGEMENT
 
 
         }
+        
+        
+                function del(id){
+
+
+            swal({   
+                title: "Delete?",   
+                text: "",   
+                type: "warning",   
+                showCancelButton: true,   
+                confirmButtonColor: "#DD6B55",   
+                confirmButtonText: "Delete",   
+                cancelButtonText: "Cancel",   
+                closeOnConfirm: false}, 
+                 function(isConfirm){   if (isConfirm) {
+
+
+
+                $.ajax({
+                    type: "get",
+                    url: 'admin_delete_room',
+                    data: {
+                        id:id
+                    },
+
+                    success : function(data){
+
+
+                        swal("Deleted!", "", "success");  
+                        dataLoad();    
+
+                    },
+                    error: function(xhr, ajaxOptions, thrownError) {
+                        console.log(thrownError);
+
+                        swal("Ooops!", "Something Went Wrong! ("+thrownError+")", "error");   
+                    }	 
+                });
+
+
+            } });
+
+
+        }
 
         function delCancel(id){
 
@@ -529,6 +576,41 @@ ROOM MANAGEMENT
 
         }
 
+        function getRoomNum(id){
+
+            if(id == 0){
+
+                document.getElementById('rnum').value = "";
+                document.getElementById('max').value = "";
+                return false;
+
+
+            }
+
+            $.ajax({
+                type: "get",
+                url: 'admin_getRoomNum',
+                data: {
+                    id:id
+                },
+
+                success : function(data){
+
+                    document.getElementById('rnum').value = data.code;
+                    document.getElementById('max').value = data.max;
+
+
+                },
+                error: function(xhr, ajaxOptions, thrownError) {
+                    console.log(thrownError);
+
+                    swal("Ooops!", "Cannot generate room number! ("+thrownError+")", "error");   
+                }	 
+            });
+
+
+
+        }
 
     </script>
 

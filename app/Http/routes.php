@@ -44,7 +44,6 @@ Route::get('/room_packages/room_availability','PagesController@room_availabilty'
 
 Route::get('/halls','PagesController@halls');
 
-Route::get('/halls','PagesController@halls');
 
 
 
@@ -77,8 +76,8 @@ Route::get('admin_getroom_types', 'RoomController@getroom_types');
 Route::get('admin_room_add', 'RoomController@room_add');
 Route::get('admin_roomtype_add','RoomController@admin_roomtype_add');
 Route::get('admin_delete_room_type','RoomController@delete_room_type');
-
- 
+Route::get('admin_getRoomNum','RoomController@admin_getRoomNum');
+Route::get('admin_delete_room', 'RoomController@admin_delete_room'); 
 
 
 
