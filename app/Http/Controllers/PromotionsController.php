@@ -11,15 +11,14 @@ use DB;
 class PromotionsController extends Controller
 {
  
-    
 
     public function getIndex (Request $request){
-
         
         return view('nipuna.promotions');
         
         
     }
+
 
 
     public function getPromotions(Request $request){
