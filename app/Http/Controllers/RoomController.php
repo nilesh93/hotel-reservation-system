@@ -66,12 +66,25 @@ class RoomController extends Controller
         
         $rt->type_name = $request->input('rtname');
         $rt->description = $request->input('rtdes');
+        $rt->type_code = $request->input('rtcode');
+        $rt->services_provided = $request->input('wifi').";".$request->input('tv');
             
         $rt->save();    
         
         
     }
      
+    
+    public function delete_room_type(Request $request){
+        
+        $rt = RoomType::find($request->input('id'));
+        
+        $rt->delete();
+        
+        
+        
+        
+    }
     
     
     

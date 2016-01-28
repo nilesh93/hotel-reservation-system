@@ -76,10 +76,11 @@ ROOM MANAGEMENT
             <table class="table table-striped table-bordered table-hover dataTables-example" id="ddt" plugin="datatable" >
                 <thead>
                     <tr>
-                        <th>#</th>
+                        <th>Code</th>
                         <th>Type</th>
 
                         <th>Description</th>
+                        <th>Services</th>
                         <th>Count</th>
 
                         <th class="col-md-1"></th>
@@ -220,12 +221,46 @@ ROOM MANAGEMENT
                     </div>
 
                     <div class="form-group">
+
+                        <label class="col-lg-3 control-label">Type Code</label>
+
+                        <div class="col-lg-9"><input placeholder="Enter Short code for Room Type" class="form-control" type="text" required id="rtcode" name="rtcode">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
                         <label class="col-lg-3 control-label">Description</label>
                         <div class="col-lg-9">
                             <textarea id="rtdes" class="form-control"  name="rtdes" placeholder="Description of this Room Type"></textarea>
                         </div>
 
+                        <div class="form-group">
 
+                            <label class="col-lg-3 control-label">Services</label>
+                            <div class="col-md-2">
+
+                                <div class="checkbox checkbox-primary">
+                                    <input id="wifi" name="wifi" value="WiFi" type="checkbox">
+                                    <label for="wifi">
+                                        Wifi
+                                    </label>
+                                </div>
+                            </div>
+
+
+                            <div class="col-md-3">
+
+                                <div class="checkbox checkbox-primary">
+                                    <input id="tv" name="tv" value="Satelite TV" type="checkbox">
+                                    <label for="tv">
+                                        Satelite TV
+                                    </label>
+                                </div>
+                            </div>
+
+
+
+                        </div>
 
 
                     </div>
@@ -310,9 +345,27 @@ ROOM MANAGEMENT
             $('#ddt').DataTable( {
                 "ajax": "admin_getroom_types",
                 "columns": [
-                    { "data": "room_type_id" },
+                    { "data": "type_code" },
                     { "data": "type_name" },
                     { "data": "description" },
+                    {"data" : null,
+                     "mRender": function(data, type, full) {
+
+                         var serviceArray = data.services_provided.split(";");  
+
+                         var returnBody = "";
+
+                         for (var i = 0; i< serviceArray.length; i++){
+
+                             returnBody += "<label class='label label-primary' style='margin-right:1%'>"+serviceArray[i]+"</label>";
+
+                         }
+
+
+                         return returnBody;
+
+                     }
+                    },
                     { "data": "count" },
 
                     {"data" : null,
@@ -322,7 +375,17 @@ ROOM MANAGEMENT
                     },
                     {"data" : null,
                      "mRender": function(data, type, full) {
-                         return '<button class="btn btn-danger  btn-animate btn-animate-side btn-block btn-sm" onclick="del('+data.room_id+')"> Delete </button>' ;
+
+                         if(data.count == 0){
+
+
+                             return '<button class="btn btn-danger  btn-animate btn-animate-side btn-block btn-sm" onclick="delRT('+data.room_type_id+')"> Delete </button>' ;
+
+                         }else{
+
+
+                             return '<button class="btn btn-danger  btn-animate btn-animate-side btn-block btn-sm" onclick="delCancel('+data.room_type_id+')"> Delete </button>' ;
+                         }
                      }
                     }
                 ]
@@ -412,6 +475,56 @@ ROOM MANAGEMENT
                 }	 
             });
 
+
+
+        }
+
+        function delRT(id){
+
+
+            swal({   
+                title: "Delete?",   
+                text: "",   
+                type: "warning",   
+                showCancelButton: true,   
+                confirmButtonColor: "#DD6B55",   
+                confirmButtonText: "Delete",   
+                cancelButtonText: "Cancel",   
+                closeOnConfirm: false}, 
+                 function(isConfirm){   if (isConfirm) {
+
+
+
+                $.ajax({
+                    type: "get",
+                    url: 'admin_delete_room_type',
+                    data: {
+                        id:id
+                    },
+
+                    success : function(data){
+
+
+                        swal("Deleted!", "", "success");  
+                        dataLoad();    
+
+                    },
+                    error: function(xhr, ajaxOptions, thrownError) {
+                        console.log(thrownError);
+
+                        swal("Ooops!", "Something Went Wrong! ("+thrownError+")", "error");   
+                    }	 
+                });
+
+
+            } });
+
+
+        }
+
+        function delCancel(id){
+
+            swal('Cannot delete!', 'Room type cannot be deleted because there are rooms associated with this room type. Please delete them or change them first!', 'error');
 
 
         }

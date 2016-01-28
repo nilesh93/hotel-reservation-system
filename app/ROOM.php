@@ -6,9 +6,12 @@ use Illuminate\Database\Eloquent\Model;
 
 class Room extends Model
 {
-    //
+
+    
+    use SoftDeletes;
+    
     protected $table = 'ROOMS';
     public $timestamps = false;
-    protected $id = 'room_id';
+    protected  $primaryKey = 'room_id';
     
 }
