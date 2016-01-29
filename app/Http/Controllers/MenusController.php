@@ -7,28 +7,23 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use DB;
-
-class PromotionsController extends Controller
+class MenusController extends Controller
 {
- 
-
     public function getIndex (Request $request){
         
-        return view('nipuna.promotions');
+        return view('nipuna.menus');
         
         
     }
 
-
-
     public function getPromotions(Request $request){
     
-	$result = DB::table('promotions')->get();
-	        return response()->json(['count' => count($result), 'data' => $result]);
+    $result = DB::table('promotions')->get();
+            return response()->json(['count' => count($result), 'data' => $result]);
 
-	}
+    }
 
-	public function getAddpromotion(Request $request){
+    public function getAddpromotion(Request $request){
     $promotion_name = $request->input('promo_name');
     $promotion_description = $request->input('promo_description');
     $date_from = $request->input('promo_start');
@@ -40,7 +35,4 @@ class PromotionsController extends Controller
 
 
     }
-
 }
-
-

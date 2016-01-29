@@ -170,14 +170,9 @@ ADMIN DEMO
 
         
         document.getElementById("management").click();
-        document.getElementById("PR").setAttribute("class","active");
+        document.getElementById("MM").setAttribute("class","active");
         dataLoad();
-        
-        
-        
-
-
-    });
+});
 
  function add_promotions_modal(){
         $("#add_promotions_modal").modal("show");
@@ -256,6 +251,7 @@ function dataLoad(){
 
 
     }
+
 </script>
 
 @endsection
