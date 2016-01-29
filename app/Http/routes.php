@@ -30,7 +30,7 @@ Route::get('/admin', function () {
 
 Route::get('/contact',function(){
     
-    return view('website.contact');
+    return view('Website.contact');
     
     
 });

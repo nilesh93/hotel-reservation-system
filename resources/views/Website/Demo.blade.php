@@ -5,7 +5,7 @@
 
 
 @section('title')
-Contact Us
+Home
 @endsection
 
 
