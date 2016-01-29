@@ -23,7 +23,15 @@ Function Halls
 
 @endsection
 
+@section('hall_links')
 
+	<ul>
+
+		@foreach($halls as $hall)
+			<li><a href="#">{{ $hall->title }}</a></li>
+		@endforeach
+	</ul>
+@endsection
 
 
 
