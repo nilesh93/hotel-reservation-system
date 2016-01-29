@@ -528,7 +528,6 @@ Room Packages
 			}
 		}
 		else{
-
 			$('#exceedmodalpopup').modal('show');
 			document.getElementById('ono_of_rooms').value = 1;
 			document.getElementById('adults').value = 1;
@@ -608,10 +607,6 @@ Room Packages
 
 }
 
-	$(".modal-wide").on("show.bs.modal", function() {
-		var height = $(window).height() - 200;
-		$(this).find(".modal-body").css("max-height", height);
-	});
 
 
 </script>
