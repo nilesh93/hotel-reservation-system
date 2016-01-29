@@ -150,7 +150,7 @@
 											</ul>
 										</li>
 
-										<li><a href="/">Home</a>
+										<li><a href="{!! url('/') !!}">Home</a>
 											<ul>
 												<li><a href="#">Home Version 1</a></li>
 												<li><a href="#">Home Version 2</a></li>
@@ -171,6 +171,8 @@
 					<div class="container-fluid">
 					@yield('content')
 
+
+						<!-- room_type_modals_to _load_in_any_page-->
 						@foreach($roomtypes as $room_type)
 
 							<modal><!-- room -->
@@ -361,7 +363,7 @@
 								</div>
 							</modal>
 						@endforeach
-
+				<!-- /room_type_modals-->
 
 
 					</div>
@@ -471,8 +473,8 @@
 							<img src="{{URL::asset('FrontEnd/img/amalya-logo.png')}}" alt="">
 							<br>
 							<br>
-							<p>Vivamus lacus libero, ultrices and well non ullamcorper as, tempus sit amer enim. Suspendisse at supermarket and semper ispum Suspeat all web design</p>
-							<p>Vivamus lacus libero, ultrices and well non ullamcorper as, tempus sit amer enim.</p>
+							<p>Amalya Reach resort situated in homagama on morgahahena road away from 26km from Colombo this hotel can be accommodate up to 750 guests on a function.</p>
+							<p>Well trained staff to give you the best services to experience the difference with us</p>
 						</div><!-- /col-md-3 -->
 						<div class="col-sm-3 col-md-3 col-lg-3">
 							<div class="widget widget-latest-posts">
