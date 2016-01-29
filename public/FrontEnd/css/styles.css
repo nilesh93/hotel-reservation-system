@@ -502,6 +502,16 @@ input.datepicker::-webkit-input-placeholder {
   margin: 0px;
   position: relative;
   top: 6px;
+  margin-top: -6px; 
+}
+
+.weather [class^="icon-sun"]:before,
+.weather [class*=" icon-sun"]:before {
+  font-size: 34px;
+  color: #259aad;
+  margin: 0px;
+  position: relative;
+  top: 6px;
   margin-top: -6px;
   -webkit-animation: rotation 7s infinite linear;
   -moz-animation: rotation 7s infinite linear;
@@ -1747,7 +1757,7 @@ aside#sidebar .widget-recent-posts a:hover {
 }
 /* 11.1.6 Gmap */
 #gmap {
-  height: 600px;
+  height: 300px;
 }
 /* 11.2 Gallery Styles */
 /* ==========================================================================

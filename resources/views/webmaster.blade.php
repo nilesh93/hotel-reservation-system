@@ -61,12 +61,12 @@
 			<header class="main-header header-v1">
 				<div class="container">
 					<div class="row">
-						<div class="col-sm-3 col-md-3 col-lg-3">
+						<div class="col-sm-3 col-md-2 col-lg-2">
 
 						 <img src="{{URL::asset('FrontEnd/img/amalya-logo.png')}}" alt="" style=" background-size: 227px;"><!-- /logo -->
 
 						</div><!-- /4 columns -->
-						<div class="col-lg-9">
+						<div class="col-lg-10">
 						<a class="nav-toggle pull-right"><i class="icon-menu"></i></a>
 
 						<nav class="col-sm-12 clear" id="mobile-nav"></nav>
@@ -81,14 +81,17 @@
 								</div>-->
 
 								<div class="weather element">
-									<p><strong>SUNDAY</strong>, FEBRUARY 27 <i class="icon-sun-1"></i> 31&deg;C/88&deg;F</p>
+									<p id="deg"><strong> {{strtoupper(date('l'))}}</strong>, {{strtoupper(date('F'))}}  {{date('d')}} <i id="weatherid" class=""></i> </p>
 								</div><!-- /weather -->
 
 								<div class="header-info element">
 									<div class="info">
-										<p data-id="1"><strong>CALL US:</strong> 1-800-643-4300</p>
-										<p data-id="2"><strong>ADDRESS:</strong> 176, Pivot Lane</p>
-										<p data-id="3"><strong>EMAIL:</strong> support@themesgravity.com</p>
+										<p data-id="1"><strong>CALL US:</strong> +94 114404040 / +94 114368291</p>
+										<p data-id="2"><strong>ADDRESS:</strong>No.556,
+Moragahahena Road, Pitipana North,
+Homagama.</p>
+										<p data-id="3"><strong>EMAIL:</strong> amalyareach@
+yahoo.com</p>
 									</div><!-- /info -->
 									<div class="triggers">
 										<i data-id="1" class="icon-tablet-2"></i>
@@ -116,7 +119,7 @@
           </ul>--}}
         </li>
 
-        <li><a href="#">Shortcodes</a></li>
+        <li><a href="contact">Contact Us</a></li>
 
         <li><a href="#">Pages</a>
           <ul>
@@ -384,8 +387,52 @@
 
 		<!-- Sweet Alert -->
 		<script src="{{URL::asset('FrontEnd/sweetalert/sweetalert.min.js')}}"></script>
+		
+		<script src="{{URL::asset('FrontEnd/js/jquery.simpleWeather.js')}}"></script>
+
+		<script src="{{URL::asset('FrontEnd/js/sugar.js')}}"></script>
+
+		<script src="{{URL::asset('FrontEnd/js/weather.js')}}"></script>
+
+		 
+
+		<script>
+		
+		$('document').ready(function(){
+			
+			
+			
+		  var myLatLng = {lat:6.840172, lng: 80.020895};
+			
+			
+Weather.getCurrent("colombo", function(current) {
+  console.log(current.data.list[0].weather[0].main );
+	
+ 	
+	if(current.data.list[0].weather[0].main == "Rain"){
+	document.getElementById("weatherid").removeAttribute("class","");
+	document.getElementById("weatherid").setAttribute("class","icon-rain-1");
+		
+	}
+});
 
 
+			
+			Weather.getForecast("colombo", function(forecast) {
+  console.log("Forecast High in Kelvin: " + forecast.high());
+  console.log("Forecast High in Fahrenheit" + Weather.kelvinToFahrenheit(forecast.high()));
+  console.log("Forecast High in Celsius" + Weather.kelvinToCelsius( forecast.high() ));
+				
+				var F = Math.ceil(Weather.kelvinToFahrenheit(forecast.high()));
+				var C = Math.ceil(Weather.kelvinToCelsius(forecast.high()));
+				document.getElementById("deg").innerHTML += C+"&deg;C/"+F+"&deg;F";
+				
+				
+});
+			
+			
+		});
+		</script>
 		@yield('js')
 
 
