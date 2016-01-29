@@ -32,14 +32,16 @@ Available Rooms
 
 
 
-						<form class="form-horizontal" action="{!! url('/room_packages/room_availability') !!}" method="Post">
-							<input type="hidden" name="_token" value="{{ csrf_token() }}">
+				<form class="form-horizontal" action="{!! url('/room_packages/room_availability') !!}" method="Post">
+					<input type="hidden" name="_token" value="{{ csrf_token() }}">
 
 					<br>
 
 					<div class="row">
 						<div class="col-sm-12 col-md-12 col-lg-12">
-							<input type="date" class="form-control" id="datepicker" value="Check In Date" name="check_in"/>
+
+							<i class="fa fa-calendar"></i>
+							<input type="date" class="form-control" id="datepicker" value="Check In Date" name="check_in" placeholder="Check In Date" />
 
 						</div><!-- /col-md-12 -->
 					</div><!-- /row -->
@@ -49,16 +51,57 @@ Available Rooms
 					<div class="row">
 
 						<div class="col-sm-12 col-md-12 col-lg-12">
-							<input type="date" class="form-control" Value="Check Out Date" id="datepicker1"  name="check_out"/>
+							<i class="fa fa-calendar"></i>
+							<input type="date" class="form-control" Value="Check Out Date" id="datepicker1"  name="check_out" placeholder="Check Out Date" />
 
 						</div><!-- /col-md-12 -->
 					</div><!-- /row -->
 
 					<br>
 
+					<div class="row">
+						<div class="col-sm-6 col-md-6 col-lg-6">
+							<select class="form-control "  name="adults" id="adults">
 
+								<option>Adults</option>
+								@for($i=1;$i<31;$i++)
+									<option value={{ $i}}>{{$i}}</option>
+								@endfor
+							</select>
+						</div><!-- /col-md-6 -->
+						<div class="col-sm-6 col-md-6 col-lg-6">
+							<select class="form-control"  name="children" id="children">
+								<option>Kids</option>
+								@for($i=0;$i<21;$i++)
+									<option value={{ $i}}>{{$i}}</option>
+								@endfor
+							</select>
+						</div><!-- /col-md-6 -->
+					</div><!-- /row -->
 
 					<br>
+					<div class="row">
+
+						<div class="col-sm-12 col-md-12 col-lg-12">
+							<select class="form-control "  name="ono_of_rooms" id="ono_of_rooms">
+								<option value="No. of Rooms">No. of Rooms</option>
+
+								@for($i=1;$i< 13;$i++)
+									<option value={{ $i}}>{{$i}}</option>
+								@endfor
+							</select>
+						</div>
+					</div>	<!-- /row -->
+
+					<br>
+
+
+
+					<div class="row">
+						<div class="col-sm-12 col-md-12 col-lg-12">
+							<input class="form-control input-lg" type="text" placeholder="Enter Promo Code">
+						</div><!-- /col-md-12 -->
+					</div><!-- /row -->
 
 					<div class="row">
 
@@ -79,16 +122,18 @@ Available Rooms
 
 		<div class="col-md-12">
 
+			@foreach($room_types as $room_type)
+
 			<div class="col-md-6">
 
 						<article class="room-post row">
 							<div class="col-sm-6 col-md-6 col-lg-6">
-								<img src="{{URL::asset('FrontEnd/img/superior_rooms/superior1.png')}}" alt="themesgravity">
+								<img class="img-thumbnail" src="{{URL::asset('FrontEnd/img/superior_rooms/superior1.png')}}" alt="themesgravity">
 							</div><!-- /end three columns -->
 							<div class="col-sm-6 col-md-6 col-lg-6">
 
 								<span>Discover our</span>
-								<h3 class="room-title"><a href="#">Superior Single</a></h3>
+								<h3 class="room-title"><a href="#">{{ $room_type->type_name }}</a></h3>
 								<span>from</span>
 								<span class="room-cost"> $198</span>
 
@@ -98,7 +143,8 @@ Available Rooms
 
 								<a type="button" class="btn btn-primary">Select</a>
 
-								<div class="room-post-person">
+
+							<!--	<div class="room-post-person">
 									<span class="serif-font">max </span>
 									<span class="glyphicon glyphicon-user"></span>
 									<span style="font-size:18px;">x <small>2 per room</small></span>
@@ -110,108 +156,15 @@ Available Rooms
 
 			</div><!-- /col-md-6 -->
 
+			@endforeach
 
-			<div class="col-md-6">
-					<article class="room-post row">
-						<div class="col-sm-6 col-md-6 col-lg-6">
-							<img src="{{URL::asset('FrontEnd/img/deluxe_rooms/deluxe1.png')}}" alt="themesgravity">
-						</div><!-- /end three columns -->
-						<div class="col-sm-6 col-md-6 col-lg-6">
-
-							<span>Discover our</span>
-							<h3 class="room-title"><a href="#">Deluxe Rooms</a></h3>
-							<span>from</span>
-							<span class="room-cost"> $200</span>
-
-							<p>
-								<b>Available Rooms : {{ $available_deluxe }}</b>
-							</p>
-
-							<a type="button" class="btn btn-primary">Select</a>
-
-							<div class="room-post-person">
-								<span class="serif-font">max </span>
-								<span class="glyphicon glyphicon-user"></span>
-								<span style="font-size:18px;">x <small>3 per room</small></span>
-							</div><!-- /room-post-person -->
-
-						</div><!-- /end nine columns -->
-
-					</article><!-- /article -->
-				</div><!-- /col-md-6 -->
 
 		</div> <!-- /div-col-md-12 -->
 	</div>	<!-- /row -->
 
 
 
-	<div class="row">
 
-		<div class="col-md-12">
-
-			<div class="col-md-6">
-
-				<article class="room-post row">
-					<div class="col-sm-6 col-md-6 col-lg-6">
-						<img src="{{URL::asset('FrontEnd/img/luxury_rooms/luxury1.png')}}"alt="themesgravity">
-					</div><!-- /end three columns -->
-					<div class="col-sm-6 col-md-6 col-lg-6">
-
-						<span>Discover our</span>
-						<h3 class="room-title"><a href="#">Luxury Rooms</a></h3>
-						<span>from</span>
-						<span class="room-cost"> $220</span>
-
-						<p>
-							<b>Available Rooms : {{ $available_luxury }}</b>
-						</p>
-
-						<a type="button" class="btn btn-primary">Select</a>
-
-						<div class="room-post-person">
-							<span class="serif-font">max </span>
-							<span class="glyphicon glyphicon-user"></span>
-							<span style="font-size:18px;">x <small>3 per room</small></span>
-						</div><!-- /room-post-person -->
-
-					</div><!-- /end nine columns -->
-
-				</article><!-- /article -->
-
-			</div><!-- /col-md-6 -->
-
-
-			<div class="col-md-6">
-				<article class="room-post row">
-					<div class="col-sm-6 col-md-6 col-lg-6">
-						<img src="{{URL::asset('FrontEnd/img/superior_rooms/superior3.png')}}" alt="themesgravity">
-					</div><!-- /end three columns -->
-					<div class="col-sm-6 col-md-6 col-lg-6">
-
-						<span>Discover our</span>
-						<h3 class="room-title"><a href="#">Guest Rooms</a></h3>
-						<span>from</span>
-						<span class="room-cost"> $150</span>
-
-						<p>
-							<b>Available Rooms : {{ $available_guest }}</b>
-						</p>
-
-						<a type="button" class="btn btn-primary">Select</a>
-
-						<div class="room-post-person">
-							<span class="serif-font">max </span>
-							<span class="glyphicon glyphicon-user"></span>
-							<span style="font-size:18px;">x <small>1 per room</small></span>
-						</div><!-- /room-post-person -->
-
-					</div><!-- /end nine columns -->
-
-				</article><!-- /article -->
-			</div><!-- /col-md-6 -->
-
-		</div> <!-- /div-col-md-12 -->
-	</div>	<!-- /row -->
 
 
 

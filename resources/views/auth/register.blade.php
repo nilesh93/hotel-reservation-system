@@ -17,55 +17,66 @@
             <img src="{{URL::asset('FrontEnd/img/amalya.jpg')}}">
         </div>
         <div class="col-lg-6">
-            <form role="form" method="post" action="{{URL::to('auth/register')}}">
+            <form role="form" name="registrationForm" method="post" action="{{URL::to('auth/register')}}">
                 {!! csrf_field() !!}
                 <div class="form-group">
                     <label for="Name">Name:</label>
-                    <input type="text" class="form-control" name="name" value="{{ old('name') }}">
+                    <input type="text" class="form-control" name="name" value="{{ old('name') }}" required pattern="^(([A-Za-z]+[\-\']?)*([A-Za-z]+)?\s)+([A-Za-z]+[\-\']?)*([A-Za-z]+)?$" placeholder="Your name" title="">
+                    @if ($errors->has('name')) <p class="text-danger">{{ $errors->first('name') }}</p>@endif
                 </div>
                 <div class="form-group">
                     <label for="ID">NIC/ Passport Number:</label>
-                    <input type="text" class="form-control" name="ID" value="{{ old('ID') }}">
+                    <input type="text" class="form-control" name="ID" value="{{ old('ID') }}" required placeholder="Your NIC or Passport Number">
+                    @if ($errors->has('ID')) <p class="text-danger">{{ $errors->first('ID') }}</p>@endif
                 </div>
                 <div class="form-group">
                     <label for="email">Email address:</label>
-                    <input type="email" class="form-control" name="email" value="{{ old('email') }}">
+                    <input type="email" class="form-control" name="email" value="{{ old('email') }}" required placeholder="Your email">
+                    @if ($errors->has('email')) <p class="text-danger">{{ $errors->first('email') }}</p>@endif
                 </div>
                 <div class="form-group">
                     <label for="password">Password:</label>
-                    <input type="password" class="form-control" name="password" id="password">
+                    <input type="password" class="form-control" name="password" id="password" required placeholder="Password should be minimum 6 characters long">
+                    @if ($errors->has('password')) <p class="text-danger">{{ $errors->first('password') }}</p>@endif
                 </div>
                 <div class="form-group">
                     <label for="password">Confirm Password:</label>
-                    <input type="password" class="form-control" name="password_confirmation" id="password">
+                    <input type="password" class="form-control" name="password_confirmation" id="password" required>
+                    @if ($errors->has('password_confirmation')) <p class="text-danger">{{ $errors->first('password_confirmation') }}</p>@endif
                 </div>
                 <div class="form-group">
                     <label for="telephone">Telephone:</label>
-                    <input type="tel" class="form-control" name="telephone" id="telephone">
+                    <input type="tel" class="form-control" name="telephone" id="telephone" value="{{ old('telephone') }}" required maxlength="15" pattern="^\d{10,15}$" placeholder="Your telephone number with country and local prefixes" title="Please do not enter any characters, dashes, spaces or paranthesis">
+                    @if ($errors->has('telephone')) <p class="text-danger">{{ $errors->first('telephone') }}</p>@endif
                 </div>
                 <div class="form-group">
                     <label for="address_line1">Address Line #1:</label>
-                    <input type="text" class="form-control" name="address_line1" id="address_line1">
+                    <input type="text" class="form-control" name="address_line1" id="address_line1" value="{{ old('address_line1') }}" required placeholder="Address Line 1">
+                    @if ($errors->has('address_line1')) <p class="text-danger">{{ $errors->first('address_line1') }}</p>@endif
                 </div>
                 <div class="form-group">
                     <label for="address_line2">Address Line #2:</label>
-                    <input type="text" class="form-control" name="address_line2" id="address_line2">
+                    <input type="text" class="form-control" name="address_line2" id="address_line2" value="{{ old('address_line2') }}" required placeholder="Address Line 2">
+                    @if ($errors->has('address_line2')) <p class="text-danger">{{ $errors->first('address_line2') }}</p>@endif
                 </div>
                 <div class="form-group">
                     <label for="city">City:</label>
-                    <input type="text" class="form-control" name="city" id="city">
+                    <input type="text" class="form-control" name="city" id="city" value="{{ old('city') }}" required placeholder="Your city">
+                    @if ($errors->has('city')) <p class="text-danger">{{ $errors->first('city') }}</p>@endif
                 </div>
                 <div class="form-group">
                     <label for="province">Province/ State:</label>
-                    <input type="text" class="form-control" name="province" id="province">
+                    <input type="text" class="form-control" name="province" id="province" value="{{ old('province') }}" required placeholder="Your state and/or province">
+                    @if ($errors->has('province')) <p class="text-danger">{{ $errors->first('province') }}</p>@endif
                 </div>
                 <div class="form-group">
                     <label for="zipCode">ZIP Code:</label>
-                    <input type="text" class="form-control" name="zipCode" id="zipCode">
+                    <input type="text" class="form-control" name="zipCode" id="zipCode" value="{{ old('zipCode') }}" required placeholder="Zip Code">
+                    @if ($errors->has('zipCode')) <p class="text-danger">{{ $errors->first('zipCode') }}</p>@endif
                 </div>
                 <div class="form-group'">
                     <label for="country">Country:</label>
-                    <select class="form-control" name="country">
+                    <select class="form-control" name="country" id="country">
                         <option value="AF">Afghanistan</option>
                         <option value="AX">Åland Islands</option>
                         <option value="AL">Albania</option>
@@ -316,6 +327,11 @@
                         <option value="ZM">Zambia</option>
                         <option value="ZW">Zimbabwe</option>
                     </select>
+
+                    <script type="text/javascript">
+                        document.getElementById('country').value = "{{ old('country') }}";
+                    </script>
+
                 </div>
 
                 <br>

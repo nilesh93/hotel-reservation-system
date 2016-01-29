@@ -117,13 +117,15 @@ class RoomAvailabiltyController extends Controller
         $available_guest = $total_guest - $guest_count;
 
 
+        $room_types = ROOM_TYPE::get();
+
 
 
 
 
 
         return view('Website.Rooms_availability',['available_superior'=>$available_superior,'available_deluxe'=>$available_deluxe,
-                                        'available_luxury'=>$available_luxury,'available_guest'=>$available_guest]);
+                                        'available_luxury'=>$available_luxury,'available_guest'=>$available_guest,"room_types"=>$room_types]);
     }
 
 }
