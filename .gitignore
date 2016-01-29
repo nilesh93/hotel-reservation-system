@@ -7,5 +7,7 @@ config/app.php
 .env
 .idea/
 /.idea
+
 .DS_Store
+
 
