@@ -7,3 +7,7 @@ Homestead.json
 .env
 .idea/
 /.idea
+
+config/database.php
+
+config/app.php
