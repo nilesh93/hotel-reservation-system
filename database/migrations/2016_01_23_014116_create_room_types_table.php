@@ -17,6 +17,10 @@ class CreateRoomTypesTable extends Migration
             $table->string('type_name', 100);
             $table->longText('description')->nullable();
             $table->integer('count')->nullable();
+            $table->string('services_provided');
+            $table->string('type_code');
+            $table->timestamps();
+            $table->softDeletes();
         });
     }
 

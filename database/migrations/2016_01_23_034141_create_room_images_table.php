@@ -15,7 +15,7 @@ class CreateRoomImagesTable extends Migration
         Schema::create('ROOM_IMAGES', function (Blueprint $table) {
             $table->increments('room_image_id');
             $table->binary('content');  //change to medium blob in the DB
-            $table->char('room_num', 5);
+            $table->integer('room_id')->unsigned();
             $table->integer('room_type_id')->unsigned();
 
           //  $table->foreign('room_num')->references('room_num')->on('ROOMS');

@@ -172,6 +172,9 @@ ADMIN DEMO
         document.getElementById("management").click();
         document.getElementById("PR").setAttribute("class","active");
         dataLoad();
+        
+        
+        
 
 
     });
@@ -181,29 +184,47 @@ ADMIN DEMO
     }
 
 $(function () {
-                $('#datetimepicker1').datetimepicker();
+                $('#datetimepicker1').datepicker({
+        dateFormat: 'mm-dd-yy',
+        minDate: "0",
+        endDate: "01-01-2017",
+        todayBtn: "linked",
+        autoclose: true,
+        onSelect: function (date, inst) {
+            $('#data').text(this.value);
+            $('#rental-form').bootstrapValidator('revalidateField', 'datePicker'); // her, feil navn på plugin
+        }
+    });
+
             });
 $(function () {
-                $('#datetimepicker2').datetimepicker();
+                $('#datetimepicker2').datepicker();
             });
 
 function add_promotion(){
+
     var promo_name=$('#prom_name').val();
     var promo_description=$('#prom_description').val();
     var promo_start=$('#start_date').val();
     var promo_end=$('#end_date').val();
     var promo_rate=$('#prom_rate').val();
+
+    if(promo_name == "" || promo_description == "" || promo_start == "" || promo_end == "" || promo_rate == ""){
+        sweetAlert("Oops...", "One or more field(s) are empty!", "error");
+
+    }
+    else{
     var data="promo_name="+promo_name+"&promo_description="+promo_description+"&promo_start="+promo_start+"&promo_end="+promo_end+"&promo_rate="+promo_rate;
     
     $.ajax({
         type:"get",
-        url:"addpromotion",
+        url:"admin_promotions/addpromotion",
         data:data,
         success:function(ss){
             dataLoad();
         }
     });
-  
+  }
 }
 
 function dataLoad(){

@@ -50,6 +50,9 @@ ROOM MANAGEMENT
 @section('content')
 
 <div class="col-lg-12"> 
+
+
+    <div id="test"></div>
     <ul class="nav nav-tabs tabs" style="width: 100%;">
         <li class="active tab" style="width: 25%;">
             <a href="#rooms" data-toggle="tab" aria-expanded="false" class="active"> 
@@ -73,10 +76,11 @@ ROOM MANAGEMENT
             <table class="table table-striped table-bordered table-hover dataTables-example" id="ddt" plugin="datatable" >
                 <thead>
                     <tr>
-                        <th>#</th>
+                        <th>Code</th>
                         <th>Type</th>
-                        <th>Room Type</th>
+
                         <th>Description</th>
+                        <th>Services</th>
                         <th>Count</th>
 
                         <th class="col-md-1"></th>
@@ -134,19 +138,13 @@ ROOM MANAGEMENT
                 <div class="modal-body">
 
 
-                    <div class="form-group">
 
-                        <label class="col-lg-3 control-label">Room No</label>
-
-                        <div class="col-lg-9"><input placeholder="Enter Room Number" class="form-control" type="number" required id="rnum" name="rnum">
-                        </div>
-                    </div>
 
                     <div class="form-group">
                         <label class="col-lg-3 control-label">Room Type</label>
 
-                        <div class="col-lg-9"> <select class="form-control" id="rtype" name="rtype">
-                            <option value="0">Add Later</option>
+                        <div class="col-lg-9"> <select class="form-control" onchange="getRoomNum(this.value)" id="rtype" name="rtype" required>
+
 
 
                             </select>
@@ -155,12 +153,22 @@ ROOM MANAGEMENT
 
                     <div class="form-group">
 
-                        <label class="col-lg-3 control-label">Size</label>
+                        <label class="col-lg-3 control-label">Room No</label>
 
-                        <div class="col-lg-9"><input placeholder="Enter Room Size" class="form-control" type="text" required id="rsize" name="rsize">
+                        <div class="col-lg-9"><input placeholder="Enter Room Number" class="form-control" type="text" required id="rnum" name="rnum" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+
+                        <label class="col-lg-3 control-label">Size (SqFt)</label>
+
+                        <div class="col-lg-9"><input type="text" placeholder="Enter Room Size" class="form-control" type="text" required id="rsize" name="rsize" pattern="[-+]?[0-9]*\.?[0-9]+" title="Float value needed" >
 
                         </div>               
                     </div>
+
+                    <input type="text"  id="max" name="max" hidden="true">
 
                     <div class="form-group">
                         <label class="col-lg-3 control-label">Status</label>
@@ -212,180 +220,398 @@ ROOM MANAGEMENT
 
                         <label class="col-lg-3 control-label">Type Name</label>
 
-                        <div class="col-lg-9"><input placeholder="Enter Room Type Name" class="form-control" type="number" required id="rtname" name="rtname">
+                        <div class="col-lg-9"><input placeholder="Enter Room Type Name" class="form-control" type="text" required id="rtname" name="rtname">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+
+                        <label class="col-lg-3 control-label">Type Code</label>
+
+                        <div class="col-lg-9"><input placeholder="Enter Short code for Room Type" class="form-control" type="text" required id="rtcode" name="rtcode">
                         </div>
                     </div>
 
                     <div class="form-group">
                         <label class="col-lg-3 control-label">Description</label>
                         <div class="col-lg-9">
-                       <textarea id="rtdes" class="form-control"  name="rtdes" placeholder="Description of this Room Type"></textarea>
+                            <textarea id="rtdes" class="form-control"  name="rtdes" placeholder="Description of this Room Type"></textarea>
+                        </div>
+
+                        <div class="form-group">
+
+                            <label class="col-lg-3 control-label">Services</label>
+                            <div class="col-md-2">
+
+                                <div class="checkbox checkbox-primary">
+                                    <input id="wifi" name="wifi" value="WiFi" type="checkbox">
+                                    <label for="wifi">
+                                        Wifi
+                                    </label>
+                                </div>
+                            </div>
+
+
+                            <div class="col-md-3">
+
+                                <div class="checkbox checkbox-primary">
+                                    <input id="tv" name="tv" value="Satelite TV" type="checkbox">
+                                    <label for="tv">
+                                        Satelite TV
+                                    </label>
+                                </div>
+                            </div>
+
+
+
+                        </div>
+
+
                     </div>
 
-                    
-
-
-                </div>
-
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-white" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary">Save changes</button>
-                </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-white" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Save changes</button>
+                    </div>
                 </div>
 
             </form>
+        </div>
     </div>
-</div>
 
-
-@endsection
-
-
-
-@section('js')
+    @endsection
 
 
 
-<script>
-    $('document').ready(function(){
-
-        document.getElementById('management').click();
-        document.getElementById('RM').setAttribute('class','active');
-
-        dataLoad();
-        loadTypes();
+    @section('js')
 
 
 
+    <script>
+        $('document').ready(function(){
 
-    });
+            document.getElementById('management').click();
+            document.getElementById('RM').setAttribute('class','active');
 
-    function dataLoad(){
+            dataLoad();
+            loadTypes();
 
-        var oTable = $('#dd').DataTable();
-        oTable.destroy();
+          
 
-        $('#dd').DataTable( {
-            "ajax": "admin_getrooms",
-            "columns": [
-                { "data": "room_id" },
-                { "data": "room_num" },
-                { "data": "room_size" },
-                { "data": "type" },
-                {"data" : null,
-                 "mRender": function(data, type, full) {
+        });
 
-                     if(data.status == '0'){
+        function dataLoad(){
 
-                         return "<span class='label label-warning'> Not Assigned </span>";
+            var oTable = $('#dd').DataTable();
+            oTable.destroy();
 
-                     }else{
+            $('#dd').DataTable( {
+                "ajax": "admin_getrooms",
+                "columns": [
+                    { "data": "room_id" },
+                    { "data": "room_num" },
+                    { "data": "type" },
+                    { "data": "room_size" },
+                    {"data" : null,
+                     "mRender": function(data, type, full) {
 
-                         return data.status;
+                         if(data.status == '0'){
+
+                             return "<span class='label label-warning'> Not Assigned </span>";
+
+                         }else{
+
+                             return data.status;
+
+                         }
 
                      }
+                    },
+                    { "data": "remarks" },
+                    {"data" : null,
+                     "mRender": function(data, type, full) {
+                         return '<button class="btn btn-primary  btn-animate btn-animate-side btn-block btn-sm" onclick="edit('+data.room_id+')"> Edit </button>' ;
+                     }
+                    },
+                    {"data" : null,
+                     "mRender": function(data, type, full) {
+                         return '<button class="btn btn-danger  btn-animate btn-animate-side btn-block btn-sm" onclick="del('+data.room_id+')"> Delete </button>' ;
+                     }
+                    }
+                ]
+            } );
 
-                 }
+
+            var oTable = $('#ddt').DataTable();
+            oTable.destroy();
+
+            $('#ddt').DataTable( {
+                "ajax": "admin_getroom_types",
+                "columns": [
+                    { "data": "type_code" },
+                    { "data": "type_name" },
+                    { "data": "description" },
+                    {"data" : null,
+                     "mRender": function(data, type, full) {
+
+                         var serviceArray = data.services_provided.split(";");  
+
+                         var returnBody = "";
+
+                         for (var i = 0; i< serviceArray.length; i++){
+
+                             returnBody += "<label class='label label-primary' style='margin-right:1%'>"+serviceArray[i]+"</label>";
+
+                         }
+
+
+                         return returnBody;
+
+                     }
+                    },
+                    { "data": "count" },
+
+                    {"data" : null,
+                     "mRender": function(data, type, full) {
+                         return '<button class="btn btn-primary  btn-animate btn-animate-side btn-block btn-sm" onclick="edit('+data.room_id+')"> Edit </button>' ;
+                     }
+                    },
+                    {"data" : null,
+                     "mRender": function(data, type, full) {
+
+                         if(data.count == 0){
+
+
+                             return '<button class="btn btn-danger  btn-animate btn-animate-side btn-block btn-sm" onclick="delRT('+data.room_type_id+')"> Delete </button>' ;
+
+                         }else{
+
+
+                             return '<button class="btn btn-danger  btn-animate btn-animate-side btn-block btn-sm" onclick="delCancel('+data.room_type_id+')"> Delete </button>' ;
+                         }
+                     }
+                    }
+                ]
+            } );
+
+
+
+        }
+
+        function insertR(){
+
+
+            $.ajax({
+                type: "get",
+                url: 'admin_room_add',
+                data: $('#addR').serialize(),
+
+                success : function(data){
+                    $('#addRoom').modal('hide');
+                    swal('Success','Successfully Added!', 'success');
+                    dataLoad();
+
                 },
-                { "data": "remarks" },
-                {"data" : null,
-                 "mRender": function(data, type, full) {
-                     return '<button class="btn btn-info  btn-animate btn-animate-side btn-block btn-sm" onclick="edit('+data.room_id+')"> Edit </button>' ;
-                 }
+                error: function(xhr, ajaxOptions, thrownError) {
+                    console.log(thrownError);
+                }	 
+            });
+
+
+
+            return false; 
+
+
+        }
+
+
+        function insertRT(){
+
+
+            $.ajax({
+                type: "get",
+                url: 'admin_roomtype_add',
+                data: $('#addRT').serialize(),
+
+                success : function(data){
+                    $('#addRoomT').modal('hide');
+                    swal('Success','Successfully Added!', 'success');
+                    dataLoad();
+                    loadTypes();
+
                 },
-                {"data" : null,
-                 "mRender": function(data, type, full) {
-                     return '<button class="btn btn-danger  btn-animate btn-animate-side btn-block btn-sm" onclick="del('+data.room_id+')"> Delete </button>' ;
-                 }
-                }
-            ]
-        } );
+                error: function(xhr, ajaxOptions, thrownError) {
+                    console.log(thrownError);
+                }	 
+            });
 
 
-        var oTable = $('#ddt').DataTable();
-        oTable.destroy();
 
-        $('#ddt').DataTable( {
-            "ajax": "admin_getroom_types",
-            "columns": [
-                { "data": "room_type_id" },
-                { "data": "type_name" },
-                { "data": "description" },
-                { "data": "count" },
+            return false; 
 
-                {"data" : null,
-                 "mRender": function(data, type, full) {
-                     return '<button class="btn btn-info  btn-animate btn-animate-side btn-block btn-sm" onclick="edit('+data.room_id+')"> Edit </button>' ;
-                 }
+
+        }
+        function loadTypes(){
+
+
+
+            $.ajax({
+                type: "get",
+                url: 'admin_getroom_types',
+                data: '',
+
+                success : function(data){
+
+                    var body = "<option value='0'> Select Type </option>";
+                    console.log(data.data);
+                    for(var i = 0; i<data.data.length; i++){
+
+                        body += "<option value = '"+data.data[i].room_type_id+"'> "+data.data[i].type_name+"   </option>";
+
+
+                    }
+                    document.getElementById("rtype").innerHTML = body;
+
                 },
-                {"data" : null,
-                 "mRender": function(data, type, full) {
-                     return '<button class="btn btn-danger  btn-animate btn-animate-side btn-block btn-sm" onclick="del('+data.room_id+')"> Delete </button>' ;
-                 }
-                }
-            ]
-        } );
+                error: function(xhr, ajaxOptions, thrownError) {
+                    console.log(thrownError);
+                }	 
+            });
 
 
 
-    }
+        }
 
-    function insertR(){
+        function delRT(id){
 
 
-        $.ajax({
-            type: "get",
-            url: 'admin_room_add',
-            data: $('#addR').serialize(),
-
-            success : function(data){
-                $('#addRoom').modal('hide');
-                dataLoad();
-
-            },
-            error: function(xhr, ajaxOptions, thrownError) {
-                console.log(thrownError);
-            }	 
-        });
+            swal({   
+                title: "Delete?",   
+                text: "",   
+                type: "warning",   
+                showCancelButton: true,   
+                confirmButtonColor: "#DD6B55",   
+                confirmButtonText: "Delete",   
+                cancelButtonText: "Cancel",   
+                closeOnConfirm: false}, 
+                 function(isConfirm){   if (isConfirm) {
 
 
 
-        return false; 
+                $.ajax({
+                    type: "get",
+                    url: 'admin_delete_room_type',
+                    data: {
+                        id:id
+                    },
+
+                    success : function(data){
 
 
-    }
+                        swal("Deleted!", "", "success");  
+                        dataLoad();    
 
-    function loadTypes(){
+                    },
+                    error: function(xhr, ajaxOptions, thrownError) {
+                        console.log(thrownError);
 
-
-
-        $.ajax({
-            type: "get",
-            url: 'admin_getroom_types',
-            data: '',
-
-            success : function(data){
-
-                var body = "";
-
-                for(var i = 0; i<data.data.length; i++){
-
-                    body += "<option value = '"+data.data.room_type_id+"'> "+data.data.type_name+"   </option>";
+                        swal("Ooops!", "Something Went Wrong! ("+thrownError+")", "error");   
+                    }	 
+                });
 
 
-                }
-                document.getElementById("rtype").innerHTML = body;
-
-            },
-            error: function(xhr, ajaxOptions, thrownError) {
-                console.log(thrownError);
-            }	 
-        });
+            } });
 
 
+        }
+        
+        
+                function del(id){
 
-    }
 
-</script>
+            swal({   
+                title: "Delete?",   
+                text: "",   
+                type: "warning",   
+                showCancelButton: true,   
+                confirmButtonColor: "#DD6B55",   
+                confirmButtonText: "Delete",   
+                cancelButtonText: "Cancel",   
+                closeOnConfirm: false}, 
+                 function(isConfirm){   if (isConfirm) {
 
-@endsection
+
+
+                $.ajax({
+                    type: "get",
+                    url: 'admin_delete_room',
+                    data: {
+                        id:id
+                    },
+
+                    success : function(data){
+
+
+                        swal("Deleted!", "", "success");  
+                        dataLoad();    
+
+                    },
+                    error: function(xhr, ajaxOptions, thrownError) {
+                        console.log(thrownError);
+
+                        swal("Ooops!", "Something Went Wrong! ("+thrownError+")", "error");   
+                    }	 
+                });
+
+
+            } });
+
+
+        }
+
+        function delCancel(id){
+
+            swal('Cannot delete!', 'Room type cannot be deleted because there are rooms associated with this room type. Please delete them or change them first!', 'error');
+
+
+        }
+
+        function getRoomNum(id){
+
+            if(id == 0){
+
+                document.getElementById('rnum').value = "";
+                document.getElementById('max').value = "";
+                return false;
+
+
+            }
+
+            $.ajax({
+                type: "get",
+                url: 'admin_getRoomNum',
+                data: {
+                    id:id
+                },
+
+                success : function(data){
+
+                    document.getElementById('rnum').value = data.code;
+                    document.getElementById('max').value = data.max;
+
+
+                },
+                error: function(xhr, ajaxOptions, thrownError) {
+                    console.log(thrownError);
+
+                    swal("Ooops!", "Cannot generate room number! ("+thrownError+")", "error");   
+                }	 
+            });
+
+
+
+        }
+
+    </script>
+
+    @endsection

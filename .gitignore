@@ -2,5 +2,10 @@
 /node_modules
 Homestead.yaml
 Homestead.json
-/config/database.php
+config/database.php
+config/app.php
 .env
+.idea/
+/.idea
+.DS_Store
+

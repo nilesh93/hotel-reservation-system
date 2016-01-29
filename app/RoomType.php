@@ -9,5 +9,6 @@ class RoomType extends Model
     //
     
     protected $table = 'ROOM_TYPES';
-    protected $id = 'room_type_id';
+    public $timestamps = false;
+    protected $primaryKey = 'room_type_id';
 }
