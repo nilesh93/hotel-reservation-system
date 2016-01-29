@@ -72,90 +72,6 @@
 							<nav class="col-sm-12 clear" id="mobile-nav"></nav>
 
 							<!-- weather widget -->
-<<<<<<< HEAD
-						<div class="col-sm-12 col-md-12 col-lg-12">
-
-							<div class="elements pull-right">
-
-								<!-- <div class="language element">
-									<p>thank you lord</p>
-								</div>-->
-
-								<div class="weather element">
-									<p><strong>SUNDAY</strong>, FEBRUARY 27 <i class="icon-sun-1"></i> 31&deg;C/88&deg;F</p>
-								</div><!-- /weather -->
-
-								<div class="header-info element">
-									<div class="info">
-										<p data-id="1"><strong>CALL US:</strong> 1-800-643-4300</p>
-										<p data-id="2"><strong>ADDRESS:</strong> 176, Pivot Lane</p>
-										<p data-id="3"><strong>EMAIL:</strong> support@themesgravity.com</p>
-									</div><!-- /info -->
-									<div class="triggers">
-										<i data-id="1" class="icon-tablet-2"></i>
-										<i data-id="2" class="icon-location"></i>
-										<i data-id="3" class="icon-globe-3"></i>
-									</div><!-- /triggers -->
-								</div><!-- /header-info -->
-							</div><!-- /elements -->
-
-						</div><!-- /col-sm-8 -->
-
-						<div class="col-sm-12   col-md-12 col-lg-12">
-  <nav id="main-nav">
-    <ul>
-		@if(Auth::check())
-			<li><a href="{{URL::to('auth/logout')}}">Log out</a></li>
-		@else
-			<li><a href="{{URL::to('auth/register')}}">Sign up</a></li>
-			<li><a href="{{URL::to('auth/login')}}">Login</a>
-		@endif
-          {{--<ul>
-            <li><a href="#">Blog Listing</a></li>
-            <li><a href="#">Blog Post Left Sidebar</a></li>
-            <!-- <li><a href="#">Blog Post Right Sidebar</a></li> -->
-          </ul>--}}
-        </li>
-
-        <li><a href="#">Shortcodes</a></li>
-
-        <li><a href="#">Pages</a>
-          <ul>
-            <li><a href="#">Typography</a></li>
-            <li><a href="#">Gallery</a></li>
-            <li><a href="#">Full Width Page</a></li>
-            <li><a  href="#">Right Sidebar Page</a></li>
-            <li><a href="#">left Sidebar Page</a></li>
-            <li><a href="#">About</a></li>
-          </ul>
-        </li>
-        <li><a href="#">Hotel</a></li>
-		
-		<li><a href="{!! url('/halls') !!}">Halls</a>
-			@yield('hall_links')
-		</li>
-        <li><a href="{!! url('/room_packages') !!}">Rooms</a>
-
-			<ul>
-
-				@foreach($roomtypes as $roomtype)
-					<li><a onclick="showModal({{$roomtype->room_type_id}})">{{ $roomtype->type_name}}</a></li>
-				@endforeach
-			</ul>
-
-		</li>
-
-        <li><a href="/">Home</a>
-          <ul>
-            <li><a href="#">Home Version 1</a></li>
-            <li><a href="#">Home Version 2</a></li>
-            <li><a href="#">Home Version 3</a></li>
-          </ul> 
-        </li>
-    </ul>
-  </nav>
-</div><!-- /8 columns -->
-=======
 							<div class="col-sm-12 col-md-12 col-lg-12">
 
 								<div class="elements pull-right">
@@ -229,7 +145,7 @@
 											<ul>
 
 												@foreach($roomtypes as $roomtype)
-												<li><a href="#">{{ $roomtype->type_name}}</a></li>
+												<li><a onclick="showModal({{$roomtype->room_type_id}})">{{ $roomtype->type_name}}</a></li>
 												@endforeach
 											</ul>
 										</li>
@@ -244,14 +160,14 @@
 									</ul>
 								</nav>
 							</div><!-- /8 columns -->
->>>>>>> origin/master
+
 
 						</div>				</div><!-- /row -->
 				</div><!-- /container -->
 			</header><!-- /main-header -->
 
 
-<<<<<<< HEAD
+
 					<div class="container-fluid">
 					@yield('content')
 
@@ -452,14 +368,7 @@
 
 
 				 
-=======
 
-
-			<div class="container-fluid">
-				@yield('content')
-			</div>
-
->>>>>>> origin/master
 			<div class="footerbox" style="margin-top:1%">
 				<div class="container">
 					<div class="row">
@@ -719,7 +628,7 @@
 		<!-- Sweet Alert -->
 		<script src="{{URL::asset('FrontEnd/sweetalert/sweetalert.min.js')}}"></script>
 
-<<<<<<< HEAD
+
 		<script>
 			function showModal(id){
 
@@ -732,7 +641,6 @@
 			}
 		</script>
 
-=======
 		<script src="{{URL::asset('FrontEnd/js/jquery.simpleWeather.js')}}"></script>
 
 		<script src="{{URL::asset('FrontEnd/js/sugar.js')}}"></script>
@@ -744,7 +652,6 @@
 		<script>
 
 			$('document').ready(function(){
->>>>>>> origin/master
 
 
 
