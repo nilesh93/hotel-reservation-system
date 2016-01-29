@@ -133,25 +133,180 @@ Room Packages
 					</div><!-- /roombox -->
 				</div><!-- /col-sm-3 -->
 
+				<?php
 
-				<div class="modal fade" id="{{$room_type->room_type_id}}">
-					<div class="modal-dialog">
-						<div class="modal-content">
-							<div class="modal-header">
-								<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&close;</button>
-								<h4 class="modal-title">Modal title</h4>
-							</div>
-							<div class="modal-body">
-								<p>One fine body…</p>
-							</div>
-							<div class="modal-footer">
-								<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-								<button type="button" class="btn btn-primary">Save changes</button>
+					$token = strtok($room_type->services_provided, ";")
+
+				?>
+
+				<modal>
+					<div class="modal fade" id="{{$room_type->room_type_id}}">
+						<div class="modal-dialog modal-lg">
+							<div class="modal-content">
+								<div class="modal-header" style="background: cornsilk">
+									<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+									<h3 class="modal-title" align="center">{{ $room_type->type_name }}</h3>
+									<br>
+								</div>
+								<div class="modal-body">
+
+									<slides>
+
+										<div class="row">
+
+
+
+											<div class="col-md-12">
+												<div class="carousel slide" id="carousel-{{$room_type->room_type_id}}">
+													<div class="carousel-inner">
+														<div class="item active">
+															<img class="img-thumbnail"alt="Carousel Bootstrap First" src="FrontEnd/img/superior_rooms/superior2.png">
+															<div class="carousel-caption">
+																<h4>
+
+
+																</h4>
+																<p>
+
+																</p>
+															</div>
+														</div>
+														<div class="item">
+															<img class="img-thumnail" alt="Carousel Bootstrap Second" src="FrontEnd/img/superior_rooms/superior2.png">
+															<div class="carousel-caption">
+																<h4>
+
+																</h4>
+																<p>
+
+																</p>
+															</div>
+														</div>
+
+													</div>
+
+													<a class="left carousel-control" href="#carousel-{{$room_type->room_type_id}}" data-slide="prev"><span class="glyphicon glyphicon-chevron-left"></span></a> <a class="right carousel-control" href="#carousel-{{$room_type->room_type_id}}" data-slide="next"><span class="glyphicon glyphicon-chevron-right"></span></a>
+												</div>
+
+											</div>
+
+
+
+										</div><!--/row -->
+									</slides>
+										<br>
+									<services>
+
+										<div class="row">
+											<div class="col-md-4">
+
+												<h4 align="center">Furnishing and Fixtures</h4>
+
+												<ul>
+												<?php
+													while($token != false)
+													{
+														echo "<li >$token<br></li>";
+														$token = strtok(";");
+
+													}
+													?>
+												</ul>
+											</div>
+
+											<div class="col-md-4">
+											</div>
+
+											<div class="col-md-4">
+												<h4 align="center">Services</h4>
+
+												<ul>
+													<?php
+													while($token != false)
+													{
+														echo "<li >$token<br></li>";
+														$token = strtok(";");
+
+													}
+													?>
+												</ul>
+											</div>
+
+										</div>
+									</services>
+
+								</div>
+
+
+
+								<div class="modal-footer" style="background:cornsilk">
+
+									<div class="row">
+
+										<div class="col-md-4">
+
+											<div align="center">
+												<h4>Area</h4>
+												40m2
+											</div>
+										</div>
+
+										<div class="col-md-4">
+
+											<div align="center">
+												<h4>Bed</h4>
+												110～120×215cm　x2
+											</div>
+										</div>
+
+										<div class="col-md-4">
+											<div align="center">
+
+												<h4>Rate</h4>
+													Single Occupancy from ¥53,460～
+													Double Occupancy from ¥58,860～
+											</div>
+										</div>
+
+									</div>
+									<br>
+									<div class="row">
+
+										<div class="col-md-4">
+											<div align="center">
+												<h4>Extra Bed</h4>
+												¥5,400
+											</div>
+
+										</div>
+
+										<div class="col-md-4">
+											<div align="center">
+												<h4>Chenk In</h4>
+												14:00
+											</div>
+										</div>
+
+										<div class="col-md-4">
+											<div align="center">
+												<h4 >Check Out</h4>
+												12:00
+											</div>
+										</div>
+
+									</div>
+									<br>
+									<br>
+								</div>
+
+
+
+
+
 							</div>
 						</div>
 					</div>
-				</div>
-
+				</modal>
 
 
 			@endforeach
@@ -443,10 +598,6 @@ Room Packages
 
 
 
-
-
-
-
 	function showModal(id){
 
 
@@ -456,6 +607,11 @@ Room Packages
 
 
 }
+
+	$(".modal-wide").on("show.bs.modal", function() {
+		var height = $(window).height() - 200;
+		$(this).find(".modal-body").css("max-height", height);
+	});
 
 
 </script>
