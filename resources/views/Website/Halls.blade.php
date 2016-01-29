@@ -116,7 +116,7 @@ Function Halls
 							<div class="col-sm-6 col-md-6 col-lg-6">
 								<div class="roombox">
 									<div class="room-image">
-										<img src="{{URL::asset('FrontEnd/img/Hall_images/hall1.jpg')}}"  alt="themesgravity">
+										<img src="{{URL::asset('FrontEnd/img/Hall_images/hall1.jpg')}}"  alt="themesgravity" width="100%">
 										<h4><a href="#">{{ $hall->title }}</a></h4>
 									</div><!-- /room-image -->
 									<div class="room-content">

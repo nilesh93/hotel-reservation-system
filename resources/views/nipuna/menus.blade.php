@@ -245,11 +245,11 @@ ADMIN DEMO
 
 @section('js')
 <script>
-    $('document').ready(function(){
+	$('document').ready(function(){
 
         
         document.getElementById("management").click();
-        document.getElementById("PR").setAttribute("class","active");
+        document.getElementById("MM").setAttribute("class","active");
         dataLoad();
 });
 
