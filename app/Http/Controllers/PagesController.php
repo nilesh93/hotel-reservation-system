@@ -15,7 +15,6 @@ class PagesController extends Controller
      public function halls(){
 
          $halls = HALL::get();
-         return "LOL";
          return view('Website.Halls',["halls"=>$halls]);
      }
 
