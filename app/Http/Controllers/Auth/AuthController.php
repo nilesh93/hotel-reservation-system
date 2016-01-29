@@ -9,6 +9,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 
 class AuthController extends Controller
 {
@@ -86,6 +87,13 @@ class AuthController extends Controller
         'zip_code' => $data['zipCode'],
         'country' => $data['country']
     ]);
+
+        // Sends an email to the newly registered Guest user.
+        Mail::send('emails.newUser', ['userData' => $data], function ($message) {
+            $message->from('danurajay@gmail.com', 'Welcome to Amalya Reach!');
+
+            $message->to('vishandanura@hotmail.com');
+        });
 
         return $user;
     }
