@@ -28,6 +28,12 @@ Route::get('/admin', function () {
     return view('Admin.Demo');
 });
 
+Route::get('/contact',function(){
+    
+    return view('website.contact');
+    
+    
+});
 
 
 Route::get('/LOL',function(){
