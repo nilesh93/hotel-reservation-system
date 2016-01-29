@@ -69,24 +69,10 @@ body {
     ## All Scaffolding/layout related styles comes under here. 
    ========================================================================== */
 #wrapper {
-  margin: 0 auto;
+ 
   background: #ffffff;
 }
-@media (min-width: 850px) {
-  #wrapper {
-    max-width: 850px;
-  }
-}
-@media (min-width: 1070px) {
-  #wrapper {
-    max-width: 1070px;
-  }
-}
-@media (min-width: 1270px) {
-  #wrapper {
-    max-width: 1270px;
-  }
-}
+ 
 /* 2.2 custom columns */
 .col1 {
   max-width: 70px;

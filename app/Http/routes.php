@@ -95,8 +95,10 @@ Route::get('admin_delete_room', 'RoomController@admin_delete_room');
 Route::get('admin_halls','HallController@halls');
 Route::get('admin_get_halls','HallController@admin_get_halls');
 Route::get('admin_hall_add','HallController@admin_hall_add');
-ROute::get('admin_delete_hall','HallController@admin_delete_hall');
+Route::get('admin_delete_hall','HallController@admin_delete_hall');
 
+
+Route::get('saveinquiry','InquiryController@saveinquiry');
 
 
 /*
