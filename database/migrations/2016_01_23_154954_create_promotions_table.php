@@ -16,8 +16,8 @@ class CreatePromotionsTable extends Migration
             $table->increments('promotion_code');
             $table->longText('promotion_name');
             $table->longText('promotion_description');
-            $table->dateTime('date_from'); 
-            $table->dateTime('date_to');           
+            $table->longText('date_from'); 
+            $table->longText('date_to');           
             $table->double('rate');
         });
     }
