@@ -22,7 +22,7 @@ Route::get('/', function () {
 
 Route::get('admin', function () {
     return view('Admin.Demo');
-});             
+});
 
 Route::get('/admin', function () {
     return view('Admin.Demo');
@@ -139,6 +139,9 @@ Route::post('password/email', 'Auth\PasswordController@postEmail');
 Route::get('password/reset/{token}', 'Auth\PasswordController@getReset');
 
 Route::post('password/reset', 'Auth\PasswordController@postReset');
+
+// View admin level users
+Route::get('/admin_users', 'UserController@getUsers');
 
 /*
 |
