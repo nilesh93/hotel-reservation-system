@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -12,15 +13,26 @@
 		<meta name="description" content="">
 		<meta name="author" content="">
 
+		<?php
 
 
-		@yield('links')
+		$roomtypes = DB::table('ROOM_TYPES')->get();
+		$halls = DB::table('HALLS')->get();
+
+
+
+		?>
+
+	
 		<!-- initializing looks -->
         <!--[if IE]><meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'><![endif]-->
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
         <!-- Animate Styles -->
         <link rel="stylesheet" href="{{URL::asset('FrontEnd/css/vendor/animate.css')}}">
+
+		<!-- Sweet  Alert -->
+		<link rel="stylesheet" href="{{URL::asset('FrontEnd/sweetalert/sweetalert.css')}}">
 
 		<!-- Fonts -->
 		<link href='http://fonts.googleapis.com/css?family=Playfair+Display|Sintony:400,700' rel='stylesheet' type='text/css'>
@@ -29,7 +41,9 @@
 		 <link rel="stylesheet" href="{{URL::asset('FrontEnd/css/styles.css')}}">
 		 <link rel="stylesheet" href="{{URL::asset('FrontEnd/css/font-awesome/css/font-awesome.min.css')}}">
 
-
+		<link rel="stylesheet" href="{{URL::asset('FrontEnd/dp/jquery-ui.css')}}">
+		
+		@yield('links')
 		@yield('css')
 		<!-- Custom Stylesheet == Make sure u put all ur css changes in this file == -->
 
@@ -39,8 +53,7 @@
 		<![endif]-->
 
 		<!-- CUSTOM JavaScript so you can use jQuery or $ before it has been loaded in the footer. -->
-		<script>(function(w,d,u){w.readyQ=[];w.bindReadyQ=[];function p(x,y){if(x=="ready"){w.bindReadyQ.push(y);}else{w.readyQ.push(x);}};var a={ready:p,bind:p};w.$=w.jQuery=function(f){if(f===d||f===u){return a}else{p(f)}}})(window,document)</script>
-
+		<!-- <script>(function(w,d,u){w.readyQ=[];w.bindReadyQ=[];function p(x,y){if(x=="ready"){w.bindReadyQ.push(y);}else{w.readyQ.push(x);}};var a={ready:p,bind:p};w.$=w.jQuery=function(f){if(f===d||f===u){return a}else{p(f)}}})(window,document)</script>-->
 	</head>
 
 	<body>
@@ -48,20 +61,20 @@
 			<header class="main-header header-v1">
 				<div class="container">
 					<div class="row">
-						<div class="col-sm-4 col-md-4 col-lg-4">
+						<div class="col-sm-3 col-md-3 col-lg-3">
 
-							<a class="logo" href="" ><!-- check css to update logo --></a><img src="{{URL::asset('FrontEnd/img/amalya-logo.png')}}" alt=""><!-- /logo -->
+						 <img src="{{URL::asset('FrontEnd/img/amalya-logo.png')}}" alt="" style=" background-size: 227px;"><!-- /logo -->
 
 						</div><!-- /4 columns -->
-
+						<div class="col-lg-9">
 						<a class="nav-toggle pull-right"><i class="icon-menu"></i></a>
 
 						<nav class="col-sm-12 clear" id="mobile-nav"></nav>
 					
 							<!-- weather widget -->
-						<div class="col-sm-12 col-md-8 col-lg-8">
+						<div class="col-sm-12 col-md-12 col-lg-12">
 
-							<div class="elements">
+							<div class="elements pull-right">
 
 								<!-- <div class="language element">
 									<p>thank you lord</p>
@@ -87,7 +100,7 @@
 
 						</div><!-- /col-sm-8 -->
 
-						<div class="col-sm-8 col-lg-offset-4 col-md-12 col-lg-8">
+						<div class="col-sm-12   col-md-12 col-lg-12">
   <nav id="main-nav">
     <ul>
 		@if(Auth::check())
@@ -116,10 +129,24 @@
           </ul>
         </li>
         <li><a href="#">Hotel</a></li>
-		<li><a href="{!! url('/halls') !!}">Halls</a></li>
+		
+		<li><a href="{!! url('/halls') !!}">Halls</a>
+			<ul>
+
+				@foreach($halls as $hall)
+					<li><a href="#">{{ $hall->title }}</a></li>
+				@endforeach
+			</ul>
+		</li>
         <li><a href="{!! url('/room_packages') !!}">Rooms</a>
 
-        </li>
+			<ul>
+
+				@foreach($roomtypes as $roomtype)
+					<li><a href="#">{{ $roomtype->type_name}}</a></li>
+				@endforeach
+			</ul>
+		</li>
 
         <li><a href="/">Home</a>
           <ul>
@@ -132,7 +159,7 @@
   </nav>
 </div><!-- /8 columns -->
 
-						</div><!-- /row -->
+						</div>				</div><!-- /row -->
 				</div><!-- /container -->
 			</header><!-- /main-header -->
 
@@ -301,17 +328,18 @@
 		</section><!-- /wrapper -->
 
 		<!-- jQuery -->
-		<!-- <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script> -->
-{{--
+
+
+
+
+
 
 		<script src="{{URL::asset('FrontEnd/js/vendor/jquery-1.11.0.min.js')}}"></script>
---}}
+
+		<script src="{{URL::asset('FrontEnd/dp/jquery-ui.js')}}"></script>
 
 		<!-- CUSTOM JavaScript so you can use jQuery or $ before it has been loaded in the footer. -->
-{{--
-		<script>(function($,d){$.each(readyQ,function(i,f){$(f)});$.each(bindReadyQ,function(i,f){$(d).bind("ready",f)})})(jQuery,document)</script>
---}}
-
+ 
 		<!-- Google Maps Plugin -->
 	 <!--	<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?libraries=geometry"></script>
 
@@ -354,43 +382,14 @@
 
 		<script src="{{URL::asset('FrontEnd/js/vendor/owl.carousel.js')}}"></script>
 
+		<!-- Sweet Alert -->
+		<script src="{{URL::asset('FrontEnd/sweetalert/sweetalert.min.js')}}"></script>
+
 
 		@yield('js')
 
-		<!-- loginModal -->
-		{{--<div id="loginModal" class="modal fade" role="dialog">
-			<div class="modal-dialog" style="width: 30%">
 
-				<!-- Modal content-->
-				<div class="modal-content">
-					<div class="modal-header">
-						<button type="button" class="close" data-dismiss="modal">&times;</button>
-						<h4 class="modal-title">Login</h4>
-					</div>
-					<div class="modal-body">
-						<form role="form" action="#" method="post">
-							<div class="form-group">
-								<label for="email">Email address:</label>
-								<input type="email" class="form-control col-xs-4" id="email" name="email">
-							</div>
-							<div class="form-group">
-								<label for="pwd">Password:</label>
-								<input type="password" class="form-control col-xs-4" id="pwd" name="pwd">
-							</div>
-                            <br>
-							<div class="checkbox">
-								<label><input type="checkbox"> Remember me</label>
-							</div>
-					</div>
-					<div class="modal-footer">
-						<button type="submit" class="btn btn-success">Login</button>
-						</form>
-						<button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
-					</div>
-				</div>
-
-			</div>
-		</div>--}}
+ 
 
 	</body>
 </html>

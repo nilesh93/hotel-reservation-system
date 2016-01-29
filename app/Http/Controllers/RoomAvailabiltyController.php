@@ -1,9 +1,21 @@
 <?php
 
+/*
+|--------------------------------------------------------------------------
+|RoomAvailabilityController
+|--------------------------------------------------------------------------
+|
+| This controller handles the  rooms check availability part for
+| each room types.
+|
+*/
+
+
 namespace App\Http\Controllers;
 
 use App\RES_RMTYPE_CNT_RATE;
 use App\ROOM_TYPE;
+use App\HALL;
 use Request;
 use App\ROOM_RESERVATION;
 
@@ -13,6 +25,14 @@ use App\Http\Controllers\Controller;
 
 class RoomAvailabiltyController extends Controller
 {
+
+    /**
+     * Redirect a room availability page according to customer requests.
+     *
+     *
+     * @return Website.Rooms_availability view with availability details
+     */
+
     function check_room_availabilty()
     {
         $inputs = Request::all();
@@ -95,6 +115,8 @@ class RoomAvailabiltyController extends Controller
         $available_deluxe = $total_deluxe - $deluxe_count;
         $available_luxury = $total_luxury - $luxury_count;
         $available_guest = $total_guest - $guest_count;
+
+
 
 
 
