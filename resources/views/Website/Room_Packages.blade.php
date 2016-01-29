@@ -154,14 +154,34 @@ Room Packages
 
 										<div class="row">
 
+											<div class="col-md-3">
 
+												<h4 align="center">Furnishing and Fixtures</h4>
 
-											<div class="col-md-12">
+												<ul>
+													<?php
+													while($token != false)
+													{
+														echo "<li >$token<br></li>";
+														$token = strtok(";");
+
+													}
+													?>
+												</ul>
+											</div>
+
+											<div class="col-md-6">
+
+												<br>
+												<br>
+												<br>
+												<br>
+												<br>
 												<div class="carousel slide" id="carousel-{{$room_type->room_type_id}}">
 													<div class="carousel-inner">
 														<div class="item active">
-															<img class="img-thumbnail"alt="Carousel Bootstrap First" src="FrontEnd/img/superior_rooms/superior2.png">
-															<div class="carousel-caption">
+															<img class="img-thumbnail"alt="Carousel Bootstrap First" src="FrontEnd/img/superior_rooms/superior2.png" width="100%">
+														<!--	<div class="carousel-caption">
 																<h4>
 
 
@@ -169,10 +189,10 @@ Room Packages
 																<p>
 
 																</p>
-															</div>
+															</div> -->
 														</div>
 														<div class="item">
-															<img class="img-thumnail" alt="Carousel Bootstrap Second" src="FrontEnd/img/superior_rooms/superior2.png">
+															<img class="img-thumbnail" alt="Carousel Bootstrap Second" src="FrontEnd/img/superior_rooms/superior2.png" width="100%">
 															<div class="carousel-caption">
 																<h4>
 
@@ -190,34 +210,8 @@ Room Packages
 
 											</div>
 
+											<div class="col-md-3">
 
-
-										</div><!--/row -->
-									</slides>
-										<br>
-									<services>
-
-										<div class="row">
-											<div class="col-md-4">
-
-												<h4 align="center">Furnishing and Fixtures</h4>
-
-												<ul>
-												<?php
-													while($token != false)
-													{
-														echo "<li >$token<br></li>";
-														$token = strtok(";");
-
-													}
-													?>
-												</ul>
-											</div>
-
-											<div class="col-md-4">
-											</div>
-
-											<div class="col-md-4">
 												<h4 align="center">Services</h4>
 
 												<ul>
@@ -230,6 +224,26 @@ Room Packages
 													}
 													?>
 												</ul>
+											</div>
+
+
+
+
+										</div><!--/row -->
+									</slides>
+										<br>
+									<services>
+
+										<div class="row">
+											<div class="col-md-4">
+
+
+											</div>
+
+											<div class="col-md-4">
+											</div>
+
+											<div class="col-md-4">
 											</div>
 
 										</div>
