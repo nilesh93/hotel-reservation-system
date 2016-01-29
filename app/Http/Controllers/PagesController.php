@@ -1,13 +1,13 @@
 <?php
-
 namespace App\Http\Controllers;
 
-use App\HALL;
-use App\ROOM_TYPE;
-use Illuminate\Http\Request;
 
+use Illuminate\Http\Request;
+use DB;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use App\HALL;
+use App\ROOM_TYPE;
 
 class PagesController extends Controller
 {
@@ -15,7 +15,7 @@ class PagesController extends Controller
      public function halls(){
 
          $halls = HALL::get();
-
+         return "LOL";
          return view('Website.Halls',["halls"=>$halls]);
      }
 

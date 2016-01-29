@@ -12,8 +12,7 @@ class HALL extends Model
 
     protected $primaryKey = 'hall_id';
 
-    public $timestamps  = false;
-
+ 
 
 
 }
