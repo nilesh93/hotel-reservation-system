@@ -17,7 +17,7 @@ Route::get('/', function () {
 
 Route::get('admin', function () {
     return view('Admin.Demo');
-});             
+});
 
 Route::get('/admin', function () {
     return view('Admin.Demo');

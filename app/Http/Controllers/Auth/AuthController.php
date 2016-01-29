@@ -68,7 +68,6 @@ class AuthController extends Controller
     protected function create(array $data)
     {
         $user = User::create([
-            /*'name' => $data['name'],*/
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
             'role' => "guest"
@@ -88,11 +87,11 @@ class AuthController extends Controller
         'country' => $data['country']
     ]);
 
-        // Sends an email to the newly registered Guest user.
-        Mail::send('emails.newUser', ['userData' => $data], function ($message) {
-            $message->from('danurajay@gmail.com', 'Welcome to Amalya Reach!');
+        // Send an email to the newly registered Guest user.
+        Mail::send('emails.newUser', [], function ($message) use ($data) {
+            $message->from(env('MAIL_FROM'), env('MAIL_NAME'));
 
-            $message->to('vishandanura@hotmail.com');
+            $message->to($data['email'])->subject('Welcome to Amalya Reach!');
         });
 
         return $user;
