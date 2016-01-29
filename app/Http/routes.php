@@ -28,6 +28,14 @@ Route::get('/admin', function () {
     return view('Admin.Demo');
 });
 
+
+
+Route::get('/LOL',function(){
+    
+ 
+    return view('webmaster');
+});
+
 /*
 |--------------------------------------------------------------------------
 | Rish Routes
