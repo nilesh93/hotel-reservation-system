@@ -28,6 +28,12 @@ Route::get('/admin', function () {
     return view('Admin.Demo');
 });
 
+Route::get('/contact',function(){
+    
+    return view('Website.contact');
+    
+    
+});
 
 
 Route::get('/LOL',function(){
@@ -89,8 +95,10 @@ Route::get('admin_delete_room', 'RoomController@admin_delete_room');
 Route::get('admin_halls','HallController@halls');
 Route::get('admin_get_halls','HallController@admin_get_halls');
 Route::get('admin_hall_add','HallController@admin_hall_add');
-ROute::get('admin_delete_hall','HallController@admin_delete_hall');
+Route::get('admin_delete_hall','HallController@admin_delete_hall');
 
+
+Route::get('saveinquiry','InquiryController@saveinquiry');
 
 
 /*
@@ -111,6 +119,7 @@ ROute::get('admin_delete_hall','HallController@admin_delete_hall');
 |
 */
 
+// Register & Login routes
 Route::get('auth/login', 'Auth\AuthController@getLogin');
 
 Route::post('auth/login', 'Auth\AuthController@postLogin');
@@ -120,6 +129,16 @@ Route::get('auth/logout', 'Auth\AuthController@getLogout');
 Route::get('auth/register', 'Auth\AuthController@getRegister');
 
 Route::post('auth/register', 'Auth\AuthController@postRegister');
+
+// Password reset link request routes
+Route::get('password/email', 'Auth\PasswordController@getEmail');
+
+Route::post('password/email', 'Auth\PasswordController@postEmail');
+
+// Password reset routes
+Route::get('password/reset/{token}', 'Auth\PasswordController@getReset');
+
+Route::post('password/reset', 'Auth\PasswordController@postReset');
 
 /*
 |

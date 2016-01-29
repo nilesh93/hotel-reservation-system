@@ -26,6 +26,8 @@ class ForeignKeyFromCustomerToUsersTable extends Migration
     {
         Schema::table('CUSTOMER', function (Blueprint $table) {
             //
+             $table->dropForeign('CUSTOMER_email_foreign');
+            
         });
     }
 }

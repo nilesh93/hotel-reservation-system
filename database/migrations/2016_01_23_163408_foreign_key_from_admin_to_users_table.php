@@ -26,6 +26,7 @@ class ForeignKeyFromAdminToUsersTable extends Migration
     {
         Schema::table('ADMIN', function (Blueprint $table) {
             //
+            $table->dropForeign('ADMIN_email_foreign');
         });
     }
 }
