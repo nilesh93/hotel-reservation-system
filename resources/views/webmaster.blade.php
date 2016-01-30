@@ -136,7 +136,7 @@
 											<ul>
 
 												@foreach($halls as $hall)
-												<li><a href="#">{{ $hall->title }}</a></li>
+												<li><a onclick="showModal('{{$hall->hall_id}}hall')">{{ $hall->title }}</a></li>
 												@endforeach
 											</ul>
 										</li>
@@ -364,6 +364,176 @@
 							</modal>
 						@endforeach
 				<!-- /room_type_modals-->
+
+
+				<!-- halls modal -->
+							@foreach($halls as $hall)
+
+								<modal><!-- room -->
+									<div class="modal fade" id="{{$hall->hall_id}}hall">
+										<div class="modal-dialog modal-lg">
+											<div class="modal-content">
+												<div class="modal-header" style="background: cornsilk">
+													<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+													<h3 class="modal-title" align="center">{{ $hall->title }}</h3>
+													<br>
+												</div>
+												<div class="modal-body">
+
+													<slides>
+
+														<div class="row">
+
+															<div class="col-md-3">
+
+																<h4 align="center">Furnishing and Fixtures</h4>
+
+																<ul>
+															<!--	<?php
+																		/*
+																	$token = strtok($room_type->services_provided, ";")
+
+																	?>
+																	<?php
+																	while($token != false)
+																	{
+																		echo "<li >$token<br></li>";
+																		$token = strtok(";");
+
+																	} */
+																	?> -->
+																</ul>
+															</div>
+
+															<div class="col-md-6">
+
+																<br>
+																<br>
+																<br>
+																<br>
+																<br>
+																<div class="carousel slide" id="carousel-{{$hall->hall_id}}hall">
+																	<div class="carousel-inner">
+																		<div class="item active">
+																			<img class="img-thumbnail"alt="Carousel Bootstrap First" src="{{URL::asset('FrontEnd/img/Hall_images/hall1.jpg')}}" width="100%">
+																			<!--	<div class="carousel-caption">
+                                                                                    <h4>
+
+
+                                                                                    </h4>
+                                                                                    <p>
+
+                                                                                    </p>
+                                                                                </div> -->
+																		</div>
+																		<div class="item">
+																			<img class="img-thumbnail" alt="Carousel Bootstrap Second" src="{{URL::asset('FrontEnd/img/Hall_images/hall1.jpg')}}" width="100%">
+																			<div class="carousel-caption">
+																				<h4>
+
+																				</h4>
+																				<p>
+
+																				</p>
+																			</div>
+																		</div>
+
+																	</div>
+
+																	<a class="left carousel-control" href="#carousel-{{$hall->hall_id}}hall" data-slide="prev"><span class="glyphicon glyphicon-chevron-left"></span></a> <a class="right carousel-control" href="#carousel-{{$room_type->room_type_id}}" data-slide="next"><span class="glyphicon glyphicon-chevron-right"></span></a>
+																</div>
+
+															</div>
+
+															<div class="col-md-3">
+
+																<h4 align="center">Services</h4>
+
+															<!--	<ul>
+																	<?php
+																		/*
+																	while($token != false)
+																	{
+																		echo "<li >$token<br></li>";
+																		$token = strtok(";");
+
+																	}*/
+																	?>
+																</ul> -->
+															</div>
+
+
+
+
+														</div><!--/row -->
+													</slides>
+													<br>
+													<services>
+
+														<div class="row">
+															<div class="col-md-4">
+
+
+															</div>
+
+															<div class="col-md-4">
+															</div>
+
+															<div class="col-md-4">
+															</div>
+
+														</div>
+													</services>
+
+												</div>
+
+
+
+												<div class="modal-footer" style="background:cornsilk">
+
+													<div class="row">
+
+														<div class="col-md-4">
+
+															<div align="center">
+																<h4>Area</h4>
+																140m2
+															</div>
+														</div>
+
+														<div class="col-md-4">
+
+															<div align="center">
+																<h4>Capacity</h4>
+																{{ $hall->capacity_from }} - {{ $hall->capacity_to }}
+															</div>
+														</div>
+
+														<div class="col-md-4">
+															<div align="center">
+
+																<h4>Rate</h4>
+																 ¥53,460～
+
+															</div>
+														</div>
+
+													</div>
+													<br>
+
+													<br>
+													<br>
+												</div>
+
+
+
+
+
+											</div>
+										</div>
+									</div>
+								</modal>
+							@endforeach
 
 
 					</div>
