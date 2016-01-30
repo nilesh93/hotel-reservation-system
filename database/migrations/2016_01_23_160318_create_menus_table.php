@@ -27,6 +27,6 @@ class CreateMenusTable extends Migration
      */
     public function down()
     {
-        Schema::drop('ROOMS');
+        Schema::drop('MENUS');
     }
 }

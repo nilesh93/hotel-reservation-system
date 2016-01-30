@@ -1,5 +1,7 @@
 <?php
 
+use App\ROOM_TYPE;
+use App\HALL;
 /*
 |--------------------------------------------------------------------------
 | Application Routes
@@ -12,49 +14,146 @@
 */
 
 Route::get('/', function () {
-    return view('Website.Demo');
+    $room_types = ROOM_TYPE::get();
+    //inorder to load the halls navigation bar list
+    $halls = HALL::get();
+    return view('Website.Demo',["room_types"=>$room_types,"halls"=>$halls]);
 });
 
-
- 
-Route::get('admin_rooms', 'RoomController@rooms');
-
-<<<<<<< HEAD
-Route::get('admin_getrooms', 'RoomController@getrooms');
-Route::get('admin_getroom_types', 'RoomController@getroom_types');
- 
-
-
-Route::get('admin_promotions','PromotionsController@promotions');
-
+Route::get('admin', function () {
+    return view('Admin.Demo');
+});             
 
 Route::get('/admin', function () {
     return view('Admin.Demo');
 });
 
-Route::get('/get-customer', function(){
-	$result = DB::table('promotions')->get();
+
+
+Route::get('/LOL',function(){
     
-    return response()->json(['count' => count($result), 'data' => $result]);
-=======
-
-Route::get('/get-customer', function(){
-	$result = DB::table('promotions')->get();
-	        return response()->json(['count' => count($result), 'data' => $result]);
+ 
+    return view('webmaster');
 });
 
+/*
+|--------------------------------------------------------------------------
+| Rish Routes
+|--------------------------------------------------------------------------
+|
+|
+*/
 
-Route::get('/addpromotion',function() {
+Route::get('/room_packages','PagesController@rooms');
 
-    $promotion_name = Input::get('promo_name');
-    $promotion_description = Input::get('promo_description');
-    $date_from = Input::get('promo_start');
-    $date_to = Input::get('promo_end');
-    $rate = Input::get('promo_rate');
-   
-    DB::table('promotions')->insert(array('promotion_name'=> $promotion_name,'promotion_description'=> $promotion_description,'date_from'=> $date_from,'date_to'=> $date_to,'rate'=> $rate));
-    return 1;
->>>>>>> origin/master
+Route::post('/room_packages/room_availability','RoomAvailabiltyController@check_room_availabilty');
+
+Route::get('/room_packages/room_availability','PagesController@room_availabilty');
+
+Route::get('/halls','PagesController@halls');
 
 
-});
+
+
+/*
+|
+|
+|--------------------------------------------------------------------------
+| End Rish Routes
+|--------------------------------------------------------------------------
+*/
+
+
+
+
+
+
+/*
+|--------------------------------------------------------------------------
+| Nilesh Routes
+|--------------------------------------------------------------------------
+|
+|
+*/
+
+Route::get('admin_rooms', 'RoomController@rooms');
+Route::get('admin_getrooms', 'RoomController@getrooms');
+Route::get('admin_getroom_types', 'RoomController@getroom_types');
+Route::get('admin_room_add', 'RoomController@room_add');
+Route::get('admin_roomtype_add','RoomController@admin_roomtype_add');
+Route::get('admin_delete_room_type','RoomController@delete_room_type');
+Route::get('admin_getRoomNum','RoomController@admin_getRoomNum');
+Route::get('admin_delete_room', 'RoomController@admin_delete_room'); 
+
+
+Route::get('admin_halls','HallController@halls');
+Route::get('admin_get_halls','HallController@admin_get_halls');
+Route::get('admin_hall_add','HallController@admin_hall_add');
+ROute::get('admin_delete_hall','HallController@admin_delete_hall');
+
+
+
+/*
+|
+|
+|--------------------------------------------------------------------------
+| End Nilesh Routes
+|--------------------------------------------------------------------------
+*/
+
+
+
+/*
+|--------------------------------------------------------------------------
+| Vishan Routes
+|--------------------------------------------------------------------------
+|
+|
+*/
+
+Route::get('auth/login', 'Auth\AuthController@getLogin');
+
+Route::post('auth/login', 'Auth\AuthController@postLogin');
+
+Route::get('auth/logout', 'Auth\AuthController@getLogout');
+
+Route::get('auth/register', 'Auth\AuthController@getRegister');
+
+Route::post('auth/register', 'Auth\AuthController@postRegister');
+
+/*
+|
+|
+|--------------------------------------------------------------------------
+| End Vishan Routes
+|--------------------------------------------------------------------------
+*/
+
+
+
+/*
+|--------------------------------------------------------------------------
+| Nipuna Routes
+|--------------------------------------------------------------------------
+|
+|
+*/
+
+
+Route::controller('admin_promotions','PromotionsController');
+Route::controller('admin_menus','MenusController');
+Route::controller('admin_facilities','FacilitiesController');
+Route::get('admin_search/bookings','nipuna_controller@bookings_search');
+Route::get('admin_bookings_search','nipuna_controller@bookings_search_index');
+
+Route::get('admin_rooms_search','nipuna_controller@rooms_search_index');
+Route::get('admin_search/rooms','nipuna_controller@rooms_search');
+
+/*
+|
+|
+|--------------------------------------------------------------------------
+| End Nipuna Routes
+|--------------------------------------------------------------------------
+*/
+

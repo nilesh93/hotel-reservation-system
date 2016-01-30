@@ -15,7 +15,9 @@ class CreateMealTypesTable extends Migration
         Schema::create('MEAL_TYPES', function (Blueprint $table) {
             $table->increments('meal_type_id');
             $table->string('meal_type_name', 100);
-            $table->longText('description');
+            $table->longText('description')->nullable();
+            $table->timestamps();
+            $table->softDeletes();
         });
     }
 
