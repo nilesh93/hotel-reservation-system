@@ -142,6 +142,12 @@ Route::post('auth/register', 'Auth\AuthController@postRegister');
 
 Route::controller('admin_promotions','PromotionsController');
 Route::controller('admin_menus','MenusController');
+Route::controller('admin_facilities','FacilitiesController');
+Route::get('admin_search/bookings','nipuna_controller@bookings_search');
+Route::get('admin_bookings_search','nipuna_controller@bookings_search_index');
+
+Route::get('admin_rooms_search','nipuna_controller@rooms_search_index');
+Route::get('admin_search/rooms','nipuna_controller@rooms_search');
 
 /*
 |
