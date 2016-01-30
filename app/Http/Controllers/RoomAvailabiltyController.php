@@ -120,6 +120,8 @@ class RoomAvailabiltyController extends Controller
 
 
 
+
+
         return view('Website.Rooms_availability',['available_superior'=>$available_superior,'available_deluxe'=>$available_deluxe,
                                         'available_luxury'=>$available_luxury,'available_guest'=>$available_guest]);
     }
