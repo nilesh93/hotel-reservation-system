@@ -10,7 +10,11 @@ Room Packages
 
 @section('css')
 
-
+	<style>
+	input[readonly].default-cursor {
+		cursor: default;
+	}
+	</style>
 
 @endsection
 
@@ -28,7 +32,7 @@ Room Packages
 
 
 
-						<form class="form-horizontal" action="{!! url('/room_packages/room_availability') !!}" method="Post">
+						<form class="form-horizontal" action="{!! url('room_availability') !!}" method="Post">
 							<input type="hidden" name="_token" value="{{ csrf_token() }}">
 
 					<br>
@@ -37,7 +41,7 @@ Room Packages
 						<div class="col-sm-12 col-md-12 col-lg-12">
 
 							<i class="fa fa-calendar"></i>
-								<input type="date" class="form-control" id="datepicker" value="Check In Date" name="check_in" placeholder="Check In Date" />
+								<input type="text"  class="form-control default-cursor" id="datepicker" value="Check In Date" name="check_in" placeholder="Check In Date"  readonly="readonly"  />
 
 						</div><!-- /col-md-12 -->
 					</div><!-- /row -->
@@ -48,7 +52,7 @@ Room Packages
 
 						<div class="col-sm-12 col-md-12 col-lg-12">
 							<i class="fa fa-calendar"></i>
-							<input type="date" class="form-control" Value="Check Out Date" id="datepicker1"  name="check_out" placeholder="Check Out Date" />
+							<input type="text" class="form-control default-cursor" Value="Check Out Date" id="datepicker1"  name="check_out" placeholder="Check Out Date" readonly/>
 
 						</div><!-- /col-md-12 -->
 					</div><!-- /row -->

@@ -16,10 +16,11 @@ namespace App\Http\Controllers;
 use App\RES_RMTYPE_CNT_RATE;
 use App\ROOM_TYPE;
 use App\HALL;
-use Request;
+
+
 use App\ROOM_RESERVATION;
 
-
+use Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
@@ -126,6 +127,23 @@ class RoomAvailabiltyController extends Controller
 
         return view('Website.Rooms_availability',['available_superior'=>$available_superior,'available_deluxe'=>$available_deluxe,
                                         'available_luxury'=>$available_luxury,'available_guest'=>$available_guest,"room_types"=>$room_types]);
+    }
+
+
+
+    function addSelectedRooms()
+    {
+
+        $inputs = Request::all();
+
+        $room_type_id = $inputs['room_type_id'];
+        $room_type_name = $inputs['room_type_name'];
+        $no_of_rooms = $inputs['no_of_rooms'];
+
+
+        return response()->json(['room_type_id' => $room_type_id,'room_type_name'=>$room_type_name,'no_of_rooms'=>$no_of_rooms]);
+
+
     }
 
 }

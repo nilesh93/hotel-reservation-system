@@ -12,7 +12,11 @@ Available Rooms
 
 
 @section('css')
-
+	<style>
+		input[readonly].default-cursor {
+			cursor: default;
+		}
+	</style>
 
 @endsection
 
@@ -32,7 +36,7 @@ Available Rooms
 
 
 
-				<form class="form-horizontal" action="{!! url('/room_packages/room_availability') !!}" method="Post">
+				<form class="form-horizontal" action="{!! url('room_availability') !!}" method="Post">
 					<input type="hidden" name="_token" value="{{ csrf_token() }}">
 
 					<br>
@@ -41,7 +45,7 @@ Available Rooms
 						<div class="col-sm-12 col-md-12 col-lg-12">
 
 							<i class="fa fa-calendar"></i>
-							<input type="date" class="form-control" id="datepicker" value="Check In Date" name="check_in" placeholder="Check In Date" />
+							<input type="text"  class="form-control default-cursor" id="datepicker" value="Check In Date" name="check_in" placeholder="Check In Date"  readonly="readonly"  />
 
 						</div><!-- /col-md-12 -->
 					</div><!-- /row -->
@@ -52,7 +56,7 @@ Available Rooms
 
 						<div class="col-sm-12 col-md-12 col-lg-12">
 							<i class="fa fa-calendar"></i>
-							<input type="date" class="form-control" Value="Check Out Date" id="datepicker1"  name="check_out" placeholder="Check Out Date" />
+							<input type="text" class="form-control default-cursor" Value="Check Out Date" id="datepicker1"  name="check_out" placeholder="Check Out Date" readonly/>
 
 						</div><!-- /col-md-12 -->
 					</div><!-- /row -->
@@ -112,10 +116,21 @@ Available Rooms
 			</div>
 		</div>
 	</div> <!-- /row -->
+
+
 	<br>
 	<br>
+
+	<div class="row">
+
+
+		<div id="myBooking" class="col-md-12">
+
+		</div>
+
+	</div>
 	<br>
-	<br>
+
 
 
 	<div class="row">
@@ -123,6 +138,15 @@ Available Rooms
 		<div class="col-md-12">
 
 			@foreach($room_types as $room_type)
+
+
+				<?php
+					$ratefrom = DB::table('RATES')
+								->where('room_type_id','=',$room_type->room_type_id)
+								->min('single_rates');
+
+
+				?>
 
 			<div class="col-md-6">
 
@@ -133,28 +157,126 @@ Available Rooms
 							<div class="col-sm-6 col-md-6 col-lg-6">
 
 								<span>Discover our</span>
-								<h3 class="room-title"><a href="#">{{ $room_type->type_name }}</a></h3>
+								<h3 class="room-title"><a onclick="showModal({{$room_type->room_type_id}})">{{ $room_type->type_name }}</a></h3>
 								<span>from</span>
-								<span class="room-cost"> $198</span>
+								<span class="room-cost"> ${{ $ratefrom }}</span>
 
 								<p>
 									<b>Available Rooms : {{ $available_superior }}</b>
 								</p>
 
-								<a type="button" class="btn btn-primary">Select</a>
+								<a type="button"  onclick='showModalRoomSelector("{{ $room_type->room_type_id }}select")' class="btn btn-primary">Select</a>
 
 
-							<!--	<div class="room-post-person">
+								<div class="room-post-person">
 									<span class="serif-font">max </span>
 									<span class="glyphicon glyphicon-user"></span>
-									<span style="font-size:18px;">x <small>2 per room</small></span>
-								</div><!-- /room-post-person -->
+									<span style="font-size:18px;">x <small>3 per room</small></span>
+								</div>
 
 							</div><!-- /end nine columns -->
 
 						</article><!-- /article -->
 
 			</div><!-- /col-md-6 -->
+
+
+			<?php
+					$mealtypeRates = DB::table('RATES')
+									->join('MEAL_TYPES','RATES.meal_type_id','=','MEAL_TYPES.meal_type_id')
+									->where('RATES.room_type_id','=',$room_type->room_type_id)
+									->select('MEAL_TYPES.meal_type_name','RATES.rate_code','RATES.single_rates')
+									->get();
+
+					?>
+
+
+				<modal><!-- room_select_modal -->
+					<div class="modal fade" id="{{$room_type->room_type_id}}select">
+						<div class="modal-dialog ">
+							<div class="modal-content">
+								<div class="modal-header" style="background: azure">
+									<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+									<h3 class="modal-title" align="center">{{ $room_type->type_name }}</h3>
+									<br>
+								</div>
+
+								<form id="{{ $room_type->room_type_id }}roomselect" onsubmit="return selectRooms({{ $room_type->room_type_id }})">
+
+									<div class="modal-body">
+
+
+											<input type="hidden" name="_token" value="{{ csrf_token() }}">
+											<input type="hidden" name="room_type_id" value="{{ $room_type->room_type_id }}">
+											<input type="hidden" name="room_type_name" value="{{ $room_type->type_name }}">
+
+											<div class="row">
+												<div class="col-md-6 col-sm-6">
+													<label for="no_of_rooms"  style="font-size: large">
+														No. of Rooms
+													</label>
+												</div>
+
+												<div class="col-md-6 col-sm-6">
+													<select class="form-control"  name="no_of_rooms" id="no_of_rooms">
+														{{--@if ($errors->has('code')) <p class="help-block" style="color:red">{{ $errors->first('code') }}</p> @endif--}}
+														<option value=1>1</option>
+
+														@for($i=2;$i<=$available_superior;$i++)
+															<option value={{ $i}} @if(old('no_of_rooms')==$i ) selected="selected"@endif>{{$i}}</option>
+														@endfor
+													</select>
+
+
+												</div>
+
+											</div><!-- /row -->
+
+
+											<div class="row">
+
+												<div class="col-md-6 col-sm-6" style="margin-top: 3%">
+													<label for="stay_type"  style="font-size: large">
+														Meal type
+													</label>
+												</div>
+
+												<div class="col-md-6 col-sm-6" style="margin-top: 3%">
+													<select class="form-control"  name="rate_code" id="rate_code">
+
+														<option value="Select Meal Type">Select Meal Type </option>
+														@foreach($mealtypeRates as $mealtypeRate)
+															<option value="{{ $mealtypeRate->rate_code }}">{{ $mealtypeRate->meal_type_name }} : ${{ $mealtypeRate->single_rates }}</option>
+
+														@endforeach
+													</select>
+
+												</div>
+											</div><!-- /row -->
+
+
+
+									</div>
+
+
+
+									<div class="modal-footer" style="background:azure">
+
+										<button type="button" class="btn btn-white" data-dismiss="modal">Close</button>
+										<button type="submit" class="btn btn-primary">Save changes</button>
+
+										<br>
+									</div>
+
+								</form>
+
+
+
+
+							</div>
+						</div>
+					</div>
+				</modal>
 
 			@endforeach
 
@@ -175,9 +297,6 @@ Available Rooms
 	<br>
 
 
-	<script src="{{URL::asset('FrontEnd/js/vendor/jquery-1.11.0.min.js')}}"></script>
-	<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
-	<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
 
 @endsection
 
@@ -187,6 +306,44 @@ Available Rooms
 @section('js')
 
 <script>
+
+	function selectRooms(id){
+
+
+
+		var divid = id+"roomselect";
+		var modalid = id+"select"
+
+
+
+		$.ajax({
+			type: "get",
+			url: 'select_room_add',
+			data: $('#'+divid).serialize(),
+
+
+			success:function(data){
+
+				swal('Success','Successfully Added!', 'success');
+				$('#'+modalid).modal('hide');
+
+				document.getElementById("myBooking").innerHTML = '<h1 align="center">My Booking<h1><hr><div align="center"><div class="checkout-info row"><div class="col-sm-3 col-md-3 col-lg-3"><span class="checkout-title">Room: '+data.room_type_name+'</span><span class="checkout-value"></span></div><!-- /col-3 --><div class="col-sm-3 col-md-3 col-lg-3"><span class="checkout-title">No. of rooms: '+data.no_of_rooms+'</span><span class="checkout-value"></span></div><!-- /col-3 --><div class="col-sm-3 col-md-3 col-lg-3"><span class="checkout-title">Check in:</span><span class="checkout-value">02-07-2014</span></div><!-- /col-3 --><div class="col-sm-3 col-md-3 col-lg-3"><span class="checkout-title">Check out:</span><span class="checkout-value">08-07-2014</span></div><!-- /col-3 --></div></div><hr>';
+
+			},
+
+
+			error: function(xhr, ajaxOptions, thrownError) {
+				console.log(thrownError);
+			}
+		});
+
+
+
+		return false;
+
+
+	}
+
 
 	//datepicker
 	$("#datepicker").datepicker({
@@ -280,12 +437,19 @@ Available Rooms
 
 		}
 	});
-function hello(){
-    
-   alert("Refer the coding to see where javascript should be written you fucktard!"); 
-    
-    
-}
+
+
+
+	function showModalRoomSelector(id){
+
+
+		var temp = '#'+id;
+
+		$(temp).modal('show');
+
+
+	}
+
 
 
 </script>
