@@ -50,13 +50,17 @@ Route::get('/LOL',function(){
 |
 */
 
-Route::get('/room_packages','PagesController@rooms');
 
-Route::post('/room_packages/room_availability','RoomAvailabiltyController@check_room_availabilty');
+Route::get('select_room_add','RoomAvailabiltyController@addSelectedRooms');
 
-Route::get('/room_packages/room_availability','PagesController@room_availabilty');
+Route::get('room_packages','PagesController@rooms');
 
-Route::get('/halls','PagesController@halls');
+Route::post('room_availability','RoomAvailabiltyController@check_room_availabilty');
+
+/*Route::get('room_packages/room_availability','PagesController@available_rooms');*/
+
+Route::get('halls','PagesController@halls');
+
 
 
 
