@@ -53,6 +53,10 @@ Route::get('/LOL',function(){
 
 Route::get('select_room_add','RoomAvailabiltyController@addSelectedRooms');
 
+Route::get('delete_selected_room_type','RoomAvailabiltyController@delSelectedRoom_type');
+
+Route::get('loadBooking','RoomAvailabiltyController@loadMyBooking');
+
 Route::get('room_packages','PagesController@rooms');
 
 Route::post('room_availability','RoomAvailabiltyController@check_room_availabilty');
@@ -60,6 +64,11 @@ Route::post('room_availability','RoomAvailabiltyController@check_room_availabilt
 /*Route::get('room_packages/room_availability','PagesController@available_rooms');*/
 
 Route::get('halls','PagesController@halls');
+
+Route::get('payment','PagesController@makePayment');
+
+
+
 
 
 

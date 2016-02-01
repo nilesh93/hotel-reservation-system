@@ -26,6 +26,11 @@ Available Rooms
 
 
 @section('content')
+
+
+
+
+
 	<div class="row">
 		<div class="col-md-12">
 
@@ -121,12 +126,14 @@ Available Rooms
 	<br>
 	<br>
 
-	<div class="row">
 
 
-		<div id="myBooking" class="col-md-12">
 
-		</div>
+
+		<div class="row">
+			<div id="myBooking">
+
+			</div>
 
 	</div>
 	<br>
@@ -242,9 +249,9 @@ Available Rooms
 												</div>
 
 												<div class="col-md-6 col-sm-6" style="margin-top: 3%">
-													<select class="form-control"  name="rate_code" id="rate_code">
+													<select class="form-control"  name="{{ $room_type->room_type_id }}rate_code" id="{{ $room_type->room_type_id }}rate_code">
 
-														<option value="Select Meal Type">Select Meal Type </option>
+														<option value=0>Select Meal Type </option>
 														@foreach($mealtypeRates as $mealtypeRate)
 															<option value="{{ $mealtypeRate->rate_code }}">{{ $mealtypeRate->meal_type_name }} : ${{ $mealtypeRate->single_rates }}</option>
 
@@ -305,6 +312,17 @@ Available Rooms
 
 @section('js')
 
+	@if(Session::has('room_types'))
+		<script>
+
+			$(document).ready(function(){
+				loadMybooking();
+			});
+
+		</script>
+	@endif
+
+
 <script>
 
 	function selectRooms(id){
@@ -312,30 +330,51 @@ Available Rooms
 
 
 		var divid = id+"roomselect";
-		var modalid = id+"select"
+		var modalid = id+"select";
+
+
+		var rate_code_value = document.getElementById(id+'rate_code').value;
+
+		if(rate_code_value != 0)
+		{
+
+			$.ajax({
+				type: "get",
+				url: 'select_room_add',
+				data: $('#'+divid).serialize(),
+
+
+				success:function(data){
+
+					swal('Success','Successfully Added!', 'success');
+					$('#'+modalid).modal('hide');
+					loadMybooking();
 
 
 
-		$.ajax({
-			type: "get",
-			url: 'select_room_add',
-			data: $('#'+divid).serialize(),
+				},
 
 
-			success:function(data){
-
-				swal('Success','Successfully Added!', 'success');
-				$('#'+modalid).modal('hide');
-
-				document.getElementById("myBooking").innerHTML = '<h1 align="center">My Booking<h1><hr><div align="center"><div class="checkout-info row"><div class="col-sm-3 col-md-3 col-lg-3"><span class="checkout-title">Room: '+data.room_type_name+'</span><span class="checkout-value"></span></div><!-- /col-3 --><div class="col-sm-3 col-md-3 col-lg-3"><span class="checkout-title">No. of rooms: '+data.no_of_rooms+'</span><span class="checkout-value"></span></div><!-- /col-3 --><div class="col-sm-3 col-md-3 col-lg-3"><span class="checkout-title">Check in:</span><span class="checkout-value">02-07-2014</span></div><!-- /col-3 --><div class="col-sm-3 col-md-3 col-lg-3"><span class="checkout-title">Check out:</span><span class="checkout-value">08-07-2014</span></div><!-- /col-3 --></div></div><hr>';
-
-			},
+				error: function(xhr, ajaxOptions, thrownError) {
+					console.log(thrownError);
+				}
+			});
 
 
-			error: function(xhr, ajaxOptions, thrownError) {
-				console.log(thrownError);
-			}
-		});
+		}
+		else{
+			swal({
+				title: "<div class='alert alert-danger'> <strong>Warning! </strong> </div>",
+				text: "<span style='color:#ff2222'>Select a Meal Type<span>",
+				html: true });
+
+
+		}
+
+
+
+
+
 
 
 
@@ -343,6 +382,165 @@ Available Rooms
 
 
 	}
+
+	function delroomtype(id)
+	{
+
+
+		swal({
+					title: "Remove?",
+					text: "",
+					type: "warning",
+					showCancelButton: true,
+					confirmButtonColor: "#DD6B55",
+					confirmButtonText: "Remove",
+					cancelButtonText: "Cancel",
+					closeOnConfirm: false},
+				function(isConfirm){   if (isConfirm) {
+
+					$.ajax({
+						type:'get',
+						url:'delete_selected_room_type',
+						data: {
+							room_type_id:id
+						},
+
+
+						success:function(data){
+							loadMybooking();
+							swal("Deleted!", "", "success");
+
+						},
+
+
+						error: function(xhr, ajaxOptions, thrownError) {
+							console.log(thrownError);
+
+							swal("Ooops!", "Something Went Wrong! ("+thrownError+")", "error");
+						}
+
+
+
+
+					});
+
+
+
+
+				} });
+
+
+
+
+		return false;
+
+	}
+
+
+
+
+
+
+
+	function loadMybooking(){
+
+		$.ajax({
+
+
+			type:'get',
+			url:'loadBooking',
+
+
+
+			success:function(data){
+
+
+				var body ='';
+				var total = 0;
+
+
+
+				if(data.room_types.length !=0) {
+					for (var i = 0; i < data.room_types.length; i++) {
+
+						body += '<div class="row">' +
+								'<div class="col-md-12">' + '' +
+								'<div align="center">' +
+								'<div class="checkout-info row">' +
+								'<div class="col-sm-3 col-md-3 col-lg-3">' +
+								'<span class="checkout-title">' + data.room_types[i] + '</span>' +
+								'<span class="checkout-value"></span>' +
+								'</div><!-- /col-3 -->' +
+
+								'<div class="col-sm-2 col-md-2 col-lg-2">' +
+								'<span class="checkout-title">' + data.no_of_rooms[i] + '</span>' +
+								'<span class="checkout-value"></span>' +
+								'</div><!-- /col-3 -->' +
+
+								'<div class="col-sm-2 col-md-2 col-lg-2">' +
+								'<span class="checkout-title">' + data.meals[i] + '</span>' +
+								'<span class="checkout-value"></span>' +
+								'</div><!-- /col-3 -->' +
+
+								'<div class="col-sm-2 col-md-2 col-lg-2">' +
+								'<span class="checkout-title">' + data.rates[i] + '</span>' +
+								'<span class="checkout-value"></span>' +
+								'</div> <!-- /col-3 -->' +
+
+								'<div class="col-sm-2 col-md-2 col-lg-2">' +
+								'<span class="checkout-title">' + data.rates[i] * data.no_of_rooms[i] + '</span>' +
+								'<span class="checkout-value"></span>' +
+								'</div><!-- /col-2 -->' +
+
+								'<div class="col-sm-1 col-md-1 col-lg-1">' +
+								'<span class="checkout-title">' +
+								'<button onclick="showModalTypeSelector(' + data.ids[i] + ')" type="button" class="btn-primary btn-xs">' +
+								'<i class="glyphicon glyphicon-edit"></i>' +
+								'</button>  ' +
+								'<button onclick="return delroomtype(' + data.ids[i] + ')" type="button" class="btn-primary btn-xs">' +
+								'<i class="glyphicon glyphicon-trash"></i>' +
+								'</button></span>' +
+								'<span class="checkout-value"></span>' +
+								'</div><!-- /col-2 -->' +
+								'</div>' +
+								'</div>' +
+								'</div>' +
+								'</div>'
+
+						total += data.rates[i] * data.no_of_rooms[i];
+
+
+					}
+
+					var begin = '<h1 align="center">My Booking</h1><hr><div align="center"><div class="checkout-info row"><div class="col-sm-3 col-md-3 col-lg-3"><span class="checkout-title">Room Type</span><span class="checkout-value"></span></div><!-- /col-3 --><div class="col-sm-2 col-md-2 col-lg-2"><span class="checkout-title">No. of rooms</span><span class="checkout-value"></span></div><!-- /col-2 --><div class="col-sm-2 col-md-2 col-lg-2"><span class="checkout-title">Meal Type</span><span class="checkout-value"></span></div><!-- /col-3 --><div class="col-sm-2 col-md-2 col-lg-2"><span class="checkout-title">Rates ($)</span><span class="checkout-value"></span></div><!-- /col-3 --><div class="col-sm-2 col-md-2 col-lg-2"><span class="checkout-title">Line Total ($)</span><span class="checkout-value"></span></div><!-- /col-2 --><div class="col-sm-1 col-md-1 col-lg-1"><span class="checkout-title"></span><span class="checkout-value"></span></div><!-- /col-2 --></div></div><hr>';
+
+
+					var end = '<div class="col-md-12"><hr><div class="col-md-3"><button style="width: 60%;" type="button" class="btn-primary btn-lg">Cancel</button></div><div class="col-md-6"><h2 align="center"><b>Total($) : ' + total + '</b><h2></div><div class="col-md-3" align="right"><button type="button" class="btn-primary btn-lg">Make Payments</button></div><hr></div>'
+
+
+					document.getElementById("myBooking").innerHTML = begin + body + end;
+
+				}
+				else{
+					document.getElementById("myBooking").innerHTML = '';
+
+
+				}
+
+
+			},
+
+
+			error: function(xhr, ajaxOptions, thrownError) {
+				console.log(thrownError);
+			}
+
+
+
+		});
+
+	}
+
 
 
 	//datepicker
@@ -444,6 +642,17 @@ Available Rooms
 
 
 		var temp = '#'+id;
+
+		$(temp).modal('show');
+
+
+	}
+
+
+	function showModalTypeSelector(id){
+
+
+		var temp = '#'+id+'select';
 
 		$(temp).modal('show');
 
