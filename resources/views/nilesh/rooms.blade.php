@@ -508,7 +508,7 @@ ROOM MANAGEMENT
                     success : function(data){
 
 
-                        swal("Deleted!", "", "success");  
+                        swal("Removed!", "", "success");
                         dataLoad();    
 
                     },

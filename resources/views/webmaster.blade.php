@@ -819,8 +819,6 @@
 
 		<script src="{{URL::asset('FrontEnd/js/weather.js')}}"></script>
 
-
-
 		<script>
 
 			$('document').ready(function(){
@@ -839,16 +837,16 @@
 						document.getElementById("weatherid").setAttribute("class","icon-rain-1");
 
 					}else if(current.data.list[0].weather[0].main == "Clouds"){
-						
+
 						document.getElementById("weatherid").removeAttribute("class","");
 						document.getElementById("weatherid").setAttribute("class","icon-cloud-1");
-						
+
 					}
 					else{
-						
+
 						document.getElementById("weatherid").removeAttribute("class","");
 						document.getElementById("weatherid").setAttribute("class","icon-sun-1");
-						
+
 					}
 				});
 
@@ -869,6 +867,8 @@
 
 			});
 		</script>
+
+
 		@yield('js')
 
 

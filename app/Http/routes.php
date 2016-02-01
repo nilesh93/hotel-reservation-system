@@ -53,6 +53,10 @@ Route::get('/LOL',function(){
 
 Route::get('select_room_add','RoomAvailabiltyController@addSelectedRooms');
 
+Route::get('delete_selected_room_type','RoomAvailabiltyController@delSelectedRoom_type');
+
+Route::get('loadBooking','RoomAvailabiltyController@loadMyBooking');
+
 Route::get('room_packages','PagesController@rooms');
 
 Route::post('room_availability','RoomAvailabiltyController@check_room_availabilty');
@@ -60,6 +64,11 @@ Route::post('room_availability','RoomAvailabiltyController@check_room_availabilt
 /*Route::get('room_packages/room_availability','PagesController@available_rooms');*/
 
 Route::get('halls','PagesController@halls');
+
+Route::get('payment','PagesController@makePayment');
+
+
+
 
 
 
@@ -165,6 +174,12 @@ Route::post('password/reset', 'Auth\PasswordController@postReset');
 
 Route::controller('admin_promotions','PromotionsController');
 Route::controller('admin_menus','MenusController');
+Route::controller('admin_facilities','FacilitiesController');
+Route::get('admin_search/bookings','nipuna_controller@bookings_search');
+Route::get('admin_bookings_search','nipuna_controller@bookings_search_index');
+
+Route::get('admin_rooms_search','nipuna_controller@rooms_search_index');
+Route::get('admin_search/rooms','nipuna_controller@rooms_search');
 
 /*
 |
