@@ -53,7 +53,7 @@
 <![endif]-->
 
 		<!-- CUSTOM JavaScript so you can use jQuery or $ before it has been loaded in the footer. -->
-		<!-- <script>(function(w,d,u){w.readyQ=[];w.bindReadyQ=[];function p(x,y){if(x=="ready"){w.bindReadyQ.push(y);}else{w.readyQ.push(x);}};var a={ready:p,bind:p};w.$=w.jQuery=function(f){if(f===d||f===u){return a}else{p(f)}}})(window,document)</script>-->
+	<!--	 <script>(function(w,d,u){w.readyQ=[];w.bindReadyQ=[];function p(x,y){if(x=="ready"){w.bindReadyQ.push(y);}else{w.readyQ.push(x);}};var a={ready:p,bind:p};w.$=w.jQuery=function(f){if(f===d||f===u){return a}else{p(f)}}})(window,document)</script> -->
 	</head>
 
 	<body>
@@ -136,7 +136,7 @@
 											<ul>
 
 												@foreach($halls as $hall)
-												<li><a href="#">{{ $hall->title }}</a></li>
+												<li><a onclick="showModal('{{$hall->hall_id}}hall')">{{ $hall->title }}</a></li>
 												@endforeach
 											</ul>
 										</li>
@@ -145,12 +145,12 @@
 											<ul>
 
 												@foreach($roomtypes as $roomtype)
-												<li><a href="#">{{ $roomtype->type_name}}</a></li>
+												<li><a onclick="showModal({{$roomtype->room_type_id}})">{{ $roomtype->type_name}}</a></li>
 												@endforeach
 											</ul>
 										</li>
 
-										<li><a href="/">Home</a>
+										<li><a href="{!! url('/') !!}">Home</a>
 											<ul>
 												<li><a href="#">Home Version 1</a></li>
 												<li><a href="#">Home Version 2</a></li>
@@ -161,16 +161,385 @@
 								</nav>
 							</div><!-- /8 columns -->
 
+
 						</div>				</div><!-- /row -->
 				</div><!-- /container -->
 			</header><!-- /main-header -->
 
 
 
+					<div class="container-fluid">
+					@yield('content')
 
-			<div class="container-fluid">
-				@yield('content')
-			</div>
+
+						<!-- room_type_modals_to _load_in_any_page-->
+						@foreach($roomtypes as $room_type)
+
+							<modal><!-- room -->
+								<div class="modal fade" id="{{$room_type->room_type_id}}">
+									<div class="modal-dialog modal-lg">
+										<div class="modal-content">
+											<div class="modal-header" style="background: cornsilk">
+												<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+												<h3 class="modal-title" align="center">{{ $room_type->type_name }}</h3>
+												<br>
+											</div>
+											<div class="modal-body">
+
+												<slides>
+
+													<div class="row">
+
+														<div class="col-md-3">
+
+															<h4 align="center">Furnishing and Fixtures</h4>
+
+															<ul>
+																<?php
+
+																$token = strtok($room_type->services_provided, ";")
+
+																?>
+																<?php
+																while($token != false)
+																{
+																	echo "<li >$token<br></li>";
+																	$token = strtok(";");
+
+																}
+																?>
+															</ul>
+														</div>
+
+														<div class="col-md-6">
+
+															<br>
+															<br>
+															<br>
+															<br>
+															<br>
+															<div class="carousel slide" id="carousel-{{$room_type->room_type_id}}">
+																<div class="carousel-inner">
+																	<div class="item active">
+																		<img class="img-thumbnail"alt="Carousel Bootstrap First" src="{{URL::asset('FrontEnd/img/superior_rooms/superior1.png')}}" width="100%">
+																		<!--	<div class="carousel-caption">
+                                                                                <h4>
+
+
+                                                                                </h4>
+                                                                                <p>
+
+                                                                                </p>
+                                                                            </div> -->
+																	</div>
+																	<div class="item">
+																		<img class="img-thumbnail" alt="Carousel Bootstrap Second" src="{{URL::asset('FrontEnd/img/superior_rooms/superior2.png')}}" width="100%">
+																		<div class="carousel-caption">
+																			<h4>
+
+																			</h4>
+																			<p>
+
+																			</p>
+																		</div>
+																	</div>
+
+																</div>
+
+																<a class="left carousel-control" href="#carousel-{{$room_type->room_type_id}}" data-slide="prev"><span class="glyphicon glyphicon-chevron-left"></span></a> <a class="right carousel-control" href="#carousel-{{$room_type->room_type_id}}" data-slide="next"><span class="glyphicon glyphicon-chevron-right"></span></a>
+															</div>
+
+														</div>
+
+														<div class="col-md-3">
+
+															<h4 align="center">Services</h4>
+
+															<ul>
+																<?php
+																while($token != false)
+																{
+																	echo "<li >$token<br></li>";
+																	$token = strtok(";");
+
+																}
+																?>
+															</ul>
+														</div>
+
+
+
+
+													</div><!--/row -->
+												</slides>
+												<br>
+												<services>
+
+													<div class="row">
+														<div class="col-md-4">
+
+
+														</div>
+
+														<div class="col-md-4">
+														</div>
+
+														<div class="col-md-4">
+														</div>
+
+													</div>
+												</services>
+
+											</div>
+
+
+
+											<div class="modal-footer" style="background:cornsilk">
+
+												<div class="row">
+
+													<div class="col-md-4">
+
+														<div align="center">
+															<h4>Area</h4>
+															40m2
+														</div>
+													</div>
+
+													<div class="col-md-4">
+
+														<div align="center">
+															<h4>Bed</h4>
+															110～120×215cm　x2
+														</div>
+													</div>
+
+													<div class="col-md-4">
+														<div align="center">
+
+															<h4>Rate</h4>
+															Single Occupancy from ¥53,460～
+															Double Occupancy from ¥58,860～
+														</div>
+													</div>
+
+												</div>
+												<br>
+												<div class="row">
+
+													<div class="col-md-4">
+														<div align="center">
+															<h4>Extra Bed</h4>
+															¥5,400
+														</div>
+
+													</div>
+
+													<div class="col-md-4">
+														<div align="center">
+															<h4>Chenk In</h4>
+															14:00
+														</div>
+													</div>
+
+													<div class="col-md-4">
+														<div align="center">
+															<h4 >Check Out</h4>
+															12:00
+														</div>
+													</div>
+
+												</div>
+												<br>
+												<br>
+											</div>
+
+
+
+
+
+										</div>
+									</div>
+								</div>
+							</modal>
+						@endforeach
+				<!-- /room_type_modals-->
+
+
+				<!-- halls modal -->
+							@foreach($halls as $hall)
+
+								<modal><!-- room -->
+									<div class="modal fade" id="{{$hall->hall_id}}hall">
+										<div class="modal-dialog modal-lg">
+											<div class="modal-content">
+												<div class="modal-header" style="background: cornsilk">
+													<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+													<h3 class="modal-title" align="center">{{ $hall->title }}</h3>
+													<br>
+												</div>
+												<div class="modal-body">
+
+													<slides>
+
+														<div class="row">
+
+															<div class="col-md-3">
+
+																<h4 align="center">Furnishing and Fixtures</h4>
+
+																<ul>
+															<!--	<?php
+																		/*
+																	$token = strtok($room_type->services_provided, ";")
+
+																	?>
+																	<?php
+																	while($token != false)
+																	{
+																		echo "<li >$token<br></li>";
+																		$token = strtok(";");
+
+																	} */
+																	?> -->
+																</ul>
+															</div>
+
+															<div class="col-md-6">
+
+																<br>
+																<br>
+																<br>
+																<br>
+																<br>
+																<div class="carousel slide" id="carousel-{{$hall->hall_id}}hall">
+																	<div class="carousel-inner">
+																		<div class="item active">
+																			<img class="img-thumbnail"alt="Carousel Bootstrap First" src="{{URL::asset('FrontEnd/img/Hall_images/hall1.jpg')}}" width="100%">
+																			<!--	<div class="carousel-caption">
+                                                                                    <h4>
+
+
+                                                                                    </h4>
+                                                                                    <p>
+
+                                                                                    </p>
+                                                                                </div> -->
+																		</div>
+																		<div class="item">
+																			<img class="img-thumbnail" alt="Carousel Bootstrap Second" src="{{URL::asset('FrontEnd/img/Hall_images/hall1.jpg')}}" width="100%">
+																			<div class="carousel-caption">
+																				<h4>
+
+																				</h4>
+																				<p>
+
+																				</p>
+																			</div>
+																		</div>
+
+																	</div>
+
+																	<a class="left carousel-control" href="#carousel-{{$hall->hall_id}}hall" data-slide="prev"><span class="glyphicon glyphicon-chevron-left"></span></a> <a class="right carousel-control" href="#carousel-{{$room_type->room_type_id}}" data-slide="next"><span class="glyphicon glyphicon-chevron-right"></span></a>
+																</div>
+
+															</div>
+
+															<div class="col-md-3">
+
+																<h4 align="center">Services</h4>
+
+															<!--	<ul>
+																	<?php
+																		/*
+																	while($token != false)
+																	{
+																		echo "<li >$token<br></li>";
+																		$token = strtok(";");
+
+																	}*/
+																	?>
+																</ul> -->
+															</div>
+
+
+
+
+														</div><!--/row -->
+													</slides>
+													<br>
+													<services>
+
+														<div class="row">
+															<div class="col-md-4">
+
+
+															</div>
+
+															<div class="col-md-4">
+															</div>
+
+															<div class="col-md-4">
+															</div>
+
+														</div>
+													</services>
+
+												</div>
+
+
+
+												<div class="modal-footer" style="background:cornsilk">
+
+													<div class="row">
+
+														<div class="col-md-4">
+
+															<div align="center">
+																<h4>Area</h4>
+																140m2
+															</div>
+														</div>
+
+														<div class="col-md-4">
+
+															<div align="center">
+																<h4>Capacity</h4>
+																{{ $hall->capacity_from }} - {{ $hall->capacity_to }}
+															</div>
+														</div>
+
+														<div class="col-md-4">
+															<div align="center">
+
+																<h4>Rate</h4>
+																 ¥53,460～
+
+															</div>
+														</div>
+
+													</div>
+													<br>
+
+													<br>
+													<br>
+												</div>
+
+
+
+
+
+											</div>
+										</div>
+									</div>
+								</modal>
+							@endforeach
+
+
+					</div>
+
+
+				 
 
 			<div class="footerbox" style="margin-top:1%">
 				<div class="container">
@@ -274,8 +643,8 @@
 							<img src="{{URL::asset('FrontEnd/img/amalya-logo.png')}}" alt="">
 							<br>
 							<br>
-							<p>Vivamus lacus libero, ultrices and well non ullamcorper as, tempus sit amer enim. Suspendisse at supermarket and semper ispum Suspeat all web design</p>
-							<p>Vivamus lacus libero, ultrices and well non ullamcorper as, tempus sit amer enim.</p>
+							<p>Amalya Reach resort situated in homagama on morgahahena road away from 26km from Colombo this hotel can be accommodate up to 750 guests on a function.</p>
+							<p>Well trained staff to give you the best services to experience the difference with us</p>
 						</div><!-- /col-md-3 -->
 						<div class="col-sm-3 col-md-3 col-lg-3">
 							<div class="widget widget-latest-posts">
@@ -431,13 +800,24 @@
 		<!-- Sweet Alert -->
 		<script src="{{URL::asset('FrontEnd/sweetalert/sweetalert.min.js')}}"></script>
 
+
+		<script>
+			function showModal(id){
+
+
+				var temp = '#'+id;
+
+				$(temp).modal('show');
+
+
+			}
+		</script>
+
 		<script src="{{URL::asset('FrontEnd/js/jquery.simpleWeather.js')}}"></script>
 
 		<script src="{{URL::asset('FrontEnd/js/sugar.js')}}"></script>
 
 		<script src="{{URL::asset('FrontEnd/js/weather.js')}}"></script>
-
-
 
 		<script>
 
@@ -457,16 +837,16 @@
 						document.getElementById("weatherid").setAttribute("class","icon-rain-1");
 
 					}else if(current.data.list[0].weather[0].main == "Clouds"){
-						
+
 						document.getElementById("weatherid").removeAttribute("class","");
 						document.getElementById("weatherid").setAttribute("class","icon-cloud-1");
-						
+
 					}
 					else{
-						
+
 						document.getElementById("weatherid").removeAttribute("class","");
 						document.getElementById("weatherid").setAttribute("class","icon-sun-1");
-						
+
 					}
 				});
 
@@ -487,6 +867,8 @@
 
 			});
 		</script>
+
+
 		@yield('js')
 
 
