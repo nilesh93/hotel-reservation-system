@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Auth;
 
 use App\User;
 use App\Customer;
+use App\Admin;
+use Carbon\Carbon;
 use Validator;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
@@ -107,6 +109,10 @@ class AuthController extends Controller
     {
         if(Auth::check()){
             if(Auth::user()->role == "admin") {
+
+                // If user is an admin, last_login_ts field in ADMIN table is updated
+                Admin::where('email', Auth::user()->email)
+                    ->update(['last_login_ts' => Carbon::now()]);
 
                 return redirect('/admin');
             }

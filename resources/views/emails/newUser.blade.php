@@ -1,25 +1,45 @@
-@extends('webmaster')
+<!DOCTYPE html>
+<html lang="en">
 
-@section('title')
-    Welcome to Amalya Reach!
-@endsection
+<head>
+    <!-- Fonts -->
+    <link href='http://fonts.googleapis.com/css?family=Playfair+Display|Sintony:400,700' rel='stylesheet' type='text/css'>
 
-@section('css')
-@endsection
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="{{URL::asset('FrontEnd/css/styles.css')}}">
+    {{--<link rel="stylesheet" href="{{URL::asset('FrontEnd/css/font-awesome/css/font-awesome.min.css')}}">--}}
 
-@section('content')
-    <div class="row">
-        <br>
-        <div class="col-lg-6">
-            <img src="{{URL::asset('FrontEnd/img/Amalayareach-pool.jpg')}}">
-        </div>
-        <div class="col-lg-6">
-            <p class="text-info">We warmly welcome you to Amalya Reach.</p>
-        </div>
-        <div class="row">
-            <div class="col-lg-12">
-                <br>
-            </div>
-        </div>
+    <link rel="stylesheet" href="{{URL::asset('FrontEnd/dp/jquery-ui.css')}}">
+</head>
+
+<body style="background-color: #ffffff; background: none">
+<div class="row">
+    <div class="col-md-2">
+        <img src="{{URL::asset('FrontEnd/img/amalya-logo.png')}}"> <br><br><br>
     </div>
-@endsection
+    <div class="col-md-10">
+        <h1 style="display: inline" class="text-info">Amalya Reach Holiday Resorts</h1>
+        <p class="text-muted">
+            No:556, Moragahahena, Pitipana North, Homagama, Sri Lanka <br>
+
+            +94 11 2748913 | info@amalyareach.com | http://amalyareachlk.com
+        </p>
+    </div>
+
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <p class="text-info">
+            Hello, <br>
+            We warmly welcome you to Amalya Reach! <br><br>
+            We hope to see you soon at our premises.
+            Keep in touch with our website for the newest promotions and news.<br><br>
+
+            Have a nice day!<br><br>
+
+            -Amalya Reach Holiday Resort-
+
+        </p>
+    </div>
+</div>
+</body>
