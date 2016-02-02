@@ -6,82 +6,51 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use DB;
 
 class FacilitiesController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
+   public function getIndex (Request $request){
+        
+        return view('nipuna.facilities');
+    } 
+
+    public function getFacilities(Request $request){
+    
+    $result = DB::table('facilities')->get();
+            return response()->json(['count' => count($result), 'data' => $result]);
+
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+    public function getAddfacility(Request $request){
+    $category = $request->input('category');
+    $description = $request->input('description');
+    $price = $request->input('price');
+
+    DB::table('facilities')->insert(array('category'=> $category,'description'=> $description,'price'=> $price));
+    return 1;
+
+
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
+    public function getDeleterow(Request $request){
+        $facility_id=$request->input('row');
+        DB::table('facilities')->where('facility_id','=',$facility_id)->delete();
+
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
+     public function getRetrievedetails(Request $request){
+        $facility_id=$request->input('row');
+        $result = DB::table('facilities')->where('facility_id','=',$facility_id)->get();
+        return $result;
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
+    public function getUpdatefacility(Request $request){
+        $category = $request->input('category');
+        $description = $request->input('description');
+        $price = $request->input('price');
+        $row=$request->input('row');
+        DB::table('facilities')->where('facility_id',$row)->update(array('category'=> $category,'description'=> $description,'price'=> $price));
+        return 1;
     }
 }

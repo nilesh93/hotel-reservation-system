@@ -10,13 +10,13 @@
 @section('title')
 
 
-DEMO PAGE
+Promotions - Admin Panel
 
 @endsection
 
 
 @section('page_title')
-ADMIN DEMO
+Promotions
 @endsection
 
 
@@ -27,7 +27,7 @@ ADMIN DEMO
 	<a href="#">Admin</a>
 </li>
 <li  class="active">
-	<a href="#">Demo</a>
+	<a href="#">Promotions</a>
 </li>
 
 @endsection
@@ -49,7 +49,7 @@ ADMIN DEMO
                 <input class="form-control" id="search" oninput="navigate()"  placeholder="Enter Item Code" type="text">
             </div>-->
             <div class="col-lg-1" style="padding-left:0cm;">
-                <button type="button" class="btn btn-primary btn-default" onclick="add_promotions_modal()">Add Promotions</button>
+                <button type="button" class="btn btn-primary btn-success" onclick="add_promotions_modal()"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add Promotions</button>
             </div>
 </div>
     </form>
@@ -255,6 +255,12 @@ ADMIN DEMO
 
  function add_promotions_modal(){
         $("#add_promotions_modal").modal("show");
+       
+         document.getElementById("prom_name").value = "";
+         document.getElementById("prom_description").value = "";
+         document.getElementById("start_date").value = "";
+         document.getElementById("end_date").value = "";
+         document.getElementById("prom_rate").value = "";
     }
 
 $(function () {
@@ -297,12 +303,13 @@ function start_date_validate(){
         document.getElementById("start_date").value = "";
     };
 
+    if(end_date != ""){
     if ( start_date > end_date || end_date != "") {
         sweetAlert("Oops...", "End date cannot be lesser than start date!", "error");
         //console.log("todays lower");
         document.getElementById("end_date").value = "";
     };
-            
+    }        
 }
 
 function end_date_validate(){
@@ -458,6 +465,7 @@ function add_promotion(){
         data:data,
         success:function(ss){
             dataLoad();
+            swal("Added!", "Record Added Successfully.", "success");
         }
     });
   }
@@ -507,7 +515,7 @@ swal({
     url:"admin_promotions/deleterow",
     data:data,
     success:function(data){
-            swal("Deleted!", "Your imaginary file has been deleted.", "success"); 
+            swal("Deleted!", "Record has been deleted.", "success"); 
             dataLoad();
     
     },

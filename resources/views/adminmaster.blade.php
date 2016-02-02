@@ -219,6 +219,9 @@
                                     <li id="PR"><a href="admin_promotions">Promotions Management</a></li>
                                     <li id="MM"><a href="admin_menus">Menus Management</a></li>
                                     <li id="UM"><a href="{{URL::to('/admin_users')}}">User Management</a></li>
+                                    <li id="FS"><a href="admin_facilities">Facilities Management</a></li>
+                                    <li id="BS"><a href="admin_bookings_search">Bookings Search</a></li>
+                                    <li id="RS"><a href="admin_rooms_search">Room Search</a></li>
                                 </ul>
                             </li>
 

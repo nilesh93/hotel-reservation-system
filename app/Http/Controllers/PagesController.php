@@ -32,4 +32,10 @@ class PagesController extends Controller
 
         return view('Website.Rooms_availability',["room_types"=>$room_types]);
     }
+
+
+    function makePayment(){
+
+        return view('Website.Payment');
+    }
 }
