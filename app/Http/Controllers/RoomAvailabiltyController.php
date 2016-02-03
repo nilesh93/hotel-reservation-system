@@ -32,16 +32,31 @@ class RoomAvailabiltyController extends Controller
     /**
      * Redirect a room availability page according to customer requests.
      *
+     * @param $request
      *
      * @return Website.Rooms_availability view with availability details
      */
 
-    function check_room_availabilty()
+    function check_room_availabilty(Request $request)
     {
-        $inputs = Request::all();
+
+        $inputs = $request::all();
+
 
         $check_in = $inputs['check_in'];
         $check_out = $inputs['check_out'];
+        $adults = $inputs['adults'];
+        $kids = $inputs['children'];
+        $rooms = $inputs['ono_of_rooms'];
+
+
+
+        Session::put('check_in',$check_in);
+        Session::put('check_out',$check_out);
+        Session::put('adults',$adults);
+        Session::put('kids',$kids);
+        Session::put('rooms',$rooms);
+
 
 
         $superior_count =0;
@@ -130,6 +145,16 @@ class RoomAvailabiltyController extends Controller
         return view('Website.Rooms_availability',['available_superior'=>$available_superior,'available_deluxe'=>$available_deluxe,
                                         'available_luxury'=>$available_luxury,'available_guest'=>$available_guest,"room_types"=>$room_types]);
     }
+
+
+
+    /**
+     * Add the selected rooms to the session.
+     *
+     * @param $request
+     *
+     * @return jason output
+     */
 
 
 
@@ -222,6 +247,17 @@ class RoomAvailabiltyController extends Controller
     }
 
 
+    /**
+     * delete selected rooms from the session.
+     *
+     * @param $request
+     *
+     * @return jason output
+     */
+
+
+
+
 
     function delSelectedRoom_type(Request $request)
     {
@@ -263,6 +299,13 @@ class RoomAvailabiltyController extends Controller
 
 
     }
+
+
+    /**
+     * push session values to arrays.
+     *
+     * @return jason output
+     */
 
 
 

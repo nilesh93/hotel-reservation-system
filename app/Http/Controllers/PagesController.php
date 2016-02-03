@@ -11,7 +11,15 @@ use App\ROOM_TYPE;
 
 class PagesController extends Controller
 {
-    //
+
+
+    /**
+     * view hall page.
+     *
+     * @return Website.halls
+     */
+
+
      public function halls(){
 
          $halls = HALL::get();
