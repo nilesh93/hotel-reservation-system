@@ -32,21 +32,18 @@ Room Packages
 
 
 
-						<form class="form-horizontal" action="{!! url('room_availability') !!}" method="Post">
+						<form id= "checkavail" name="checkavail" class="form-horizontal" onsubmit="return roomavailability()" action="{!! url('room_availability') !!}"  method="Post">
 							<input type="hidden" name="_token" value="{{ csrf_token() }}">
 
-					<br>
 
 					<div class="row">
-						<div class="col-sm-12 col-md-12 col-lg-12">
+						<div class=" col-sm-12 col-md-12 col-lg-12">
 
 							<i class="fa fa-calendar"></i>
 								<input type="text"  class="form-control default-cursor" id="datepicker" value="Check In Date" name="check_in" placeholder="Check In Date"  readonly="readonly"  />
-
 						</div><!-- /col-md-12 -->
 					</div><!-- /row -->
 
-					<br>
 
 					<div class="row">
 
@@ -63,7 +60,7 @@ Room Packages
 								<div class="col-sm-6 col-md-6 col-lg-6">
 									<select class="form-control "  name="adults" id="adults">
 
-										<option>Adults</option>
+										<option value="Adults">Adults</option>
 										@for($i=1;$i<31;$i++)
 											<option value={{ $i}}>{{$i}}</option>
 										@endfor
@@ -71,7 +68,7 @@ Room Packages
 								</div><!-- /col-md-6 -->
 								<div class="col-sm-6 col-md-6 col-lg-6">
 									<select class="form-control"  name="children" id="children">
-										<option>Kids</option>
+										<option value="Kids">Kids</option>
 										@for($i=0;$i<21;$i++)
 											<option value={{ $i}}>{{$i}}</option>
 										@endfor
@@ -97,9 +94,17 @@ Room Packages
 
 
 
+								<div class="checkbox">
+									<label>
+										<input type="checkbox" id="promochk" onclick="enableDisable(this.checked,'promotxt')"><span style="color: darkslategray"> I have promotion code</span>
+									</label>
+								</div>
+
+
+
 							<div class="row">
 								<div class="col-sm-12 col-md-12 col-lg-12">
-									<input class="form-control input-lg" type="text" placeholder="Enter Promo Code">
+									<input class="form-control input-lg" type="text" id="promotxt" name="promotxt" placeholder="Enter Promo Code" disabled>
 								</div><!-- /col-md-12 -->
 							</div><!-- /row -->
 
@@ -121,14 +126,28 @@ Room Packages
 		<div class="col-md-12">
 
 			@foreach($room_types as $room_type)
+				<?php
+
+					$image = DB::table('ROOM_IMAGES')
+								->where('room_type_id','=',$room_type->room_type_id)
+								->value('path');
+
+					$ratefrom = DB::table('RATES')
+							->where('room_type_id','=',$room_type->room_type_id)
+							->min('single_rates');
+
+				?>
+
+
+
 				<div class="col-sm-3 col-md-3 col-lg-3">
 					<div class="roombox">
 						<div class="room-image">
-							<img src="FrontEnd/img/superior_rooms/superior2.png" alt="themesgravity">
+							<img src="{{ $image }}" alt="themesgravity">
 							<h4><a style="text-decoration: none" onclick="showModal({{$room_type->room_type_id}})" href="#">{{ $room_type->type_name }}</a></h4>
 						</div><!-- /room-image -->
 						<div class="room-content">
-							<p class="room-price"><small>From 169$ per nights</small></p>
+							<p class="room-price"><small>From ${{ $ratefrom }} per nights</small></p>
 							<hr>
 							<p>{{ $room_type->description }}</p>
 						</div><!-- /room-content -->
@@ -163,6 +182,68 @@ Room Packages
 @section('js')
 
 <script>
+
+
+	//to enable and disable the promotion text box field
+	function enableDisable(benable,id)
+	{
+
+		if(benable)
+		{
+			document.getElementById(id).removeAttribute('disabled');
+		}
+		else{
+
+			document.getElementById(id).setAttribute('disabled','disabled');
+		}
+	}
+
+
+	//validate form submission before send to the server side
+
+	function roomavailability(){
+
+		var checkin_date = document.getElementById('datepicker').value;
+		var checkout_date = document.getElementById('datepicker1').value;
+		var adults =  document.getElementById('adults').value;
+
+		if(checkin_date == "Check In Date" || checkout_date == "Check Out Date" || checkout_date == "" || adults == "Adults") {
+			if (checkin_date == "Check In Date") {
+				swal({
+					title: "<div class='alert alert-danger'> <strong>Warning! </strong> </div>",
+					text: "<span style='color:#ff2222'> Select a Check-In date <span>",
+					html: true
+				});
+
+			}
+			else if (checkout_date == "Check Out Date" || checkout_date == "") {
+				swal({
+					title: "<div class='alert alert-danger'> <strong>Warning! </strong> </div>",
+					text: "<span style='color:#ff2222'> Select a Check-Out date <span>",
+					html: true
+				});
+
+
+			}
+			else if (adults == "Adults") {
+				swal({
+					title: "<div class='alert alert-danger'> <strong>Warning! </strong> </div>",
+					text: "<span style='color:#ff2222'> Select Adults <span>",
+					html: true
+				});
+
+			}
+
+			return false;
+		}
+		else {
+
+
+			return true;
+
+
+		}
+	}
 
 	// script code for date picker 1
 	$("#datepicker").datepicker({
@@ -254,6 +335,14 @@ Room Packages
 
 				}
 			}
+
+
+			document.getElementById('ono_of_rooms').value = 1;
+			document.getElementById('adults').value = 1;
+			document.getElementById('children').value =0;
+
+
+
 
 		}
 	});
@@ -357,8 +446,8 @@ Room Packages
 					document.getElementById('ono_of_rooms').value = parseInt(setrooms) + 1;
 				}
 			}
-		}
-		else{
+		}else{
+
 			$('#exceedmodalpopup').modal('show');
 			document.getElementById('ono_of_rooms').value = 1;
 			document.getElementById('adults').value = 1;

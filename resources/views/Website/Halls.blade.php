@@ -121,14 +121,22 @@ Function Halls
 					<div class="row">
 
 						@foreach($halls as $hall)
+
+						<?php
+							$himage = DB::table('HALL_IMAGES')
+							->where('hall_id','=',$hall->hall_id)
+							->value('path');
+
+						?>
+
 							<div class="col-sm-6 col-md-6 col-lg-6">
 								<div class="roombox">
 									<div class="room-image">
-										<img src="{{URL::asset('FrontEnd/img/Hall_images/hall1.jpg')}}"  alt="themesgravity" width="100%">
+										<img src="{{URL::asset($himage)}}"  alt="themesgravity" width="100%">
 										<h4><a style="text-decoration: none" onclick="showModal('{{$hall->hall_id}}hall')"href="#">{{ $hall->title }}</a></h4>
 									</div><!-- /room-image -->
 									<div class="room-content">
-										<p class="room-price"><small>From 209$ per night</small></p>
+										<p class="room-price"><small></small></p>
 										<hr>
 										<p>{{ $hall->capacity_from }} - {{ $hall->capacity_to }} Seating Capacity</p>
 									</div><!-- /room-content -->

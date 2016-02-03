@@ -175,6 +175,30 @@
 						<!-- room_type_modals_to _load_in_any_page-->
 						@foreach($roomtypes as $room_type)
 
+						<?php
+
+							$image1 = DB::table('ROOM_IMAGES')
+									->where('room_type_id','=',$room_type->room_type_id)
+									->value('path');
+
+							$images = DB::table('ROOM_IMAGES')
+									->where('room_type_id','=',$room_type->room_type_id)
+									->where('path','!=',$image1)
+									->select('path')
+									->get();
+
+
+							$mealtypeRates = DB::table('RATES')
+									->join('MEAL_TYPES','RATES.meal_type_id','=','MEAL_TYPES.meal_type_id')
+									->where('RATES.room_type_id','=',$room_type->room_type_id)
+									->select('MEAL_TYPES.meal_type_name','RATES.rate_code','RATES.single_rates')
+									->get();
+
+
+
+
+							?>
+
 							<modal><!-- room -->
 								<div class="modal fade" id="{{$room_type->room_type_id}}">
 									<div class="modal-dialog modal-lg">
@@ -220,29 +244,25 @@
 															<br>
 															<div class="carousel slide" id="carousel-{{$room_type->room_type_id}}">
 																<div class="carousel-inner">
+
 																	<div class="item active">
-																		<img class="img-thumbnail"alt="Carousel Bootstrap First" src="{{URL::asset('FrontEnd/img/superior_rooms/superior1.png')}}" width="100%">
-																		<!--	<div class="carousel-caption">
-                                                                                <h4>
+																		<img class="img-thumbnail" src="{{URL::asset($image1)}}" width="100%">
 
-
-                                                                                </h4>
-                                                                                <p>
-
-                                                                                </p>
-                                                                            </div> -->
 																	</div>
-																	<div class="item">
-																		<img class="img-thumbnail" alt="Carousel Bootstrap Second" src="{{URL::asset('FrontEnd/img/superior_rooms/superior2.png')}}" width="100%">
-																		<div class="carousel-caption">
-																			<h4>
 
-																			</h4>
-																			<p>
+																	@foreach($images as $image)
+																		<div class="item">
+																			<img class="img-thumbnail"  src="{{URL::asset($image->path)}}" width="100%">
+																			<div class="carousel-caption">
+																				<h4>
 
-																			</p>
+																				</h4>
+																				<p>
+
+																				</p>
+																			</div>
 																		</div>
-																	</div>
+																	@endforeach
 
 																</div>
 
@@ -302,7 +322,7 @@
 
 														<div align="center">
 															<h4>Area</h4>
-															40m2
+
 														</div>
 													</div>
 
@@ -310,7 +330,7 @@
 
 														<div align="center">
 															<h4>Bed</h4>
-															110～120×215cm　x2
+
 														</div>
 													</div>
 
@@ -318,8 +338,12 @@
 														<div align="center">
 
 															<h4>Rate</h4>
-															Single Occupancy from ¥53,460～
-															Double Occupancy from ¥58,860～
+
+															@foreach($mealtypeRates as $mealtype)
+																{{ $mealtype->meal_type_name }} from ${{ $mealtype->single_rates }}<br>
+
+															@endforeach
+
 														</div>
 													</div>
 
@@ -330,7 +354,7 @@
 													<div class="col-md-4">
 														<div align="center">
 															<h4>Extra Bed</h4>
-															¥5,400
+
 														</div>
 
 													</div>
@@ -368,6 +392,23 @@
 
 				<!-- halls modal -->
 							@foreach($halls as $hall)
+
+
+								<?php
+									$himage1 = DB::table('HALL_IMAGES')
+											->where('hall_id','=',$hall->hall_id)
+											->value('path');
+
+									$himages = DB::table('HALL_IMAGES')
+											->where('hall_id','=',$hall->hall_id)
+											->where('path','!=',$himage1)
+											->select('path')
+											->get();
+
+
+
+								?>
+
 
 								<modal><!-- room -->
 									<div class="modal fade" id="{{$hall->hall_id}}hall">
@@ -415,7 +456,7 @@
 																<div class="carousel slide" id="carousel-{{$hall->hall_id}}hall">
 																	<div class="carousel-inner">
 																		<div class="item active">
-																			<img class="img-thumbnail"alt="Carousel Bootstrap First" src="{{URL::asset('FrontEnd/img/Hall_images/hall1.jpg')}}" width="100%">
+																			<img class="img-thumbnail"alt="Carousel Bootstrap First" src="{{URL::asset($himage1)}}" width="100%">
 																			<!--	<div class="carousel-caption">
                                                                                     <h4>
 
@@ -426,21 +467,24 @@
                                                                                     </p>
                                                                                 </div> -->
 																		</div>
-																		<div class="item">
-																			<img class="img-thumbnail" alt="Carousel Bootstrap Second" src="{{URL::asset('FrontEnd/img/Hall_images/hall1.jpg')}}" width="100%">
-																			<div class="carousel-caption">
-																				<h4>
 
-																				</h4>
-																				<p>
+																		@foreach($himages as $himage)
+																			<div class="item">
+																				<img class="img-thumbnail" alt="Carousel Bootstrap Second" src="{{URL::asset($himage->path)}}" width="100%">
+																				<div class="carousel-caption">
+																					<h4>
 
-																				</p>
+																					</h4>
+																					<p>
+
+																					</p>
+																				</div>
 																			</div>
-																		</div>
-
+																		@endforeach
 																	</div>
 
-																	<a class="left carousel-control" href="#carousel-{{$hall->hall_id}}hall" data-slide="prev"><span class="glyphicon glyphicon-chevron-left"></span></a> <a class="right carousel-control" href="#carousel-{{$room_type->room_type_id}}" data-slide="next"><span class="glyphicon glyphicon-chevron-right"></span></a>
+																	<a class="left carousel-control" href="#carousel-{{$hall->hall_id}}hall" data-slide="prev"><span class="glyphicon glyphicon-chevron-left"></span></a> <a class="right carousel-control" href="#carousel-{{$hall->hall_id}}hall" data-slide="next"><span class="glyphicon glyphicon-chevron-right"></span></a>
+
 																</div>
 
 															</div>
@@ -497,7 +541,7 @@
 
 															<div align="center">
 																<h4>Area</h4>
-																140m2
+
 															</div>
 														</div>
 
@@ -513,16 +557,14 @@
 															<div align="center">
 
 																<h4>Rate</h4>
-																 ¥53,460～
+
 
 															</div>
 														</div>
 
 													</div>
-													<br>
 
-													<br>
-													<br>
+
 												</div>
 
 
