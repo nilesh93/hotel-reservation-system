@@ -152,6 +152,10 @@ Route::get('/admin_users', 'UserController@Users');
 Route::post('/new_admin', 'UserController@createNewAdmin');
 Route::get('/delete_admin/{id}','UserController@deleteAdmin');
 
+// Facebook Login Routes
+Route::get('/login/fb', 'Auth\AuthController@redirectToProvider');
+Route::get('/login/fb/callback', 'Auth\AuthController@handleProviderCallback');
+
 // Inaccessible views testing route
 Route::get('/test', function(){
     return view('emails.newUser');
