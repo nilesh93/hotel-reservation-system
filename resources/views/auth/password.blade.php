@@ -28,6 +28,12 @@
                     </ul>
                 @endif
 
+                @if (session('status'))
+                    <ul class="list-group">
+                        <li class="list-group-item text-success">{{ session('status') }}</li>
+                    </ul>
+                @endif
+
                 <div class="form-group">
                     <label for="email">Email address</label>
                     <input type="email" id="email" name="email" class="form-control" value="{{ old('email') }}" placeholder="Your email" required>

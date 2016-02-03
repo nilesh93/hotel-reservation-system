@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Auth;
 
 use App\User;
 use App\Customer;
+use App\Admin;
+use Carbon\Carbon;
 use Validator;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
@@ -68,7 +70,6 @@ class AuthController extends Controller
     protected function create(array $data)
     {
         $user = User::create([
-            /*'name' => $data['name'],*/
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
             'role' => "guest"
@@ -88,11 +89,11 @@ class AuthController extends Controller
         'country' => $data['country']
     ]);
 
-        // Sends an email to the newly registered Guest user.
-        Mail::send('emails.newUser', ['userData' => $data], function ($message) {
-            $message->from('danurajay@gmail.com', 'Welcome to Amalya Reach!');
+        // Send an email to the newly registered Guest user.
+        Mail::send('emails.newUser', [], function ($message) use ($data) {
+            $message->from(env('MAIL_FROM'), env('MAIL_NAME'));
 
-            $message->to('vishandanura@hotmail.com');
+            $message->to($data['email'])->subject('Welcome to Amalya Reach!');
         });
 
         return $user;
@@ -108,6 +109,10 @@ class AuthController extends Controller
     {
         if(Auth::check()){
             if(Auth::user()->role == "admin") {
+
+                // If user is an admin, last_login_ts field in ADMIN table is updated
+                Admin::where('email', Auth::user()->email)
+                    ->update(['last_login_ts' => Carbon::now()]);
 
                 return redirect('/admin');
             }

@@ -1,3 +1,5 @@
+<?php_date_default_timezone_set("Asia/Colombo"); ?>
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -187,7 +189,7 @@
                                         <li><a href="javascript:void(0)"><i class="ti-user m-r-5"></i> Profile</a></li>
                                         <li><a href="javascript:void(0)"><i class="ti-settings m-r-5"></i> Settings</a></li>
                                         <li><a href="javascript:void(0)"><i class="ti-lock m-r-5"></i> Lock screen</a></li>
-                                        <li><a href="javascript:void(0)"><i class="ti-power-off m-r-5"></i> Logout</a></li>
+                                        <li><a href="{{URL::to('auth/logout')}}"><i class="ti-power-off m-r-5"></i> Logout</a></li>
                                     </ul>
                                 </li>
                             </ul>
@@ -216,6 +218,7 @@
                                     <li id="HM"><a href="admin_halls">Hall Management</a></li>
                                     <li id="PR"><a href="admin_promotions">Promotions Management</a></li>
                                     <li id="MM"><a href="admin_menus">Menus Management</a></li>
+                                    <li id="UM"><a href="{{URL::to('/admin_users')}}">User Management</a></li>
                                     <li id="FS"><a href="admin_facilities">Facilities Management</a></li>
                                     <li id="BS"><a href="admin_bookings_search">Bookings Search</a></li>
                                     <li id="RS"><a href="admin_rooms_search">Room Search</a></li>
