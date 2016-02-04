@@ -22,7 +22,7 @@ Route::get('/', function () {
 
 Route::get('admin', function () {
     return view('Admin.Demo');
-});             
+});
 
 Route::get('/admin', function () {
     return view('Admin.Demo');
@@ -30,7 +30,7 @@ Route::get('/admin', function () {
 
 Route::get('/contact',function(){
     
-    return view('website.contact');
+    return view('Website.contact');
     
     
 });
@@ -50,13 +50,26 @@ Route::get('/LOL',function(){
 |
 */
 
-Route::get('/room_packages','PagesController@rooms');
 
-Route::post('/room_packages/room_availability','RoomAvailabiltyController@check_room_availabilty');
+Route::get('select_room_add','RoomAvailabiltyController@addSelectedRooms');
 
-Route::get('/room_packages/room_availability','PagesController@room_availabilty');
+Route::get('delete_selected_room_type','RoomAvailabiltyController@delSelectedRoom_type');
 
-Route::get('/halls','PagesController@halls');
+Route::get('loadBooking','RoomAvailabiltyController@loadMyBooking');
+
+Route::get('room_packages','PagesController@rooms');
+
+Route::post('room_availability','RoomAvailabiltyController@check_room_availabilty');
+
+/*Route::get('room_packages/room_availability','PagesController@available_rooms');*/
+
+Route::get('halls','PagesController@halls');
+
+Route::get('payment','PagesController@makePayment');
+
+
+
+
 
 
 
@@ -119,15 +132,34 @@ Route::get('saveinquiry','InquiryController@saveinquiry');
 |
 */
 
+// Register & Login routes
 Route::get('auth/login', 'Auth\AuthController@getLogin');
-
 Route::post('auth/login', 'Auth\AuthController@postLogin');
-
 Route::get('auth/logout', 'Auth\AuthController@getLogout');
-
 Route::get('auth/register', 'Auth\AuthController@getRegister');
-
 Route::post('auth/register', 'Auth\AuthController@postRegister');
+
+// Password reset link request routes
+Route::get('password/email', 'Auth\PasswordController@getEmail');
+Route::post('password/email', 'Auth\PasswordController@postEmail');
+
+// Password reset routes
+Route::get('password/reset/{token}', 'Auth\PasswordController@getReset');
+Route::post('password/reset', 'Auth\PasswordController@postReset');
+
+// View, Create, Delete Admin level user(s) routes
+Route::get('/admin_users', 'UserController@Users');
+Route::post('/new_admin', 'UserController@createNewAdmin');
+Route::get('/delete_admin/{id}','UserController@deleteAdmin');
+
+// Facebook Login Routes
+Route::get('/login/fb', 'Auth\AuthController@redirectToProvider');
+Route::get('/login/fb/callback', 'Auth\AuthController@handleProviderCallback');
+
+// Inaccessible views testing route
+Route::get('/test', function(){
+    return view('emails.newUser');
+});
 
 /*
 |
@@ -150,6 +182,12 @@ Route::post('auth/register', 'Auth\AuthController@postRegister');
 
 Route::controller('admin_promotions','PromotionsController');
 Route::controller('admin_menus','MenusController');
+Route::controller('admin_facilities','FacilitiesController');
+Route::get('admin_search/bookings','nipuna_controller@bookings_search');
+Route::get('admin_bookings_search','nipuna_controller@bookings_search_index');
+
+Route::get('admin_rooms_search','nipuna_controller@rooms_search_index');
+Route::get('admin_search/rooms','nipuna_controller@rooms_search');
 
 /*
 |
