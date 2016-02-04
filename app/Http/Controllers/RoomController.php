@@ -10,6 +10,8 @@ use App\Room;
 use App\RoomType;
 use App\RoomService;
 use App\RoomFurnish;
+use App\RoomTypeFurnish;
+use App\RoomTypeService;
 
 
 class RoomController extends Controller
@@ -19,7 +21,12 @@ class RoomController extends Controller
 
     public function rooms(Request $request){
 
-        return view('nilesh.rooms');
+
+        $rs = RoomService::all();
+        $rf = RoomFurnish::all();
+        return view('nilesh.rooms')
+            ->with('rs',$rs)
+            ->with('rf',$rf);
 
     }
 
@@ -74,7 +81,39 @@ class RoomController extends Controller
         $rt->type_code = $request->input('rtcode');
         $rt->services_provided = $request->input('wifi').";".$request->input('tv');
 
-        $rt->save();    
+        $rt->save(); 
+
+
+        for($i = 0; $i<$request->input('rscount'); $i++){
+
+
+            if( $request->input("service".$i) > 0){
+                $rts = new RoomTypeService;
+
+                $rts->room_type_id = $rt->room_type_id;
+                $rts->service_id = $request->input("service".$i);
+
+                $rts->save();
+
+            }
+
+        }
+
+
+        for($x = 0; $x< $request->input('rfcount'); $x++){
+
+            if( $request->input("furnish".$x) > 0){
+                $rtf = new RoomTypeFurnish;
+
+                $rtf->room_type_id = $rt->room_type_id;
+                $rtf->furnish_id = $request->input("furnish".$x);
+
+                $rtf->save();
+
+            }
+
+        }
+
 
 
     }
