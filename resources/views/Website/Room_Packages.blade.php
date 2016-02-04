@@ -10,11 +10,13 @@ Room Packages
 
 @section('css')
 
-
+	<style>
+	input[readonly].default-cursor {
+		cursor: default;
+	}
+	</style>
 
 @endsection
-
-
 
 
 
@@ -30,7 +32,7 @@ Room Packages
 
 
 
-						<form class="form-horizontal" action="{!! url('/room_packages/room_availability') !!}" method="Post">
+						<form class="form-horizontal" action="{!! url('room_availability') !!}" method="Post">
 							<input type="hidden" name="_token" value="{{ csrf_token() }}">
 
 					<br>
@@ -39,7 +41,7 @@ Room Packages
 						<div class="col-sm-12 col-md-12 col-lg-12">
 
 							<i class="fa fa-calendar"></i>
-								<input type="date" class="form-control" id="datepicker" value="Check In Date" name="check_in" placeholder="Check In Date" />
+								<input type="text"  class="form-control default-cursor" id="datepicker" value="Check In Date" name="check_in" placeholder="Check In Date"  readonly="readonly"  />
 
 						</div><!-- /col-md-12 -->
 					</div><!-- /row -->
@@ -50,7 +52,7 @@ Room Packages
 
 						<div class="col-sm-12 col-md-12 col-lg-12">
 							<i class="fa fa-calendar"></i>
-							<input type="date" class="form-control" Value="Check Out Date" id="datepicker1"  name="check_out" placeholder="Check Out Date" />
+							<input type="text" class="form-control default-cursor" Value="Check Out Date" id="datepicker1"  name="check_out" placeholder="Check Out Date" readonly/>
 
 						</div><!-- /col-md-12 -->
 					</div><!-- /row -->
@@ -61,7 +63,7 @@ Room Packages
 								<div class="col-sm-6 col-md-6 col-lg-6">
 									<select class="form-control "  name="adults" id="adults">
 
-										<option value="Adults">Adults</option>
+										<option>Adults</option>
 										@for($i=1;$i<31;$i++)
 											<option value={{ $i}}>{{$i}}</option>
 										@endfor
@@ -69,7 +71,7 @@ Room Packages
 								</div><!-- /col-md-6 -->
 								<div class="col-sm-6 col-md-6 col-lg-6">
 									<select class="form-control"  name="children" id="children">
-										<option value="Kids">Kids</option>
+										<option>Kids</option>
 										@for($i=0;$i<21;$i++)
 											<option value={{ $i}}>{{$i}}</option>
 										@endfor
@@ -134,23 +136,7 @@ Room Packages
 				</div><!-- /col-sm-3 -->
 
 
-				<div class="modal fade" id="{{$room_type->room_type_id}}">
-					<div class="modal-dialog">
-						<div class="modal-content">
-							<div class="modal-header">
-								<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&close;</button>
-								<h4 class="modal-title">Modal title</h4>
-							</div>
-							<div class="modal-body">
-								<p>One fine body…</p>
-							</div>
-							<div class="modal-footer">
-								<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-								<button type="button" class="btn btn-primary">Save changes</button>
-							</div>
-						</div>
-					</div>
-				</div>
+
 
 
 
@@ -373,7 +359,6 @@ Room Packages
 			}
 		}
 		else{
-
 			$('#exceedmodalpopup').modal('show');
 			document.getElementById('ono_of_rooms').value = 1;
 			document.getElementById('adults').value = 1;
@@ -445,17 +430,6 @@ Room Packages
 
 
 
-
-
-	function showModal(id){
-
-
-	var temp = '#'+id;
-
-	$(temp).modal('show');
-
-
-}
 
 
 </script>

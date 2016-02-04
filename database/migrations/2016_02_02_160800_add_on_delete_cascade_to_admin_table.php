@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class ForeignKeyFromAdminToUsersTable extends Migration
+class AddOnDeleteCascadeToAdminTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,8 @@ class ForeignKeyFromAdminToUsersTable extends Migration
     public function up()
     {
         Schema::table('ADMIN', function (Blueprint $table) {
-            $table->foreign('email')->references('email')->on('users');
+            $table->dropForeign('admin_email_foreign');
+            $table->foreign('email')->references('email')->on('users')->onDelete('cascade');
         });
     }
 
@@ -25,8 +26,7 @@ class ForeignKeyFromAdminToUsersTable extends Migration
     public function down()
     {
         Schema::table('ADMIN', function (Blueprint $table) {
-            //
-            $table->dropForeign('ADMIN_email_foreign');
+            $table->dropForeign('admin_email_foreign');
         });
     }
 }

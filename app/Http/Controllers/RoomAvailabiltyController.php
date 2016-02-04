@@ -16,10 +16,13 @@ namespace App\Http\Controllers;
 use App\RES_RMTYPE_CNT_RATE;
 use App\ROOM_TYPE;
 use App\HALL;
-use Request;
+use Session;
+use DB;
+
+
 use App\ROOM_RESERVATION;
 
-
+use Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
@@ -117,11 +120,183 @@ class RoomAvailabiltyController extends Controller
         $available_guest = $total_guest - $guest_count;
 
 
+        $room_types = ROOM_TYPE::get();
+
+
+
 
 
 
         return view('Website.Rooms_availability',['available_superior'=>$available_superior,'available_deluxe'=>$available_deluxe,
-                                        'available_luxury'=>$available_luxury,'available_guest'=>$available_guest]);
+                                        'available_luxury'=>$available_luxury,'available_guest'=>$available_guest,"room_types"=>$room_types]);
+    }
+
+
+
+    function addSelectedRooms(Request $request)
+    {
+
+
+
+        $inputs = $request::all();
+
+        $room_type_id = $inputs['room_type_id'];
+        $room_type_name = $inputs['room_type_name'];
+        $no_of_rooms = $inputs['no_of_rooms'];
+        $rate_code = $inputs[$room_type_id.'rate_code'];
+
+
+
+        $rate_price = DB::table('RATES')->where('rate_code','=',$rate_code)->value('single_rates');
+
+        $meal_type_name = DB::table('RATES')
+                        ->join('MEAL_TYPES','RATES.meal_type_id','=','MEAL_TYPES.meal_type_id')
+                        ->where('RATES.rate_code','=',$rate_code)
+                        ->value('meal_type_name');
+
+
+
+        $have = 0;
+
+        $room_types = array();
+        $nrooms = array();
+        $rates = array();
+        $meal = array();
+        $room_type_ids = array();
+       if(Session::has('room_types'))
+       {
+
+           foreach(session('room_types') as $room_type)
+           {
+               if($room_type == $room_type_id)
+               {
+                   $have = 1;
+               }
+           }
+
+       }
+
+
+
+        if($have == 1)
+        {
+            Session::put('no_of_rooms'.$room_type_id,$no_of_rooms);
+            Session::put('rate_code'.$room_type_id,$rate_code);
+            Session::put('rate'.$room_type_id,$rate_price);
+            Session::put('meal_type'.$room_type_id,$meal_type_name);
+
+
+
+        }
+        else
+        {
+            Session::push('room_types',$room_type_id);
+            Session::put('no_of_rooms'.$room_type_id,$no_of_rooms);
+            Session::put('room_type_name'.$room_type_id,$room_type_name);
+            Session::put('rate_code'.$room_type_id,$rate_code);
+            Session::put('rate'.$room_type_id,$rate_price);
+            Session::put('meal_type'.$room_type_id,$meal_type_name);
+
+        }
+
+
+        foreach(session('room_types') as $room_type)
+        {
+            array_push($room_type_ids,$room_type);
+            array_push($room_types,session('room_type_name'.$room_type));
+            array_push($nrooms,session('no_of_rooms'.$room_type));
+            array_push($rates,session('rate'.$room_type));
+            array_push($meal,session('meal_type'.$room_type));
+
+        }
+
+
+
+
+
+
+
+        return response()->json(['ids'=>$room_type_ids,'room_types'=>$room_types,'no_of_rooms'=>$nrooms,'rates'=>$rates,'meals'=>$meal]);
+
+
+    }
+
+
+
+    function delSelectedRoom_type(Request $request)
+    {
+
+
+        $inputs = $request::all();
+
+        $room_type_id = $inputs['room_type_id'];
+
+        $nroom_types = array();
+
+        foreach(session('room_types') as $room_type)
+        {
+            if($room_type != $room_type_id)
+            {
+                array_push($nroom_types,$room_type);
+
+            }
+
+        }
+
+        Session::forget('room_types');
+        Session::forget('room_type_name'.$room_type_id);
+        Session::forget('no_of_rooms'.$room_type_id);
+        Session::forget('rate'.$room_type_id);
+        Session::forget('meal_type'.$room_type_id);
+        Session::forget('rate_code'.$room_type_id);
+
+
+        foreach($nroom_types as $room_type)
+        {
+            Session::push('room_types',$room_type);
+
+        }
+
+
+
+        return response()->json(['okay'=>'ok']);
+
+
+    }
+
+
+
+
+    function loadMyBooking()
+    {
+
+        $room_types = array();
+        $nrooms = array();
+        $rates = array();
+        $meal = array();
+        $room_type_ids = array();
+
+        if(Session::has('room_types'))
+        {
+
+            foreach(session('room_types') as $room_type)
+            {
+                array_push($room_type_ids,$room_type);
+                array_push($room_types,session('room_type_name'.$room_type));
+                array_push($nrooms,session('no_of_rooms'.$room_type));
+                array_push($rates,session('rate'.$room_type));
+                array_push($meal,session('meal_type'.$room_type));
+
+            }
+
+
+
+        }
+
+
+        return response()->json(['ids'=>$room_type_ids,'room_types'=>$room_types,'no_of_rooms'=>$nrooms,'rates'=>$rates,'meals'=>$meal]);
+
+
     }
 
 }

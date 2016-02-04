@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class ForeignKeyFromAdminToUsersTable extends Migration
+class ChangeToTimestampAdminTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,8 @@ class ForeignKeyFromAdminToUsersTable extends Migration
     public function up()
     {
         Schema::table('ADMIN', function (Blueprint $table) {
-            $table->foreign('email')->references('email')->on('users');
+            $table->dropColumn('last_login');
+            $table->timestamp('last_login_ts');
         });
     }
 
@@ -25,8 +26,7 @@ class ForeignKeyFromAdminToUsersTable extends Migration
     public function down()
     {
         Schema::table('ADMIN', function (Blueprint $table) {
-            //
-            $table->dropForeign('ADMIN_email_foreign');
+            $table->dropColumn('last_login_ts');
         });
     }
 }

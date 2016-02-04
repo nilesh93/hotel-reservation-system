@@ -4,11 +4,12 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class RoomType extends Model
+class Inquiry extends Model
 {
     //
     
-    protected $table = 'ROOM_TYPES';
+    
+    protected $table = 'INQUIRIES';
    // public $timestamps = false;
-    protected $primaryKey = 'room_type_id';
+    protected $primaryKey = 'inq_id';
 }

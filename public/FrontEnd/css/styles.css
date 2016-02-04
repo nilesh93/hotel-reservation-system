@@ -69,24 +69,10 @@ body {
     ## All Scaffolding/layout related styles comes under here. 
    ========================================================================== */
 #wrapper {
-  margin: 0 auto;
+ 
   background: #ffffff;
 }
-@media (min-width: 850px) {
-  #wrapper {
-    max-width: 850px;
-  }
-}
-@media (min-width: 1070px) {
-  #wrapper {
-    max-width: 1070px;
-  }
-}
-@media (min-width: 1270px) {
-  #wrapper {
-    max-width: 1270px;
-  }
-}
+ 
 /* 2.2 custom columns */
 .col1 {
   max-width: 70px;
@@ -497,6 +483,16 @@ input.datepicker::-webkit-input-placeholder {
 /* Weather element */
 .weather [class^="icon-"]:before,
 .weather [class*=" icon-"]:before {
+  font-size: 34px;
+  color: #259aad;
+  margin: 0px;
+  position: relative;
+  top: 6px;
+  margin-top: -6px; 
+}
+
+.weather [class^="icon-sun"]:before,
+.weather [class*=" icon-sun"]:before {
   font-size: 34px;
   color: #259aad;
   margin: 0px;
@@ -1747,7 +1743,7 @@ aside#sidebar .widget-recent-posts a:hover {
 }
 /* 11.1.6 Gmap */
 #gmap {
-  height: 600px;
+  height: 300px;
 }
 /* 11.2 Gallery Styles */
 /* ==========================================================================

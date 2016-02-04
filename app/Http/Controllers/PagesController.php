@@ -15,7 +15,6 @@ class PagesController extends Controller
      public function halls(){
 
          $halls = HALL::get();
-         return "LOL";
          return view('Website.Halls',["halls"=>$halls]);
      }
 
@@ -32,5 +31,11 @@ class PagesController extends Controller
 
 
         return view('Website.Rooms_availability',["room_types"=>$room_types]);
+    }
+
+
+    function makePayment(){
+
+        return view('Website.Payment');
     }
 }

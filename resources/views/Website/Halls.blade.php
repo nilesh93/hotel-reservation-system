@@ -23,7 +23,15 @@ Function Halls
 
 @endsection
 
+@section('hall_links')
 
+	<ul>
+
+		@foreach($halls as $hall)
+			<li><a href="#">{{ $hall->title }}</a></li>
+		@endforeach
+	</ul>
+@endsection
 
 
 
@@ -116,8 +124,8 @@ Function Halls
 							<div class="col-sm-6 col-md-6 col-lg-6">
 								<div class="roombox">
 									<div class="room-image">
-										<img src="{{URL::asset('FrontEnd/img/Hall_images/hall1.jpg')}}"  alt="themesgravity">
-										<h4><a href="#">{{ $hall->title }}</a></h4>
+										<img src="{{URL::asset('FrontEnd/img/Hall_images/hall1.jpg')}}"  alt="themesgravity" width="100%">
+										<h4><a style="text-decoration: none" onclick="showModal('{{$hall->hall_id}}hall')"href="#">{{ $hall->title }}</a></h4>
 									</div><!-- /room-image -->
 									<div class="room-content">
 										<p class="room-price"><small>From 209$ per night</small></p>

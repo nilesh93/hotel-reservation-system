@@ -4,11 +4,15 @@ namespace App\Http\Controllers\Auth;
 
 use App\User;
 use App\Customer;
+use App\Admin;
+use Carbon\Carbon;
+use Laravel\Socialite\Facades\Socialite;
 use Validator;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 
 class AuthController extends Controller
 {
@@ -67,7 +71,6 @@ class AuthController extends Controller
     protected function create(array $data)
     {
         $user = User::create([
-            /*'name' => $data['name'],*/
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
             'role' => "guest"
@@ -87,6 +90,13 @@ class AuthController extends Controller
         'country' => $data['country']
     ]);
 
+        // Send an email to the newly registered Guest user.
+        Mail::send('emails.newUser', [], function ($message) use ($data) {
+            $message->from(env('MAIL_FROM'), env('MAIL_NAME'));
+
+            $message->to($data['email'])->subject('Welcome to Amalya Reach!');
+        });
+
         return $user;
     }
 
@@ -101,6 +111,10 @@ class AuthController extends Controller
         if(Auth::check()){
             if(Auth::user()->role == "admin") {
 
+                // If user is an admin, last_login_ts field in ADMIN table is updated
+                Admin::where('email', Auth::user()->email)
+                    ->update(['last_login_ts' => Carbon::now()]);
+
                 return redirect('/admin');
             }
             return redirect('/');
@@ -114,4 +128,83 @@ class AuthController extends Controller
      * @var string
      */
     protected $redirectPath = '/';
+
+
+    /**
+     * Redirect a user who wants to login using Facebook to the Facebook Authentication Page.
+     *
+     * @return mixed
+     */
+    public function redirectToProvider()
+    {
+        return Socialite::driver('facebook')->redirect();
+    }
+
+    /**
+     * Obtain & process user information provided by Facebook for the above user.
+     *
+     */
+    public function handleProviderCallback()
+    {
+        // Obtain User information from facebook.
+        $userFB = Socialite::driver('facebook')->user();
+
+        // Get User's email and store it in a variable for future reference.
+        $email = $userFB->getEmail();
+
+        // Check if this User is new or already registered.
+        $user = User::where('email', $email)->first();
+
+        if($user->count() == 0){
+            try{
+                // Creating a User table entry for this user.
+                // Since Password is not provided, User's email is subjected to encryption and stored.
+                $user = User::create([
+                    'email' => $email,
+                    'password' => bcrypt($email),
+                    'role' => "guest"
+                ]);
+
+                // Create a Customer entry for the above User. Fields left blank will be later on filled by the customer.
+                Customer::create([
+                    'name' => $userFB->getName(),
+                    'NIC/passport_num' => "",
+                    'email' => $email,
+                    'telephone_num' => "",
+                    'block_status' => "0",
+                    'address_line_1' => "",
+                    'address_line_2' => "",
+                    'city' => "",
+                    'provicnce/state' => "",
+                    'zip_code' => "",
+                    'country' => ""
+                ]);
+            }
+
+            catch(QueryException $e){
+                return ("A user account with".$email."already exists.");
+            }
+
+            // Send an email to the newly registered Guest user.
+            Mail::send('emails.newUser', [], function ($message) use ($email) {
+                $message->from(env('MAIL_FROM'), env('MAIL_NAME'));
+
+                $message->to($email)->subject('Welcome to Amalya Reach!');
+            });
+        }
+
+        // Log in the User
+        Auth::login($user);
+
+        // Redirect User to the Homepage if the Login attempt was successful.
+        if(Auth::check()){
+
+            // Here, facebook automatically appends #_=_ to the URL as it is empty. This is a security measure.
+            // Read more about this at:
+            // http://homakov.blogspot.com/2013/03/redirecturi-is-achilles-heel-of-oauth.html
+            return redirect('/');
+        }
+
+    }
+
 }
