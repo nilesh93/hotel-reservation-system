@@ -105,6 +105,21 @@ Route::get('admin_getRoomNum','RoomController@admin_getRoomNum');
 Route::get('admin_delete_room', 'RoomController@admin_delete_room'); 
 
 
+
+Route::get('admin_room_services', 'RoomController@roomservices');
+Route::get('admin_get_room_services', 'RoomController@get_room_services');
+Route::get('admin_get_room_furnish', 'RoomController@get_room_furnish');
+Route::get('admin_room_furnish_add', 'RoomController@room_furnish_add');
+Route::get('admin_room_service_add', 'RoomController@room_service_add');
+Route::get('admin_getRS_info', 'RoomController@getRS_info');
+Route::get('admin_getRF_info', 'RoomController@getRF_info');
+Route::get('admin_updateRF','RoomController@updateRF');
+Route::get('admin_updateRS','RoomController@updateRS');
+Route::get('admin_delRS','RoomController@delRS');
+Route::get('admin_delRF','RoomController@delRF');
+
+
+
 Route::get('admin_halls','HallController@halls');
 Route::get('admin_get_halls','HallController@admin_get_halls');
 Route::get('admin_hall_add','HallController@admin_hall_add');
