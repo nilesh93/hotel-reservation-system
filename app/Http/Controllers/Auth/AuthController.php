@@ -78,14 +78,14 @@ class AuthController extends Controller
 
         Customer::create([
         'name' => $data['name'],
-        'NIC/passport_num' => $data['ID'],
+        'NIC_passport_num' => $data['ID'],
         'email' => $data['email'],
         'telephone_num' => $data['telephone'],
         'block_status' => "0",
         'address_line_1' => $data['address_line1'],
         'address_line_2' => $data['address_line2'],
         'city' => $data['city'],
-        'provicnce/state' => $data['province'],
+        'province_state' => $data['province'],
         'zip_code' => $data['zipCode'],
         'country' => $data['country']
     ]);
@@ -117,7 +117,19 @@ class AuthController extends Controller
 
                 return redirect('/admin');
             }
-            return redirect('/');
+            else{
+                $user_email = Auth::user()->email;
+                $block_status = Customer::where('email', $user_email)->first()->block_status;
+
+                // If user has been blocked, user is redirected to a page announcing so.
+                if($block_status == "1"){
+                    Auth::logout();
+                    return redirect('/blocked_user');
+                }
+                else{
+                    return redirect('/');
+                }
+            }
         }
     }
 
@@ -155,34 +167,34 @@ class AuthController extends Controller
         // Check if this User is new or already registered.
         $user = User::where('email', $email)->first();
 
-        if($user->count() == 0){
+        if($user == null){
             try{
                 // Creating a User table entry for this user.
                 // Since Password is not provided, User's email is subjected to encryption and stored.
                 $user = User::create([
                     'email' => $email,
-                    'password' => bcrypt($email),
+                    'password' => "",
                     'role' => "guest"
                 ]);
 
                 // Create a Customer entry for the above User. Fields left blank will be later on filled by the customer.
                 Customer::create([
                     'name' => $userFB->getName(),
-                    'NIC/passport_num' => "",
+                    'NIC_passport_num' => "",
                     'email' => $email,
                     'telephone_num' => "",
                     'block_status' => "0",
                     'address_line_1' => "",
                     'address_line_2' => "",
                     'city' => "",
-                    'provicnce/state' => "",
+                    'province_state' => "",
                     'zip_code' => "",
                     'country' => ""
                 ]);
             }
 
             catch(QueryException $e){
-                return ("A user account with".$email."already exists.");
+                return ("A user account with ".$email." already exists.");
             }
 
             // Send an email to the newly registered Guest user.
@@ -193,18 +205,26 @@ class AuthController extends Controller
             });
         }
 
-        // Log in the User
-        Auth::login($user);
+        // check if the user has been blocked from the site
+        $user_email = $user->email;
+        $block_status = Customer::where('email', $user_email)->first()->block_status;
 
-        // Redirect User to the Homepage if the Login attempt was successful.
-        if(Auth::check()){
-
-            // Here, facebook automatically appends #_=_ to the URL as it is empty. This is a security measure.
-            // Read more about this at:
-            // http://homakov.blogspot.com/2013/03/redirecturi-is-achilles-heel-of-oauth.html
-            return redirect('/');
+        if($block_status == "1"){
+            return redirect('/blocked_user');
         }
+        else{
+            // Log in the User
+            Auth::login($user);
 
+            // Redirect User to the Homepage if the Login attempt was successful.
+            if(Auth::check()){
+
+                // Here, facebook automatically appends #_=_ to the URL as it is empty. This is a security measure.
+                // Read more about this at:
+                // http://homakov.blogspot.com/2013/03/redirecturi-is-achilles-heel-of-oauth.html
+                return redirect('/');
+            }
+        }
     }
 
 }

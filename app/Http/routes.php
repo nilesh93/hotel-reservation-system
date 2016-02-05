@@ -147,14 +147,21 @@ Route::post('password/email', 'Auth\PasswordController@postEmail');
 Route::get('password/reset/{token}', 'Auth\PasswordController@getReset');
 Route::post('password/reset', 'Auth\PasswordController@postReset');
 
-// View, Create, Delete Admin level user(s) routes
+// View, Create, Delete Admin level users & Block Customers routes
 Route::get('/admin_users', 'UserController@Users');
+Route::get('/fill_data', 'UserController@fillData');
+Route::get('/block_customer', 'UserController@blockCustomer');
+Route::get('/unblock_customer', 'UserController@unblockCustomer');
+Route::get('/fill_data_admin', 'UserController@fillAdminData');
 Route::post('/new_admin', 'UserController@createNewAdmin');
-Route::get('/delete_admin/{id}','UserController@deleteAdmin');
+Route::get('/delete_admin','UserController@deleteAdmin');
 
 // Facebook Login Routes
 Route::get('/login/fb', 'Auth\AuthController@redirectToProvider');
 Route::get('/login/fb/callback', 'Auth\AuthController@handleProviderCallback');
+
+// User Blocked Notice route
+Route::get('/blocked_user', 'UserController@blockNotice');
 
 // Inaccessible views testing route
 Route::get('/test', function(){
