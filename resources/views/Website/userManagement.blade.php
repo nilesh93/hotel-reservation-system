@@ -191,7 +191,7 @@ User Management
 
                     $('#udt').DataTable(
                             {
-                                "ajax": "/fill_data",
+                                "ajax": "fill_data",
                                 "columns": [
                                     { "data": "name" },
                                     { "data": "NIC_passport_num" },
@@ -224,7 +224,7 @@ User Management
 
                     $('#adt').DataTable(
                             {
-                                "ajax": "/fill_data_admin",
+                                "ajax": "fill_data_admin",
                                 "columns": [
                                     { "data": "emp_id" },
                                     { "data": "email" },
@@ -236,7 +236,7 @@ User Management
                                                 var admin;
                                                 $.ajax({
                                                     async: false,
-                                                    url: '{{URL::to('/fill_data_admin')}}',
+                                                    url: '{{URL::to('fill_data_admin')}}',
                                                     dataType: 'json',
                                                     success: function(res){
                                                         admin = (res.thisAdmin);
@@ -259,7 +259,7 @@ User Management
                 /*function addnewAdmin(){
                     $.ajax({
                         type: "post",
-                        url: '/new_admin',
+                        url: 'new_admin',
                         data: $('#newAdmin').serialize(),
 
                         success : function(data){
@@ -291,7 +291,7 @@ User Management
                                     $.ajax(
                                             {
                                         type: "get",
-                                        url: '/block_customer',
+                                        url: 'block_customer',
                                         data: {cus_id:cus_id},
 
                                         success : function(data){
@@ -325,7 +325,7 @@ User Management
                                 if (isConfirm) {
                                     $.ajax({
                                         type: "get",
-                                        url: '/unblock_customer',
+                                        url: 'unblock_customer',
                                         data: {cus_id:cus_id},
 
                                         success : function(data){
@@ -358,7 +358,7 @@ User Management
                                 if (isConfirm) {
                                     $.ajax({
                                         type: "get",
-                                        url: '/delete_admin',
+                                        url: 'delete_admin',
                                         data: {emp_id:emp_id},
 
                                         success : function(data){

@@ -178,6 +178,12 @@ Route::get('/login/fb/callback', 'Auth\AuthController@handleProviderCallback');
 // User Blocked Notice route
 Route::get('/blocked_user', 'UserController@blockNotice');
 
+// Hall Services routes
+Route::get('/hallServices', 'HallController@getHallServices');
+Route::get('/getHallServices', 'HallController@getHallServiceData');
+Route::get('/addHallService', 'HallController@addHallService');
+Route::get('/deleteHallService', 'HallController@deleteHallService');
+
 // Inaccessible views testing route
 Route::get('/test', function(){
     return view('emails.newUser');
