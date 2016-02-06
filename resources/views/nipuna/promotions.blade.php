@@ -33,31 +33,24 @@ Promotions
 @endsection
 
 
+@section('page_buttons')
+<div class="col-md-4 col-md-offset-8">
+     <button type="button" class="btn btn-primary btn-success pull-right" onclick="add_promotions_modal()"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add Promotions</button> 
+
+       
+</div>
+
+@endsection
 
 @section('content')
 
 
-    
-        
-<div class="col-lg-12" style="margin:0px; padding:0px" >
+ <div class="portlet"> 
 
-    <form class="form-horizontal" >
+<div class="portlet-body">
 
-        <div class="form-group" >
-            <!--
-            <div class="col-lg-2" style="padding-left:0px; margin-left:0px">
-                <input class="form-control" id="search" oninput="navigate()"  placeholder="Enter Item Code" type="text">
-            </div>-->
-            <div class="col-lg-1" style="padding-left:0cm;">
-                <button type="button" class="btn btn-primary btn-success" onclick="add_promotions_modal()"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add Promotions</button>
-            </div>
-</div>
-    </form>
-    <br>
-</div>
-    
    
-    <div class="row" id="temptable">
+    <div class="" id="temptable">
         <table class="table table-striped table-bordered table-hover dataTables-example" id="dd" plugin="datatable" >
                     <thead>
                         <tr>
@@ -79,7 +72,9 @@ Promotions
 
                 </table>
     </div>
-      
+      </div>
+
+ </div>
         
     <!--Add Promotions Modal-->
     <div  class="modal fade" id="add_promotions_modal">
