@@ -178,7 +178,7 @@ Route::get('/login/fb/callback', 'Auth\AuthController@handleProviderCallback');
 // User Blocked Notice route
 Route::get('/blocked_user', 'UserController@blockNotice');
 
-// Hall Services routes
+// Hall Services routes (Controller is from Nilesh, View has been created in ./Resources/nilesh)
 Route::get('/hallServices', 'HallController@getHallServices');
 Route::get('/getHallServices', 'HallController@getHallServiceData');
 Route::get('/addHallService', 'HallController@addHallService');
