@@ -16,14 +16,14 @@ class Customer extends Model
 
     protected $fillable = [
         'name',
-        'NIC/passport_num',
+        'NIC_passport_num',
         'email',
         'telephone_num',
         'block_status',
         'address_line_1',
         'address_line_2',
         'city',
-        'provicnce/state',
+        'province_state',
         'zip_code',
         'country'
     ];

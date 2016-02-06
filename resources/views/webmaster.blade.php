@@ -1,7 +1,7 @@
 
 <!DOCTYPE html>
 <html lang="en">
-
+<?php date_default_timezone_set("Asia/Colombo");  ?>
 	<head>
 
 		<title>@yield('title')</title>
@@ -567,7 +567,7 @@
 
 									@foreach($promotions as $p)
 
-									@if($init == 0)
+									@if($init == 0 )
 
 									<div class="item active">
 
@@ -584,7 +584,7 @@
 										</div>
 									</div>
 									@else
-										<div class="item active">
+										<div class="item  ">
 
 										<div class="col-md-6">
 											<i class="fa fa-calendar-o"></i><small class="date">AUGUST 26th</small>

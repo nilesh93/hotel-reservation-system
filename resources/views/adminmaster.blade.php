@@ -1,4 +1,4 @@
-<?php_date_default_timezone_set("Asia/Colombo"); ?>
+<?php date_default_timezone_set("Asia/Colombo"); ?>
 
 <!DOCTYPE html>
 <html>
@@ -215,6 +215,7 @@
                                 <a href="#" class="waves-effect" id="management"><i class="ti-home"></i> <span> Management </span> </a>
                                 <ul class="list-unstyled">
                                     <li id="RM"><a href="admin_rooms">Room Management</a></li>
+                                    <li id="ARS"><a href="admin_room_services">Room Services</a></li>
                                     <li id="HM"><a href="admin_halls">Hall Management</a></li>
                                     <li id="PR"><a href="admin_promotions">Promotions Management</a></li>
                                     <li id="MM"><a href="admin_menus">Menus Management</a></li>

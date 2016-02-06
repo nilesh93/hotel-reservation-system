@@ -105,6 +105,21 @@ Route::get('admin_getRoomNum','RoomController@admin_getRoomNum');
 Route::get('admin_delete_room', 'RoomController@admin_delete_room'); 
 
 
+
+Route::get('admin_room_services', 'RoomController@roomservices');
+Route::get('admin_get_room_services', 'RoomController@get_room_services');
+Route::get('admin_get_room_furnish', 'RoomController@get_room_furnish');
+Route::get('admin_room_furnish_add', 'RoomController@room_furnish_add');
+Route::get('admin_room_service_add', 'RoomController@room_service_add');
+Route::get('admin_getRS_info', 'RoomController@getRS_info');
+Route::get('admin_getRF_info', 'RoomController@getRF_info');
+Route::get('admin_updateRF','RoomController@updateRF');
+Route::get('admin_updateRS','RoomController@updateRS');
+Route::get('admin_delRS','RoomController@delRS');
+Route::get('admin_delRF','RoomController@delRF');
+
+
+
 Route::get('admin_halls','HallController@halls');
 Route::get('admin_get_halls','HallController@admin_get_halls');
 Route::get('admin_hall_add','HallController@admin_hall_add');
@@ -147,14 +162,21 @@ Route::post('password/email', 'Auth\PasswordController@postEmail');
 Route::get('password/reset/{token}', 'Auth\PasswordController@getReset');
 Route::post('password/reset', 'Auth\PasswordController@postReset');
 
-// View, Create, Delete Admin level user(s) routes
+// View, Create, Delete Admin level users & Block Customers routes
 Route::get('/admin_users', 'UserController@Users');
+Route::get('/fill_data', 'UserController@fillData');
+Route::get('/block_customer', 'UserController@blockCustomer');
+Route::get('/unblock_customer', 'UserController@unblockCustomer');
+Route::get('/fill_data_admin', 'UserController@fillAdminData');
 Route::post('/new_admin', 'UserController@createNewAdmin');
-Route::get('/delete_admin/{id}','UserController@deleteAdmin');
+Route::get('/delete_admin','UserController@deleteAdmin');
 
 // Facebook Login Routes
 Route::get('/login/fb', 'Auth\AuthController@redirectToProvider');
 Route::get('/login/fb/callback', 'Auth\AuthController@handleProviderCallback');
+
+// User Blocked Notice route
+Route::get('/blocked_user', 'UserController@blockNotice');
 
 // Inaccessible views testing route
 Route::get('/test', function(){
