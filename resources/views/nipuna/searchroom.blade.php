@@ -36,6 +36,9 @@ Search Rooms
 
 @section('content')
 
+<div class="portlet"> 
+
+<div class="portlet-body">
 
     <div class="row" id="temptable">
         <table class="table table-striped table-bordered table-hover dataTables-example" id="dd" plugin="datatable" >
@@ -49,8 +52,6 @@ Search Rooms
                             <th>Room Type ID</th>
                             <th>Remarks</th>
                             <th>Status</th>
-                            <th class="col-md-1"></th>
-                            <th class="col-md-1"></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -60,7 +61,7 @@ Search Rooms
                 </table>
     </div>
       
-
+</div></div>
 <div  class="modal fade" id="update_menus_modal">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
@@ -142,18 +143,7 @@ function dataLoad(){
                 { "data": "room_size" },
                 { "data": "room_type_id" },
                 { "data": "remarks"},
-                { "data": "status"},
-               
-                {"data" : null,
-                 "mRender": function(data, type, full) {
-                     return '<button class="btn btn-info  btn-animate btn-animate-side btn-block btn-sm" onclick="edit('+data.menu_id+')"> View </button>' ;
-                 }
-                },
-                {"data" : null,
-                 "mRender": function(data, type, full) {
-                     return '<button class="btn btn-danger  btn-animate btn-animate-side btn-block btn-sm" onclick="delete_menu('+data.menu_id+')"> Delete </button>' ;
-                 }
-                }
+                { "data": "status"}
             ]
         } );
 

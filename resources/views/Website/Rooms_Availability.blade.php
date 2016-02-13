@@ -158,7 +158,7 @@ Available Rooms
 							<select class="form-control "  name="ono_of_rooms" id="ono_of_rooms">
 								<option value="No. of Rooms" >No. of Rooms</option>
 
-								@for($i=1;$i< 13;$i++)
+								@for($i=1;$i< 20;$i++)
 									<option value={{ $i}} @if(session('rooms') == $i) selected @endif>{{$i}}</option>
 								@endfor
 							</select>
@@ -254,7 +254,7 @@ Available Rooms
 								<span class="room-cost"> ${{ $ratefrom }}</span>
 
 								<p>
-									<b>Available Rooms : {{ $available_superior }}</b>
+									<b>Available Rooms : {{ $room_type_available[$room_type->room_type_id]}}</b>
 								</p>
 
 								<a type="button"  onclick='showModalRoomSelector("{{ $room_type->room_type_id }}select")' class="btn btn-primary">Select</a>
@@ -314,8 +314,8 @@ Available Rooms
 														{{--@if ($errors->has('code')) <p class="help-block" style="color:red">{{ $errors->first('code') }}</p> @endif--}}
 														<option value=1>1</option>
 
-														@for($i=2;$i<=$available_superior;$i++)
-															<option value={{ $i}} @if(old('no_of_rooms')==$i ) selected="selected"@endif>{{$i}}</option>
+														@for($i=2;$i<=$room_type_available[$room_type->room_type_id];$i++)
+															<option value={{ $i}} @if(session('no_of_rooms'.$room_type->room_type_id) == $i) selected @endif>{{$i}}</option>
 														@endfor
 													</select>
 
@@ -338,7 +338,7 @@ Available Rooms
 
 														<option value=0>Select Meal Type </option>
 														@foreach($mealtypeRates as $mealtypeRate)
-															<option value="{{ $mealtypeRate->rate_code }}">{{ $mealtypeRate->meal_type_name }} : ${{ $mealtypeRate->single_rates }}</option>
+															<option value="{{ $mealtypeRate->rate_code }}" @if(session('meal_type'.$room_type->room_type_id) == $mealtypeRate->rate_code) selected @endif>{{ $mealtypeRate->meal_type_name }} : ${{ $mealtypeRate->single_rates }}</option>
 
 														@endforeach
 													</select>
@@ -434,6 +434,8 @@ Available Rooms
 					swal('Success','Successfully Added!', 'success');
 					$('#'+modalid).modal('hide');
 					loadMybooking();
+					$('html,body').animate({scrollTop:$("#myBooking").offset().top}, 'slow');
+
 
 
 
@@ -542,6 +544,7 @@ Available Rooms
 
 				var body ='';
 				var total = 0;
+				var total_rooms = 0;
 
 
 
@@ -593,14 +596,16 @@ Available Rooms
 								'</div>'
 
 						total += data.rates[i] * data.no_of_rooms[i];
+						total_rooms += parseInt(data.no_of_rooms[i]);
 
 
 					}
 
+
 					var begin = '<h1 align="center">My Booking</h1><hr><div align="center"><div class="checkout-info row"><div class="col-sm-3 col-md-3 col-lg-3"><span class="checkout-title">Room Type</span><span class="checkout-value"></span></div><!-- /col-3 --><div class="col-sm-2 col-md-2 col-lg-2"><span class="checkout-title">No. of rooms</span><span class="checkout-value"></span></div><!-- /col-2 --><div class="col-sm-2 col-md-2 col-lg-2"><span class="checkout-title">Meal Type</span><span class="checkout-value"></span></div><!-- /col-3 --><div class="col-sm-2 col-md-2 col-lg-2"><span class="checkout-title">Rates ($)</span><span class="checkout-value"></span></div><!-- /col-3 --><div class="col-sm-2 col-md-2 col-lg-2"><span class="checkout-title">Line Total ($)</span><span class="checkout-value"></span></div><!-- /col-2 --><div class="col-sm-1 col-md-1 col-lg-1"><span class="checkout-title"></span><span class="checkout-value"></span></div><!-- /col-2 --></div></div><hr>';
 
 
-					var end = '<div class="col-md-12"><hr><div class="col-md-3"><button style="width: 60%;" type="button" class="btn-link btn-lg">Cancel</button></div><div class="col-md-6"><h2 align="center"><b>Total($) : ' + total + '</b><h2></div><div class="col-md-3" align="right"><button type="button" class="btn-link btn-lg">Make Payments</button></div><hr></div>'
+					var end = '<input type="hidden" name="total_payable" id="total_payable" value='+total+'><input type="hidden" name="total_rooms_selected" id="total_rooms_selected" value='+total_rooms+'><div class="col-md-12"><hr><div class="col-md-3"><a  href="{!! url('cancel_reserv') !!}"  style="width: 60%;" type="button" class="btn-link btn-lg">Cancel</a></div><div class="col-md-6"><h2 align="center"><b>Total($) : ' + total + '</b><h2></div><div class="col-md-3" align="right"><a   onclick="return makepaymentchk()" href="{!! url('payment') !!}" type="button" class="btn-link btn-lg">Make Payments</a></div><hr></div>'
 
 
 					document.getElementById("myBooking").innerHTML = begin + body + end;
@@ -625,6 +630,9 @@ Available Rooms
 		});
 
 	}
+
+
+
 
 
 
@@ -689,6 +697,49 @@ Available Rooms
 
 		}
 	}
+
+
+	//check the room_count when make payments button is clicked
+	function makepaymentchk()
+	{
+
+		var requested_rooms = "{!! session('rooms') !!}";
+		var req_rooms = parseInt(requested_rooms);
+		var total_rooms_selected = document.getElementById('total_rooms_selected').value;
+
+
+
+		if(req_rooms > total_rooms_selected)
+		{
+			swal({
+				title: "<div class='alert alert-danger'> <strong>Warning! </strong> </div>",
+				text: "<span style='color:#ff2222'> Your selected no of rooms are less than requested no of rooms. Please select "+ (req_rooms - total_rooms_selected) +" more room(s)<span>",
+				html: true
+			});
+
+			return false;
+		}
+		else if(req_rooms < total_rooms_selected) {
+
+			swal({
+				title: "<div class='alert alert-danger'> <strong>Warning! </strong> </div>",
+				text: "<span style='color:#ff2222'> You have selected "+ (total_rooms_selected - req_rooms ) +" more than requested no of room(s). Please select "+ req_rooms +" room(s) only <span>",
+				html: true
+			});
+
+			return false;
+		}
+
+
+
+			return true;
+
+
+	}
+
+
+
+
 
 	// script code for date picker 1
 	$("#datepicker").datepicker({

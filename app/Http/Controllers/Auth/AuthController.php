@@ -6,6 +6,7 @@ use App\User;
 use App\Customer;
 use App\Admin;
 use Carbon\Carbon;
+use Laravel\Socialite\Facades\Socialite;
 use Validator;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
@@ -77,14 +78,14 @@ class AuthController extends Controller
 
         Customer::create([
         'name' => $data['name'],
-        'NIC/passport_num' => $data['ID'],
+        'NIC_passport_num' => $data['ID'],
         'email' => $data['email'],
         'telephone_num' => $data['telephone'],
         'block_status' => "0",
         'address_line_1' => $data['address_line1'],
         'address_line_2' => $data['address_line2'],
         'city' => $data['city'],
-        'provicnce/state' => $data['province'],
+        'province_state' => $data['province'],
         'zip_code' => $data['zipCode'],
         'country' => $data['country']
     ]);
@@ -116,7 +117,19 @@ class AuthController extends Controller
 
                 return redirect('/admin');
             }
-            return redirect('/');
+            else{
+                $user_email = Auth::user()->email;
+                $block_status = Customer::where('email', $user_email)->first()->block_status;
+
+                // If user has been blocked, user is redirected to a page announcing so.
+                if($block_status == "1"){
+                    Auth::logout();
+                    return redirect('/blocked_user');
+                }
+                else{
+                    return redirect('/');
+                }
+            }
         }
     }
 
@@ -127,4 +140,91 @@ class AuthController extends Controller
      * @var string
      */
     protected $redirectPath = '/';
+
+
+    /**
+     * Redirect a user who wants to login using Facebook to the Facebook Authentication Page.
+     *
+     * @return mixed
+     */
+    public function redirectToProvider()
+    {
+        return Socialite::driver('facebook')->redirect();
+    }
+
+    /**
+     * Obtain & process user information provided by Facebook for the above user.
+     *
+     */
+    public function handleProviderCallback()
+    {
+        // Obtain User information from facebook.
+        $userFB = Socialite::driver('facebook')->user();
+
+        // Get User's email and store it in a variable for future reference.
+        $email = $userFB->getEmail();
+
+        // Check if this User is new or already registered.
+        $user = User::where('email', $email)->first();
+
+        if($user == null){
+            try{
+                // Creating a User table entry for this user.
+                // Since Password is not provided, User's email is subjected to encryption and stored.
+                $user = User::create([
+                    'email' => $email,
+                    'password' => "",
+                    'role' => "guest"
+                ]);
+
+                // Create a Customer entry for the above User. Fields left blank will be later on filled by the customer.
+                Customer::create([
+                    'name' => $userFB->getName(),
+                    'NIC_passport_num' => "",
+                    'email' => $email,
+                    'telephone_num' => "",
+                    'block_status' => "0",
+                    'address_line_1' => "",
+                    'address_line_2' => "",
+                    'city' => "",
+                    'province_state' => "",
+                    'zip_code' => "",
+                    'country' => ""
+                ]);
+            }
+
+            catch(QueryException $e){
+                return ("A user account with ".$email." already exists.");
+            }
+
+            // Send an email to the newly registered Guest user.
+            Mail::send('emails.newUser', [], function ($message) use ($email) {
+                $message->from(env('MAIL_FROM'), env('MAIL_NAME'));
+
+                $message->to($email)->subject('Welcome to Amalya Reach!');
+            });
+        }
+
+        // check if the user has been blocked from the site
+        $user_email = $user->email;
+        $block_status = Customer::where('email', $user_email)->first()->block_status;
+
+        if($block_status == "1"){
+            return redirect('/blocked_user');
+        }
+        else{
+            // Log in the User
+            Auth::login($user);
+
+            // Redirect User to the Homepage if the Login attempt was successful.
+            if(Auth::check()){
+
+                // Here, facebook automatically appends #_=_ to the URL as it is empty. This is a security measure.
+                // Read more about this at:
+                // http://homakov.blogspot.com/2013/03/redirecturi-is-achilles-heel-of-oauth.html
+                return redirect('/');
+            }
+        }
+    }
+
 }

@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use DB;
 use Illuminate\Http\Request;
 use App\HALL;
+use App\Hall_Services;
 
 class HallController extends Controller
 {
@@ -51,5 +52,36 @@ class HallController extends Controller
         
         
     }
+
+    public function getHallServices(){
+        return view('nilesh.hallServices');
+    }
+
+    public function getHallServiceData(){
+
+        $data = Hall_Services::all();
+
+        return response()->json(['count'=> count($data), 'data'=> $data]);
+
+    }
+
+    public function addHallService(Request $request){
+
+        $data = $request->all();
+
+        Hall_Services::create([
+            'name' => $data['name'],
+            'rate' => $data['rate']
+        ]);
+    }
+
+    public function deleteHallService(Request $request){
+
+        $service = Hall_Services::find($request->input('id'));
+
+        $service->delete();
+    }
+
+
 
 }

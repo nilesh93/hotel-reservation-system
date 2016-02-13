@@ -19,8 +19,6 @@ Menus - Admin Panel
 Menus
 @endsection
 
-
-
 @section('breadcrumbs')
 
 <li>
@@ -31,30 +29,24 @@ Menus
 </li>
 
 @endsection
+@section('page_buttons')
+<div class="col-md-4 col-md-offset-9">
+                <button type="button" class="btn btn-primary btn-success" onclick="add_menu_modal()"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add new Menu</button>
 
+       
+</div>
+
+@endsection
 
 
 @section('content')
 
 
     
-        
-<div class="col-lg-12" style="margin:0px; padding:0px" >
+<div class="portlet"> 
 
-    <form class="form-horizontal" >
+<div class="portlet-body">
 
-        <div class="form-group" >
-            <!--
-            <div class="col-lg-2" style="padding-left:0px; margin-left:0px">
-                <input class="form-control" id="search" oninput="navigate()"  placeholder="Enter Item Code" type="text">
-            </div>-->
-            <div class="col-lg-1" style="padding-left:0cm;">
-                <button type="button" class="btn btn-primary btn-success" onclick="add_menu_modal()"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add new Menu</button>
-            </div>
-</div>
-    </form>
-    <br>
-</div>
     
    
     <div class="row" id="temptable">
@@ -77,11 +69,11 @@ Menus
 
                 </table>
     </div>
-      
+      </div></div>
         
     <!--Add Promotions Modal-->
     <div  class="modal fade" id="add_menus_modal">
-        <div class="modal-dialog modal-lg">
+        <div class="modal-dialog ">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
@@ -117,6 +109,7 @@ Menus
                         </div>
                     </div>
 
+
                 </div>
                 <div class="alert alert-dismissible alert-success" id="addedsuccessfully" hidden="true">                   
                     <button type="button" class="close" data-dismiss="alert">×</button>
@@ -137,7 +130,7 @@ Menus
 <!-------------------------------------END OF ADD PROMOTIONS MODAL-------------------------------->
 
 <div  class="modal fade" id="update_menus_modal">
-        <div class="modal-dialog modal-lg">
+        <div class="modal-dialog ">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
@@ -170,6 +163,15 @@ Menus
                             <label for="item" class="col-lg-5 control-label">Rate</label>
                             <div class="col-lg-6">
                                 <input class="form-control" id="menu_rate_edit" placeholder="Rate" type="text">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="form-group">
+                            <label for="item" class="col-lg-5 control-label">Image</label>
+                            <div class="col-lg-6">
+                                <img height="400" width="300" src={{URL::asset('BackEnd\assets\images\RoyalVictoriaMenu.jpg')}}></img>
                             </div>
                         </div>
                     </div>

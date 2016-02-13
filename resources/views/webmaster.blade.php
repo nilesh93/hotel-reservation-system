@@ -1,7 +1,7 @@
 
 <!DOCTYPE html>
 <html lang="en">
-
+<?php date_default_timezone_set("Asia/Colombo");  ?>
 	<head>
 
 		<title>@yield('title')</title>
@@ -405,12 +405,18 @@
 											->select('path')
 											->get();
 
+									$advance = DB::table('HALL_RATES')
+											->where('hall_id','=',$hall->hall_id)
+											->value('advance_payment');
 
+									$refundable = DB::table('HALL_RATES')
+											->where('hall_id','=',$hall->hall_id)
+											->value('refundable_amount');
 
 								?>
 
 
-								<modal><!-- room -->
+								<modal><!-- halls -->
 									<div class="modal fade" id="{{$hall->hall_id}}hall">
 										<div class="modal-dialog modal-lg">
 											<div class="modal-content">
@@ -427,7 +433,7 @@
 
 															<div class="col-md-3">
 
-																<h4 align="center">Furnishing and Fixtures</h4>
+																<h4 align="center">  </h4>
 
 																<ul>
 															<!--	<?php
@@ -448,8 +454,7 @@
 
 															<div class="col-md-6">
 
-																<br>
-																<br>
+
 																<br>
 																<br>
 																<br>
@@ -482,8 +487,9 @@
 																			</div>
 																		@endforeach
 																	</div>
-
+																	
 																	<a class="left carousel-control" href="#carousel-{{$hall->hall_id}}hall" data-slide="prev"><span class="glyphicon glyphicon-chevron-left"></span></a> <a class="right carousel-control" href="#carousel-{{$hall->hall_id}}hall" data-slide="next"><span class="glyphicon glyphicon-chevron-right"></span></a>
+
 
 																</div>
 
@@ -491,7 +497,7 @@
 
 															<div class="col-md-3">
 
-																<h4 align="center">Services</h4>
+																<h4 align="center"> </h4>
 
 															<!--	<ul>
 																	<?php
@@ -556,8 +562,9 @@
 														<div class="col-md-4">
 															<div align="center">
 
-																<h4>Rate</h4>
-
+																<h4>Rates</h4>
+																Advance Payment : ${{ $advance }}<br>
+																Refundable : ${{ $refundable }}
 
 															</div>
 														</div>
@@ -597,9 +604,9 @@
 								<div class="carousel-inner">
 
 									<?php $promotions = DB::table('PROMOTIONS')
-	->where('date_from','<',date('Y-m-d'))
-	->where('date_to','>',date('Y-m-d'))
-	->get();
+														->where('date_from','<',date('Y-m-d'))
+														->where('date_to','>',date('Y-m-d'))
+														->get();
 
 
 
@@ -609,7 +616,7 @@
 
 									@foreach($promotions as $p)
 
-									@if($init == 0)
+									@if($init == 0 )
 
 									<div class="item active">
 
@@ -626,7 +633,7 @@
 										</div>
 									</div>
 									@else
-										<div class="item active">
+										<div class="item  ">
 
 										<div class="col-md-6">
 											<i class="fa fa-calendar-o"></i><small class="date">AUGUST 26th</small>

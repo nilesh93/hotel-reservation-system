@@ -30,6 +30,8 @@
                     <label><input type="checkbox" name="remember"> Remember me</label>
                 </div>
                 <button type="submit" class="btn btn-success">Login</button>
+                <p style="display: inline" class="text-info"> Or </p>
+                <a href="{{URL::to('/login/fb')}}" class="text-info"><img src="{{URL::asset('FrontEnd/img/btn_facebook_login.png')}}" alt="Login with Facebook" height="37%" width="37%"></a>
                 <a href="{{URL::to('password/email')}}" class="text-info">Forgot your password?</a>
             </form>
 
