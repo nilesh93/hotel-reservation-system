@@ -127,7 +127,7 @@ class AuthController extends Controller
                     return redirect('/blocked_user');
                 }
                 else{
-                    return redirect('/');
+                    return redirect()->intended('/');
                 }
             }
         }
