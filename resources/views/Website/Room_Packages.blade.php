@@ -40,7 +40,7 @@ Room Packages
 						<div class=" col-sm-12 col-md-12 col-lg-12">
 
 							<i class="fa fa-calendar"></i>
-								<input type="text"  class="form-control default-cursor" id="datepicker" value="Check In Date" name="check_in" placeholder="Check In Date"  readonly="readonly"  />
+								<input type="text"  class="form-control default-cursor" id="datepicker"  name="check_in" placeholder="Check In Date"  readonly="readonly"  required/>
 						</div><!-- /col-md-12 -->
 					</div><!-- /row -->
 
@@ -49,7 +49,7 @@ Room Packages
 
 						<div class="col-sm-12 col-md-12 col-lg-12">
 							<i class="fa fa-calendar"></i>
-							<input type="text" class="form-control default-cursor" Value="Check Out Date" id="datepicker1"  name="check_out" placeholder="Check Out Date" readonly/>
+							<input type="text" class="form-control default-cursor"  id="datepicker1"  name="check_out" placeholder="Check Out Date" readonly required/>
 
 						</div><!-- /col-md-12 -->
 					</div><!-- /row -->
@@ -83,7 +83,7 @@ Room Packages
 									<select class="form-control "  name="ono_of_rooms" id="ono_of_rooms">
 										<option value="No. of Rooms">No. of Rooms</option>
 
-										@for($i=1;$i< 13;$i++)
+										@for($i=1;$i< 20;$i++)
 											<option value={{ $i}}>{{$i}}</option>
 										@endfor
 									</select>
@@ -180,6 +180,30 @@ Room Packages
 
 
 @section('js')
+	@if(Session::has('reserv_status'))
+		<script>
+
+		swal("Success" ,"Your reservation has been successfully made!", "success");
+
+		</script>
+	@endif
+
+
+
+
+	@if(Session::has('rooms_not_available'))
+
+		<script>
+
+			swal({
+			title: "<div class='alert alert-danger'> <strong>Warning! </strong> </div>",
+			text: "<span style='color:#ff2222'> {!! session("rooms_not_available") !!}<span>",
+				html: true
+			});
+
+		</script>
+
+	@endif
 
 <script>
 
@@ -207,8 +231,8 @@ Room Packages
 		var checkout_date = document.getElementById('datepicker1').value;
 		var adults =  document.getElementById('adults').value;
 
-		if(checkin_date == "Check In Date" || checkout_date == "Check Out Date" || checkout_date == "" || adults == "Adults") {
-			if (checkin_date == "Check In Date") {
+		if(checkin_date == "" || checkout_date == "" || checkout_date == "" || adults == "Adults") {
+			if (checkin_date == "") {
 				swal({
 					title: "<div class='alert alert-danger'> <strong>Warning! </strong> </div>",
 					text: "<span style='color:#ff2222'> Select a Check-In date <span>",
@@ -216,7 +240,7 @@ Room Packages
 				});
 
 			}
-			else if (checkout_date == "Check Out Date" || checkout_date == "") {
+			else if (checkout_date == "") {
 				swal({
 					title: "<div class='alert alert-danger'> <strong>Warning! </strong> </div>",
 					text: "<span style='color:#ff2222'> Select a Check-Out date <span>",
@@ -248,7 +272,7 @@ Room Packages
 	// script code for date picker 1
 	$("#datepicker").datepicker({
 		dateFormat:'yy-mm-dd',
-		minDate:0,
+		minDate:1,
 		changeMonth: true,
 		changeYear: true,
 		defaultDate:new Date(),
@@ -262,14 +286,14 @@ Room Packages
 			var arrival =$(this).datepicker( 'getDate' );
 			var departure = $("#datepicker1" ).datepicker( "getDate" );
 
-			var _MS_PER_DAY = 1000 * 60 * 60 * 24;
+			/*var _MS_PER_DAY = 1000 * 60 * 60 * 24;
 			var utc1 = Date.UTC(arrival.getFullYear(), arrival.getMonth(), arrival.getDate());
 			var utc2 = Date.UTC(departure.getFullYear(), departure.getMonth(), departure.getDate());
 
 
 			var difference = Math.abs(Math.floor((utc2 - utc1) / _MS_PER_DAY));
 
-			$("#nights").val(difference);
+			$("#nights").val(difference);*/
 
 
 			/*if(arrival > departure){
@@ -302,7 +326,7 @@ Room Packages
 		dateFormat:'yy-mm-dd',
 		changeMonth: true,
 		changeYear: true,
-		minDate:0,
+		minDate:2,
 
 
 		onClose:function(){

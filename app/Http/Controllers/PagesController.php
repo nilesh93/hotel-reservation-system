@@ -8,6 +8,7 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\HALL;
 use App\ROOM_TYPE;
+use Session;
 
 class PagesController extends Controller
 {
@@ -27,6 +28,7 @@ class PagesController extends Controller
      }
 
     public function rooms(){
+
 
         $room_types = ROOM_TYPE::get();
 

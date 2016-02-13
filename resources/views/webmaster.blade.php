@@ -405,12 +405,18 @@
 											->select('path')
 											->get();
 
+									$advance = DB::table('HALL_RATES')
+											->where('hall_id','=',$hall->hall_id)
+											->value('advance_payment');
 
+									$refundable = DB::table('HALL_RATES')
+											->where('hall_id','=',$hall->hall_id)
+											->value('refundable_amount');
 
 								?>
 
 
-								<modal><!-- room -->
+								<modal><!-- halls -->
 									<div class="modal fade" id="{{$hall->hall_id}}hall">
 										<div class="modal-dialog modal-lg">
 											<div class="modal-content">
@@ -427,7 +433,7 @@
 
 															<div class="col-md-3">
 
-																<h4 align="center">Furnishing and Fixtures</h4>
+																<h4 align="center">  </h4>
 
 																<ul>
 															<!--	<?php
@@ -448,8 +454,7 @@
 
 															<div class="col-md-6">
 
-																<br>
-																<br>
+
 																<br>
 																<br>
 																<br>
@@ -491,7 +496,7 @@
 
 															<div class="col-md-3">
 
-																<h4 align="center">Services</h4>
+																<h4 align="center"> </h4>
 
 															<!--	<ul>
 																	<?php
@@ -556,8 +561,9 @@
 														<div class="col-md-4">
 															<div align="center">
 
-																<h4>Rate</h4>
-
+																<h4>Rates</h4>
+																Advance Payment : ${{ $advance }}<br>
+																Refundable : ${{ $refundable }}
 
 															</div>
 														</div>
@@ -597,9 +603,9 @@
 								<div class="carousel-inner">
 
 									<?php $promotions = DB::table('PROMOTIONS')
-	->where('date_from','<',date('Y-m-d'))
-	->where('date_to','>',date('Y-m-d'))
-	->get();
+														->where('date_from','<',date('Y-m-d'))
+														->where('date_to','>',date('Y-m-d'))
+														->get();
 
 
 

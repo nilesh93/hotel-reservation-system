@@ -1,4 +1,4 @@
-<?php_date_default_timezone_set("Asia/Colombo"); ?>
+<? //php_date_default_timezone_set("Asia/Colombo"); ?>
 
 <!DOCTYPE html>
 <html>
