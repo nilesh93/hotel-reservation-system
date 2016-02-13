@@ -39,4 +39,13 @@ class nipuna_controller extends Controller
         $result = DB::table('rooms')->get();
             return response()->json(['count' => count($result), 'data' => $result]);
     }
+
+    public function customers_search_index(){
+        return view('nipuna.searchcustomer');
+    }
+
+    public function customers_search(){
+        $result = DB::table('customer')->get();
+            return response()->json(['count' => count($result), 'data' => $result]);
+    }
 }

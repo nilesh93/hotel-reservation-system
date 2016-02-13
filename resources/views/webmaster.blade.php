@@ -1,7 +1,7 @@
 
 <!DOCTYPE html>
 <html lang="en">
-
+<?php date_default_timezone_set("Asia/Colombo");  ?>
 	<head>
 
 		<title>@yield('title')</title>
@@ -487,8 +487,9 @@
 																			</div>
 																		@endforeach
 																	</div>
-
+																	
 																	<a class="left carousel-control" href="#carousel-{{$hall->hall_id}}hall" data-slide="prev"><span class="glyphicon glyphicon-chevron-left"></span></a> <a class="right carousel-control" href="#carousel-{{$hall->hall_id}}hall" data-slide="next"><span class="glyphicon glyphicon-chevron-right"></span></a>
+
 
 																</div>
 
@@ -615,7 +616,7 @@
 
 									@foreach($promotions as $p)
 
-									@if($init == 0)
+									@if($init == 0 )
 
 									<div class="item active">
 
@@ -632,7 +633,7 @@
 										</div>
 									</div>
 									@else
-										<div class="item active">
+										<div class="item  ">
 
 										<div class="col-md-6">
 											<i class="fa fa-calendar-o"></i><small class="date">AUGUST 26th</small>

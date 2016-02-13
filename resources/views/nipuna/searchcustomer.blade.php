@@ -10,13 +10,13 @@
 @section('title')
 
 
-Search Booking - Admin Panel
+Search Customer - Admin Panel
 
 @endsection
 
 
 @section('page_title')
-Search Booking
+Search Customer
 @endsection
 
 
@@ -27,7 +27,7 @@ Search Booking
 	<a href="#">Admin</a>
 </li>
 <li  class="active">
-	<a href="#">Search Booking</a>
+	<a href="#">Search Customer</a>
 </li>
 
 @endsection
@@ -35,26 +35,26 @@ Search Booking
 
 
 @section('content')
-
 <div class="portlet"> 
 
 <div class="portlet-body">
+
     <div class="row" id="temptable">
         <table class="table table-striped table-bordered table-hover dataTables-example" id="dd" plugin="datatable" >
                     <thead>
                         <tr>
                             
                             
-                            <th>Reservation ID</th>
-                            <th>Remarks</th>
-                            <th>Check In</th>
-                            <th>Check Out</th>
-                            <th>Adults</th>
-                            <th>Children</th>
-                            <th>Rooms</th>
-                            <th>Nights</th>
-                            <th>Total Amount</th>
-                            <th>Type</th>
+                            <th>Customer ID</th>
+                            <th>NIC / Passport</th>
+                            <th>Email</th>
+                            <th>Telephone</th>
+                            <th>Block Status</th>
+                            <th>Address Line 1</th>
+                            <th>Address Line 2</th>
+                            <th>City</th>
+                            <th>Postal Code</th>
+                            <th>Country</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -76,7 +76,7 @@ Search Booking
 
         
         document.getElementById("management").click();
-        document.getElementById("BS").setAttribute("class","active");
+        document.getElementById("CS").setAttribute("class","active");
         dataLoad();
 });
 
@@ -86,18 +86,19 @@ function dataLoad(){
         oTable.destroy();
 
         $('#dd').DataTable( {
-            "ajax": "admin_search/bookings",
+            "ajax": "admin_search/customers",
             "columns": [
-                { "data": "room_reservation_id" },
-                { "data": "remarks"},
-                { "data": "check_in" },
-                { "data": "check_out" },
-                { "data": "adults"},
-                { "data": "children"},
-                { "data": "num_of_rooms" },
-                { "data": "num_of_nights"},
-                { "data": "total_amount"},
-                { "data": "type" }
+                { "data": "cus_id" },
+                { "data": "NIC/passport_num"},
+                { "data": "email" },
+                { "data": "telephone_num" },
+                { "data": "block_status"},
+                { "data": "address_line_1"},
+                { "data": "address_line_2"},
+                { "data": "city"},
+                { "data": "zip_code"},
+                { "data": "country"}
+
             ]
         } );
 
