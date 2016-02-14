@@ -217,12 +217,13 @@
                                     <li id="RM"><a href="admin_rooms">Room Management</a></li>
                                     <li id="ARS"><a href="admin_room_services">Room Services</a></li>
                                     <li id="HM"><a href="admin_halls">Hall Management</a></li>
+                                    <li id="HS"><a href="hallServices">Hall Services</a></li>
                                     <li id="PR"><a href="admin_promotions">Promotions Management</a></li>
                                     <li id="MM"><a href="admin_menus">Menus Management</a></li>
                                     <li id="UM"><a href="{{URL::to('/admin_users')}}">User Management</a></li>
                                     <li id="FS"><a href="admin_facilities">Facilities Management</a></li>
                                     <li id="BS"><a href="admin_bookings_search">Bookings Search</a></li>
-                                    <li id="RS"><a href="admin_rooms_search">Room Search</a></li>
+                                    <li id="RS"><a href="admin_rooms_search">Room Logs</a></li>
                                     <li id="CS"><a href="admin_customers_search">Customer Search</a></li>
                                 </ul>
                             </li>

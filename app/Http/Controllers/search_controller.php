@@ -9,7 +9,7 @@ use App\Http\Controllers\Controller;
 
 use DB;
 
-class nipuna_controller extends Controller
+class search_controller extends Controller
 {
     /**
      * Display a listing of the resource.
