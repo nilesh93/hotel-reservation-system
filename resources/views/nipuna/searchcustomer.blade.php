@@ -89,7 +89,7 @@ function dataLoad(){
             "ajax": "admin_search/customers",
             "columns": [
                 { "data": "cus_id" },
-                { "data": "NIC/passport_num"},
+                { "data": "NIC_passport_num"},
                 { "data": "email" },
                 { "data": "telephone_num" },
                 { "data": "block_status"},
