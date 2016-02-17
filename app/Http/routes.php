@@ -178,6 +178,12 @@ Route::get('/login/fb/callback', 'Auth\AuthController@handleProviderCallback');
 // User Blocked Notice route
 Route::get('/blocked_user', 'UserController@blockNotice');
 
+// Hall Services routes (Controller is from Nilesh, View has been created in ./Resources/nilesh)
+Route::get('/hallServices', 'HallController@getHallServices');
+Route::get('/getHallServices', 'HallController@getHallServiceData');
+Route::get('/addHallService', 'HallController@addHallService');
+Route::get('/deleteHallService', 'HallController@deleteHallService');
+
 // Inaccessible views testing route
 Route::get('/test', function(){
     return view('emails.newUser');
@@ -206,14 +212,14 @@ Route::controller('admin_promotions','PromotionsController');
 Route::controller('admin_menus','MenusController');
 Route::controller('admin_facilities','FacilitiesController');
 
-Route::get('admin_search/bookings','nipuna_controller@bookings_search');
-Route::get('admin_bookings_search','nipuna_controller@bookings_search_index');
+Route::get('admin_search/bookings','search_controller@bookings_search');
+Route::get('admin_bookings_search','search_controller@bookings_search_index');
 
-Route::get('admin_rooms_search','nipuna_controller@rooms_search_index');
-Route::get('admin_search/rooms','nipuna_controller@rooms_search');
+Route::get('admin_rooms_search','search_controller@rooms_search_index');
+Route::get('admin_search/rooms','search_controller@rooms_search');
 
-Route::get('admin_search/customers','nipuna_controller@customers_search');
-Route::get('admin_customers_search','nipuna_controller@customers_search_index');
+Route::get('admin_search/customers','search_controller@customers_search');
+Route::get('admin_customers_search','search_controller@customers_search_index');
 
 
 

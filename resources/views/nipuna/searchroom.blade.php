@@ -35,33 +35,82 @@ Search Rooms
 
 
 @section('content')
+<div class="col-lg-12"> 
 
-<div class="portlet"> 
 
-<div class="portlet-body">
+    <div id="test"></div>
+    <ul class="nav nav-tabs tabs" style="width: 100%;">
+        <li class="active tab" style="width: 25%;">
+            <a href="#rooms" data-toggle="tab" aria-expanded="false" class="active"> 
+                <span class="visible-xs"><i class="fa fa-home"></i></span> 
+                <span class="hidden-xs">Previous Logs</span> 
+            </a> 
+        </li> 
+        <li class="tab" style="width: 25%;"> 
+            <a href="#roomtypes" data-toggle="tab" aria-expanded="false"> 
+                <span class="visible-xs"><i class="fa fa-user"></i></span> 
+                <span class="hidden-xs">Bookings</span> 
+            </a> 
+        </li> 
 
-    <div class="row" id="temptable">
-        <table class="table table-striped table-bordered table-hover dataTables-example" id="dd" plugin="datatable" >
-                    <thead>
-                        <tr>
-                            
-                            
-                            <th>Room ID</th>
-                            <th>Room Number</th>
-                            <th>Room Size</th>
-                            <th>Room Type ID</th>
-                            <th>Remarks</th>
-                            <th>Status</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        
-                    </tbody>
 
-                </table>
-    </div>
-      
-</div></div>
+        <div class="indicator" style="right: 367px; left: 0px;"></div></ul> 
+    <div class="tab-content"> 
+        <div class="tab-pane " id="roomtypes"> 
+
+
+            <table class="table table-striped table-bordered table-hover dataTables-example" id="ddt" plugin="datatable" >
+                <thead>
+                    <tr>
+                        <th>Code</th>
+                        <th>Type</th>
+
+                        <th>Description</th>
+                        <th>Services</th>
+                        <th>Count</th>
+
+                        <th class="col-md-1"></th>
+                        <th class="col-md-1"></th>
+                    </tr>
+                </thead>
+                <tbody>
+
+
+                </tbody>
+
+            </table>
+
+
+        </div> 
+        <div class="tab-pane active" id="rooms">
+
+
+            <table class="table table-striped table-bordered table-hover dataTables-example" id="dd" plugin="datatable" >
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Room_No.</th>
+                        <th>Room Type</th>
+                        <th>Size</th>
+                        <th>status</th>
+                        <th>Remarks</th>
+                       
+                    </tr>
+                </thead>
+                <tbody>
+
+
+                </tbody>
+
+            </table>
+
+
+        </div> 
+    </div> 
+</div>
+
+
+
 <div  class="modal fade" id="update_menus_modal">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
