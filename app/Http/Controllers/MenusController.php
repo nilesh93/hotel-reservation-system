@@ -46,11 +46,23 @@ class MenusController extends Controller
         return $result;
     }
 
+    public function getRetrieveitemdetails(Request $request){
+        $row=$request->input('row');
+        $result = DB::table('detailed_menus')->where('id','=',$row)->get();
+        return $result;
+    }
+
     public function getUpdatemenu(Request $request){
         $category = $request->input('category');
         $description = $request->input('description');
         $rate = $request->input('rate');
         $row=$request->input('row');
         DB::table('menus')->where('menu_id',$row)->update(array('category'=> $category,'description'=> $description,'rate'=> $rate));
+    }
+
+    public function getDetailedmenus(Request $request){
+        $row = $request->input('row');
+        $result = DB::table('detailed_menus')->where('menu_id',$row)->get();
+        return response()->json(['count' => count($result), 'data' => $result]);
     }
 }
