@@ -8,10 +8,19 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\HALL;
 use App\ROOM_TYPE;
+use Session;
 
 class PagesController extends Controller
 {
-    //
+
+
+    /**
+     * view hall page.
+     *
+     * @return Website.halls
+     */
+
+
      public function halls(){
 
          $halls = HALL::get();
@@ -19,6 +28,7 @@ class PagesController extends Controller
      }
 
     public function rooms(){
+
 
         $room_types = ROOM_TYPE::get();
 
