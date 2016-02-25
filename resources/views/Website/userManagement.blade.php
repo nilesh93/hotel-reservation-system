@@ -18,7 +18,7 @@ User Management
 
 @section('page_buttons')
     <div class="col-md-4 col-md-offset-8">
-        <button type="button" class="btn btn-success waves-effect btn-block waves-light pull-right" data-toggle="modal" data-target="#addRoom">
+        <button type="button" class="btn btn-success waves-effect btn-block waves-light pull-right" data-toggle="modal" data-target="#addAdmin">
         <span class="btn-label pull-left"><i class="fa fa-plus"></i>
         </span>ADD ADMIN</button>
     </div>
@@ -63,62 +63,39 @@ User Management
             <div class="tab-pane " id="guest">
 
 
-                {{--<table class="table table-striped table-bordered table-hover dataTables-example" id="ddt" plugin="datatable" >
+                <table class="table table-striped table-bordered table-hover dataTables-example" id="udt" plugin="datatable" >
                     <thead>
                     <tr>
-                        <th>Code</th>
-                        <th>Type</th>
-
-                        <th>Description</th>
-                        <th>Services</th>
-                        <th>Count</th>
-
-                        <th class="col-md-1"></th>
-                        <th class="col-md-1"></th>
+                        <th>Name</th>
+                        <th>NIC/ Passport No.</th>
+                        <th>Email address</th>
+                        <th>Telephone No.</th>
+                        <th>Block Status</th>
+                        <th>Address</th>
+                        <th>Country</th>
+                        <th class="col-md-1">Actions</th>
                     </tr>
                     </thead>
                     <tbody>
 
-
                     </tbody>
-
-                </table>--}}
+                </table>
 
 
             </div>
             <div class="tab-pane active" id="admin">
 
 
-                <table class="table table-striped table-bordered table-hover dataTables-example" id="dd" plugin="datatable" >
+                <table class="table table-striped table-bordered table-hover dataTables-example" id="adt" plugin="datatable" >
                     <thead>
                     <tr>
                         <th>ID</th>
                         <th>Admin email</th>
                         <th class="col-md-">Last login</th>
-                        <th class="col-md-1">Activate Actions</th>
                         <th class="col-md-1">Actions</th>
                     </tr>
                     </thead>
                     <tbody>
-                    @foreach($admins as $data)
-                        <tr>
-                            <td>
-                                {{sprintf('%04d', $data->emp_id)}}
-                            </td>
-                            <td>
-                                {{$data->email}}
-                            </td>
-                            <td>
-                                {{$data->last_login_ts}}
-                            </td>
-                            <td>
-                                <button type="button" class="btn btn-warning" onclick="activateDel({{$data->emp_id}})">Activate Actions</button>
-                            </td>
-                            <td>
-                                <a href="{{'/delete_admin/'.$data->emp_id}}" class="btn btn-danger" id="delete{{$data->emp_id}}" disabled>Remove this Admin</a>
-                            </td>
-                        </tr>
-                    @endforeach
                     </tbody>
 
                 </table>
@@ -130,7 +107,7 @@ User Management
 
 
 
-    <div class="modal inmodal fade" id="addRoom" tabindex="-1" role="dialog"  aria-hidden="true">
+    <div class="modal inmodal fade" id="addAdmin" tabindex="-1" role="dialog"  aria-hidden="true">
         <div class="modal-dialog ">
             <div class="modal-content">
                 <div class="modal-header">
@@ -138,29 +115,30 @@ User Management
                     <h4 class="modal-title">Create New Admin</h4>
 
                 </div>
-                <form class="form-horizontal" method="post" action="{{URL::to('/new_admin')}}">
+                <form class="form-horizontal" method="post" action="{{URL::to('/new_admin')}}"{{--id="newAdmin" onsubmit="return addnewAdmin()"--}}>
                     <div class="modal-body">
                         {!! csrf_field() !!}
                         <div class="form-group">
                             <label class="col-lg-3 control-label">Email address</label>
                             <div class="col-lg-9">
-                                <input placeholder="New Admin's email" class="form-control" type="email" name="email" required placeholder="New Admin's email" title="Check the email again">
+                                <input placeholder="New Admin's email" class="form-control" type="email" name="email" required placeholder="New Admin's email">
+                                @if ($errors->has('email')) <p class="text-danger">{{ $errors->first('email') }}</p>@endif
                             </div>
                         </div>
-
-                        <input type="hidden" name="role" value="admin">
 
                         <div class="form-group">
                             <label class="col-lg-3 control-label">Password</label>
                             <div class="col-lg-9">
                                 <input type="password" class="form-control" name="password" id="password" pattern="{6,}" title="6 Characters minimum" required placeholder="Password should be minimum 6 characters long">
+                                @if ($errors->has('password')) <p class="text-danger">{{ $errors->first('password') }}</p>@endif
                             </div>
                         </div>
 
                         <div class="form-group">
                             <label class="col-lg-3 control-label">Confirm Password</label>
                             <div class="col-lg-9">
-                                <input type="password" class="form-control" name="password_confirmation" id="password" pattern="{6,}" title="6 Characters minimum" required placeholder="Password should be minimum 6 characters long">
+                                <input type="password" class="form-control" name="password_confirmation" id="password_confirmation" pattern="{6,}" title="6 Characters minimum" required>
+                                @if ($errors->has('password_confirmation')) <p class="text-danger">{{ $errors->first('password_confirmation') }}</p>@endif
                             </div>
                         </div>
                     </div>
@@ -181,161 +159,222 @@ User Management
 
         @section('js')
 
-            <script>
-                $(document).ready(function(){
-                    {
-                        $({{"delete"}}).attr("disabled", true);
-                    };
-                });
-            </script>
-
-            <script>
-                $(document).ready(function(){
-                    $({{"activate"}}).click(function(){
-                        $({{"delete"}}).attr("disabled", false);
-                        /*$('#chkOut').removeProp("disabled");*/
-                    });
-                });
-            </script>
-
-        <script>
-            function activateDel(id){
-
-
-
-                document.getElementById("delete"+id).removeAttribute("disabled",false);
-
-
-            }
-
-
-        </script>
-
             {{--<script>
+                function activateDel(id){
+                    document.getElementById("delete"+id).removeAttribute("disabled",false);
+                }
+
+            </script>--}}
+
+            <script>
+                @if(count($errors)>0){
+                    $('#addAdmin').modal('show');
+                }
+                @endif
+            </script>
+
+            <script>
                 $('document').ready(function(){
 
                     document.getElementById('management').click();
                     document.getElementById('UM').setAttribute('class','active');
 
                     dataLoad();
-                    loadTypes();
-
-
+                    adminDataLoad();
 
                 });
 
                 function dataLoad(){
 
-                    var oTable = $('#dd').DataTable();
+                    var oTable = $('#udt').DataTable();
                     oTable.destroy();
 
-                    $('#dd').DataTable( {
-                        "ajax": "admin_getrooms",
-                        "columns": [
-                            { "data": "room_id" },
-                            { "data": "room_num" },
-                            { "data": "type" },
-                            { "data": "room_size" },
-                            {"data" : null,
-                                "mRender": function(data, type, full) {
-
-                                    if(data.status == '0'){
-
-                                        return "<span class='label label-warning'> Not Assigned </span>";
-
-                                    }else{
-
-                                        return data.status;
-
+                    $('#udt').DataTable(
+                            {
+                                "ajax": "fill_data",
+                                "columns": [
+                                    { "data": "name" },
+                                    { "data": "NIC_passport_num" },
+                                    { "data": "email"},
+                                    { "data": "telephone_num" },
+                                    { "data": "block_status"},
+                                    { "data": "address_line_1",
+                                        "render":function(data, type, full, meta){
+                                            return full.address_line_1 +", "+ full.address_line_2 +", "+ full.city +", "+ full.province_state +", "+ full.zip_code;
+                                        }
+                                    },
+                                    { "data": "country"},
+                                    { "data": null,
+                                        "mRender": function (data, type, full) {
+                                            if(data.block_status == "1")
+                                                return '<button class="btn btn-success  btn-animate btn-animate-side btn-block btn-sm" onclick="unblock(' + data.cus_id + ')"> Unblock </button>';
+                                            else
+                                                return '<button class="btn btn-danger  btn-animate btn-animate-side btn-block btn-sm" onclick="block(' + data.cus_id + ')"> Block </button>';
+                                        }
                                     }
-
-                                }
-                            },
-                            { "data": "remarks" },
-                            {"data" : null,
-                                "mRender": function(data, type, full) {
-                                    return '<button class="btn btn-primary  btn-animate btn-animate-side btn-block btn-sm" onclick="edit('+data.room_id+')"> Edit </button>' ;
-                                }
-                            },
-                            {"data" : null,
-                                "mRender": function(data, type, full) {
-                                    return '<button class="btn btn-danger  btn-animate btn-animate-side btn-block btn-sm" onclick="del('+data.room_id+')"> Delete </button>' ;
-                                }
+                                ]
                             }
-                        ]
-                    } );
-
+                    );
                 }
 
-                function insertR(){
+                function adminDataLoad(){
 
+                    var oTable = $('#adt').DataTable();
+                    oTable.destroy();
 
+                    $('#adt').DataTable(
+                            {
+                                "ajax": "fill_data_admin",
+                                "columns": [
+                                    { "data": "emp_id" },
+                                    { "data": "email" },
+                                    { "data": "last_login_ts" },
+                                    { "data": null,
+                                        "mRender":function (data, type, full) {
+
+                                            function getThisAdmin(){
+                                                var admin;
+                                                $.ajax({
+                                                    async: false,
+                                                    url: '{{URL::to('fill_data_admin')}}',
+                                                    dataType: 'json',
+                                                    success: function(res){
+                                                        admin = (res.thisAdmin);
+                                                    }
+                                                });
+
+                                                return admin;
+                                            }
+                                            if(data.emp_id != getThisAdmin())
+                                                return '<button class="btn btn-danger  btn-animate btn-animate-side btn-block btn-sm" onclick="removeAdmin(' + data.emp_id + ')"> Remove </button>';
+                                            else
+                                                return '<button class="btn btn-danger  btn-animate btn-animate-side btn-block btn-sm" onclick="removeAdmin(' + data.emp_id + ')" disabled> Remove </button>';
+                                        }
+                                    }
+                                ]
+                            }
+                    );
+                }
+
+                /*function addnewAdmin(){
                     $.ajax({
-                        type: "get",
-                        url: 'admin_room_add',
-                        data: $('#addR').serialize(),
+                        type: "post",
+                        url: 'new_admin',
+                        data: $('#newAdmin').serialize(),
 
                         success : function(data){
-                            $('#addRoom').modal('hide');
+                            $('#addAdmin').modal('hide');
                             swal('Success','Successfully Added!', 'success');
-                            dataLoad();
+                            adminDataLoad();
 
                         },
                         error: function(xhr, ajaxOptions, thrownError) {
                             console.log(thrownError);
                         }
                     });
-
-
-
                     return false;
+                }*/
 
-
-                }
-
-                function del(id){
-
-
-                    swal({
-                                title: "Delete?",
+                function block(cus_id){
+                    swal(
+                            {title: "Block this Customer?",
                                 text: "",
                                 type: "warning",
                                 showCancelButton: true,
                                 confirmButtonColor: "#DD6B55",
-                                confirmButtonText: "Delete",
+                                confirmButtonText: "Block",
                                 cancelButtonText: "Cancel",
-                                closeOnConfirm: false},
-                            function(isConfirm){   if (isConfirm) {
+                                closeOnConfirm: false
+                            },
+                            function(isConfirm){
+                                if (isConfirm) {
+                                    $.ajax(
+                                            {
+                                        type: "get",
+                                        url: 'block_customer',
+                                        data: {cus_id:cus_id},
+
+                                        success : function(data){
+                                            swal("User has been blocked.", "", "success");
+                                            dataLoad();
+                                        },
+                                        error: function(xhr, ajaxOptions, thrownError) {
+                                            console.log(thrownError);
+
+                                            swal("Ooops!", "Something Went Wrong! ("+thrownError+")", "error");
+                                        }
+                                    });
+                                }
+                            }
+                    );
+                }
 
 
+                function unblock(cus_id){
+                    swal(
+                            {title: "Unblock this Customer?",
+                                text: "",
+                                type: "warning",
+                                showCancelButton: true,
+                                confirmButtonColor: "#DD6B55",
+                                confirmButtonText: "Unblock",
+                                cancelButtonText: "Cancel",
+                                closeOnConfirm: false
+                            },
+                            function(isConfirm){
+                                if (isConfirm) {
+                                    $.ajax({
+                                        type: "get",
+                                        url: 'unblock_customer',
+                                        data: {cus_id:cus_id},
 
-                                $.ajax({
-                                    type: "get",
-                                    url: 'admin_delete_room',
-                                    data: {
-                                        id:id
-                                    },
+                                        success : function(data){
+                                            swal("User has been unblocked.", "", "success");
+                                            dataLoad();
+                                        },
+                                        error: function(xhr, ajaxOptions, thrownError) {
+                                            console.log(thrownError);
 
-                                    success : function(data){
+                                            swal("Ooops!", "Something Went Wrong! ("+thrownError+")", "error");
+                                        }
+                                    });
+                                }
+                            }
+                    );
+                }
 
+                function removeAdmin(emp_id){
+                    swal(
+                            {title: "Remove this Admin?",
+                                text: "",
+                                type: "warning",
+                                showCancelButton: true,
+                                confirmButtonColor: "#DD6B55",
+                                confirmButtonText: "Remove",
+                                cancelButtonText: "Cancel",
+                                closeOnConfirm: false
+                            },
+                            function(isConfirm){
+                                if (isConfirm) {
+                                    $.ajax({
+                                        type: "get",
+                                        url: 'delete_admin',
+                                        data: {emp_id:emp_id},
 
-                                        swal("Deleted!", "", "success");
-                                        dataLoad();
+                                        success : function(data){
+                                            swal("Admin has been removed.", "", "success");
+                                            adminDataLoad();
+                                        },
+                                        error: function(xhr, ajaxOptions, thrownError) {
+                                            console.log(thrownError);
 
-                                    },
-                                    error: function(xhr, ajaxOptions, thrownError) {
-                                        console.log(thrownError);
-
-                                        swal("Ooops!", "Something Went Wrong! ("+thrownError+")", "error");
-                                    }
-                                });
-
-
-                            } });
-
-
+                                            swal("Ooops!", "Something Went Wrong! ("+thrownError+")", "error");
+                                        }
+                                    });
+                                }
+                            }
+                    );
                 }
 
             </script>
---}}
 @endsection

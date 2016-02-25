@@ -43,7 +43,7 @@ class RoomController extends Controller
 
     public function getroom_types(Request $request){
 
-        $types = DB::select(DB::raw("SELECT A.*, 
+        $types = DB::select(DB::raw("SELECT A.*,
         (SELECT COUNT(*) FROM ROOMS WHERE ROOMS.room_type_id = A.room_type_id) as 'count' 
         FROM ROOM_TYPES A
         "));
@@ -155,7 +155,7 @@ class RoomController extends Controller
     public function roomservices(){
 
 
-        return view('Nilesh.roomservices');
+        return view('nilesh.roomservices');
 
     }
 

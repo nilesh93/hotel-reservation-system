@@ -14,10 +14,24 @@ use App\HALL;
 */
 
 Route::get('/', function () {
-    $room_types = ROOM_TYPE::get();
-    //inorder to load the halls navigation bar list
-    $halls = HALL::get();
-    return view('Website.Demo',["room_types"=>$room_types,"halls"=>$halls]);
+
+
+    if(Session::has('room_types') || Session::has('hall_selected'))
+    {
+
+        return redirect()->intended('/');
+    }
+    else{
+        return view('Website.Demo');
+    }
+
+
+});
+
+Route::get('/home', function () {
+
+
+    return view('Website.Demo');
 });
 
 Route::get('admin', function () {
@@ -42,6 +56,8 @@ Route::get('/LOL',function(){
     return view('webmaster');
 });
 
+
+
 /*
 |--------------------------------------------------------------------------
 | Rish Routes
@@ -50,26 +66,34 @@ Route::get('/LOL',function(){
 |
 */
 
+//rooms
 
-Route::get('select_room_add','RoomAvailabiltyController@addSelectedRooms');
-
-Route::get('delete_selected_room_type','RoomAvailabiltyController@delSelectedRoom_type');
-
-Route::get('loadBooking','RoomAvailabiltyController@loadMyBooking');
-
+Route::get('cancel_reserv','RoomAvailabilityController@cancel_reserv');
+Route::get('select_room_add','RoomAvailabilityController@addSelectedRooms');
+Route::get('delete_selected_room_type','RoomAvailabilityController@delSelectedRoom_type');
+Route::get('loadBooking','RoomAvailabilityController@loadMyBooking');
 Route::get('room_packages','PagesController@rooms');
+Route::post('room_availability','RoomAvailabilityController@check_room_availability');
+Route::get('room_reservation','ReservationController@RoomReservation');
 
-Route::post('room_availability','RoomAvailabiltyController@check_room_availabilty');
 
-/*Route::get('room_packages/room_availability','PagesController@available_rooms');*/
 
+//halls
 Route::get('halls','PagesController@halls');
+Route::get('hall_availability','HallavailabilityController@check_hall_availability');
+Route::get('book_hall_add','HallavailabilityController@book_hall_add');
+Route::get('cancel_hall_reserv','HallavailabilityController@cancel_hall_reserv');
+Route::get('hall_reserve_final','HallReservationController@HallReservation');
 
-Route::get('payment','PagesController@makePayment');
 
 
 
+//payment
+Route::get('payment',[
 
+    'middleware' => 'auth',
+
+    'uses' =>'PagesController@makePayment']);
 
 
 
@@ -162,14 +186,27 @@ Route::post('password/email', 'Auth\PasswordController@postEmail');
 Route::get('password/reset/{token}', 'Auth\PasswordController@getReset');
 Route::post('password/reset', 'Auth\PasswordController@postReset');
 
-// View, Create, Delete Admin level user(s) routes
+// View, Create, Delete Admin level users & Block Customers routes
 Route::get('/admin_users', 'UserController@Users');
+Route::get('/fill_data', 'UserController@fillData');
+Route::get('/block_customer', 'UserController@blockCustomer');
+Route::get('/unblock_customer', 'UserController@unblockCustomer');
+Route::get('/fill_data_admin', 'UserController@fillAdminData');
 Route::post('/new_admin', 'UserController@createNewAdmin');
-Route::get('/delete_admin/{id}','UserController@deleteAdmin');
+Route::get('/delete_admin','UserController@deleteAdmin');
 
 // Facebook Login Routes
 Route::get('/login/fb', 'Auth\AuthController@redirectToProvider');
 Route::get('/login/fb/callback', 'Auth\AuthController@handleProviderCallback');
+
+// User Blocked Notice route
+Route::get('/blocked_user', 'UserController@blockNotice');
+
+// Hall Services routes (Controller is from Nilesh, View has been created in ./Resources/nilesh)
+Route::get('/hallServices', 'HallController@getHallServices');
+Route::get('/getHallServices', 'HallController@getHallServiceData');
+Route::get('/addHallService', 'HallController@addHallService');
+Route::get('/deleteHallService', 'HallController@deleteHallService');
 
 // Inaccessible views testing route
 Route::get('/test', function(){
@@ -198,11 +235,18 @@ Route::get('/test', function(){
 Route::controller('admin_promotions','PromotionsController');
 Route::controller('admin_menus','MenusController');
 Route::controller('admin_facilities','FacilitiesController');
-Route::get('admin_search/bookings','nipuna_controller@bookings_search');
-Route::get('admin_bookings_search','nipuna_controller@bookings_search_index');
 
-Route::get('admin_rooms_search','nipuna_controller@rooms_search_index');
-Route::get('admin_search/rooms','nipuna_controller@rooms_search');
+Route::get('admin_search/bookings','search_controller@bookings_search');
+Route::get('admin_bookings_search','search_controller@bookings_search_index');
+
+Route::get('admin_rooms_search','search_controller@rooms_search_index');
+Route::get('admin_search/rooms','search_controller@rooms_search');
+
+Route::get('admin_search/customers','search_controller@customers_search');
+Route::get('admin_customers_search','search_controller@customers_search_index');
+
+
+
 
 /*
 |
