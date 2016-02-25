@@ -42,12 +42,6 @@ Route::get('/admin', function () {
     return view('Admin.Demo');
 });
 
-Route::get('/contact',function(){
-    
-    return view('Website.contact');
-    
-    
-});
 
 
 Route::get('/LOL',function(){
@@ -151,6 +145,12 @@ Route::get('admin_delete_hall','HallController@admin_delete_hall');
 
 
 Route::get('saveinquiry','InquiryController@saveinquiry');
+Route::get('menu','MenuControllerWeb@menuMain');
+
+Route::get('/contact',function(){
+    return view('Website.contact');
+});
+
 
 
 /*
