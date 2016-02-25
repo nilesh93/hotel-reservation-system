@@ -118,6 +118,11 @@ class UserController extends Controller
         $customer->save();
     }
 
+    /**
+     * Redirect Blocked User to this page.
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function blockNotice()
     {
         return view('Website.blocked');
