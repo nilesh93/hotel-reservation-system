@@ -106,7 +106,7 @@ class AuthController extends Controller
      *
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
-    protected function authenticated(/*$user*/)
+    protected function authenticated()
     {
         if(Auth::check()){
             if(Auth::user()->role == "admin") {
@@ -115,7 +115,7 @@ class AuthController extends Controller
                 Admin::where('email', Auth::user()->email)
                     ->update(['last_login_ts' => Carbon::now()]);
 
-                return redirect('/admin');
+                return redirect()->intended('/admin');
             }
             else{
                 $user_email = Auth::user()->email;
@@ -127,18 +127,14 @@ class AuthController extends Controller
                     return redirect('/blocked_user');
                 }
                 else{
-                    return redirect('/');
+                    return redirect()->intended('/');
                 }
             }
         }
     }
 
-    /**
-     * Redirect a successfully registered new user to the start page.
-     * Applicable only to 'guest' role.
-     *
-     * @var string
-     */
+    //Redirect a successfully registered new user to the start page.
+    //Applicable only to 'guest' role.
     protected $redirectPath = '/';
 
 
@@ -155,6 +151,7 @@ class AuthController extends Controller
     /**
      * Obtain & process user information provided by Facebook for the above user.
      *
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector|string
      */
     public function handleProviderCallback()
     {
@@ -170,7 +167,6 @@ class AuthController extends Controller
         if($user == null){
             try{
                 // Creating a User table entry for this user.
-                // Since Password is not provided, User's email is subjected to encryption and stored.
                 $user = User::create([
                     'email' => $email,
                     'password' => "",
@@ -222,7 +218,7 @@ class AuthController extends Controller
                 // Here, facebook automatically appends #_=_ to the URL as it is empty. This is a security measure.
                 // Read more about this at:
                 // http://homakov.blogspot.com/2013/03/redirecturi-is-achilles-heel-of-oauth.html
-                return redirect('/');
+                return redirect()->intended('/');
             }
         }
     }

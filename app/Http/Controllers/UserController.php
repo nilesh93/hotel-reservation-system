@@ -14,6 +14,34 @@ use App\Customer;
 
 class UserController extends Controller
 {
+    /*
+    |--------------------------------------------------------------------------
+    | Users Controller
+    |--------------------------------------------------------------------------
+    |
+    |This controller provides views and feeds data to the admin's control
+    |panel's User Management section. It also provides capabilities to
+    |add/remove admins and block and unblock users.
+    |
+    */
+
+    /**
+     * Constructor for the UserController class. Checks if a user has sufficient permission
+     * to access the Admin area.
+     *
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+
+        if(Auth::check()) {
+            if(Auth::user()->role != 'admin') {
+                return ("Access denied due to lack of permission. Are you an Administrator?");
+            }
+        }
+    }
+
+
     /**
      * Return the view of the Admin's user control panel.
      *
@@ -57,7 +85,8 @@ class UserController extends Controller
      * @param Request $request
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
-    public function createNewAdmin(CreateNewAdminRequest $request){
+    public function createNewAdmin(CreateNewAdminRequest $request)
+    {
         $data = $request->all();
 
         // Create new User
@@ -81,8 +110,8 @@ class UserController extends Controller
      *
      * @param Request $request
      */
-    public function deleteAdmin(Request $request){
-
+    public function deleteAdmin(Request $request)
+    {
         $user = User::where('email', Admin::find($request->emp_id)->email);
 
         // On delete of the user entry associated with the admin, admin will be deleted too
@@ -96,7 +125,8 @@ class UserController extends Controller
      * Set Customer's block_status to 1. (i.e. blocked).
      * @param Request $request
      */
-    public function blockCustomer(Request $request){
+    public function blockCustomer(Request $request)
+    {
 
         $customer = Customer::find($request->cus_id);
 
@@ -110,7 +140,8 @@ class UserController extends Controller
      *
      * @param Request $request
      */
-    public function unblockCustomer(Request $request){
+    public function unblockCustomer(Request $request)
+    {
         $customer = Customer::find($request->cus_id);
 
         $customer->block_status = "0";

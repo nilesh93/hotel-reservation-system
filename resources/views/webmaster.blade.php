@@ -134,20 +134,23 @@
 
 										<li><a href="{!! url('/halls') !!}">Halls</a>
 											<ul>
-
+											@if($halls != null)
 												@foreach($halls as $hall)
 												<li><a onclick="showModal('{{$hall->hall_id}}hall')">{{ $hall->title }}</a></li>
 												@endforeach
+											@endif
 											</ul>
 										</li>
 										<li><a href="{!! url('/room_packages') !!}">Rooms</a>
 
 											<ul>
-
+											@if($roomtypes != null)
 												@foreach($roomtypes as $roomtype)
 												<li><a onclick="showModal({{$roomtype->room_type_id}})">{{ $roomtype->type_name}}</a></li>
 												@endforeach
+											@endif
 											</ul>
+
 										</li>
 
 										<li><a href="{!! url('/') !!}">Home</a>
@@ -172,6 +175,7 @@
 					@yield('content')
 
 
+					@if($roomtypes != null)
 						<!-- room_type_modals_to _load_in_any_page-->
 						@foreach($roomtypes as $room_type)
 
@@ -179,14 +183,14 @@
 
 							$image1 = DB::table('ROOM_IMAGES')
 									->where('room_type_id','=',$room_type->room_type_id)
-									->value('path');
-
+									->get();
+							if($image1 != null)	{
 							$images = DB::table('ROOM_IMAGES')
 									->where('room_type_id','=',$room_type->room_type_id)
-									->where('path','!=',$image1)
+									->where('path','!=',$image1->path)
 									->select('path')
 									->get();
-
+							}
 
 							$mealtypeRates = DB::table('RATES')
 									->join('MEAL_TYPES','RATES.meal_type_id','=','MEAL_TYPES.meal_type_id')
@@ -246,10 +250,10 @@
 																<div class="carousel-inner">
 
 																	<div class="item active">
-																		<img class="img-thumbnail" src="{{URL::asset($image1)}}" width="100%">
+																		<img class="img-thumbnail" @if($image1 != null)src="{{URL::asset($image1->path)}}"@endif width="100%">
 
 																	</div>
-
+																	@if($image1 != null)
 																	@foreach($images as $image)
 																		<div class="item">
 																			<img class="img-thumbnail"  src="{{URL::asset($image->path)}}" width="100%">
@@ -263,6 +267,11 @@
 																			</div>
 																		</div>
 																	@endforeach
+
+
+
+
+																	@endif
 
 																</div>
 
@@ -361,7 +370,7 @@
 
 													<div class="col-md-4">
 														<div align="center">
-															<h4>Chenk In</h4>
+															<h4>Check In</h4>
 															14:00
 														</div>
 													</div>
@@ -387,31 +396,33 @@
 								</div>
 							</modal>
 						@endforeach
+					@endif
 				<!-- /room_type_modals-->
 
 
 				<!-- halls modal -->
-							@foreach($halls as $hall)
+					@if($halls != null)
+										@foreach($halls as $hall)
 
 
 								<?php
 									$himage1 = DB::table('HALL_IMAGES')
 											->where('hall_id','=',$hall->hall_id)
-											->value('path');
-
+											->get();
+									if($himage != null){
 									$himages = DB::table('HALL_IMAGES')
 											->where('hall_id','=',$hall->hall_id)
-											->where('path','!=',$himage1)
+											->where('path','!=',$himage1->path)
 											->select('path')
 											->get();
-
+									}
 									$advance = DB::table('HALL_RATES')
 											->where('hall_id','=',$hall->hall_id)
-											->value('advance_payment');
+											->get();
 
 									$refundable = DB::table('HALL_RATES')
 											->where('hall_id','=',$hall->hall_id)
-											->value('refundable_amount');
+											->get();
 
 								?>
 
@@ -461,7 +472,7 @@
 																<div class="carousel slide" id="carousel-{{$hall->hall_id}}hall">
 																	<div class="carousel-inner">
 																		<div class="item active">
-																			<img class="img-thumbnail"alt="Carousel Bootstrap First" src="{{URL::asset($himage1)}}" width="100%">
+																			<img class="img-thumbnail"alt="Carousel Bootstrap First" @if($himage1 != null)src="{{URL::asset($himage1->path)}}" @endif width="100%">
 																			<!--	<div class="carousel-caption">
                                                                                     <h4>
 
@@ -472,6 +483,8 @@
                                                                                     </p>
                                                                                 </div> -->
 																		</div>
+
+																		@if($himage1 != null)
 
 																		@foreach($himages as $himage)
 																			<div class="item">
@@ -486,6 +499,8 @@
 																				</div>
 																			</div>
 																		@endforeach
+
+																		@endif
 																	</div>
 																	
 																	<a class="left carousel-control" href="#carousel-{{$hall->hall_id}}hall" data-slide="prev"><span class="glyphicon glyphicon-chevron-left"></span></a> <a class="right carousel-control" href="#carousel-{{$hall->hall_id}}hall" data-slide="next"><span class="glyphicon glyphicon-chevron-right"></span></a>
@@ -563,8 +578,8 @@
 															<div align="center">
 
 																<h4>Rates</h4>
-																Advance Payment : ${{ $advance }}<br>
-																Refundable : ${{ $refundable }}
+																Advance Payment : $@if($advance != null){{  $advance->advance_payment }} @endif<br>
+																Refundable : $@if($refundable != null){{ $refundable->refundable_amount }}@endif
 
 															</div>
 														</div>
@@ -584,7 +599,7 @@
 								</modal>
 							@endforeach
 
-
+					@endif
 					</div>
 
 
