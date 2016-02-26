@@ -29,6 +29,10 @@ class AuthController extends Controller
 
     use AuthenticatesAndRegistersUsers, ThrottlesLogins;
 
+    //Redirect a successfully registered new user to the start page.
+    //Applicable only to 'guest' role.
+    protected $redirectPath = '/';
+
     /**
      * Create a new authentication controller instance.
      *
@@ -133,11 +137,6 @@ class AuthController extends Controller
         }
     }
 
-    //Redirect a successfully registered new user to the start page.
-    //Applicable only to 'guest' role.
-    protected $redirectPath = '/';
-
-
     /**
      * Redirect a user who wants to login using Facebook to the Facebook Authentication Page.
      *
@@ -222,5 +221,4 @@ class AuthController extends Controller
             }
         }
     }
-
 }

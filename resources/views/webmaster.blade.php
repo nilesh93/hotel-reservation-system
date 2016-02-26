@@ -106,11 +106,17 @@
 								<nav id="main-nav">
 									<ul>
 										@if(Auth::check())
-										<li><a href="{{URL::to('auth/logout')}}">Log out</a></li>
+										<li><a href="#">My Account</a>
+                                            <ul>
+                                               <li><a href="{{ URL::to('profile') }}">My Details</a></li>
+                                               <li><a href="{{ URL::to('change_password') }}">Change Password</a></li>
+                                               <li><a href="{{ URL::to('auth/logout') }}">Log out</a></li>
+                                            </ul>
+                                        </li>
 										@else
 										<li><a href="{{URL::to('auth/register')}}">Sign up</a></li>
 										<li><a href="{{URL::to('auth/login')}}">Login</a>
-											@endif
+										@endif
 											{{--<ul>
 											<li><a href="#">Blog Listing</a></li>
 											<li><a href="#">Blog Post Left Sidebar</a></li>
@@ -154,11 +160,11 @@
 										</li>
 
 										<li><a href="{!! url('/') !!}">Home</a>
-											<ul>
+											{{--<ul>
 												<li><a href="#">Home Version 1</a></li>
 												<li><a href="#">Home Version 2</a></li>
 												<li><a href="#">Home Version 3</a></li>
-											</ul> 
+											</ul>--}}
 										</li>
 									</ul>
 								</nav>
@@ -174,6 +180,19 @@
 					<div class="container-fluid">
 					@yield('content')
 
+							{{--This flash message is displayed if a customer tries to access admin area--}}
+							@if(session('noAccess'))
+							<ul class="list-group text-center">
+								<li class="list-group-item list-group-item-warning"><strong>{{ session('noAccess') }}</strong></li>
+							</ul>
+							@endif
+
+							{{--This flash message is displayed when a fb login registration has been completed--}}
+							@if(session('success'))
+							<ul class="list-group text-center">
+								<li class="list-group-item list-group-item-success">{{session('success')}}</li>
+							</ul>
+							@endif
 
 					@if($roomtypes != null)
 						<!-- room_type_modals_to _load_in_any_page-->

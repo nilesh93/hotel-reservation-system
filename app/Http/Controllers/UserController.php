@@ -10,7 +10,7 @@ use App\Http\Controllers\Controller;
 use App\User;
 use App\Admin;
 use App\Customer;
-/*use Illuminate\Support\Facades\DB;*/
+use Illuminate\Support\Facades\Mail;
 
 class UserController extends Controller
 {
@@ -32,15 +32,12 @@ class UserController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth');
+        // Check if User is Authenticated
+        $this->middleware('auth', ['except' => ['blockNotice']]);
 
-        if(Auth::check()) {
-            if(Auth::user()->role != 'admin') {
-                return ("Access denied due to lack of permission. Are you an Administrator?");
-            }
-        }
+        // Check if the authenticated user is an admin
+        $this->middleware('isAdmin', ['except' => ['blockNotice']]);
     }
-
 
     /**
      * Return the view of the Admin's user control panel.
@@ -102,6 +99,13 @@ class UserController extends Controller
             'last_login_ts' => ""
         ]);
 
+        // Send notification mail to the newly created Admin.
+        Mail::send('emails.newAdmin', [], function ($message) use ($data) {
+            $message->from(env('MAIL_FROM'), env('MAIL_NAME'));
+
+            $message->to($data['email'])->subject('Welcome to the team!');
+        });
+
         return redirect('/admin_users');
     }
 
@@ -119,7 +123,6 @@ class UserController extends Controller
         $user->delete();
     }
 
-
     /**
      *
      * Set Customer's block_status to 1. (i.e. blocked).
@@ -127,7 +130,6 @@ class UserController extends Controller
      */
     public function blockCustomer(Request $request)
     {
-
         $customer = Customer::find($request->cus_id);
 
         $customer->block_status = "1";
@@ -158,5 +160,4 @@ class UserController extends Controller
     {
         return view('Website.blocked');
     }
-
 }

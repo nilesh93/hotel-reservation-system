@@ -199,6 +199,14 @@ Route::get('/delete_admin','UserController@deleteAdmin');
 Route::get('/login/fb', 'Auth\AuthController@redirectToProvider');
 Route::get('/login/fb/callback', 'Auth\AuthController@handleProviderCallback');
 
+// Authenticated guest user's profile routes
+Route::get('profile', 'RegisteredUsersController@profileView');
+Route::post('profile', 'RegisteredUsersController@profileUpdate');
+
+// Authenticated guest user's change password routes
+Route::get('change_password', 'RegisteredUsersController@changePasswordView');
+Route::post('change_password', 'RegisteredUsersController@changePassword');
+
 // User Blocked Notice route
 Route::get('/blocked_user', 'UserController@blockNotice');
 
@@ -210,7 +218,7 @@ Route::get('/deleteHallService', 'HallController@deleteHallService');
 
 // Inaccessible views testing route
 Route::get('/test', function(){
-    return view('emails.newUser');
+    return view('emails.newAdmin');
 });
 
 /*

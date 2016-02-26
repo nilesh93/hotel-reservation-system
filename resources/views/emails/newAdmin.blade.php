@@ -29,11 +29,11 @@
 </div>
 <div class="row">
     <div class="col-md-12">
+        <br>
         <p class="text-info">
             Hello, <br>
-            We warmly welcome you to Amalya Reach! <br><br>
-            We hope to see you soon at our premises.
-            Keep in touch with our website for the newest promotions and news.<br><br>
+            Welcome to the Amalya Reach website Admin Team! <br><br>
+            Contact any of the existing Admins to obtain your password. Feel free to ask us any questions you have.<br><br>
 
             Have a nice day!<br><br>
 
