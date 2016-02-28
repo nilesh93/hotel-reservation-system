@@ -244,14 +244,14 @@ Route::controller('admin_promotions','PromotionsController');
 Route::controller('admin_menus','MenusController');
 Route::controller('admin_facilities','FacilitiesController');
 
-Route::get('admin_search/bookings','search_controller@bookings_search');
-Route::get('admin_bookings_search','search_controller@bookings_search_index');
+Route::get('admin_search/bookings','SearchController@bookings_search');
+Route::get('admin_bookings_search','SearchController@bookings_search_index');
 
-Route::get('admin_rooms_search','search_controller@rooms_search_index');
-Route::get('admin_search/rooms','search_controller@rooms_search');
+Route::get('admin_rooms_search','SearchController@rooms_search_index');
+Route::get('admin_search/rooms','SearchController@rooms_search');
 
-Route::get('admin_search/customers','search_controller@customers_search');
-Route::get('admin_customers_search','search_controller@customers_search_index');
+Route::get('admin_search/customers','SearchController@customers_search');
+Route::get('admin_customers_search','SearchController@customers_search_index');
 
 
 
