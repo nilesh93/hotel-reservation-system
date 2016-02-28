@@ -320,6 +320,8 @@
 
         <script src="{{URL::asset('BackEnd/assets/js/moment.min.js')}}"></script>
         <script src="{{URL::asset('BackEnd/assets/js/collapse.js')}}"></script>
+        <script src="{{URL::asset('BackEnd/assets/js/sweetalert.patch.js')}}"></script>
+
         <script src="{{URL::asset('BackEnd/assets/plugins/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js')}}"></script>
 
         <script src="{{URL::asset('BackEnd/assets/plugins/moment/moment.js')}}"></script>
