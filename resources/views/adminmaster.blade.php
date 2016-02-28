@@ -17,6 +17,7 @@
         <link href="{{URL::asset('BackEnd/assets/plugins/sweetalert/dist/sweetalert.css')}}" rel="stylesheet" type="text/css">
 
         <link href="{{URL::asset('BackEnd/assets/css/bootstrap.min.css')}}" rel="stylesheet" type="text/css" />
+        
         <link href="{{URL::asset('BackEnd/assets/css/core.css')}}" rel="stylesheet" type="text/css" />
         <link href="{{URL::asset('BackEnd/assets/css/components.css')}}" rel="stylesheet" type="text/css" />
         <link href="{{URL::asset('BackEnd/assets/css/icons.css')}}" rel="stylesheet" type="text/css" />
@@ -227,6 +228,7 @@
                                     <li id="BS"><a href="admin_bookings_search">Bookings Search</a></li>
                                     <li id="RS"><a href="admin_rooms_search">Room Logs</a></li>
                                     <li id="CS"><a href="admin_customers_search">Customer Search</a></li>
+                                    <li id="IG"><a href="admin_imageGallery">Image Gallery Management</a></li>
                                 </ul>
                             </li>
 

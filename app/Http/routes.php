@@ -135,6 +135,16 @@ Route::get('admin_updateRF','RoomController@updateRF');
 Route::get('admin_updateRS','RoomController@updateRS');
 Route::get('admin_delRS','RoomController@delRS');
 Route::get('admin_delRF','RoomController@delRF');
+Route::get('admin_imageGallery','ImageGalleryController@imageGallery');
+
+//Route::get('admin_gallery_upload','ImageGalleryController@admin_gallery_upload');
+
+Route::get('admin_gallery_upload', function(){
+    
+    
+    Input::file('lol')->move( 'uploads', 'Lol');
+    
+});
 
 
 
@@ -146,6 +156,8 @@ Route::get('admin_delete_hall','HallController@admin_delete_hall');
 
 Route::get('saveinquiry','InquiryController@saveinquiry');
 Route::get('menu','MenuControllerWeb@menuMain');
+
+
 
 Route::get('/contact',function(){
     return view('Website.contact');
