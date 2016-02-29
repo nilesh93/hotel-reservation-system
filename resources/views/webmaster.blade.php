@@ -76,9 +76,7 @@
 
 								<div class="elements pull-right">
 
-									<!-- <div class="language element">
-<p>thank you lord</p>
-</div>-->
+
 
 									<div class="weather element">
 										<p id="deg"><strong> {{strtoupper(date('l'))}}</strong>, {{strtoupper(date('F'))}}  {{date('d')}} <i id="weatherid" class=""></i> </p>
@@ -120,16 +118,9 @@
 
 										<li><a href="{!! url('/contact') !!}">Contact Us</a></li>
 
-										<li><a href="#">Pages</a>
-											<ul>
-												<li><a href="#">Typography</a></li>
-												<li><a href="#">Gallery</a></li>
-												<li><a href="#">Full Width Page</a></li>
-												<li><a  href="#">Right Sidebar Page</a></li>
-												<li><a href="#">left Sidebar Page</a></li>
-												<li><a href="#">About</a></li>
-											</ul>
-										</li>
+											@if(Auth::check())
+												<li><a href="{!! url('/myreserv') !!}">My Reservations</a></li>
+											@endif
 										<li><a href="#">Hotel</a></li>
 
 										<li><a href="{!! url('/halls') !!}">Halls</a>
@@ -151,11 +142,6 @@
 										</li>
 
 										<li><a href="{!! url('/') !!}">Home</a>
-											<ul>
-												<li><a href="#">Home Version 1</a></li>
-												<li><a href="#">Home Version 2</a></li>
-												<li><a href="#">Home Version 3</a></li>
-											</ul> 
 										</li>
 									</ul>
 								</nav>
@@ -194,6 +180,18 @@
 									->select('MEAL_TYPES.meal_type_name','RATES.rate_code','RATES.single_rates')
 									->get();
 
+							$room_furnishes = DB::table('ROOM_TYPE_FURNISH')
+											->where('room_type_id','=',$room_type->room_type_id)
+											->join('ROOM_FURNISHING','ROOM_TYPE_FURNISH.furnish_id','=','ROOM_FURNISHING.rf_id')
+											->select('name')
+											->get();
+							$room_services =  DB::table('ROOM_TYPE_SERVICE')
+												->where('room_type_id','=',$room_type->room_type_id)
+												->join('ROOM_SERVICES','ROOM_TYPE_SERVICE.service_id','=','ROOM_SERVICES.rs_id')
+												->select('name')
+												->get();
+
+
 
 
 
@@ -219,20 +217,14 @@
 															<h4 align="center">Furnishing and Fixtures</h4>
 
 															<ul>
-																<?php
+																@foreach($room_furnishes as $room_furn)
+																	<li>
+																		{!! $room_furn->name !!}
+																	</li>
+																@endforeach
 
-																$token = strtok($room_type->services_provided, ";")
 
-																?>
-																<?php
-																while($token != false)
-																{
-																	echo "<li >$token<br></li>";
-																	$token = strtok(";");
-
-																}
-																?>
-															</ul>
+ 															</ul>
 														</div>
 
 														<div class="col-md-6">
@@ -276,15 +268,12 @@
 															<h4 align="center">Services</h4>
 
 															<ul>
-																<?php
-																while($token != false)
-																{
-																	echo "<li >$token<br></li>";
-																	$token = strtok(";");
-
-																}
-																?>
+																@foreach($room_services  as $room_serv)
+																	<li>{!! $room_serv->name !!}</li>
+																@endforeach
 															</ul>
+
+
 														</div>
 
 
@@ -292,7 +281,7 @@
 
 													</div><!--/row -->
 												</slides>
-												<br>
+
 												<services>
 
 													<div class="row">
@@ -310,6 +299,12 @@
 													</div>
 												</services>
 
+											</div>
+
+											<div class="row">
+												<div align="center">
+													<b>$</b> - Additional Charges Apply
+												</div>
 											</div>
 
 

@@ -15,7 +15,6 @@ namespace App\Http\Controllers;
 
 use App\RES_RMTYPE_CNT_RATE;
 use App\ROOM_TYPE;
-use App\HALL;
 use Session;
 use DB;
 
@@ -410,7 +409,7 @@ class RoomAvailabilityController extends Controller
 
     }
 
-    function cancel_reserv(){
+    function cancel_reserve(){
 
 
 

@@ -257,7 +257,14 @@ Available Rooms
 									<b>Available Rooms : {{ $room_type_available[$room_type->room_type_id]}}</b>
 								</p>
 
-								<a type="button"  onclick='showModalRoomSelector("{{ $room_type->room_type_id }}select")' class="btn btn-primary">Select</a>
+								<button  id="select_button{{$room_type->room_type_id }}" onclick='showModalRoomSelector("{{ $room_type->room_type_id }}select")' class="btn btn-primary" >Select</button>
+
+								@if($room_type_available[$room_type->room_type_id]  == 0)
+									<script>
+											document.getElementById("select_button{{$room_type->room_type_id }}").disabled = true;
+									</script>
+
+								@endif
 
 
 								<div class="room-post-person">

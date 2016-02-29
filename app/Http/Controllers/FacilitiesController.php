@@ -10,6 +10,7 @@ use DB;
 
 class FacilitiesController extends Controller
 {
+
    public function getIndex (Request $request){
         
         return view('nipuna.facilities');

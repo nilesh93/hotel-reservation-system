@@ -9,6 +9,10 @@ use App\Http\Controllers\Controller;
 use App\HALL;
 use App\ROOM_TYPE;
 use Session;
+use DOMDocument;
+
+
+
 
 class PagesController extends Controller
 {
@@ -23,8 +27,12 @@ class PagesController extends Controller
 
      public function halls(){
 
+
+
+
          $halls = HALL::get();
          return view('Website.Halls',["halls"=>$halls]);
+
      }
 
     public function rooms(){
@@ -43,9 +51,17 @@ class PagesController extends Controller
         return view('Website.Rooms_availability',["room_types"=>$room_types]);
     }
 
-
     function makePayment(){
 
         return view('Website.Payment');
     }
+
+
+    function MyReserve(){
+
+        return view('Website.MyReservation');
+    }
+
+
+
 }

@@ -11,7 +11,7 @@ use App\HALL;
 use Session;
 
 
-class HallavailabilityController extends Controller
+class HallAvailabilityController extends Controller
 {
     function check_hall_availability(Request $request){
 
@@ -90,7 +90,12 @@ class HallavailabilityController extends Controller
 
     }
 
-    function cancel_hall_reserv(){
+    /**
+     * cancel the selected hall reservation by forgetting the session
+     *
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
+    function cancel_hall_reserve(){
 
         Session::forget('hall_selected');
         Session::forget('total_payable');
