@@ -104,16 +104,18 @@
 								<nav id="main-nav">
 									<ul>
 										@if(Auth::check())
-										<li><a href="{{URL::to('auth/logout')}}">Log out</a></li>
+										<li><a href="#">My Account</a>
+                                            <ul>
+                                               <li><a href="{{ URL::to('profile') }}">My Details</a></li>
+                                               <li><a href="{{ URL::to('change_password') }}">Change Password</a></li>
+                                               <li><a href="{{ URL::to('auth/logout') }}">Log out</a></li>
+                                            </ul>
+                                        </li>
 										@else
 										<li><a href="{{URL::to('auth/register')}}">Sign up</a></li>
 										<li><a href="{{URL::to('auth/login')}}">Login</a>
-											@endif
-											{{--<ul>
-											<li><a href="#">Blog Listing</a></li>
-											<li><a href="#">Blog Post Left Sidebar</a></li>
-											<!-- <li><a href="#">Blog Post Right Sidebar</a></li> -->
-											</ul>--}}
+										@endif
+
 										</li>
 
 										<li><a href="{!! url('/contact') !!}">Contact Us</a></li>
@@ -121,27 +123,32 @@
 											@if(Auth::check())
 												<li><a href="{!! url('/myreserv') !!}">My Reservations</a></li>
 											@endif
-										<li><a href="#">Hotel</a></li>
+
 
 										<li><a href="{!! url('/halls') !!}">Halls</a>
 											<ul>
-
+											@if($halls != null)
 												@foreach($halls as $hall)
 												<li><a onclick="showModal('{{$hall->hall_id}}hall')">{{ $hall->title }}</a></li>
 												@endforeach
+											@endif
 											</ul>
 										</li>
 										<li><a href="{!! url('/room_packages') !!}">Rooms</a>
 
 											<ul>
-
+											@if($roomtypes != null)
 												@foreach($roomtypes as $roomtype)
 												<li><a onclick="showModal({{$roomtype->room_type_id}})">{{ $roomtype->type_name}}</a></li>
 												@endforeach
+											@endif
 											</ul>
+
 										</li>
 
 										<li><a href="{!! url('/') !!}">Home</a>
+
+
 										</li>
 									</ul>
 								</nav>
@@ -157,7 +164,21 @@
 					<div class="container-fluid">
 					@yield('content')
 
+							{{--This flash message is displayed if a customer tries to access admin area--}}
+							@if(session('noAccess'))
+							<ul class="list-group text-center">
+								<li class="list-group-item list-group-item-warning"><strong>{{ session('noAccess') }}</strong></li>
+							</ul>
+							@endif
 
+							{{--This flash message is displayed when a fb login registration has been completed--}}
+							@if(session('success'))
+							<ul class="list-group text-center">
+								<li class="list-group-item list-group-item-success">{{session('success')}}</li>
+							</ul>
+							@endif
+
+					@if($roomtypes != null)
 						<!-- room_type_modals_to _load_in_any_page-->
 						@foreach($roomtypes as $room_type)
 
@@ -167,11 +188,19 @@
 									->where('room_type_id','=',$room_type->room_type_id)
 									->value('path');
 
-							$images = DB::table('ROOM_IMAGES')
-									->where('room_type_id','=',$room_type->room_type_id)
-									->where('path','!=',$image1)
-									->select('path')
-									->get();
+
+							if($image1 == null)
+							{
+								$image1 ="null";
+
+							}
+
+								$images = DB::table('ROOM_IMAGES')
+										->where('room_type_id','=',$room_type->room_type_id)
+										->where('path','!=',$image1)
+										->select('path')
+										->get();
+
 
 
 							$mealtypeRates = DB::table('RATES')
@@ -238,10 +267,10 @@
 																<div class="carousel-inner">
 
 																	<div class="item active">
-																		<img class="img-thumbnail" src="{{URL::asset($image1)}}" width="100%">
+																		<img class="img-thumbnail" @if($image1 != null)src="{{URL::asset($image1)}}"@endif width="100%">
 
 																	</div>
-
+																	@if($image1 != null)
 																	@foreach($images as $image)
 																		<div class="item">
 																			<img class="img-thumbnail"  src="{{URL::asset($image->path)}}" width="100%">
@@ -255,6 +284,11 @@
 																			</div>
 																		</div>
 																	@endforeach
+
+
+
+
+																	@endif
 
 																</div>
 
@@ -356,7 +390,7 @@
 
 													<div class="col-md-4">
 														<div align="center">
-															<h4>Chenk In</h4>
+															<h4>Check In</h4>
 															14:00
 														</div>
 													</div>
@@ -382,17 +416,25 @@
 								</div>
 							</modal>
 						@endforeach
+					@endif
 				<!-- /room_type_modals-->
 
 
 				<!-- halls modal -->
-							@foreach($halls as $hall)
+					@if($halls != null)
+								@foreach($halls as $hall)
 
 
 								<?php
 									$himage1 = DB::table('HALL_IMAGES')
 											->where('hall_id','=',$hall->hall_id)
 											->value('path');
+
+
+
+									if($himage1 == null){
+										$himage1 = "null";
+									}
 
 									$himages = DB::table('HALL_IMAGES')
 											->where('hall_id','=',$hall->hall_id)
@@ -431,19 +473,7 @@
 																<h4 align="center">  </h4>
 
 																<ul>
-															<!--	<?php
-																		/*
-																	$token = strtok($room_type->services_provided, ";")
 
-																	?>
-																	<?php
-																	while($token != false)
-																	{
-																		echo "<li >$token<br></li>";
-																		$token = strtok(";");
-
-																	} */
-																	?> -->
 																</ul>
 															</div>
 
@@ -456,17 +486,10 @@
 																<div class="carousel slide" id="carousel-{{$hall->hall_id}}hall">
 																	<div class="carousel-inner">
 																		<div class="item active">
-																			<img class="img-thumbnail"alt="Carousel Bootstrap First" src="{{URL::asset($himage1)}}" width="100%">
-																			<!--	<div class="carousel-caption">
-                                                                                    <h4>
-
-
-                                                                                    </h4>
-                                                                                    <p>
-
-                                                                                    </p>
-                                                                                </div> -->
+																			<img class="img-thumbnail"alt="Carousel Bootstrap First" @if($himage1 != null)src="{{URL::asset($himage1)}}" @endif width="100%">
 																		</div>
+
+																		@if($himage1 != null)
 
 																		@foreach($himages as $himage)
 																			<div class="item">
@@ -481,6 +504,8 @@
 																				</div>
 																			</div>
 																		@endforeach
+
+																		@endif
 																	</div>
 																	
 																	<a class="left carousel-control" href="#carousel-{{$hall->hall_id}}hall" data-slide="prev"><span class="glyphicon glyphicon-chevron-left"></span></a> <a class="right carousel-control" href="#carousel-{{$hall->hall_id}}hall" data-slide="next"><span class="glyphicon glyphicon-chevron-right"></span></a>
@@ -494,17 +519,6 @@
 
 																<h4 align="center"> </h4>
 
-															<!--	<ul>
-																	<?php
-																		/*
-																	while($token != false)
-																	{
-																		echo "<li >$token<br></li>";
-																		$token = strtok(";");
-
-																	}*/
-																	?>
-																</ul> -->
 															</div>
 
 
@@ -558,8 +572,8 @@
 															<div align="center">
 
 																<h4>Rates</h4>
-																Advance Payment : ${{ $advance }}<br>
-																Refundable : ${{ $refundable }}
+																Advance Payment : ${{  $advance}} <br>
+																Refundable : ${{ $refundable}}
 
 															</div>
 														</div>
@@ -579,7 +593,7 @@
 								</modal>
 							@endforeach
 
-
+					@endif
 					</div>
 
 

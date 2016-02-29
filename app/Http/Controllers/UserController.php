@@ -10,10 +10,35 @@ use App\Http\Controllers\Controller;
 use App\User;
 use App\Admin;
 use App\Customer;
-/*use Illuminate\Support\Facades\DB;*/
+use Illuminate\Support\Facades\Mail;
 
 class UserController extends Controller
 {
+    /*
+    |--------------------------------------------------------------------------
+    | Users Controller
+    |--------------------------------------------------------------------------
+    |
+    |This controller provides views and feeds data to the admin's control
+    |panel's User Management section. It also provides capabilities to
+    |add/remove admins and block and unblock users.
+    |
+    */
+
+    /**
+     * Constructor for the UserController class. Checks if a user has sufficient permission
+     * to access the Admin area.
+     *
+     */
+    public function __construct()
+    {
+        // Check if User is Authenticated
+        $this->middleware('auth', ['except' => ['blockNotice']]);
+
+        // Check if the authenticated user is an admin
+        $this->middleware('isAdmin', ['except' => ['blockNotice']]);
+    }
+
     /**
      * Return the view of the Admin's user control panel.
      *
@@ -57,7 +82,8 @@ class UserController extends Controller
      * @param Request $request
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
-    public function createNewAdmin(CreateNewAdminRequest $request){
+    public function createNewAdmin(CreateNewAdminRequest $request)
+    {
         $data = $request->all();
 
         // Create new User
@@ -73,6 +99,13 @@ class UserController extends Controller
             'last_login_ts' => ""
         ]);
 
+        // Send notification mail to the newly created Admin.
+        Mail::send('emails.newAdmin', [], function ($message) use ($data) {
+            $message->from(env('MAIL_FROM'), env('MAIL_NAME'));
+
+            $message->to($data['email'])->subject('Welcome to the team!');
+        });
+
         return redirect('/admin_users');
     }
 
@@ -81,8 +114,8 @@ class UserController extends Controller
      *
      * @param Request $request
      */
-    public function deleteAdmin(Request $request){
-
+    public function deleteAdmin(Request $request)
+    {
         $user = User::where('email', Admin::find($request->emp_id)->email);
 
         // On delete of the user entry associated with the admin, admin will be deleted too
@@ -90,14 +123,13 @@ class UserController extends Controller
         $user->delete();
     }
 
-
     /**
      *
      * Set Customer's block_status to 1. (i.e. blocked).
      * @param Request $request
      */
-    public function blockCustomer(Request $request){
-
+    public function blockCustomer(Request $request)
+    {
         $customer = Customer::find($request->cus_id);
 
         $customer->block_status = "1";
@@ -110,7 +142,8 @@ class UserController extends Controller
      *
      * @param Request $request
      */
-    public function unblockCustomer(Request $request){
+    public function unblockCustomer(Request $request)
+    {
         $customer = Customer::find($request->cus_id);
 
         $customer->block_status = "0";
@@ -118,9 +151,13 @@ class UserController extends Controller
         $customer->save();
     }
 
+    /**
+     * Redirect Blocked User to this page.
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function blockNotice()
     {
         return view('Website.blocked');
     }
-
 }
