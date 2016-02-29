@@ -129,7 +129,7 @@ User Management
                         <div class="form-group">
                             <label class="col-lg-3 control-label">Password</label>
                             <div class="col-lg-9">
-                                <input type="password" class="form-control" name="password" id="password" pattern="{6,}" title="6 Characters minimum" required placeholder="Password should be minimum 6 characters long">
+                                <input type="password" class="form-control" name="password" id="password" pattern="^.{6,}$" title="6 Characters minimum" required placeholder="Password should be minimum 6 characters long">
                                 @if ($errors->has('password')) <p class="text-danger">{{ $errors->first('password') }}</p>@endif
                             </div>
                         </div>
@@ -137,7 +137,7 @@ User Management
                         <div class="form-group">
                             <label class="col-lg-3 control-label">Confirm Password</label>
                             <div class="col-lg-9">
-                                <input type="password" class="form-control" name="password_confirmation" id="password_confirmation" pattern="{6,}" title="6 Characters minimum" required>
+                                <input type="password" class="form-control" name="password_confirmation" id="password_confirmation" pattern="^.{6,}$" title="6 Characters minimum" required>
                                 @if ($errors->has('password_confirmation')) <p class="text-danger">{{ $errors->first('password_confirmation') }}</p>@endif
                             </div>
                         </div>
