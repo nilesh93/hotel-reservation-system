@@ -323,6 +323,7 @@
         <script src="{{URL::asset('BackEnd/assets/js/sweetalert.patch.js')}}"></script>
 
         <script src="{{URL::asset('BackEnd/assets/plugins/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js')}}"></script>
+        <script src="{{URL::asset('BackEnd/assets/js/validation.js')}}"></script>
 
         <script src="{{URL::asset('BackEnd/assets/plugins/moment/moment.js')}}"></script>
         <script src="{{URL::asset('BackEnd/assets/plugins/timepicker/bootstrap-timepicker.min.js')}}"></script>
