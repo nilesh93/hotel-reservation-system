@@ -239,17 +239,24 @@ Route::get('/test', function(){
 |
 */
 
-
+//All the requests from admin_promotions URI will be handled in PromotionsController.
 Route::controller('admin_promotions','PromotionsController');
+
+//All the requests from admin_menus URI will be handled in MenusController.
 Route::controller('admin_menus','MenusController');
+
+//All the requests from admin_facilities URI will be handled in FacilitiesController.
 Route::controller('admin_facilities','FacilitiesController');
 
+//Search functions for bookings search.
 Route::get('admin_search/bookings','SearchController@bookings_search');
 Route::get('admin_bookings_search','SearchController@bookings_search_index');
 
+//Search functions for rooms search.
 Route::get('admin_rooms_search','SearchController@rooms_search_index');
 Route::get('admin_search/rooms','SearchController@rooms_search');
 
+//Search functions for customers search
 Route::get('admin_search/customers','SearchController@customers_search');
 Route::get('admin_customers_search','SearchController@customers_search_index');
 
