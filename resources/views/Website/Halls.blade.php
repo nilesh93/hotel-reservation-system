@@ -93,16 +93,37 @@ Function Halls
 			<div class="container left-sidebar">
 
 				<aside id="sidebar">
-					<div class="widget widget-latest-posts">
-						<h5>Latest Posts</h5>
-						<ul>
-							<li><a href="#">We’re Hiring: Digital Designer (Mobile/UX)</a></li>
-							<li><a href="#">Attitude: Third WordPress Theme</a></li>
-							<li><a href="#">Gravity giving away 5 iPhone</a></li>
-							<li><a href="#">Get behind the scene of new WordPress</a></li>
-						</ul>
-					</div><!-- /widget-latest-posts -->
-				</aside><section id="content">
+					<div class="widget widget-contact">
+						<h5>Contact</h5>
+
+						<div class="address">
+							<i class="fa fa-home"></i>
+							<p>No.556,<br> Moragahahena Road,
+								Pitipana North,<br>
+								Homagama.</p>
+						</div><!-- /address -->
+
+						<div class="phone">
+							<i class="fa fa-phone"></i>
+							<p>+94 114404040<br>
+								+94 114368291<br>
+								+94 777743612</p>
+						</div><!-- /phone -->
+
+						<div class="time">
+							<i class="fa fa-clock-o"></i>
+							<p>08-16 hours<br>Monday - Friday</p>
+						</div><!-- /time -->
+
+						<div class="email">
+							<i class="fa fa-envelope-o"></i>
+							<p>amalyareach@<br>yahoo.com</p>
+						</div><!-- /email -->
+
+					</div><!-- /widget-contact -->
+
+				</aside>
+				<section id="content">
 
 					<div class="row">
 						<div class="col-md-3"></div>
@@ -119,7 +140,7 @@ Function Halls
 
 					<h1>Function Halls</h1>
 
-					<p>The projects consists of a vast suite of classic mid format celluloid film portraits of tribes people in the Omo Valley in southwest Ethiopia, near the Sudanese border, a grim and unforgiving, unaccessible roadless area which Claes Btritton has also visited, on a river expedition back in 1988.</p>
+					<p></p>
 
 					<hr>
 					<div id="hall_my_booking">

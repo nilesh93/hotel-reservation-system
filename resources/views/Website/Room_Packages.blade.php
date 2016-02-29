@@ -180,13 +180,7 @@ Room Packages
 
 
 @section('js')
-	@if(Session::has('reserv_status'))
-		<script>
 
-		swal("Success" ,"Your reservation has been successfully made!", "success");
-
-		</script>
-	@endif
 
 
 
