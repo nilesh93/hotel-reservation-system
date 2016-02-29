@@ -167,11 +167,21 @@
 									->where('room_type_id','=',$room_type->room_type_id)
 									->value('path');
 
-							$images = DB::table('ROOM_IMAGES')
-									->where('room_type_id','=',$room_type->room_type_id)
-									->where('path','!=',$image1)
-									->select('path')
-									->get();
+
+							if($image1 == null)
+							{
+								$image1 ="null";
+
+							}
+
+
+
+
+								$images = DB::table('ROOM_IMAGES')
+										->where('room_type_id','=',$room_type->room_type_id)
+										->where('path','!=',$image1)
+										->select('path')
+										->get();
 
 
 							$mealtypeRates = DB::table('RATES')
@@ -393,6 +403,12 @@
 									$himage1 = DB::table('HALL_IMAGES')
 											->where('hall_id','=',$hall->hall_id)
 											->value('path');
+
+
+
+									if($himage1 == null){
+										$himage1 = "null";
+									}
 
 									$himages = DB::table('HALL_IMAGES')
 											->where('hall_id','=',$hall->hall_id)
