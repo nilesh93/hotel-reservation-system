@@ -36,7 +36,7 @@
         <p class="text-info">
 
             We are sorry to inform you that have temporarily blocked from the site due to violation of the site user policy.<br>
-            To unblock this account, or for further inquiry, please contact us through the site's contact us page.<br><br>
+            To unblock this account, or for further inquiry, please contact us through the site's <a href="{{URL::to('contact')}}">Contact Us</a> page.<br><br>
 
             -Amalya Reach Holiday Resort-
 

@@ -206,6 +206,14 @@ Route::get('/delete_admin','UserController@deleteAdmin');
 Route::get('/login/fb', 'Auth\AuthController@redirectToProvider');
 Route::get('/login/fb/callback', 'Auth\AuthController@handleProviderCallback');
 
+// Authenticated guest user's profile routes
+Route::get('profile', 'RegisteredUsersController@profileView');
+Route::post('profile', 'RegisteredUsersController@profileUpdate');
+
+// Authenticated guest user's change password routes
+Route::get('change_password', 'RegisteredUsersController@changePasswordView');
+Route::post('change_password', 'RegisteredUsersController@changePassword');
+
 // User Blocked Notice route
 Route::get('/blocked_user', 'UserController@blockNotice');
 
@@ -217,7 +225,7 @@ Route::get('/deleteHallService', 'HallController@deleteHallService');
 
 // Inaccessible views testing route
 Route::get('/test', function(){
-    return view('emails.newUser');
+    return view('emails.newAdmin');
 });
 
 /*
@@ -238,19 +246,26 @@ Route::get('/test', function(){
 |
 */
 
-
+//All the requests from admin_promotions URI will be handled in PromotionsController.
 Route::controller('admin_promotions','PromotionsController');
+
+//All the requests from admin_menus URI will be handled in MenusController.
 Route::controller('admin_menus','MenusController');
+
+//All the requests from admin_facilities URI will be handled in FacilitiesController.
 Route::controller('admin_facilities','FacilitiesController');
 
-Route::get('admin_search/bookings','search_controller@bookings_search');
-Route::get('admin_bookings_search','search_controller@bookings_search_index');
+//Search functions for bookings search.
+Route::get('admin_search/bookings','SearchController@bookings_search');
+Route::get('admin_bookings_search','SearchController@bookings_search_index');
 
-Route::get('admin_rooms_search','search_controller@rooms_search_index');
-Route::get('admin_search/rooms','search_controller@rooms_search');
+//Search functions for rooms search.
+Route::get('admin_rooms_search','SearchController@rooms_search_index');
+Route::get('admin_search/rooms','SearchController@rooms_search');
 
-Route::get('admin_search/customers','search_controller@customers_search');
-Route::get('admin_customers_search','search_controller@customers_search_index');
+//Search functions for customers search
+Route::get('admin_search/customers','SearchController@customers_search');
+Route::get('admin_customers_search','SearchController@customers_search_index');
 
 
 
