@@ -42,17 +42,11 @@ Route::get('/admin', function () {
     return view('Admin.Demo');
 });
 
-Route::get('/contact',function(){
-    
-    return view('Website.contact');
-    
-    
-});
 
 
 Route::get('/LOL',function(){
-    
- 
+
+
     return view('webmaster');
 });
 
@@ -142,6 +136,12 @@ Route::get('admin_updateRS','RoomController@updateRS');
 Route::get('admin_delRS','RoomController@delRS');
 Route::get('admin_delRF','RoomController@delRF');
 
+Route::get('admin_imageGallery','ImageGalleryController@imageGallery');
+
+Route::post('admin_gallery_upload','ImageGalleryController@admin_gallery_upload');
+
+ 
+
 
 
 Route::get('admin_halls','HallController@halls');
@@ -151,6 +151,14 @@ Route::get('admin_delete_hall','HallController@admin_delete_hall');
 
 
 Route::get('saveinquiry','InquiryController@saveinquiry');
+Route::get('menu','MenuControllerWeb@menuMain');
+
+
+
+Route::get('/contact',function(){
+    return view('Website.contact');
+});
+
 
 
 /*

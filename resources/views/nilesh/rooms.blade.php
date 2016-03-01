@@ -462,7 +462,7 @@ ROOM MANAGEMENT
 
     function insertRT(){
 
-console.log('admin_roomtype_add?'+ $('#addRT').serialize());
+        console.log('admin_roomtype_add?'+ $('#addRT').serialize());
         $.ajax({
             type: "get",
             url: 'admin_roomtype_add',
