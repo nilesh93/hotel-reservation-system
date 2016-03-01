@@ -45,8 +45,8 @@ Route::get('/admin', function () {
 
 
 Route::get('/LOL',function(){
-    
- 
+
+
     return view('webmaster');
 });
 
@@ -137,14 +137,9 @@ Route::get('admin_delRS','RoomController@delRS');
 Route::get('admin_delRF','RoomController@delRF');
 Route::get('admin_imageGallery','ImageGalleryController@imageGallery');
 
-//Route::get('admin_gallery_upload','ImageGalleryController@admin_gallery_upload');
+Route::post('admin_gallery_upload','ImageGalleryController@admin_gallery_upload');
 
-Route::get('admin_gallery_upload', function(){
-    
-    
-    Input::file('lol')->move( 'uploads', 'Lol');
-    
-});
+ 
 
 
 

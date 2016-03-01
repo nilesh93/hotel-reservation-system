@@ -9,28 +9,52 @@ use App\Http\Controllers\Controller;
 use DB;
 use App\imageGallery;
 use Input;
+use Image;
 
 class ImageGalleryController extends Controller
 {
- 
-  
+
+
     public function imageGallery(){
         
-        return view('nilesh.imageGalleryAdmin');
-        
-        
+        $images = imageGallery::all();
+
+        return view('nilesh.imageGalleryAdmin')
+                ->with('images',$images);
+
+
     }
-    
+
     public function admin_gallery_upload(Request $request){
-       
-       print_r($_FILES);
-        
-       //var_dump($request->file());
-      $destinationPath = 'uploads'; // upload path
-      //$extension = $request->file('file')->getClientOriginalExtension(); // getting image extension
-      //$fileName = rand(11111,99999).'.'.$extension; // renameing image
-      //Input::file('image')->move($destinationPath, $fileName);
-        
-        
+
+        $img_data = Input::get("img_data");
+        $json = json_decode($img_data);
+
+
+
+        $image_real = Input::file('img');
+
+        $img = Image::make( $image_real->getRealPath());
+
+        $imgpath = "uploads/ImgGal/".date('YmdHis').'.'.$image_real->getClientOriginalExtension();
+
+
+        $width = ceil($json->width);
+        $x =  ceil($json->x);
+        $y = ceil($json->y);
+        $height = ceil($json->height);
+
+        $img->crop($width,$height ,$x, $y );
+
+        $img->save($imgpath);
+
+
+
+        $imgGal = new imageGallery;
+
+        $imgGal->path =    $imgpath;
+
+        $imgGal->save();    
+
     }
 }

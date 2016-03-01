@@ -200,8 +200,9 @@
         this.$img = $('<img src="' + this.url + '">');
         this.$avatarWrapper.empty().html(this.$img);
         this.$img.cropper({
-      
+      aspectRatio:16/9,
           preview: this.$avatarPreview.selector,
+          zoomable: false,
           crop: function (data) {
             var json = [
                   '{"x":' + data.x,
@@ -210,22 +211,7 @@
                   '"width":' + data.width,
                   '"rotate":' + data.rotate + '}'
                 ].join();
-                
-               /* $('#img123').css({
-                  
-                    width: Math.round((200/data.width) * 1100) + 'px',
-                  
-                    height: Math.round((200/data.height) * 1000) + 'px',
-                  
-                    marginLeft: '-' + Math.round((200/data.width) * data.y) + 'px',
-                  
-                    marginTop: '-' + Math.round((200/data.height)* data.x) + 'px'
-                  
-                    }); */
-
-                
-                
-
+            
             _this.$avatarData.val(json);
           }
         });
