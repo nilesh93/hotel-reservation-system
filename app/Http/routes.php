@@ -135,6 +135,7 @@ Route::get('admin_updateRF','RoomController@updateRF');
 Route::get('admin_updateRS','RoomController@updateRS');
 Route::get('admin_delRS','RoomController@delRS');
 Route::get('admin_delRF','RoomController@delRF');
+
 Route::get('admin_imageGallery','ImageGalleryController@imageGallery');
 
 Route::post('admin_gallery_upload','ImageGalleryController@admin_gallery_upload');

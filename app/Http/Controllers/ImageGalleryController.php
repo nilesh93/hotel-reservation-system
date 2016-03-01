@@ -52,7 +52,7 @@ class ImageGalleryController extends Controller
 
         $imgGal = new imageGallery;
 
-        $imgGal->path =    $imgpath;
+        $imgGal->path = $imgpath;
 
         $imgGal->save();    
 
