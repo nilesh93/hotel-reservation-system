@@ -3,6 +3,13 @@
 
 @section('css')
 
+<script src="{{ URL::asset('BackEnd/assets/plugins/upload/jquery-pack.js') }}"></script>
+<script src="{{ URL::asset('BackEnd/assets/plugins/upload/jquery.imgareaselect.min.js') }}"></script>
+
+<link rel="stylesheet" href="{{ URL::asset('BackEnd/assets/css/crop/animate.min.css')}}">
+<link rel="stylesheet" href="{{ URL::asset('BackEnd/assets/css/crop/custom.css')}}">
+<link rel="stylesheet" href="{{ URL::asset('BackEnd/assets/css/crop/icheck/flat/green.css')}}">
+
 @endsection
 
 
@@ -79,10 +86,11 @@ ROOM MANAGEMENT
                         <th>Code</th>
                         <th>Type</th>
 
+                        <th>Rate (Rs)</th>
                         <th>Description</th>
-                        <th>Services</th>
-                        <th>Count</th>
 
+                        <th>Count</th>
+                        <th class="col-md-1"></th>
                         <th class="col-md-1"></th>
                         <th class="col-md-1"></th>
                     </tr>
@@ -108,8 +116,8 @@ ROOM MANAGEMENT
                         <th>Size</th>
                         <th>status</th>
                         <th>Remarks</th>
-                        <th class="col-md-1"></th>
-                        <th class="col-md-1"></th>
+                        <th ></th>
+                        <th ></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -155,7 +163,7 @@ ROOM MANAGEMENT
 
                         <label class="col-lg-3 control-label">Room No</label>
 
-                        <div class="col-lg-9"><input placeholder="Enter Room Number" class="form-control" type="text" required id="rnum" name="rnum" required>
+                        <div class="col-lg-9"><input placeholder="Enter Room Number" class="form-control" type="text" required id="rnum" name="rnum" required onchange="checknum(this.value,this)">
                         </div>
                     </div>
 
@@ -218,19 +226,18 @@ ROOM MANAGEMENT
 
                     <div class="form-group">
 
-                        <label class="col-lg-3 control-label">Type Name</label>
+                        <label class="col-lg-3 control-label">Room Type Name</label>
 
-                        <div class="col-lg-9"><input placeholder="Enter Room Type Name" class="form-control" type="text" required id="rtname" name="rtname">
+                        <div class="col-lg-4"><input placeholder="Enter Room Type Name" class="form-control" type="text" required id="rtname" name="rtname">
+                        </div>
+                        <label class="col-lg-2 control-label">Room Code</label>
+
+                        <div class="col-lg-3"><input placeholder="Enter Short code  " class="form-control" type="text" required id="rtcode" name="rtcode">
                         </div>
                     </div>
 
-                    <div class="form-group">
+                    <input type="hidden" name="data1" id="data1">
 
-                        <label class="col-lg-3 control-label">Type Code</label>
-
-                        <div class="col-lg-9"><input placeholder="Enter Short code for Room Type" class="form-control" type="text" required id="rtcode" name="rtcode">
-                        </div>
-                    </div>
 
                     <div class="form-group">
                         <label class="col-lg-3 control-label">Description</label>
@@ -258,7 +265,7 @@ ROOM MANAGEMENT
                                         {{ $r->name}}   
                                     </label>
                                 </div>
-                                <br>
+
                                 <?php $rscount++; ?>
 
                                 @endforeach
@@ -285,7 +292,7 @@ ROOM MANAGEMENT
                                         {{ $f->name}}   
                                     </label>
                                 </div>
-                                <br>
+
                                 <?php $rfcount++; ?>
 
                                 @endforeach
@@ -301,6 +308,239 @@ ROOM MANAGEMENT
 
                     </div>
 
+                    <div class="modal-header" style="margin-bottom:2%">
+
+                        <h4 class="modal-title">Add Booking Rates</h4>
+
+                    </div>
+
+                    <div class="form-group">
+
+                        <label class="col-lg-2 control-label">Booking</label>
+                        <div class="col-md-3" id="mealErr">
+
+                            <select class=" form-control" id="rtmeal" name="rtmeal">
+                                <option value="0">Select Option </option>
+                                @foreach($meals as $m)
+                                <option value="{{$m->meal_type_id}}" data-name="{{$m->meal_type_name}}">{{$m->meal_type_name}} </option>
+
+                                @endforeach    
+                            </select>
+                            <span id="helpBlock2" class="help-block">Booking Type required.</span>
+
+                        </div>
+                        <label class="col-lg-1 control-label">Rate</label>
+
+                        <div class="col-lg-3" id="rateErr"><input placeholder="Enter Price" class="form-control" type="text"   id="rtrate" name="rtrate"   title="Float value needed" aria-describedby="helpBlock2">
+                            <span id="helpBlock2" class="help-block">A Float value is required.</span>
+                        </div>
+
+                        <div class="col-md-2">
+
+                            <button  type="button" class="btn btn-success btn-block" onclick="rateAdd()">Add</button>
+                        </div>
+                    </div>
+
+                    <div class="form-group" id="rateTBL">
+
+
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-white" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Save changes</button>
+                        <button class="" id="insertRTReset" type="reset" hidden="true"></button>
+                    </div>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<div class="profile_img">
+
+    <!-- end of image cropping -->
+    <div id="crop-avatar">
+
+
+        <div class="col-md-4 col-md-offset-8" hidden="true">
+            <button type="button" class="btn btn-success waves-effect btn-block waves-light pull-right avatar-view1"  id="imgLoad" >
+                <span class="btn-label pull-left"><i class="fa fa-plus"></i>
+                </span>ADD IMAGE</button>
+        </div>
+
+
+        <!-- Cropping modal -->
+        <div class="modal fade" id="avatar-modal" aria-hidden="true" aria-labelledby="avatar-modal-label" role="dialog" tabindex="-1">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <form class="avatar-form"    enctype="multipart/form-data" action="{{URL::asset('admin_gallery_upload')}}" method="post" id="formID" name="formID">
+                        <div class="modal-header">
+                            <button class="close" data-dismiss="modal" type="button">&times;</button>
+                            <h4 class="modal-title" id="avatar-modal-label">Upload Image</h4>
+                        </div>
+                        <div class="modal-body">
+                            <div class="avatar-body">
+
+                                <!-- Upload image and data -->
+                                <div class="avatar-upload">
+                                    <input class="avatar-src"  name="avatar_src"   id="avatar_src" type="hidden">
+                                    <input class="avatar-data" name="avatar_data"  id="avatar_data"  type="hidden">
+                                    <input type="hidden" id="imgid">
+                                    <label for="avatarInput">Upload</label>
+                                    <input class="avatar-input btn btn-success"  id="avatarInput" name="avatarInput" type="file">
+                                </div>
+
+                                <!-- Crop and preview -->
+                                <div class="row">
+                                    <div class="col-md-9">
+                                        <div class="avatar-wrapper"></div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="avatar-preview preview-lg" id="lg1"></div>
+                                        <div class="avatar-preview preview-md"></div>
+                                        <div class="avatar-preview preview-sm"></div>
+                                    </div>
+                                </div>
+                                <div class="row avatar-btns">
+                                    <div class="col-md-9">
+
+                                    </div>
+                                    <div class="col-md-3">
+                                        <button class="btn btn-primary btn-block avatar-save" type="button" onclick="upload()">Done</button>
+                                    </div>
+                                </div>
+
+
+                            </div>
+                        </div>
+                        <!-- <div class="modal-footer">
+<button class="btn btn-default" data-dismiss="modal" type="button">Close</button>
+</div> -->
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!-- /.modal -->
+
+        <!-- Loading state -->
+        <div class="loading" aria-label="Loading" role="img" tabindex="-1"></div>
+    </div>
+    <!-- end of image cropping -->
+
+</div> 
+
+
+<div class="modal inmodal fade" id="editRoomT" tabindex="-1" role="dialog"  aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title">Edit A Room Type</h4>
+
+            </div>
+            <form class="form-horizontal" id="editRT" onsubmit="return saveEditRT()">
+                <div class="modal-body">
+
+
+                    <div class="form-group">
+
+                        <label class="col-lg-2 control-label">Type Name</label>
+
+                        <div class="col-lg-4"><input placeholder="Enter Room Type Name" class="form-control" type="text" required id="rrtname" name="rtname">
+                        </div>
+
+                        <label class="col-lg-1 control-label">  Code</label>
+
+                        <div class="col-lg-2"><input placeholder="Enter Short code for Room Type" class="form-control" type="text" required id="rrtcode" name="rtcode">
+                        </div>
+                        <label class="col-lg-1 control-label"> Rate</label>
+
+
+                        <div class="col-lg-2"><input placeholder="Enter Price" class="form-control" type="text" required id="rrtrate" name="rtrate" pattern="[-+]?[0-9]*\.?[0-9]+" title="Float value needed">
+                        </div>
+                    </div>
+
+
+                    <div class="form-group">
+                        <label class="col-lg-2 control-label">Description</label>
+                        <div class="col-lg-4">
+                            <textarea id="rrtdes" class="form-control"  name="rtdes" placeholder="Description of this Room Type"></textarea>
+                        </div>
+                        <input type="hidden" id="main_id" name="main_id" >
+
+                        <label class="col-lg-1 control-label">Services</label>
+                        <div class="col-md-2">
+                            <?php $rrscount = 100; ?>
+
+                            @if(count($rs) == 0)
+                            <label class="  control-label">  <i>Not available</i> </label>
+
+                            @endif
+
+                            @foreach($rs as $r)
+
+
+                            <div class="checkbox checkbox-primary">
+                                <input class="service" id="service{{$rrscount}}" name="service{{$rrscount}}" value="{{$r->rs_id}}" type="checkbox">
+                                <label for="service{{$rrscount}}">
+                                    {{ $r->name}}   
+                                </label>
+                            </div>
+
+                            <?php $rrscount++; ?>
+
+                            @endforeach
+
+                            <input type="text" name="rscount" value="{{$rrscount}}" hidden="true">
+
+                        </div>
+
+                        <label class="col-lg-1 control-label">Furnish</label>
+                        <div class="col-md-2">
+                            <?php $rrfcount = 100; ?>
+
+                            @if(count($rf) == 0)
+                            <label class="  control-label">  <i>Not available</i> </label>
+
+                            @endif
+
+                            @foreach($rf as $f)
+
+
+                            <div class="checkbox checkbox-primary">
+                                <input class="furnish" id="furnish{{$rrfcount}}" name="furnish{{$rrfcount}}" value="{{$f->rf_id}}" type="checkbox">
+                                <label for="furnish{{$rrfcount}}">
+                                    {{ $f->name}}   
+                                </label>
+                            </div>
+
+                            <?php $rrfcount++; ?>
+
+                            @endforeach
+
+                            <input type="text" name="rfcount" value="{{$rrfcount}}" hidden="true">
+
+                        </div>
+
+
+
+
+
+
+                    </div>
+
+                    <legend> Uploaded Images</legend>
+                    <div class="form-group"  id="img_load">
+
+
+
+
+                    </div>
+
+
                     <div class="modal-footer">
                         <button type="button" class="btn btn-white" data-dismiss="modal">Close</button>
                         <button type="submit" class="btn btn-primary">Save changes</button>
@@ -312,6 +552,7 @@ ROOM MANAGEMENT
     </div>
 </div>
 
+
 @endsection
 
 
@@ -319,9 +560,87 @@ ROOM MANAGEMENT
 @section('js')
 
 
+<script src="{{ URL::asset('BackEnd/assets/plugins/cropping/cropper.min.js') }}"></script>
+<script src="{{ URL::asset('CustomJs/roomtypeImg.js') }}"></script>
 
 <script>
 
+
+    var tempRates = [];
+
+
+    function rateAdd(){
+        var rate = $('#rtrate').val();
+        var meal = $('#rtmeal').val();
+        var name = $('#rtmeal').children('option:selected').data('name');
+        var patt = new RegExp("[-+]?[0-9]*\.?[0-9]+");
+
+
+
+        if(meal === null || meal == "0"){
+            $('#mealErr').addClass("has-error");
+            return false;
+
+        }else{
+            $('#mealErr').removeClass("has-error");
+
+        }
+        if(!patt.test(rate)){
+
+            $('#rateErr').addClass("has-error");
+            return false;
+        }else{
+            $('#rateErr').removeClass("has-error");
+
+        }
+
+
+
+        $('#rtrate').val("");
+
+        $("#rtmeal option[value='"+ meal + "']").attr("disabled","disabled");
+        // $(" #rtmeal option:selected").removeAttr("selected");
+        $("#rtmeal").val("0");
+        tempRates.push({
+
+            rate: rate,
+            meal : meal,
+            name : name
+
+        });
+
+        tableLoad();
+    }
+
+
+    function tableLoad(){
+        if(tempRates.length >0 ){
+
+            var body ="<table class='table table-hover table-striped'> <thead> <th>#</th> <th> Meal Type </th>    <th>Rate (Rs.) </th> <th class='col-md-1'> </th> </thead> <tbody>  ";
+
+            for(var i = 0; i<tempRates.length ; i++){
+
+                body += "<tr> <td> "+(i+1)+" </td> <td> "+tempRates[i].name+"</td>  <td>"+tempRates[i].rate+" </td> <td> <button class='btn btn-danger btn-block btn-sm' onclick='delTemp("+i+","+tempRates[i].meal+")'> Delete </button></td>    </tr>";
+
+            }
+
+            body+= "</tbody> </table>";
+            document.getElementById("rateTBL").innerHTML = body;
+        }else{
+
+
+            document.getElementById("rateTBL").innerHTML = '<div class="alert alert-warning alert-dismissable">  No rates Added Yet. Please Add rates </div>';
+        }
+
+    }
+
+    function delTemp(index,id){
+
+        tempRates.splice(index,1);
+        $("#rtmeal option[value='"+ id + "']").removeAttr("disabled","disabled");
+
+        tableLoad();
+    }
 
     $('document').ready(function(){
 
@@ -331,7 +650,7 @@ ROOM MANAGEMENT
         dataLoad();
         loadTypes();
 
-
+        tableLoad();
 
     });
 
@@ -385,30 +704,18 @@ ROOM MANAGEMENT
             "columns": [
                 { "data": "type_code" },
                 { "data": "type_name" },
+                { "data": "rate" },
                 { "data": "description" },
+
+                { "data": "count" },
                 {"data" : null,
                  "mRender": function(data, type, full) {
-
-                     var serviceArray = data.services_provided.split(";");  
-
-                     var returnBody = "";
-
-                     for (var i = 0; i< serviceArray.length; i++){
-
-                         returnBody += "<label class='label label-primary' style='margin-right:1%'>"+serviceArray[i]+"</label>";
-
-                     }
-
-
-                     return returnBody;
-
+                     return '<button class="btn btn-success btn-animate btn-animate-side btn-block btn-sm" onclick="addimg('+data.room_type_id+')">  Images </button>' ;
                  }
                 },
-                { "data": "count" },
-
                 {"data" : null,
                  "mRender": function(data, type, full) {
-                     return '<button class="btn btn-primary  btn-animate btn-animate-side btn-block btn-sm" onclick="edit('+data.room_id+')"> Edit </button>' ;
+                     return '<button class="btn btn-primary  btn-animate btn-animate-side btn-block btn-sm" onclick="editRT('+data.room_type_id+')"> Edit </button>' ;
                  }
                 },
                 {"data" : null,
@@ -459,17 +766,105 @@ ROOM MANAGEMENT
 
     }
 
+    function addimg(id){
 
-    function insertRT(){
+        $('#imgLoad').click();
+        document.getElementById("imgid").value = id;
 
-        console.log('admin_roomtype_add?'+ $('#addRT').serialize());
+
+
+    }
+
+
+    function editRT(id){
+
+        console.log(id);
+        $.ajax({
+
+            url : "admin_edit_roomtype",
+            type:"get",
+            data:{
+                id : id
+            },
+            success:function(data){
+
+                //console.log(data.info.room_type_id);
+                $('#main_id').val(data.info.room_type_id);
+                $('#rrtname').val(data.info.type_name);
+                $('#rrtcode').val(data.info.type_code);
+                $('#rrtdes').val(data.info.description);
+
+                if(data.rate.length > 0){
+
+                    $('#rrtrate').val(data.rate[0].single_rates);
+                }else{
+
+
+                    $('#rrtrate').val("");
+
+                }
+
+                $('#editRoomT').modal('show');
+
+                for(var i = 0; i<data.rf.length; i++){
+
+                    $('input:checkbox[class="furnish"][value="' + data.rf[i].furnish_id + '"]')
+                        .attr('checked', 'checked');
+
+                }
+
+                for(var x = 0; x<data.rs.length; x++){
+
+                    $('input:checkbox[class="service"][value="' + data.rs[x].service_id + '"]')
+                        .attr('checked', 'checked');
+
+                }
+
+                var body = "";
+
+                for(var t=0; t< data.images.length ; t++){
+
+
+                    body+= '    <div class="col-sm-4" style="margin-bottom:2%">'+
+                        '<img src="'+data.images[t].path+'" alt="image" class="img-responsive">'+
+                        '<br>'+
+                        '<button class=" col-md-offset-8 col-md-4 btn btn-danger">Remove</button>'+
+
+                        ' </div>';
+                }
+                if(data.images.length == 0){
+
+                    body = '<div class="alert alert-danger alert-dismissable">  Sorry No Images Avaialble. </div>';
+
+                }
+                console.log(body);
+                document.getElementById("img_load").innerHTML = body;
+                console.log(data);
+            },
+            error:function(err){
+
+                console.log(err);
+            }
+
+        });
+
+
+
+    }
+
+
+    function saveEditRT(){
+
+        //admin_roomtype_update
+
+        console.log('admin_roomtype_add?'+ $('#editRT').serialize());
         $.ajax({
             type: "get",
-            url: 'admin_roomtype_add',
-            data: $('#addRT').serialize(),
+            url: 'admin_roomtype_update',
+            data: $('#editRT').serialize(),
 
             success : function(data){
-                $('#addRoomT').modal('hide');
+                $('#editRoomT').modal('hide');
                 swal('Success','Successfully Added!', 'success');
                 dataLoad();
                 loadTypes();
@@ -478,9 +873,93 @@ ROOM MANAGEMENT
             error: function(xhr, ajaxOptions, thrownError) {
                 console.log(thrownError);
             }	 
+
+
         });
 
+        return false;
 
+    }
+
+    function upload(){
+
+
+        console.log(document.getElementById("avatar_data").value);
+
+        var f =   new FormData();
+        f.append('img',document.getElementById("avatarInput").files[0]);
+        f.append('img_data',document.getElementById("avatar_data").value);
+        f.append('imgid',document.getElementById("imgid").value);
+
+        var url= "admin_roomtype_upload";
+        $.ajax({
+            url: url,
+            type:"post",
+            data: f,
+            dataType:"JSON",
+            processData: false,
+            contentType: false,
+            success: function (data, status)
+            {
+                console.log(data);
+            },
+            error: function (data)
+            {
+
+                if (data.status === 422) {
+
+                    name_error.html(data.responseJSON.name);
+                    link_error.html(data.responseJSON.link);
+                    image_error.html(data.responseJSON.image);
+
+                } else {
+                    $('#avatar-modal').modal('hide');
+                    swal("success","Image Successfully Uploaded","success");
+                    console.log(data.status);
+                    $('.avatar-wrapper').html("");
+                    $('.avatar-preview').html("");
+                    $('#avatarInput').val("");
+                }
+            }
+        });  
+
+
+
+
+
+    }
+
+
+
+    function insertRT(){
+
+        $('#data1').val(JSON.stringify(tempRates));
+        console.log('admin_roomtype_add?'+ $('#addRT').serialize());
+
+        if(tempRates.length > 0){
+            $.ajax({
+                type: "get",
+                url: 'admin_roomtype_add',
+                data: $('#addRT').serialize(),
+
+                success : function(data){
+                    $('#addRoomT').modal('hide');
+                    swal('Success','Successfully Added!', 'success');
+                    dataLoad();
+                    loadTypes();
+                    $('#updateRTReset').click();
+                    tempRates = [];
+
+                },
+                error: function(xhr, ajaxOptions, thrownError) {
+                    console.log(thrownError);
+                }	 
+            });
+
+        }else{
+
+            document.getElementById("rateTBL").innerHTML = '<div class="alert alert-danger alert-dismissable">  No rates Added Yet. Please Add rates. You cannot save without adding atleast one rate. </div>';
+        }
 
         return false; 
 
@@ -644,6 +1123,26 @@ ROOM MANAGEMENT
         });
 
 
+
+    }
+
+    function checknum(id,element){
+
+        $.ajax({
+
+            url : "admin_check_rnum",
+            type:"get",
+            data : {id : id},
+            success: function(data){
+
+                console.log(data);
+            },
+            error:function(err){
+
+                console.log(data);
+            }
+
+        });
 
     }
 
