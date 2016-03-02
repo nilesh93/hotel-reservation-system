@@ -16,11 +16,11 @@ class ImageGalleryController extends Controller
 
 
     public function imageGallery(){
-        
+
         $images = imageGallery::all();
 
         return view('nilesh.imageGalleryAdmin')
-                ->with('images',$images);
+            ->with('images',$images);
 
 
     }
@@ -45,6 +45,11 @@ class ImageGalleryController extends Controller
         $height = ceil($json->height);
 
         $img->crop($width,$height ,$x, $y );
+
+
+        $img->resize(846, null, function ($constraint) {
+            $constraint->aspectRatio();
+        });
 
         $img->save($imgpath);
 

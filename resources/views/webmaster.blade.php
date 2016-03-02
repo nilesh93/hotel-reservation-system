@@ -23,6 +23,7 @@
 
 		$images = array();
 		$himages = array();
+		$mealtypeRates = array();
 
 		?>
 
@@ -117,7 +118,7 @@
 											</ul>
 										</li>
 										@else
-										<li><a href="{{URL::to('auth/register')}}">Sign up</a></li>
+										<li><a href="{{URL::to('auth/register')}}">Register</a></li>
 										<li><a href="{{URL::to('auth/login')}}">Login</a>
 											@endif
 											{{--<ul>
@@ -127,19 +128,13 @@
 											</ul>--}}
 										</li>
 
-										<li><a href="{!! url('/contact') !!}">Contact Us</a></li>
+										<li><a href="{!! url('/contact') !!}">Contact</a></li>
 
-										<li><a href="#">Pages</a>
-											<ul>
-												<li><a href="#">Typography</a></li>
-												<li><a href="#">Gallery</a></li>
-												<li><a href="#">Full Width Page</a></li>
-												<li><a  href="#">Right Sidebar Page</a></li>
-												<li><a href="#">left Sidebar Page</a></li>
-												<li><a href="#">About</a></li>
-											</ul>
+										
+										<li><a href="gallery">Gallery</a></li>
+										<li><a href="menu">Menus</a>
+											 
 										</li>
-										<li><a href="#">Hotel</a></li>
 
 										<li><a href="{!! url('/halls') !!}">Halls</a>
 											<ul>
@@ -204,7 +199,10 @@
 
 				$image1 = DB::table('ROOM_IMAGES')
 					->where('room_type_id','=',$room_type->room_type_id)
-					->get();
+					->first();
+				
+				
+				
 				if(!empty($image1) )	{
 					$images = DB::table('ROOM_IMAGES')
 						->where('room_type_id','=',$room_type->room_type_id)
@@ -214,11 +212,11 @@
 				}
 
 
-				$mealtypeRates = DB::table('RATES')
+				 $mealtypeRates = DB::table('RATES')
 					->join('MEAL_TYPES','RATES.meal_type_id','=','MEAL_TYPES.meal_type_id')
 					->where('RATES.room_type_id','=',$room_type->room_type_id)
 					->select('MEAL_TYPES.meal_type_name','RATES.rate_code','RATES.single_rates')
-					->get();
+					->get();  
 
 
 
@@ -246,17 +244,7 @@
 
 												<ul>
 													<?php
-
-													$token = strtok($room_type->services_provided, ";")
-
-													?>
-													<?php
-														while($token != false)
-														{
-															echo "<li >$token<br></li>";
-															$token = strtok(";");
-
-														}
+ 
 													?>
 												</ul>
 											</div>
@@ -307,12 +295,7 @@
 
 												<ul>
 													<?php
-													while($token != false)
-													{
-														echo "<li >$token<br></li>";
-														$token = strtok(";");
-
-													}
+												 
 													?>
 												</ul>
 											</div>
@@ -368,12 +351,7 @@
 											<div align="center">
 
 												<h4>Rate</h4>
-
-												@foreach($mealtypeRates as $mealtype)
-												{{ $mealtype->meal_type_name }} from ${{ $mealtype->single_rates }}<br>
-
-												@endforeach
-
+ 
 											</div>
 										</div>
 
@@ -429,7 +407,7 @@
 				<?php
 				$himage1 = DB::table('HALL_IMAGES')
 					->where('hall_id','=',$hall->hall_id)
-					->get();
+					->first();
 				if(!empty($himage)){
 					$himages = DB::table('HALL_IMAGES')
 						->where('hall_id','=',$hall->hall_id)
@@ -533,19 +511,7 @@
 											<div class="col-md-3">
 
 												<h4 align="center"> </h4>
-
-												<!--	<ul>
-<?php
-/*
-																	while($token != false)
-																	{
-																		echo "<li >$token<br></li>";
-																		$token = strtok(";");
-
-																	}*/
-?>
-</ul> -->
-											</div>
+ 								</div>
 
 
 
@@ -727,21 +693,11 @@
 							<img src="{{URL::asset('FrontEnd/img/amalya-logo.png')}}" alt="">
 							<br>
 							<br>
-							<p>Amalya Reach resort situated in homagama on morgahahena road away from 26km from Colombo this hotel can be accommodate up to 750 guests on a function.</p>
-							<p>Well trained staff to give you the best services to experience the difference with us</p>
+							<p style="word-wrap: break-word;">Amalya Reach resort situated in homagama on morgahahena road away from 26km from Colombo this hotel can be accommodate up to 750 guests on a function.</p>
+							<p style="word-wrap: break-word;">Well trained staff to give you the best services to experience the difference with us</p>
 						</div><!-- /col-md-3 -->
-						<div class="col-sm-3 col-md-3 col-lg-3">
-							<div class="widget widget-latest-posts">
-								<h5>Latest Posts</h5>
-								<ul>
-									<li><a href="#">We’re Hiring: Digital Designer (Mobile/UX)</a></li>
-									<li><a href="#">Attitude: Third WordPress Theme</a></li>
-									<li><a href="#">Gravity giving away 5 iPhone</a></li>
-									<li><a href="#">Get behind the scene of new WordPress</a></li>
-								</ul>
-							</div><!-- /widget-latest-posts -->
-						</div><!-- /col-md-3 -->
-						<div class="col-sm-3 col-md-3 col-lg-3">
+					 <!-- /col-md-3 -->
+						<div class="col-sm-4 col-md-4 col-lg-4">
 							<div class="widget widget-contact">
 								<h5>Contact</h5>
 
@@ -773,13 +729,13 @@
 
 							</div><!-- /widget-contact -->
 						</div><!-- /col-md-3 -->
-						<div class="col-sm-3 col-md-3 col-lg-3">
+						<div class="col-sm-5 col-md-5 col-lg-5">
 							<div class="widget widget-newsletter">
-								<h5>Newsletter</h5>
+								<h5>Write a review</h5>
 
 								<form method="get" action="#">
-									<input type="text" name="name" placeholder="Your Name?">
-									<input type="email" name="email" placeholder="Email Address">
+									<input type="text" name="rname" placeholder="Your Name?">
+									<textarea class="form-control" name="rtext" placeholder="What do you have to say?"></textarea>
 									<a type="button" class="btn btn-primary">Submit</a>
 								</form>
 
