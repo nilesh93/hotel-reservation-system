@@ -34,6 +34,8 @@ Menus
         <button type="button" class="btn btn-primary btn-success" onclick="add_menu_modal()"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add new Menu</button>
     </div>
 
+
+
 @endsection
 @section('content')
 
@@ -69,7 +71,7 @@ Menus
             </div>
 
             <div class="modal-body">
-                <form class="form-horizontal" enctype="multipart/form-data" onsubmit="" method="post">
+                <form class="form-horizontal" enctype="multipart/form-data" onsubmit="" action="upload" class="form single-dropzone" id="my-dropzone" method="post">
                     <div class="row">
                         <div class="form-group">
                             <label for="quantity" class="col-lg-5 control-label">Menu Category</label>
@@ -125,6 +127,14 @@ Menus
                             </div>
                         </div>
                     </div>
+
+                    <div id="img-thumb-preview">
+                        <img id="img-thumb" class="user size-lg img-thumbnail">
+                    </div>
+                    <button id="upload-submit" class="btn btn-default margin-t-5"><i class="fa fa-upload"></i> Upload Picture</button>
+                    <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                    <input type="text" name="fname" id="fname" disabled="true">
+
             </div>
             <div class="modal-footer">
                 <button type="button" onclick="add_menu()" class="btn btn-primary" name="submit" >Add Menu</button>
@@ -200,6 +210,9 @@ Menus
                             </div>
                         </div>
                     </div>
+                    <img id="menuimage" class="user size-lg img-thumbnail">
+
+
             </div>
             <div class="alert alert-dismissible alert-success" id="addedsuccessfully" hidden="true">
                 <button type="button" class="close" data-dismiss="alert">×</button>
@@ -239,11 +252,48 @@ Menus
             document.getElementById("management").click();
             document.getElementById("MM").setAttribute("class","active");
             dataLoad();
+
+            //Dropzone.js Options - Upload an image via AJAX.
+            Dropzone.options.myDropzone = {
+                uploadMultiple: false,
+                // previewTemplate: '',
+                addRemoveLinks: false,
+                // maxFiles: 1,
+                dictDefaultMessage: '',
+                init: function() {
+                    this.on("addedfile", function(file) {
+                        // console.log('addedfile...');
+                    });
+                    this.on("thumbnail", function(file, dataUrl) {
+                        // console.log('thumbnail...');
+                        $('.dz-image-preview').hide();
+                        $('.dz-file-preview').hide();
+                    });
+                    this.on("success", function(file, res) {
+                        console.log('upload success...');
+                        $('#img-thumb').attr('src', res.path);
+                        $('input[name="pic_url"]').val(res.path);
+                    });
+                }
+            };
+            var myDropzone = new Dropzone("#my-dropzone");
+
+            $('#upload-submit').on('click', function(e) {
+                e.preventDefault();
+                //trigger file upload select
+                $("#my-dropzone").trigger('click');
+            });
+
         });
+
+        //we want to manually init the dropzone.
+        Dropzone.autoDiscover = false;
+
 
         function add_menu_modal(){
             $("#add_menus_modal").modal("show");
             $('#menu_number').val(-1);
+
 
             document.getElementById("menu_cat").value = "";
             document.getElementById("menu_desc").value = "";
@@ -296,6 +346,12 @@ Menus
                                             }
                                         });
                                     });
+                        }
+                        if(itemCount != 0) {
+
+                            $('#add_menus_modal').modal('hide');
+                            location.reload();
+
                         }
                     }
                 });
@@ -361,7 +417,8 @@ Menus
                     success:function(ss){
                         dataLoad();
                         $('#menu_number').val(ss);
-                        var rowno = $('#menu_number').val() ;
+                        $('#fname').val(ss);
+                        var rowno = $('#menu_number').val();
                         console.log(rowno);
                         document.getElementById("btnAddMenuItem").removeAttribute("disabled",false);
                         swal("Added!", "Record Added Successfully. Now you may add menu items.", "success");
@@ -375,6 +432,8 @@ Menus
             $("#update_menus_modal").modal("show");
             console.log(a);
             var data="row="+a;
+            var dir = "/HOTEL_RESERVATION/public/img/tmp/"+a+".jpg";
+            $('#menuimage').attr('src', dir);
 
             $.ajax({
                 type:"get",
