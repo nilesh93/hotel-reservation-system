@@ -16,6 +16,19 @@ use DB;
 class SearchController extends Controller
 {
     /**
+     * Constructor for the SearchController class. Checks if a user has sufficient permission
+     * to access the Admin area.
+     *
+     */
+    public function __construct()
+    {
+        // Check if User is Authenticated
+        $this->middleware('auth', ['except' => ['blockNotice']]);
+
+        // Check if the authenticated user is an admin
+        $this->middleware('isAdmin', ['except' => ['blockNotice']]);
+    }
+    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response

@@ -243,6 +243,7 @@ Route::get('/test', function(){
     return view('emails.newAdmin');
 });
 
+
 /*
 |
 |
@@ -282,9 +283,34 @@ Route::get('admin_search/rooms','SearchController@rooms_search');
 Route::get('admin_search/customers','SearchController@customers_search');
 Route::get('admin_customers_search','SearchController@customers_search_index');
 
+//Test email
+Route::get('testmail',function(){
 
+    Mail::send('emails.newAdmin', [], function ($message)  {
+        $message->from(env('MAIL_FROM'), env('MAIL_NAME'));
 
+        $message->to('hash.crackhead@gmail.com')->subject('Welcome to the team!');
+    });
+});
 
+route::post('upload',function(){
+    if(Input::hasFile('file')) {
+        //upload an image to the /img/tmp directory and return the filepath.
+
+        $file = Input::file('file');
+        $fname = Input::get('fname').".".$file->getClientOriginalExtension();
+        $tmpFilePath = '/img/tmp/';
+        $destFilePath = 'img/tmp/';
+
+        $tmpFileName = $fname ;
+        $file = $file->move(public_path() . $tmpFilePath, $tmpFileName);
+        $path = $destFilePath . $fname;
+        return response()->json(array('path'=> $path), 200);
+    } else {
+        return response()->json(false, 200);
+    }
+
+});
 /*
 |
 |
