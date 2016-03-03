@@ -22,7 +22,11 @@ Route::get('/', function () {
         return redirect()->intended('/');
     }
     else{
-        return view('Website.Demo');
+            $images = App\imageGallery::all();
+    
+     return view('Website.Demo')
+        ->with('images',$images);
+       
     }
 
 
@@ -42,7 +46,13 @@ Route::get('/admin', function () {
     return view('Admin.Demo');
 });
 
-
+Route::get('/gallery', function () {
+    
+    $images = App\imageGallery::all();
+    
+    return view('Website.webGallery')
+        ->with('images',$images);
+});
 
 Route::get('/LOL',function(){
 
@@ -121,6 +131,10 @@ Route::get('admin_roomtype_add','RoomController@admin_roomtype_add');
 Route::get('admin_delete_room_type','RoomController@delete_room_type');
 Route::get('admin_getRoomNum','RoomController@admin_getRoomNum');
 Route::get('admin_delete_room', 'RoomController@admin_delete_room'); 
+Route::post('admin_roomtype_upload', 'RoomController@admin_roomtype_upload'); 
+Route::get('admin_edit_roomtype', 'RoomController@admin_edit_roomtype'); 
+Route::get('admin_roomtype_update', 'RoomController@admin_roomtype_update'); 
+Route::get('admin_check_rnum', 'RoomController@admin_check_rnum'); 
 
 
 
@@ -137,7 +151,6 @@ Route::get('admin_delRS','RoomController@delRS');
 Route::get('admin_delRF','RoomController@delRF');
 
 Route::get('admin_imageGallery','ImageGalleryController@imageGallery');
-
 Route::post('admin_gallery_upload','ImageGalleryController@admin_gallery_upload');
 
  
@@ -148,6 +161,7 @@ Route::get('admin_halls','HallController@halls');
 Route::get('admin_get_halls','HallController@admin_get_halls');
 Route::get('admin_hall_add','HallController@admin_hall_add');
 Route::get('admin_delete_hall','HallController@admin_delete_hall');
+Route::post('admin_hall_upload','HallController@admin_hall_upload');
 
 
 Route::get('saveinquiry','InquiryController@saveinquiry');

@@ -4754,6 +4754,32 @@ input[type="file"] > input[type="button"]::-moz-focus-inner {
 #footer .widget-newsletter input:first-child {
   margin-bottom: 15px;
 }
+
+#footer .widget-newsletter textarea {
+  width: 100%;
+  font-size: 0.9em;
+  color: #999999;
+  background: #30495a;
+  border: none;
+  padding: 15px;
+  padding-top: 16px;
+}
+#footer .widget-newsletter textarea:-moz-placeholder {
+  color: #999999;
+}
+#footer .widget-newsletter textarea::-moz-placeholder {
+  color: #999999;
+  opacity: 1;
+}
+#footer .widget-newsletter textarea:-ms-input-placeholder {
+  color: #999999;
+}
+#footer .widget-newsletter textarea::-webkit-input-placeholder {
+  color: #999999;
+}
+#footer .widget-newsletter textarea:first-child {
+  margin-bottom: 15px;
+}
 #footer .widget-newsletter a {
   font-size: 1em;
   width: 100%;

@@ -202,7 +202,7 @@
                 </div>
             </div>
             <!-- Top Bar End -->
-
+            <input class="number-only" hidden>
 
             <!-- ========== Left Sidebar Start ========== -->
 
