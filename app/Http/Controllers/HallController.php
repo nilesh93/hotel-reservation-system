@@ -7,10 +7,7 @@ use App\Http\Controllers\Controller;
 use DB;
 use Illuminate\Http\Request;
 use App\HALL;
-use App\HALL_IMAGE;
 use App\Hall_Services;
-use Image;
-use Input;
 
 class HallController extends Controller
 {
@@ -85,43 +82,6 @@ class HallController extends Controller
         $service->delete();
     }
 
-    public function admin_hall_upload(Request $request){
-        
-        
-        
-        $img_data = Input::get("img_data");
-        $json = json_decode($img_data);
 
-        $image_real = Input::file('img');
-
-        $img = Image::make( $image_real->getRealPath());
-
-        $imgpath = "uploads/hallImg/".date('YmdHis').'.'.$image_real->getClientOriginalExtension();
-
-
-        $width = ceil($json->width);
-        $x =  ceil($json->x);
-        $y = ceil($json->y);
-        $height = ceil($json->height);
-
-        $img->crop($width,$height ,$x, $y );
-
-
-        $img->resize(846, null, function ($constraint) {
-            $constraint->aspectRatio();
-        });
-
-        $img->save($imgpath);
-
-        $hallImg = new HALL_IMAGE;
-
-        $hallImg->path = $imgpath;
-        $hallImg->hall_id = Input::get("imgid");
-
-        $hallImg->save();
-        
-        
-        
-    }
 
 }

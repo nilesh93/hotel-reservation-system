@@ -16,8 +16,7 @@ Rooms
 
 
 @section('page_title')
-
-ROOM SERVICES
+ROOM MANAGEMENT
 
 
 
@@ -337,7 +336,6 @@ ROOM SERVICES
 
 
 <script>
-
     $('document').ready(function(){
 
         document.getElementById('management').click();
@@ -374,12 +372,12 @@ ROOM SERVICES
                 },
                 {"data" : null,
                  "mRender": function(data, type, full) {
-                     return '<button class="btn btn-primary  btn-animate btn-animate-side   btn-sm" onclick="editMainRS('+data.rs_id+')"> Edit </button>' ;
+                     return '<button class="btn btn-primary  btn-animate btn-animate-side btn-block btn-sm" onclick="editMainRS('+data.rs_id+')"> Edit </button>' ;
                  }
                 },
                 {"data" : null,
                  "mRender": function(data, type, full) {
-                     return '<button class="btn btn-danger  btn-animate btn-animate-side   btn-sm" onclick="delRS('+data.rs_id+')"> Delete </button>' ;
+                     return '<button class="btn btn-danger  btn-animate btn-animate-side btn-block btn-sm" onclick="delRS('+data.rs_id+')"> Delete </button>' ;
                  }
                 }
             ]
@@ -412,12 +410,12 @@ ROOM SERVICES
                 },
                 {"data" : null,
                  "mRender": function(data, type, full) {
-                     return '<button class="btn btn-primary  btn-animate btn-animate-side   btn-sm" onclick="editMainRF('+data.rf_id+')"> Edit </button>' ;
+                     return '<button class="btn btn-primary  btn-animate btn-animate-side btn-block btn-sm" onclick="editMainRF('+data.rf_id+')"> Edit </button>' ;
                  }
                 },
                 {"data" : null,
                  "mRender": function(data, type, full) {
-                     return '<button class="btn btn-danger  btn-animate btn-animate-side   btn-sm" onclick="delRF('+data.rf_id+')"> Delete </button>' ;
+                     return '<button class="btn btn-danger  btn-animate btn-animate-side btn-block btn-sm" onclick="delRF('+data.rf_id+')"> Delete </button>' ;
                  }
                 }
             ]
