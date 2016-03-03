@@ -106,7 +106,7 @@ class UserController extends Controller
             $message->to($data['email'])->subject('Welcome to the team!');
         });
 
-        return redirect('/admin_users');
+        return redirect('admin_users');
     }
 
     /**

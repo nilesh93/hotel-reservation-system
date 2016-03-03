@@ -12,6 +12,16 @@ use App\Http\Controllers\Controller;
 
 class RegisteredUsersController extends Controller
 {
+    /*
+    |--------------------------------------------------------------------------
+    | Registered Users Controller
+    |--------------------------------------------------------------------------
+    |
+    |This class provides views and functions for registered users to view and
+    |edit their details as needed as well as reset their passwords.
+    |
+    */
+
     /**
      * Constructor for this class.
      * Contains middleware to restrict the access to this section.
