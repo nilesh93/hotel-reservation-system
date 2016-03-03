@@ -58,7 +58,6 @@ class AuthController extends Controller
             'password' => 'required|confirmed|min:6',
             'telephone'=> 'required|max:15',
             'address_line1'=>'required',
-            'address_line2'=>'required',
             'city'=>'required',
             'province'=>'required',
             'zipCode'=>'required',
