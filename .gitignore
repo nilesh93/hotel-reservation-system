@@ -5,7 +5,7 @@ Homestead.json
 .env
 .idea/
 /.idea
-
+/config/database.php
 .DS_Store
 
 
