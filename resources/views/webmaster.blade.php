@@ -173,24 +173,49 @@
 				</div><!-- /container -->
 			</header><!-- /main-header -->
 
+			{{--This flash message is displayed if a customer tries to access admin area--}}
+			<br>
+			<div class="row">
+				<div class="col-md-3">  </div>
+				<div class="col-md-6">
+					@if(session('noAccess'))
+						<ul class="list-group text-center">
+							<li class="list-group-item list-group-item-warning"><strong>{{ session('noAccess') }}</strong></li>
+						</ul>
+					@endif
+
+					{{--This flash message is displayed when a fb login registration has been completed--}}
+					@if(session('success'))
+						<ul class="list-group text-center">
+							<li class="list-group-item list-group-item-success">{{session('success')}}</li>
+						</ul>
+					@endif
+				</div>
+				<div class="col-md-3">  </div>
+			</div>
 
 
 			<div class="container-fluid">
 				@yield('content')
 
 				{{--This flash message is displayed if a customer tries to access admin area--}}
-				@if(session('noAccess'))
-				<ul class="list-group text-center">
-					<li class="list-group-item list-group-item-warning"><strong>{{ session('noAccess') }}</strong></li>
-				</ul>
-				@endif
+				{{--<div class="row">
+					<div class="col-md-4">
+						@if(session('noAccess'))
+							<ul class="list-group text-center">
+								<li class="list-group-item list-group-item-warning"><strong>{{ session('noAccess') }}</strong></li>
+							</ul>
+						@endif
 
-				{{--This flash message is displayed when a fb login registration has been completed--}}
-				@if(session('success'))
-				<ul class="list-group text-center">
-					<li class="list-group-item list-group-item-success">{{session('success')}}</li>
-				</ul>
-				@endif
+						--}}{{--This flash message is displayed when a fb login registration has been completed--}}{{--
+						@if(session('success'))
+							<ul class="list-group text-center">
+								<li class="list-group-item list-group-item-success">{{session('success')}}</li>
+							</ul>
+						@endif
+					</div>
+				</div>--}}
+
 
 				<!-- room_type_modals_to _load_in_any_page-->
 				@foreach($roomtypes as $room_type)

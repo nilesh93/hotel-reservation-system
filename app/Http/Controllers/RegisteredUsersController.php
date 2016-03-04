@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
+use App\Http\Requests\UpdateProfileRequest;
+use App\Http\Requests\ChangePasswordRequest;
 use Illuminate\Support\Facades\Auth;
 use App\Customer;
 use App\User;
@@ -51,7 +53,7 @@ class RegisteredUsersController extends Controller
      * @param Request $request
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function profileUpdate(Request $request)
+    public function profileUpdate(UpdateProfileRequest $request)
     {
         // Retrieve all data in $request to an array
         $data = $request->all();
@@ -60,6 +62,7 @@ class RegisteredUsersController extends Controller
         $customer = Customer::where('email', Auth::user()->email)->first();
 
         // Update the details
+        $customer->name = $data['name'];
         $customer->NIC_passport_num = $data['ID'];
         $customer->telephone_num = $data['telephone'];
         $customer->address_line_1 = $data['address_line1'];
@@ -92,7 +95,7 @@ class RegisteredUsersController extends Controller
      * @param Request $request
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function changePassword(Request $request)
+    public function changePassword(ChangePasswordRequest $request)
     {
         $data = $request->all();
 

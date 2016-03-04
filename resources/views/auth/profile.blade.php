@@ -5,6 +5,7 @@
 @endsection
 
 @section('css')
+    <link href="{{URL::asset('BackEnd/assets/plugins/sweetalert/dist/sweetalert.css')}}" rel="stylesheet" type="text/css">
 @endsection
 
 @section('content')
@@ -17,8 +18,18 @@
             <img src="{{URL::asset('FrontEnd/img/amalya.jpg')}}">
         </div>
         <div class="col-lg-6">
-            <form role="form" name="registrationForm" method="post" action="{{URL::to('profile')}}">
+            <form role="form" id="profileForm" name="profileForm" method="post" action="{{URL::to('profile')}}">
                 {!! csrf_field() !!}
+                <div class="form-group">
+                    <label for="Name">Name:</label>
+                    <input type="text" class="form-control" name="name" value="{{ $customer->name }}" required pattern="^(([A-Za-z]+[\-\']?)*([A-Za-z]+)?\s)+([A-Za-z]+[\-\']?)*([A-Za-z]+)?$" placeholder="Your name" title="Please enter a valid first name and a last name">
+                    @if ($errors->has('name')) <p class="text-danger">{{ $errors->first('name') }}</p>@endif
+                </div>
+                <div class="form-group">
+                    <label for="email">Email address:</label>
+                    <input type="email" class="form-control" name="email" value="{{ $customer->email }}" readonly>
+                    @if ($errors->has('email')) <p class="text-danger">{{ $errors->first('email') }}</p>@endif
+                </div>
                 <div class="form-group">
                     <label for="ID">NIC/ Passport Number:</label>
                     <input type="text" class="form-control" name="ID" value="{{ $customer->NIC_passport_num }}" required placeholder="Your NIC or Passport Number">
@@ -316,6 +327,7 @@
 
                 <br>
                 <button type="submit" class="btn btn-success">Save changes</button>
+                <button type="button" id="cancel" class="btn btn-warning">Cancel</button>
             </form>
         </div>
         <div class="row">
@@ -324,4 +336,42 @@
             </div>
         </div>
     </div>
+@endsection
+
+@section('js')
+    <script>
+        $(function() {
+
+            var form_original_data = $("#profileForm").serialize();
+
+            $("#cancel").click(function() {
+                if ($("#profileForm").serialize() != form_original_data) {
+                    cancelChanges();
+                }
+                else {
+                    window.location.href="{{URL::to('/')}}";
+                }
+            });
+
+        });
+
+        function cancelChanges(){
+            swal(
+                    {title: "Cancel Changes?",
+                        text: "You have some unsaved changes. Do you want to cancel them?",
+                        type: "warning",
+                        showCancelButton: true,
+                        confirmButtonColor: "#DD6B55",
+                        confirmButtonText: "Yes",
+                        cancelButtonText: "No",
+                        closeOnConfirm: true
+                    },
+                    function(isConfirm){
+                        if (isConfirm) {
+                            window.location.href="{{URL::to('/')}}";
+                        }
+                    }
+            );
+        }
+    </script>
 @endsection
