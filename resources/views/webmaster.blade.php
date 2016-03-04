@@ -100,9 +100,14 @@
 
 							</div><!-- /col-sm-8 -->
 
-							<div class="col-sm-12   col-md-12 col-lg-12">
+							<div class="col-sm-12 col-md-12 col-lg-12">
 								<nav id="main-nav">
 									<ul>
+
+
+										<li><a href="{!! url('/contact') !!}">Contact Us</a></li>
+
+
 										@if(Auth::check())
 										<li><a href="#">My Account</a>
                                             <ul>
@@ -118,7 +123,7 @@
 
 										</li>
 
-										<li><a href="{!! url('/contact') !!}">Contact Us</a></li>
+
 
 											@if(Auth::check())
 												<li><a href="{!! url('/myreserv') !!}">My Reservations</a></li>
@@ -348,18 +353,17 @@
 												<div class="row">
 
 													<div class="col-md-4">
-
 														<div align="center">
-															<h4>Area</h4>
-
+															<h4>Check In</h4>
+															14:00
 														</div>
 													</div>
 
 													<div class="col-md-4">
 
 														<div align="center">
-															<h4>Bed</h4>
-
+															<h4 >Check Out</h4>
+															12:00
 														</div>
 													</div>
 
@@ -377,34 +381,9 @@
 													</div>
 
 												</div>
-												<br>
-												<div class="row">
 
-													<div class="col-md-4">
-														<div align="center">
-															<h4>Extra Bed</h4>
 
-														</div>
 
-													</div>
-
-													<div class="col-md-4">
-														<div align="center">
-															<h4>Check In</h4>
-															14:00
-														</div>
-													</div>
-
-													<div class="col-md-4">
-														<div align="center">
-															<h4 >Check Out</h4>
-															12:00
-														</div>
-													</div>
-
-												</div>
-												<br>
-												<br>
 											</div>
 
 
@@ -450,6 +429,14 @@
 											->where('hall_id','=',$hall->hall_id)
 											->value('refundable_amount');
 
+									$services = DB::table('HALL_SERVICES')
+												->where('rate','=',0)
+												->get();
+
+									$aservices = DB::table('HALL_SERVICES')
+											->where('rate','>',0)
+											->get();
+
 								?>
 
 
@@ -470,9 +457,12 @@
 
 															<div class="col-md-3">
 
-																<h4 align="center">  </h4>
+																<h4 align="center">Services<br>(Free of Charge) </h4>
 
 																<ul>
+																	@foreach($services as $service)
+																		<li>{!!  $service->name !!} </li>
+																	@endforeach
 
 																</ul>
 															</div>
@@ -517,7 +507,14 @@
 
 															<div class="col-md-3">
 
-																<h4 align="center"> </h4>
+																<h4 align="center">Services<br>(Additional Charges) </h4>
+
+																<ul>
+																	@foreach($aservices as $aservice)
+																		<li>{!!  $aservice->name !!}-${!! $aservice->rate !!} </li>
+																	@endforeach
+
+																</ul>
 
 															</div>
 
@@ -552,15 +549,9 @@
 
 													<div class="row">
 
-														<div class="col-md-4">
 
-															<div align="center">
-																<h4>Area</h4>
 
-															</div>
-														</div>
-
-														<div class="col-md-4">
+														<div class="col-md-6">
 
 															<div align="center">
 																<h4>Capacity</h4>
@@ -568,7 +559,7 @@
 															</div>
 														</div>
 
-														<div class="col-md-4">
+														<div class="col-md-6">
 															<div align="center">
 
 																<h4>Rates</h4>
@@ -733,10 +724,7 @@
 									</p>
 								</div><!-- /phone -->
 
-								<!-- <div class="time">
-<i class="fa fa-clock-o"></i>
-<p>08-16 hours<br>Monday - Friday</p>
-</div> -->
+
 
 								<div class="email">
 									<i class="fa fa-envelope-o"></i>
@@ -924,6 +912,12 @@
 
 
 			});
+
+
+
+
+
+
 		</script>
 
 

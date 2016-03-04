@@ -13,50 +13,19 @@ use App\HALL;
 |
 */
 
-Route::get('/', function () {
+/*
+|--------------------------------------------------------------------------
+| General Routes
+|--------------------------------------------------------------------------
+|
+|
+*/
 
-    $url = redirect()->intended()->getTargetUrl();
-
-    if(Session::has('room_types') || Session::has('hall_selected') )
-    {
-        return redirect('payment');
-    }
-    else{
-        return view('Website.Demo');
-    }
-
-
-});
-
-Route::get('/home', function () {
-
-
-    return view('Website.Demo');
-});
-
-Route::get('admin', function () {
-    return view('Admin.Demo');
-});
-
-Route::get('/admin', function () {
-    return view('Admin.Demo');
-});
-
-Route::get('/contact',function(){
+Route::get('/', 'PagesController@HomePage');
+Route::get('/home', 'PagesController@HomePage');
+Route::get('admin', 'PagesController@adminView');
+Route::get('/contact', 'PagesController@contactView');
     
-    return view('Website.contact');
-    
-    
-});
-
-
-Route::get('/LOL',function(){
-    
- 
-    return view('webmaster');
-});
-
-
 
 /*
 |--------------------------------------------------------------------------
@@ -66,34 +35,34 @@ Route::get('/LOL',function(){
 |
 */
 
+
+
 //rooms
-Route::get('cancel_reserv','RoomAvailabilityController@cancel_reserve');
-Route::get('select_room_add','RoomAvailabilityController@addSelectedRooms');
-Route::get('delete_selected_room_type','RoomAvailabilityController@delSelectedRoom_type');
-Route::get('loadBooking','RoomAvailabilityController@loadMyBooking');
-Route::get('room_packages','PagesController@rooms');
-
-Route::post('room_availability','RoomAvailabilityController@check_room_availability');
-
-Route::get('room_reservation','ReservationController@RoomReservation');
-Route::get('my_future_room_reservations','ReservationController@MyFutureReservation');
-Route::get('my_past_room_reservations','ReservationController@MyPastReservation');
+Route::get('loadBooking', 'RoomAvailabilityController@loadMyBooking');
+Route::get('room_packages', 'PagesController@roomsView');
+Route::get('cancel_reserv', 'RoomController@cancelCurrentReservation');
+Route::get('select_room_add', 'RoomAvailabilityController@addSelectedRooms');
+Route::get('room_reservation', 'RoomReservationController@roomReservation');
+Route::post('room_availability', 'RoomAvailabilityController@checkRoomAvailability');
+Route::get('my_past_room_reservations', 'RoomReservationController@myPastReservation');
+Route::get('delete_selected_room_type', 'RoomAvailabilityController@delSelectedRoom_type');
+Route::get('my_future_room_reservations', 'RoomReservationController@myFutureReservation');
 
 //halls
-Route::get('halls','PagesController@halls');
-Route::get('hall_availability','HallAvailabilityController@check_hall_availability');
-Route::get('book_hall_add','HallAvailabilityController@book_hall_add');
-Route::get('cancel_hall_reserv','HallAvailabilityController@cancel_hall_reserve');
-Route::get('hall_reserve_final','HallReservationController@HallReservation');
-Route::get('my_future_hall_reservations','HallReservationController@MyFutureReservation');
-Route::get('my_past_hall_reservations','HallReservationController@MyPastReservation');
+Route::get('halls', 'PagesController@hallsView');
+Route::get('book_hall_add', 'HallAvailabilityController@addHallsToReserve');
+Route::get('hall_availability', 'HallAvailabilityController@checkHallAvailability');
+Route::get('cancel_hall_reserv', 'HallReservationController@deleteAddedHallReservation');
+Route::get('hall_reserve_final', 'HallReservationController@hallReservation');
+Route::get('my_past_hall_reservations', 'HallReservationController@myPastReservation');
+Route::get('my_future_hall_reservations', 'HallReservationController@myFutureReservation');
+
 
 //reservation
-Route::get('myreserv',['middleware' => 'auth', 'uses' =>'PagesController@MyReserve']);
+Route::get('myreserv', ['middleware' => 'auth', 'uses' =>'PagesController@myReserve']);
 
 //payment
-Route::get('payment',['middleware' => 'auth', 'uses' =>'PagesController@makePayment']);
-
+Route::get('payment', ['middleware' => 'auth', 'uses' =>'PagesController@makePayment']);
 
 
 
