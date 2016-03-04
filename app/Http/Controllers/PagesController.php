@@ -61,7 +61,10 @@ class PagesController extends Controller
         //Clear the indicator to access the payment page
         Session::forget('CanPay');
 
-        return view('Website.Demo');
+        $images = App\imageGallery::all();
+
+        return view('Website.Demo')
+            ->with('images',$images);
     }
 
     /**
