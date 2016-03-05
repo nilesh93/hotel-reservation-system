@@ -125,6 +125,10 @@ Route::get('admin_delRF','RoomController@delRF');
 Route::get('admin_imageGallery','ImageGalleryController@imageGallery');
 Route::post('admin_gallery_upload','ImageGalleryController@admin_gallery_upload');
 
+
+Route::get('admin_webGallery','ImageGalleryController@webimageGallery');
+Route::post('admin_web_gallery_upload','ImageGalleryController@admin_webgallery_upload');
+
  
 
 
@@ -145,7 +149,7 @@ Route::get('/contact',function(){
     return view('Website.contact');
 });
 
-
+Route::get('submit_review','PagesController@submit_review');
 
 /*
 |
