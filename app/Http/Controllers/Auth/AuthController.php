@@ -33,6 +33,11 @@ class AuthController extends Controller
     //Applicable only to 'guest' role.
     protected $redirectPath = '/';
 
+    // MySql Bool store non negative numbers for true,
+    // In this application,1 is defined to be true
+    // Check UserController for more info
+    private $blocked_true = 1;
+
     /**
      * Create a new authentication controller instance.
      *
@@ -125,7 +130,7 @@ class AuthController extends Controller
                 $block_status = Customer::where('email', $user_email)->first()->block_status;
 
                 // If user has been blocked, user is redirected to a page announcing so.
-                if($block_status == "1") {
+                if($block_status == $this->blocked_true) {
                     Auth::logout();
                     return redirect('blocked_user');
                 }
@@ -203,7 +208,9 @@ class AuthController extends Controller
         $user_email = $user->email;
         $block_status = Customer::where('email', $user_email)->first()->block_status;
 
-        if($block_status == "1"){
+
+
+        if($block_status == $this->blocked_true){
             return redirect('blocked_user');
         }
         else{

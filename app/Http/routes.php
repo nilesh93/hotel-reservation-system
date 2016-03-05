@@ -240,7 +240,7 @@ Route::get('deleteHallService', 'HallController@deleteHallService');
 
 // Inaccessible views testing route
 Route::get('/test', function(){
-    return view('emails.newAdmin');
+    return view('errors.modelNotFound');
 });
 
 
