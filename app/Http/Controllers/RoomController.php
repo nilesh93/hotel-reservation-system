@@ -17,6 +17,7 @@ use App\RATE;
 use App\MEAL_TYPE;
 use Input;
 use Image;
+use File;
 
 
 class RoomController extends Controller
@@ -97,9 +98,9 @@ class RoomController extends Controller
         foreach($data as $d){
             $rate = new RATE;
 
-            $rate->single_rates = $d->meal;
+            $rate->meal_type_id = $d->meal;
             $rate->room_type_id = $rt->room_type_id;
-
+            $rate->single_rates = $d->rate;
             $rate->save();
 
         }
@@ -149,6 +150,23 @@ class RoomController extends Controller
 
         $rt->save(); 
 
+
+        $rate =  RATE::where('room_type_id',$request->input('main_id'))->delete();
+
+
+        $data =  json_decode($request->input('data1'));
+
+
+        foreach($data as $d){
+            $rate = new RATE;
+
+            $rate->meal_type_id = $d->meal;
+            $rate->room_type_id = $rt->room_type_id;
+            $rate->single_rates = $d->rate;
+            $rate->save();
+
+        }
+
         RoomTypeService::where('room_type_id',$request->input('main_id'))->delete();
 
         RoomTypeFurnish::where('room_type_id',$request->input('main_id'))->delete();
@@ -184,6 +202,24 @@ class RoomController extends Controller
         }
 
 
+
+    }
+
+    public function admin_rt_image_del(Request $request){
+
+
+        $imgGal = ROOM_IMAGE::find(Input::get("id"));
+
+        $path = $imgGal->path;
+
+        File::delete($path);
+
+        $imgGal->delete(); 
+
+
+        $images = ROOM_IMAGE::where('room_type_id',Input::get("type_id"))->get();
+        
+         return response()->json (['images'=>$images]);
 
     }
 
@@ -363,12 +399,19 @@ class RoomController extends Controller
 
         $roomType = RoomType::find($request->input('id'));
 
-        $rate = RATE::where('room_type_id',$request->input('id'))->get();
+        $id = $request->input('id');
+
+        $rate = DB::select(DB::raw("select a.*,
+        (select b.meal_type_name from MEAL_TYPES b  where b.meal_type_id = a.meal_type_id) as meal
+        from RATES a where a.room_type_id = '$id'"));
+        //RATE::where('room_type_id',$request->input('id'))->get();
 
         $images = ROOM_IMAGE::where('room_type_id',$request->input('id'))->get();
 
         $rf = RoomTypeFurnish::where('room_type_id',$request->input('id'))->get();
         $rs = RoomTypeService::where('room_type_id',$request->input('id'))->get();
+
+
 
 
         return response()->json(['info' => $roomType, 'images' => $images ,'rs' => $rs , 'rf' => $rf, 'rate' => $rate]);

@@ -11,6 +11,7 @@ use App\imageGallery;
 use App\HOME_GALLERY;
 use Input;
 use Image;
+use File;
 
 class ImageGalleryController extends Controller
 {
@@ -25,6 +26,9 @@ class ImageGalleryController extends Controller
 
 
     }
+
+
+
 
     public function admin_gallery_upload(Request $request){
 
@@ -63,17 +67,17 @@ class ImageGalleryController extends Controller
         $imgGal->save();    
 
     }
-    
+
     public function webimageGallery(){
-        
-            $images = HOME_GALLERY::all();
+
+        $images = HOME_GALLERY::all();
 
         return view('nilesh.webHomeGallery')
             ->with('images',$images);
-        
+
     }
-    
-    
+
+
     public function  admin_webgallery_upload(Request $request){
 
         $img_data = Input::get("img_data");
@@ -113,7 +117,52 @@ class ImageGalleryController extends Controller
         $imgGal->save();    
 
     }
-    
-    
-    
+
+    public function admin_homeImage_update(Request $request){
+
+        $imgGal = HOME_GALLERY::find(Input::get("id"));
+
+
+        $imgGal->caption = Input::get('caption1e');
+        $imgGal->caption_desc = Input::get('caption2e');
+        $imgGal->save();    
+
+
+    }
+
+    public function get_homeImage_details(Request $request){
+
+
+        $imgGal = HOME_GALLERY::find(Input::get("id"));
+
+        return $imgGal;
+
+    }
+
+    public function admin_homeImage_del(Request $request){
+
+
+        $imgGal = HOME_GALLERY::find(Input::get("id"));
+
+        $path = $imgGal->path;
+
+        File::delete($path);
+
+        $imgGal->delete();
+
+    }
+
+    public function admin_webImage_del(Request $request){
+
+
+        $imgGal = imageGallery::find(Input::get("id"));
+
+        $path = $imgGal->path;
+
+        File::delete($path);
+
+        $imgGal->delete();
+
+    }
+
 }

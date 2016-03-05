@@ -107,6 +107,7 @@ Route::post('admin_roomtype_upload', 'RoomController@admin_roomtype_upload');
 Route::get('admin_edit_roomtype', 'RoomController@admin_edit_roomtype'); 
 Route::get('admin_roomtype_update', 'RoomController@admin_roomtype_update'); 
 Route::get('admin_check_rnum', 'RoomController@admin_check_rnum'); 
+Route::get('admin_rt_image_del', 'RoomController@admin_rt_image_del'); 
 
 
 
@@ -123,11 +124,15 @@ Route::get('admin_delRS','RoomController@delRS');
 Route::get('admin_delRF','RoomController@delRF');
 
 Route::get('admin_imageGallery','ImageGalleryController@imageGallery');
+Route::get('admin_webImage_del','ImageGalleryController@admin_webImage_del');
 Route::post('admin_gallery_upload','ImageGalleryController@admin_gallery_upload');
 
 
 Route::get('admin_webGallery','ImageGalleryController@webimageGallery');
 Route::post('admin_web_gallery_upload','ImageGalleryController@admin_webgallery_upload');
+Route::get('admin_homeImage_update','ImageGalleryController@admin_homeImage_update');
+Route::get('get_homeImage_details','ImageGalleryController@get_homeImage_details');
+Route::get('admin_homeImage_del','ImageGalleryController@admin_homeImage_del');
 
  
 
