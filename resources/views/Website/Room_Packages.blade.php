@@ -140,11 +140,11 @@
 
 						<div class="room-image">
 							<img src="{{ $image }}" alt="themesgravity">
-							<h4><a style="text-decoration: none" onclick="showModal({{$room_type->room_type_id}})" href="#">{{ $room_type->type_name }}</a></h4>
+							<h4><a style="text-decoration: none" onclick="viewRoomType('{{$room_type->room_type_id}}','{{$room_type->type_name}}')" href="#">{{ $room_type->type_name }}</a></h4>
 						</div><!-- /room-image -->
 
 						<div class="room-content">
-							<p class="room-price"><small>From ${{ $ratefrom }} per nights</small></p>
+							<p class="room-price"><small>From Rs.{{ $ratefrom }} per nights</small></p>
 							<hr>
 							<p>{{ $room_type->description }}</p>
 						</div><!-- /room-content -->

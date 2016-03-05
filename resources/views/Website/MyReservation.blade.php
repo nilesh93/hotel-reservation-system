@@ -1,4 +1,4 @@
-@extends('webmaster')
+@extends('webmaster_reservation')
 
 @section('title')
 	My Reservations
@@ -169,6 +169,11 @@
 					"url" : "my_future_room_reservations",
 					"data" : {
 						"customer_id":customer_id
+                    },
+                    error: function(xhr, ajaxOptions, thrownError) {
+                        console.log(thrownError);
+
+                        swal("Ooops!", "Something Went Wrong! ("+thrownError+")", "error");
                     }
                 },
 				"columns": [
@@ -212,6 +217,11 @@
 					"url": "my_past_room_reservations",
 					"data": {
 						"customer_id": customer_id
+                    },
+                    error: function(xhr, ajaxOptions, thrownError) {
+                        console.log(thrownError);
+
+                        swal("Ooops!", "Something Went Wrong! ("+thrownError+")", "error");
                     }
                 },
 				"columns":[
@@ -249,6 +259,11 @@
 					"url": "my_future_hall_reservations",
 					"data": {
 						"customer_id": customer_id
+                    },
+                    error: function(xhr, ajaxOptions, thrownError) {
+                        console.log(thrownError);
+
+                        swal("Ooops!", "Something Went Wrong! ("+thrownError+")", "error");
                     }
                 },
 				"columns":[
@@ -308,7 +323,7 @@
 					                    '<th>Adults</th>'+
 					                    '<th>Kids</th>'+
                                         '<th>No of Rooms</th>'+
-					                    '<th>Amount($)</th>'+
+					                    '<th>Amount(Rs.)</th>'+
                                     '</tr>'+
                                 '</thead>'+
 
@@ -330,7 +345,7 @@
                                         '<th>ID</th>'+
                                         '<th width="20%">Event Date</th>'+
                                         '<th width="20%">Hall</th>'+
-                                        '<th>Amount($)</th>'+
+                                        '<th>Amount(Rs.)</th>'+
                                     '</tr>'+
                                 '</thead>'+
 

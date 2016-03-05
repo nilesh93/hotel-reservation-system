@@ -33,52 +33,59 @@ class HallReservationController extends Controller
      */
     public function hallReservation()
     {
-        //set the timezone
-        date_default_timezone_set("Asia/Colombo");
+        try {
+            //set the timezone
+            date_default_timezone_set("Asia/Colombo");
 
-        $customer_email = Auth::user()->email;
+            $customer_email = Auth::user()->email;
 
-        $customer_id = Customer::where('email', $customer_email)
-            ->value('cus_id');
+            $customer_id = Customer::where('email', $customer_email)
+                ->value('cus_id');
 
-        $customer_name = Customer::where('email', $customer_email)
-            ->value('name');
+            $customer_name = Customer::where('email', $customer_email)
+                ->value('name');
 
-        $hall_name = HALL::where('hall_id', session('hall_selected'))
-            ->value('title');
+            $hall_name = HALL::where('hall_id', session('hall_selected'))
+                ->value('title');
 
-        $event_date = session('event_date');
+            $event_date = session('event_date');
 
-        //create instance of the HALL_RESERVATION model
-        $hall_reservation = new HALL_RESERVATION;
+            //create instance of the HALL_RESERVATION model
+            $hall_reservation = new HALL_RESERVATION;
 
-        $hall_reservation->reserve_date = session('event_date');
-        $hall_reservation->total_amount = session('total_payable');
-        $hall_reservation->cus_id = $customer_id;
-        $hall_reservation->hall_id = session('hall_selected');
+            $hall_reservation->reserve_date = session('event_date');
+            $hall_reservation->total_amount = session('total_payable');
+            $hall_reservation->cus_id = $customer_id;
+            $hall_reservation->hall_id = session('hall_selected');
 
-        $hall_reservation->save();
+            $hall_reservation->save();
 
-        //retrieve the reservation id of the last saved reservation
-        $res_id = $hall_reservation->hall_reservation_id;
+            //retrieve the reservation id of the last saved reservation
+            $res_id = $hall_reservation->hall_reservation_id;
 
-        //delete the reservation details since already stored in the db
-        Session::forget('event_date');
-        Session::forget('total_payable');
-        Session::forget('hall_selected');
-        Session::forget('CanPay');
+            //delete the reservation details since already stored in the db
+            Session::forget('event_date');
+            Session::forget('total_payable');
+            Session::forget('hall_selected');
+            Session::forget('CanPay');
 
-        //create an array in order to send the mail view with reservation details
-        $data = array('res_id' => $res_id, 'hall_name' => $hall_name, 'event_date' => $event_date, 'name' => $customer_name);
+            //create an array in order to send the mail view with reservation details
+            $data = array('res_id' => $res_id, 'hall_name' => $hall_name, 'event_date' => $event_date, 'name' => $customer_name);
 
-        //send a mail to the customer confirming his reservation details
-        Mail::send('emails.HallReservationMail', $data, function ($message) use ($customer_email) {
-            $message->from(env('MAIL_FROM'), env('MAIL_NAME'));
+            //send a mail to the customer confirming his reservation details
+            Mail::send('emails.HallReservationMail', $data, function ($message) use ($customer_email) {
+                $message->from(env('MAIL_FROM'), env('MAIL_NAME'));
 
-            $message->to($customer_email)->subject('Welcome to Amalya Reach!');
-        });
+                $message->to($customer_email)->subject('Welcome to Amalya Reach!');
+            });
 
-        return redirect('myreserv')->with(['hreserv_status' => 'Reservation has been successfully made']);
+            return redirect('myreserv')->with(['hreserv_status' => 'Reservation has been successfully made']);
+        } catch(\Exception $e){
+
+                abort(406,$e->getMessage());
+        }
+
+
     }
 
     /**

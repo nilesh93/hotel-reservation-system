@@ -46,7 +46,7 @@ Route::get('/gallery', function () {
 //rooms
 Route::get('loadBooking', 'RoomAvailabilityController@loadMyBooking');
 Route::get('room_packages', 'PagesController@roomsView');
-Route::get('cancel_reserv', 'RoomController@cancelCurrentReservation');
+Route::get('cancel_reserv', 'RoomReservationController@cancelCurrentReservation');
 Route::get('select_room_add', 'RoomAvailabilityController@addSelectedRooms');
 Route::get('room_reservation', 'RoomReservationController@roomReservation');
 Route::post('room_availability', 'RoomAvailabilityController@checkRoomAvailability');
@@ -70,7 +70,9 @@ Route::get('myreserv', ['middleware' => 'auth', 'uses' =>'PagesController@myRese
 //payment
 Route::get('payment', ['middleware' => 'auth', 'uses' =>'PagesController@makePayment']);
 
-
+//webmaster views
+Route::get('hall_view', 'WebMasterViewController@hallViewLoad');
+Route::get('room_view','WebMasterViewController@roomViewLoad');
 
 /*
 |

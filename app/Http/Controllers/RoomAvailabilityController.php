@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\RATE;
 use App\RES_RMTYPE_CNT_RATE;
 use App\ROOM_TYPE;
 use Session;
@@ -34,125 +35,126 @@ class RoomAvailabilityController extends Controller
 
     function checkRoomAvailability(Request $request)
     {
-        //clears the hall reservation session details if there are any
-        Session::forget('hall_selected');
-        Session::forget('event_date');
-        Session::forget('total_payable');
+        try {
+            //clears the hall reservation session details if there are any
+            Session::forget('hall_selected');
+            Session::forget('event_date');
+            Session::forget('total_payable');
 
-        //get the details from the form submission and store in variables
-        $inputs = $request::all();
+            //get the details from the form submission and store in variables
+            $inputs = $request::all();
 
-        $check_in = $inputs['check_in'];
-        $check_out = $inputs['check_out'];
-        $adults = $inputs['adults'];
-        $kids = $inputs['children'];
-        $rooms = $inputs['ono_of_rooms'];
+            $check_in = $inputs['check_in'];
+            $check_out = $inputs['check_out'];
+            $adults = $inputs['adults'];
+            $kids = $inputs['children'];
+            $rooms = $inputs['ono_of_rooms'];
 
-        //put the requested reservation details to the session
-        Session::put('check_in',$check_in);
-        Session::put('check_out',$check_out);
-        Session::put('adults',$adults);
-        Session::put('kids',$kids);
-        Session::put('rooms',$rooms);
+            //put the requested reservation details to the session
+            Session::put('check_in', $check_in);
+            Session::put('check_out', $check_out);
+            Session::put('adults', $adults);
+            Session::put('kids', $kids);
+            Session::put('rooms', $rooms);
 
-        //clear the session if values already exists
-        if(Session::has('room_types')) {
+            //clear the session if values already exists
+            if (Session::has('room_types')) {
 
-            $room_types =  session('room_types');
+                $room_types = session('room_types');
 
-            foreach($room_types as $room_type)
-            {
+                foreach ($room_types as $room_type) {
 
-                Session::forget('room_type_name'.$room_type);
-                Session::forget('no_of_rooms'.$room_type);
-                Session::forget('rate'.$room_type);
-                Session::forget('meal_type'.$room_type);
-                Session::forget('rate_code'.$room_type);
-                Session::forget('total_payable');
-
-            }
-            Session::forget('room_types');
-        }
-
-        $room_types = ROOM_TYPE::get();
-
-        //an array to keep the count of rooms per room_type that are booked during the requested period
-        $booked_room_type_count = array();
-
-        //an array to keep count of rooms in the RES_RMTYPE_CNT_RATE table for the reservations during the period
-        //this array is used because for a reservation there can be many rows in the RES_RMTYPE_CNT_RATE table
-        $room_type_booked = array();
-
-        //an array to keep the available room count of the room types for the requested period
-        $room_type_available = array();
-
-
-        //initially assign zero to each booked room type count
-        foreach($room_types as $room_type) {
-           $booked_room_type_count[$room_type->room_type_id] = 0;
-
-        }
-
-        //query the reservations that are that have check in or check out dates between the requested date period
-        $reservations = ROOM_RESERVATION::where('check_in', '<=', $check_out)
-            ->where('check_out','>=',$check_in)
-            ->orwhereIn('remarks', ['tendative','confirmed'])//change this orwhereIn after you finish booking section
-            ->select('room_reservation_id')
-            ->distinct()
-            ->get();
-
-        //for each reservation within that period get the room types booked and their total room count
-        foreach($reservations as $reservation) {
-
-            foreach($room_types as $room_type) {
-                $room_type_booked[$room_type->room_type_id] = RES_RMTYPE_CNT_RATE::where('room_reservation_id', '=', $reservation->room_reservation_id)
-                                                                                    ->where('room_type_id','=',$room_type->room_type_id)
-                                                                                    ->select('count')
-                                                                                    ->get();
-
-                foreach($room_type_booked[$room_type->room_type_id] as $room_type_booked_cnt)
-                {
-                    //increment the room type count as per the entries in the RES_RMTYPE_CNT_RATE for a reservation
-                    $booked_room_type_count[$room_type->room_type_id] += $room_type_booked_cnt->count;
+                    Session::forget('room_type_name' . $room_type);
+                    Session::forget('no_of_rooms' . $room_type);
+                    Session::forget('rate' . $room_type);
+                    Session::forget('meal_type' . $room_type);
+                    Session::forget('rate_code' . $room_type);
+                    Session::forget('total_payable');
 
                 }
-            }
-        }
-
-        $total_rooms_available = 0;
-        $available_rooms = 0;
-
-        //room type count will be taken from the rooms table but for now take it from the room_type table
-        foreach($room_types as $room_type) {
-            /*$room_type_room_count = DB::table('ROOMS')
-                                    ->where('room_type_id','=',1)
-                                    ->count();*/
-
-            $available_rooms = $room_type->count - $booked_room_type_count[$room_type->room_type_id];
-
-            //check whether available rooms are negative
-            if($available_rooms >=0) {
-
-                $room_type_available[$room_type->room_type_id] = $available_rooms;
-            }
-            else {
-
-                $room_type_available[$room_type->room_type_id] = 0;
+                Session::forget('room_types');
             }
 
-            $total_rooms_available += $available_rooms;
-        }
+            $room_types = ROOM_TYPE::get();
 
-        //check the total rooms available with the requested total rooms
-        if($total_rooms_available <  $rooms ) {
-            if($total_rooms_available < 0) {
-                $total_rooms_available = 0;
+            //an array to keep the count of rooms per room_type that are booked during the requested period
+            $booked_room_type_count = array();
+
+            //an array to keep count of rooms in the RES_RMTYPE_CNT_RATE table for the reservations during the period
+            //this array is used because for a reservation there can be many rows in the RES_RMTYPE_CNT_RATE table
+            $room_type_booked = array();
+
+            //an array to keep the available room count of the room types for the requested period
+            $room_type_available = array();
+
+
+            //initially assign zero to each booked room type count
+            foreach ($room_types as $room_type) {
+                $booked_room_type_count[$room_type->room_type_id] = 0;
+
             }
 
-            return redirect('room_packages')->with(['rooms_not_available'=>'Sorry requested no of rooms are not available.Only ' . $total_rooms_available . ' room(s) are available']);
-        }
-        else {
-            return view('Website.Rooms_availability',['room_type_available'=>$room_type_available,"room_types"=>$room_types]);
+            //query the reservations that are that have check in or check out dates between the requested date period
+            $reservations = ROOM_RESERVATION::where('check_in', '<=', $check_out)
+                ->where('check_out', '>=', $check_in)
+                ->orwhereIn('remarks', ['tendative', 'confirmed'])//change this orwhereIn after you finish booking section
+                ->select('room_reservation_id')
+                ->distinct()
+                ->get();
+
+            //for each reservation within that period get the room types booked and their total room count
+            foreach ($reservations as $reservation) {
+
+                foreach ($room_types as $room_type) {
+                    $room_type_booked[$room_type->room_type_id] = RES_RMTYPE_CNT_RATE::where('room_reservation_id', '=', $reservation->room_reservation_id)
+                        ->where('room_type_id', '=', $room_type->room_type_id)
+                        ->select('count')
+                        ->get();
+
+                    foreach ($room_type_booked[$room_type->room_type_id] as $room_type_booked_cnt) {
+                        //increment the room type count as per the entries in the RES_RMTYPE_CNT_RATE for a reservation
+                        $booked_room_type_count[$room_type->room_type_id] += $room_type_booked_cnt->count;
+
+                    }
+                }
+            }
+
+            $total_rooms_available = 0;
+            $available_rooms = 0;
+
+            //room type count will be taken from the rooms table but for now take it from the room_type table
+            foreach ($room_types as $room_type) {
+                /*$room_type_room_count = DB::table('ROOMS')
+                                        ->where('room_type_id','=',1)
+                                        ->count();*/
+
+                $available_rooms = $room_type->count - $booked_room_type_count[$room_type->room_type_id];
+
+                //check whether available rooms are negative
+                if ($available_rooms >= 0) {
+
+                    $room_type_available[$room_type->room_type_id] = $available_rooms;
+                } else {
+
+                    $room_type_available[$room_type->room_type_id] = 0;
+                }
+
+                $total_rooms_available += $available_rooms;
+            }
+
+            //check the total rooms available with the requested total rooms
+            if ($total_rooms_available < $rooms) {
+                if ($total_rooms_available < 0) {
+                    $total_rooms_available = 0;
+                }
+
+                return redirect('room_packages')->with(['rooms_not_available' => 'Sorry requested no of rooms are not available.Only ' . $total_rooms_available . ' room(s) are available']);
+            } else {
+                return view('Website.Rooms_availability', ['room_type_available' => $room_type_available, "room_types" => $room_types]);
+            }
+        }catch (\Exception $e)
+        {
+            abort(406,$e->getMessage());
         }
     }
 
@@ -172,10 +174,9 @@ class RoomAvailabilityController extends Controller
         $no_of_rooms = $inputs['no_of_rooms'];
         $rate_code = $inputs[$room_type_id.'rate_code'];
 
-        $rate_price = DB::table('RATES')->where('rate_code','=',$rate_code)->value('single_rates');
+        $rate_price = RATE::where('rate_code','=',$rate_code)->value('single_rates');
 
-        $meal_type_name = DB::table('RATES')
-                        ->join('MEAL_TYPES','RATES.meal_type_id','=','MEAL_TYPES.meal_type_id')
+        $meal_type_name = RATE::join('MEAL_TYPES','RATES.meal_type_id','=','MEAL_TYPES.meal_type_id')
                         ->where('RATES.rate_code','=',$rate_code)
                         ->value('meal_type_name');
 

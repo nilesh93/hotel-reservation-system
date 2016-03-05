@@ -4,9 +4,60 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "f2b8db15ec64b14c6d5d63ec997d5dac",
-    "content-hash": "bf044a1a5809a8532513ecc2b65a9da0",
+    "hash": "73ebe6d37c93233f2efd9295f294c289",
+    "content-hash": "557cd1785d692437c22f06f3333905b6",
     "packages": [
+        {
+            "name": "casinelli/currency",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Casinelli/Currency.git",
+                "reference": "0e0029294a02cfd898ad775583b78b6b775fa76c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Casinelli/Currency/zipball/0e0029294a02cfd898ad775583b78b6b775fa76c",
+                "reference": "0e0029294a02cfd898ad775583b78b6b775fa76c",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/cache": "~5.0",
+                "illuminate/support": "~5.0",
+                "illuminate/view": "~5.0",
+                "php": ">=5.4.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Casinelli\\Currency": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD 2-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Giovanni Casinelli",
+                    "email": "giovanni.casinelli@gmail.com"
+                }
+            ],
+            "description": "Handles currency for Laravel 5.",
+            "keywords": [
+                "currency",
+                "exchange rate",
+                "laravel",
+                "laravel5",
+                "money"
+            ],
+            "time": "2016-02-28 07:40:07"
+        },
         {
             "name": "classpreloader/classpreloader",
             "version": "3.0.0",
@@ -1846,6 +1897,42 @@
                 "shell"
             ],
             "time": "2016-02-27 18:59:18"
+        },
+        {
+            "name": "senemoglu/currency",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/blueskan/Laravel-5-Currency-Converter.git",
+                "reference": "acf60cf0f20cbe9f057d855e48e51181a0ec712c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/blueskan/Laravel-5-Currency-Converter/zipball/acf60cf0f20cbe9f057d855e48e51181a0ec712c",
+                "reference": "acf60cf0f20cbe9f057d855e48e51181a0ec712c",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/support": "5.x",
+                "php": ">=5.3.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Senemoglu\\Currency\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Batikan Senemoglu",
+                    "email": "batikansenemoglu@gmail.com"
+                }
+            ],
+            "time": "2015-03-25 01:03:08"
         },
         {
             "name": "swiftmailer/swiftmailer",
@@ -4001,7 +4088,10 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {
+        "casinelli/currency": 20,
+        "senemoglu/currency": 20
+    },
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {

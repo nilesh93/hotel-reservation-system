@@ -220,9 +220,9 @@
 							<div class="col-sm-6 col-md-6 col-lg-6">
 
 								<span>Discover our</span>
-								<h3 class="room-title"><a onclick="showModal({{$room_type->room_type_id}})">{{ $room_type->type_name }}</a></h3>
+								<h3 class="room-title"><a onclick="viewRoomType('{{$room_type->room_type_id}}','{{$room_type->type_name}}')">{{ $room_type->type_name }}</a></h3>
 								<span>from</span>
-								<span class="room-cost"> ${{ $ratefrom }}</span>
+								<span class="room-cost"> Rs.{{ $ratefrom }}</span>
 
                                 <p>
 									<b>Available Rooms : {{ $room_type_available[$room_type->room_type_id]}}</b>
@@ -313,7 +313,7 @@
 													<select class="form-control"  name="{{ $room_type->room_type_id }}rate_code" id="{{ $room_type->room_type_id }}rate_code">
                                                         <option value=0>Select Meal Type </option>
 														@foreach($mealtypeRates as $mealtypeRate)
-															<option value="{{ $mealtypeRate->rate_code }}" @if(session('meal_type'.$room_type->room_type_id) == $mealtypeRate->rate_code) selected @endif>{{ $mealtypeRate->meal_type_name }} : ${{ $mealtypeRate->single_rates }}</option>
+															<option value="{{ $mealtypeRate->rate_code }}" @if(session('meal_type'.$room_type->room_type_id) == $mealtypeRate->rate_code) selected @endif>{{ $mealtypeRate->meal_type_name }} : Rs.{{ $mealtypeRate->single_rates }}</option>
                                                         @endforeach
 													</select>
                                                 </div>
@@ -533,12 +533,12 @@
 										    '</div><!-- /col-3 -->' +
 
 										    '<div class="col-sm-2 col-md-2 col-lg-2">' +
-											    '<span class="checkout-title">Rates ($)</span>' +
+											    '<span class="checkout-title">Rates (Rs.)</span>' +
 											    '<span class="checkout-value"></span>' +
 										    '</div><!-- /col-3 -->' +
 
 										    '<div class="col-sm-2 col-md-2 col-lg-2">' +
-											    '<span class="checkout-title">Line Total ($)</span>' +
+											    '<span class="checkout-title">Line Total (Rs.)</span>' +
 											    '<span class="checkout-value"></span>' +
 										    '</div><!-- /col-2 -->' +
 
@@ -570,9 +570,11 @@
 					    document.getElementById("myBooking").innerHTML = '';
                     }
                 },
-                error: function(xhr, ajaxOptions, thrownError) {
-				    console.log(thrownError);
-                }
+				error: function(xhr, ajaxOptions, thrownError) {
+					console.log(thrownError);
+
+					swal("Ooops!", "Something Went Wrong! ("+thrownError+")", "error");
+				}
             });
         }
 

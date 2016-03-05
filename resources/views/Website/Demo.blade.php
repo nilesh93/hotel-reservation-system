@@ -59,7 +59,7 @@ Home
               <div class="container">
               <div class="carousel-text">
               <a href="#">
-                  <h2>Ocean View Welcomes You</h2>
+                  <h2>Amalya Reach Welcomes You</h2>
                   <br>
                   <h2>to Indulge Your Senses</h2>
               </a>

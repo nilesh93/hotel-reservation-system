@@ -73,7 +73,6 @@
 
 						<div class="price" align="center">
 							<br>
-
                             <!--this form is used to connect to the paypal API-->
 							<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
 
@@ -82,7 +81,7 @@
 								<input type="hidden" name="item_name" value="Total Payable">
 								<input type="hidden" name="no_item_price" value="0">
 								<input type="hidden" name="no_item_number" value="0">
-								<input type="hidden" name="amount" value="{{ session('total_payable') }}"><!--here the total payable amount is attached-->
+								<input type="hidden" name="amount" value="{{ session('total_payable')}}"><!--here the total payable amount is attached-->
                                 <input type="hidden" name="no_shipping" value="0">
 								<input type="hidden" name="no_note" value="1">
 								<input type="hidden" name="currency_code" value="USD">
@@ -294,12 +293,12 @@
                                             '</div><!-- /col-3 -->' +
 
                                             '<div class="col-sm-2 col-md-2 col-lg-2">' +
-                                                '<span class="checkout-title">Rates ($)</span>' +
+                                                '<span class="checkout-title">Rates (Rs.)</span>' +
                                                 '<span class="checkout-value"></span>' +
                                             '</div><!-- /col-3 -->' +
 
                                             '<div class="col-sm-2 col-md-2 col-lg-2">' +
-                                                '<span class="checkout-title">Line Total ($)</span>' +
+                                                '<span class="checkout-title">Line Total (Rs.)</span>' +
                                                 '<span class="checkout-value"></span>' +
                                             '</div><!-- /col-2 -->' +
 
@@ -318,7 +317,7 @@
                                     '</div>' +
 
 									'<div class="col-md-6">' +
-                                        '<h2 align="center"><b>Total($) : ' + total + '</b><h2>' +
+                                        '<h2 align="center"><b>Total(Rs.) : ' + total + '</b><h2>' +
 									'</div>' +
 
 									'<div class="col-md-3" align="right">' +
@@ -340,10 +339,11 @@
 					    document.getElementById("myBooking").innerHTML = '';
                     }
                 },
+				error: function(xhr, ajaxOptions, thrownError) {
+					console.log(thrownError);
 
-                error: function(xhr, ajaxOptions, thrownError) {
-				    console.log(thrownError);
-                }
+					swal("Ooops!", "Something Went Wrong! ("+thrownError+")", "error");
+				}
             });
         }
 
@@ -370,12 +370,12 @@
                                         '</div><!-- /col-4--->' +
 
                                         '<div class="col-sm-4 col-md-4 col-lg-4">' +
-                                            '<span class="checkout-title">Advance Payment ($)</span>' +
+                                            '<span class="checkout-title">Advance Payment (Rs.)</span>' +
                                             '<span class="checkout-value"></span>' +
                                         '</div><!-- /col-4--->' +
 
                                         '<div class="col-sm-4 col-md-4 col-lg-4">' +
-                                            '<span class="checkout-title">Refundable Amount ($)</span>' +
+                                            '<span class="checkout-title">Refundable Amount (Rs.)</span>' +
                                             '<span class="checkout-value"></span>' +
                                         '</div><!-- /col-4 -->' +
 
@@ -412,7 +412,7 @@
 					    		'<div class="col-md-3"></div>' +
 
 						    	'<div class="col-md-6">' +
-							    	'<h2 align="center"><b>Total($) : ' + data.hall_detail[0].advance_payment + '</b><h2>' +
+							    	'<h2 align="center"><b>Total(Rs.) : ' + data.hall_detail[0].advance_payment + '</b><h2>' +
 							    '</div>' +
 
                                 '<div class="col-md-3" align="right">' +
@@ -428,10 +428,11 @@
 
                     document.getElementById('myBooking').innerHTML = begin + body +end;
                 },
+				error: function(xhr, ajaxOptions, thrownError) {
+					console.log(thrownError);
 
-                error: function(xhr, ajaxOptions, thrownError) {
-				    console.log(thrownError);
-                }
+					swal("Ooops!", "Something Went Wrong! ("+thrownError+")", "error");
+				}
             });
         }
 

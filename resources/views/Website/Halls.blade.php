@@ -138,7 +138,7 @@
 									<div class="room-image">
 
 										<img src="{{URL::asset($himage)}}"  alt="themesgravity" width="100%">
-										<h4><a style="text-decoration: none" onclick="showModal('{{$hall->hall_id}}hall')"href="#">{{ $hall->title }}</a></h4>
+										<h4><a style="text-decoration: none" onclick="viewHall('{{$hall->hall_id}}','{{ $hall->title }}','{{$hall->capacity_from}}','{{ $hall->capacity_to }}')"href="#">{{ $hall->title }}</a></h4>
 
 									</div><!-- /room-image -->
 
@@ -209,6 +209,11 @@
 							}
 						}
 						document.getElementById('edate').innerHTML = '<h2><label class="label label-info ">Your Requested Date :'+ data.edate+'</label></h2>'
+					},
+					error: function(xhr, ajaxOptions, thrownError) {
+						console.log(thrownError);
+
+						swal("Ooops!", "Something Went Wrong! ("+thrownError+")", "error");
 					}
 
 					});
@@ -234,6 +239,8 @@
 					},
 					error: function(xhr, ajaxOptions, thrownError) {
 						console.log(thrownError);
+
+						swal("Ooops!", "Something Went Wrong! ("+thrownError+")", "error");
 					}
 				});
 
@@ -302,6 +309,11 @@
 
 						document.getElementById('edate').innerHTML = '<h2><label class="label label-info ">Your Requested Date :'+ data.edate+'</label></h2>'
 						document.getElementById('hall_my_booking').innerHTML = '';
+					},
+					error: function(xhr, ajaxOptions, thrownError) {
+						console.log(thrownError);
+
+						swal("Ooops!", "Something Went Wrong! ("+thrownError+")", "error");
 					}
 				});
 
@@ -329,6 +341,8 @@
 				},
 				error: function(xhr, ajaxOptions, thrownError) {
 					console.log(thrownError);
+
+					swal("Ooops!", "Something Went Wrong! ("+thrownError+")", "error");
 				}
 			});
 		}
@@ -349,12 +363,12 @@
 								'</div><!-- /col-4--->' +
 
 								'<div class="col-sm-4 col-md-4 col-lg-4">' +
-									'<span class="checkout-title">Advance Payment ($)</span>' +
+									'<span class="checkout-title">Advance Payment (Rs.)</span>' +
 									'<span class="checkout-value"></span>' +
 								'</div><!-- /col-4--->' +
 
 								'<div class="col-sm-4 col-md-4 col-lg-4">' +
-									'<span class="checkout-title">Refundable Amount ($)</span>' +
+									'<span class="checkout-title">Refundable Amount (Rs.)</span>' +
 									'<span class="checkout-value"></span></div><!-- /col-4 -->' +
 								'</div>' +
 							'</div>' +
@@ -392,7 +406,7 @@
 						'</div>' +
 
 						'<div class="col-md-6">'+
-							'<h2 align="center"><b>Total($) : ' + data.hall_detail[0].advance_payment+'</b><h2>'+
+							'<h2 align="center"><b>Total(Rs.) : ' + data.hall_detail[0].advance_payment+'</b><h2>'+
 						'</div>' +
 
 						'<div class="col-md-3" align="right">'+

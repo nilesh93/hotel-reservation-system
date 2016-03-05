@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\HALL_RESERVATION;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
@@ -50,8 +51,7 @@ class HallAvailabilityController extends Controller
 
         //for each halls check whether they are already reserved in a reservation
         foreach($halls as $hall) {
-            $row_count = DB::table('HALL_RESERVATION')
-                        ->where('hall_id','=',$hall->hall_id)
+            $row_count = HALL_RESERVATION::where('hall_id','=',$hall->hall_id)
                         ->where('reserve_date','=',$event_date)
                         ->count();
 
@@ -85,8 +85,7 @@ class HallAvailabilityController extends Controller
         $request->session()->put('hall_selected',$hall_id);
 
         //retrieve the hall details from the table
-        $hall_detail =  DB::table('HALLS')
-                        ->join('HALL_RATES','HALL_RATES.hall_id','=','HALLS.hall_id')
+        $hall_detail =  HALL::join('HALL_RATES','HALL_RATES.hall_id','=','HALLS.hall_id')
                         ->where('HALLS.hall_id','=',$hall_id)
                         ->select('HALLS.hall_id','HALLS.title','HALL_RATES.advance_payment','HALL_RATES.refundable_amount')
                         ->get();
