@@ -36,7 +36,6 @@ class RoomReservationController extends Controller
      */
     public function roomReservation(Request $request)
     {
-                        ->value('cus_id');
         try {
             //set the timezone
             date_default_timezone_set("Asia/Colombo");
