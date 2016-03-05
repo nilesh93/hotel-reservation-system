@@ -201,4 +201,6 @@ class MenusController extends Controller
         DB::table('DETAILED_MENUS')->where('id','=',$item_id)->delete();
     }
 
+
+
 }

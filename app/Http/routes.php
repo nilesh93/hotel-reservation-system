@@ -293,7 +293,8 @@ Route::get('testmail',function(){
     });
 });
 
-route::post('upload',function(){
+//Menu image upload
+Route::post('menuImageUpload',function(){
     if(Input::hasFile('file')) {
         //upload an image to the /img/tmp directory and return the filepath.
 
@@ -310,6 +311,13 @@ route::post('upload',function(){
         return response()->json(false, 200);
     }
 
+});
+
+Route::get('deleteImage',function(){
+   $filename = Input::get('rowno');
+    $fname = public_path().'/img/tmp/'.$filename.'.jpg';
+    File::delete($fname);
+    return $fname;
 });
 /*
 |

@@ -71,7 +71,7 @@ Menus
             </div>
 
             <div class="modal-body">
-                <form class="form-horizontal" enctype="multipart/form-data" onsubmit="" action="upload" class="form single-dropzone" id="my-dropzone" method="post">
+                <form class="form-horizontal" enctype="multipart/form-data" onsubmit="" action="menuImageUpload" class="form single-dropzone" id="my-dropzone" method="post">
                     <div class="row">
                         <div class="form-group">
                             <label for="quantity" class="col-lg-5 control-label">Menu Category</label>
@@ -134,6 +134,8 @@ Menus
                     <button id="upload-submit" class="btn btn-default margin-t-5"><i class="fa fa-upload"></i> Upload Picture</button>
                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
                     <input type="text" name="fname" id="fname" disabled="true">
+                    <button type="button" id="delete" onclick="deleteImage()" class="btn btn-default margin-t-5">Delete Image</button>
+
 
             </div>
             <div class="modal-footer">
@@ -288,6 +290,19 @@ Menus
 
         //we want to manually init the dropzone.
         Dropzone.autoDiscover = false;
+
+        function deleteImage(){
+            var rowno = $('#menu_number').val();
+            var data = "rowno="+rowno;
+            $.ajax({
+                type:"get",
+                url:"deleteImage",
+                data:data,
+                success:function(ss){
+                    console.log(ss);
+                }
+            });
+        }
 
 
         function add_menu_modal(){
