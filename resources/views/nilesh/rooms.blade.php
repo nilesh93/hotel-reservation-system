@@ -881,7 +881,8 @@ ROOM MANAGEMENT
 
     }
 
-    function upload(){
+    function upload()
+    {
 
 
         console.log(document.getElementById("avatar_data").value);

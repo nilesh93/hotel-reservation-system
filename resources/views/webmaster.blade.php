@@ -100,6 +100,8 @@
 										<li><a href="#">My Account</a>
 											<ul>
 												<li><a href="{{ URL::to('profile') }}">My Details</a></li>
+
+												<li><a href="{!! url('/myreserv') !!}">My Reservations</a></li>
 												<li><a href="{{ URL::to('change_password') }}">Change Password</a></li>
 												<li><a href="{{ URL::to('auth/logout') }}">Log out</a></li>
 											</ul>
@@ -109,9 +111,7 @@
 										<li><a href="{{URL::to('auth/login')}}">Login</a></li>
 										@endif
 
-										@if(Auth::check())
-										<li><a href="{!! url('/myreserv') !!}">My Reservations</a></li>
-										@endif
+
 
 
 										<li><a href="{!! url('/contact') !!}">Contact Us</a></li>
@@ -372,6 +372,53 @@
 
 			</div>
 
+			<?php 
+			$promotions = DB::table('PROMOTIONS')
+				->select(DB::raw("*, DATE_FORMAT(date_from,'%M %e, %Y') as dfrom, DATE_FORMAT(date_to,'%M %e, %Y') as dto"))
+				->where('date_from','<',date('Y-m-d'))
+				->where('date_to','>',date('Y-m-d'))
+				->get(); ?>
+
+
+			<div class="modal inmodal fade" id="promoModel" tabindex="-1" role="dialog"  aria-hidden="true">
+				<div class="modal-dialog modal-lg">
+					<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+							<h4 class="modal-title">Promotions</h4>
+
+						</div>
+						<div class="modal-body">
+
+							@foreach($promotions as $p)
+							<article class="post row" style="margin-top:0cm">
+								<!-- /end three columns -->
+
+								<div class="col-sm-12 col-md-12 col-lg-12">
+									<div class="infobox" style="background:#f0f1f1;color:#000000;">
+										<span class="post-date"> {{$p->dfrom}} to  {{$p->dto}}</span>
+
+										<h4 class="col5" style="margin-top:1%"><a href="#">  {{ $p->promotion_name }}  </a></h4>
+
+										<p> {{ $p->promotion_description }}</p>
+
+									</div><!-- /end nine columns -->
+								</div>
+							</article>
+
+							@endforeach
+
+
+						</div>
+
+						<div class="modal-footer">
+							<button type="button" class="btn btn-white" data-dismiss="modal">Close</button>
+						</div>
+					</div>
+
+
+				</div>
+			</div>
 
 
 
@@ -388,13 +435,7 @@
 							<div class="footercarousel carousel slide" id="footercarousel" data-ride="carousel">
 								<div class="carousel-inner">
 
-									<?php $promotions = DB::table('PROMOTIONS')
-	->where('date_from','<',date('Y-m-d'))
-	->where('date_to','>',date('Y-m-d'))
-	->get();
-
-
-
+									<?php  
 									$init = 0;
 									?>
 
@@ -406,7 +447,7 @@
 									<div class="item active">
 
 										<div class="col-md-6">
-											<i class="fa fa-calendar-o"></i><small class="date">AUGUST 26th</small>
+											<i class="fa fa-calendar-o"></i><small class="date">  {{$p->dfrom}} to  {{$p->dto}}</small>
 											<h4 class=" ">	
 
 
@@ -421,7 +462,7 @@
 									<div class="item  ">
 
 										<div class="col-md-6">
-											<i class="fa fa-calendar-o"></i><small class="date">AUGUST 26th</small>
+											<i class="fa fa-calendar-o"></i><small class="date"> {{$p->dfrom}} to  {{$p->dto}}</small>
 											<h4 class=" ">	
 
 
@@ -458,7 +499,7 @@
 
 
 								</div><!-- /carousel-inner -->
-								<a class="footercarousel-controls top" href="#">
+								<a class="footercarousel-controls top"  onclick="showPromos()" href="javascript:void(0);">
 									<i class="fa fa-bars"></i>
 								</a>
 								<a class="footercarousel-controls" href="#footercarousel" data-slide="prev">
@@ -521,7 +562,7 @@
 									<a type="button" class="btn btn-primary" onclick="validateReview()" href="javascript:void(0);">Submit</a>
 									<button type="submit"  hidden="true" id="submitBtn"></button>
 									<button type="reset"  hidden="true" id="resetBtn"></button>
-								
+
 								</form>
 
 							</div><!-- /widget-newsletter -->
@@ -536,13 +577,9 @@
 					<div class="row">
 						<div class="col-sm-3 col-md-3 col-lg-3">
 							<div class="footer-social">
-								<a href="#"><i class="fa fa-facebook"></i></a>
-								<a href="#"><i class="fa fa-twitter"></i></a>
-								<a href="#"><i class="fa fa-pinterest"></i></a>
+								<a href="#"><i class="fa fa-facebook"></i></a> 
 								<a href="#"><i class="fa fa-google-plus"></i></a>
-								<a href="#"><i class="fa fa-github"></i></a>
-								<a href="#"><i class="fa fa-youtube"></i></a>
-								<a href="#"><i class="fa fa-linkedin"></i></a>
+
 							</div><!-- /footer-social -->
 						</div><!-- /col-md-3 -->
 						<div class="col-sm-5 col-md-5 col-lg-5">
@@ -617,16 +654,21 @@
 
 		<script>
 
-			function showModal(id){
+
+			function showModal(id)
+			{
 				var temp = '#'+id;
 				$(temp).modal('show');
 			}
-			
-			function validateReview(){
+
+			//validate review submit
+			function validateReview()
+			{
 				$('#submitBtn').click();
-				
+
 			}
 
+			//JQuery onload function
 			$('document').ready(function(){
 
 				var myLatLng = {lat:6.840172, lng: 80.020895};
@@ -805,9 +847,9 @@
 			}
 
 			//review submit
+			function submitReview()
+			{
 
-			function submitReview(){
- 
 				document.getElementById("rsubmit").innerHTML = "";
 
 				$.ajax({
@@ -817,14 +859,14 @@
 					type:"get",
 					data:$('#submitform').serialize(),
 					success:function(data){
- 
+
 						var body = '<div class="alert alert-dismissible alert-success"><button type="button" class="close" data-dismiss="alert">X</button><strong>Well done!</strong> You successfully reviewed!.</div>';
 						document.getElementById("rsubmit").innerHTML = body;
 						$('#resetBtn').click();
 					},
 					error:function (err){
 
-						 
+
 						var body = '<div class="alert alert-dismissible alert-danger"><button type="button" class="close" data-dismiss="alert">X</button><strong>Oops!</strong>Something went wrong! Please try again.</div>';
 						document.getElementById("rsubmit").innerHTML = body;
 
@@ -832,8 +874,15 @@
 
 
 				});
-				
+
 				return false;
+			}
+
+			function showPromos(){
+
+
+				$('#promoModel').modal('show');
+
 			}
 		</script>
 
