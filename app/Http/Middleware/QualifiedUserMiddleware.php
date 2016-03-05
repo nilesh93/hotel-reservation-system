@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Auth;
 
 class QualifiedUserMiddleware
 {
-    public $blockMessage = 'This account lacks permission to enter the Admin section.';
+    private $blockMessage = 'This account lacks permission to enter the Admin section.';
 
     /**
      * Restrict Admin section to Customer accounts.

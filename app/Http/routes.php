@@ -235,6 +235,8 @@ Route::get('blocked_user', 'UserController@blockNotice');
 // Hall Services routes (Controller is from Nilesh, View has been created in ./Resources/nilesh)
 Route::get('hallServices', 'HallController@getHallServices');
 Route::get('getHallServices', 'HallController@getHallServiceData');
+Route::get('getHallServiceInfo', 'HallController@getHallServiceInfo');
+Route::get('editHallService', 'HallController@updateHallService');
 Route::get('addHallService', 'HallController@addHallService');
 Route::get('deleteHallService', 'HallController@deleteHallService');
 
