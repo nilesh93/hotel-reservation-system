@@ -58,7 +58,7 @@
                         </div><!-- /4 columns -->
 
 						<div class="col-lg-10 col-md-10">
-							<a class="nav-toggle pull-right"><i class="icon-menu"></i></a>
+							<div class="row">							<a class="nav-toggle pull-right"><i class="icon-menu"></i></a>
 
                             <nav class="col-sm-12 clear" id="mobile-nav"></nav>
 
@@ -88,13 +88,12 @@
 
 								</div><!-- /elements -->
                             </div><!-- /col-sm-8 -->
-                        </div>
-                    </div><!-- /row -->
-
-                    <div class="row">
-                        <div class="col-sm-12 col-md-12 col-lg-12">
-
-                            <nav id="main-nav">
+							</div>
+							
+							<div class="row">
+							
+							
+							<nav id="main-nav">
                                 <ul>
 
                                     @if(Auth::check())
@@ -116,7 +115,7 @@
 
 
                                         <li><a href="{!! url('/contact') !!}">Contact Us</a></li>
-                                        <li><a href="gallery">Gallery</a></li><li><a href="menu">Menus</a></li>
+                                        <li><a href="{!! url('/gallery') !!}">Gallery</a></li><li><a href="menu">Menus</a></li>
 
                                     <li><a href="{!! url('/halls') !!}">Halls</a>
                                         <ul>
@@ -141,6 +140,18 @@
                                 </ul>
                             </nav>
 
+							
+							</div>
+                        </div>
+						
+						
+						
+                    </div><!-- /row -->
+
+                    <div class="row">
+                        <div class="col-sm-12 col-md-12 col-lg-12">
+
+                            
                         </div><!-- /8 columns -->
                     </div>
 
