@@ -13,50 +13,25 @@ use App\HALL;
 |
 */
 
-Route::get('/', function () {
+/*
+|--------------------------------------------------------------------------
+| General Routes
+|--------------------------------------------------------------------------
+|
+|
+*/
 
-    $url = redirect()->intended()->getTargetUrl();
+Route::get('/', 'PagesController@HomePage');
+Route::get('/home', 'PagesController@HomePage');
+Route::get('admin', 'PagesController@adminView');
+Route::get('/contact', 'PagesController@contactView');
+Route::get('/gallery', function () {
 
-    if(Session::has('room_types') || Session::has('hall_selected') )
-    {
-        return redirect('payment');
-    }
-    else{
-        return view('Website.Demo');
-    }
+    $images = App\imageGallery::all();
 
-
+    return view('Website.webGallery')
+        ->with('images',$images);
 });
-
-Route::get('/home', function () {
-
-
-    return view('Website.Demo');
-});
-
-Route::get('admin', function () {
-    return view('Admin.Demo');
-});
-
-Route::get('/admin', function () {
-    return view('Admin.Demo');
-});
-
-Route::get('/contact',function(){
-    
-    return view('Website.contact');
-    
-    
-});
-
-
-Route::get('/LOL',function(){
-    
- 
-    return view('webmaster');
-});
-
-
 
 /*
 |--------------------------------------------------------------------------
@@ -66,36 +41,38 @@ Route::get('/LOL',function(){
 |
 */
 
+
+
 //rooms
-Route::get('cancel_reserv','RoomAvailabilityController@cancel_reserve');
-Route::get('select_room_add','RoomAvailabilityController@addSelectedRooms');
-Route::get('delete_selected_room_type','RoomAvailabilityController@delSelectedRoom_type');
-Route::get('loadBooking','RoomAvailabilityController@loadMyBooking');
-Route::get('room_packages','PagesController@rooms');
-
-Route::post('room_availability','RoomAvailabilityController@check_room_availability');
-
-Route::get('room_reservation','ReservationController@RoomReservation');
-Route::get('my_future_room_reservations','ReservationController@MyFutureReservation');
-Route::get('my_past_room_reservations','ReservationController@MyPastReservation');
+Route::get('loadBooking', 'RoomAvailabilityController@loadMyBooking');
+Route::get('room_packages', 'PagesController@roomsView');
+Route::get('cancel_reserv', 'RoomReservationController@cancelCurrentReservation');
+Route::get('select_room_add', 'RoomAvailabilityController@addSelectedRooms');
+Route::get('room_reservation', 'RoomReservationController@roomReservation');
+Route::post('room_availability', 'RoomAvailabilityController@checkRoomAvailability');
+Route::get('my_past_room_reservations', 'RoomReservationController@myPastReservation');
+Route::get('delete_selected_room_type', 'RoomAvailabilityController@delSelectedRoom_type');
+Route::get('my_future_room_reservations', 'RoomReservationController@myFutureReservation');
 
 //halls
-Route::get('halls','PagesController@halls');
-Route::get('hall_availability','HallAvailabilityController@check_hall_availability');
-Route::get('book_hall_add','HallAvailabilityController@book_hall_add');
-Route::get('cancel_hall_reserv','HallAvailabilityController@cancel_hall_reserve');
-Route::get('hall_reserve_final','HallReservationController@HallReservation');
-Route::get('my_future_hall_reservations','HallReservationController@MyFutureReservation');
-Route::get('my_past_hall_reservations','HallReservationController@MyPastReservation');
+Route::get('halls', 'PagesController@hallsView');
+Route::get('book_hall_add', 'HallAvailabilityController@addHallsToReserve');
+Route::get('hall_availability', 'HallAvailabilityController@checkHallAvailability');
+Route::get('cancel_hall_reserv', 'HallReservationController@deleteAddedHallReservation');
+Route::get('hall_reserve_final', 'HallReservationController@hallReservation');
+Route::get('my_past_hall_reservations', 'HallReservationController@myPastReservation');
+Route::get('my_future_hall_reservations', 'HallReservationController@myFutureReservation');
+
 
 //reservation
-Route::get('myreserv',['middleware' => 'auth', 'uses' =>'PagesController@MyReserve']);
+Route::get('myreserv', ['middleware' => 'auth', 'uses' =>'PagesController@myReserve']);
 
 //payment
-Route::get('payment',['middleware' => 'auth', 'uses' =>'PagesController@makePayment']);
+Route::get('payment', ['middleware' => 'auth', 'uses' =>'PagesController@makePayment']);
 
-
-
+//webmaster views
+Route::get('hall_view', 'WebMasterViewController@hallViewLoad');
+Route::get('room_view','WebMasterViewController@roomViewLoad');
 
 /*
 |
@@ -126,6 +103,10 @@ Route::get('admin_roomtype_add','RoomController@admin_roomtype_add');
 Route::get('admin_delete_room_type','RoomController@delete_room_type');
 Route::get('admin_getRoomNum','RoomController@admin_getRoomNum');
 Route::get('admin_delete_room', 'RoomController@admin_delete_room'); 
+Route::post('admin_roomtype_upload', 'RoomController@admin_roomtype_upload'); 
+Route::get('admin_edit_roomtype', 'RoomController@admin_edit_roomtype'); 
+Route::get('admin_roomtype_update', 'RoomController@admin_roomtype_update'); 
+Route::get('admin_check_rnum', 'RoomController@admin_check_rnum'); 
 
 
 
@@ -141,15 +122,29 @@ Route::get('admin_updateRS','RoomController@updateRS');
 Route::get('admin_delRS','RoomController@delRS');
 Route::get('admin_delRF','RoomController@delRF');
 
+Route::get('admin_imageGallery','ImageGalleryController@imageGallery');
+Route::post('admin_gallery_upload','ImageGalleryController@admin_gallery_upload');
+
+ 
+
 
 
 Route::get('admin_halls','HallController@halls');
 Route::get('admin_get_halls','HallController@admin_get_halls');
 Route::get('admin_hall_add','HallController@admin_hall_add');
 Route::get('admin_delete_hall','HallController@admin_delete_hall');
+Route::post('admin_hall_upload','HallController@admin_hall_upload');
 
 
 Route::get('saveinquiry','InquiryController@saveinquiry');
+Route::get('menu','MenuControllerWeb@menuMain');
+
+
+
+Route::get('/contact',function(){
+    return view('Website.contact');
+});
+
 
 
 /*
@@ -186,17 +181,17 @@ Route::get('password/reset/{token}', 'Auth\PasswordController@getReset');
 Route::post('password/reset', 'Auth\PasswordController@postReset');
 
 // View, Create, Delete Admin level users & Block Customers routes
-Route::get('/admin_users', 'UserController@Users');
-Route::get('/fill_data', 'UserController@fillData');
-Route::get('/block_customer', 'UserController@blockCustomer');
-Route::get('/unblock_customer', 'UserController@unblockCustomer');
-Route::get('/fill_data_admin', 'UserController@fillAdminData');
-Route::post('/new_admin', 'UserController@createNewAdmin');
-Route::get('/delete_admin','UserController@deleteAdmin');
+Route::get('admin_users', 'UserController@Users');
+Route::get('fill_data', 'UserController@fillData');
+Route::get('block_customer', 'UserController@blockCustomer');
+Route::get('unblock_customer', 'UserController@unblockCustomer');
+Route::get('fill_data_admin', 'UserController@fillAdminData');
+Route::post('new_admin', 'UserController@createNewAdmin');
+Route::get('delete_admin','UserController@deleteAdmin');
 
 // Facebook Login Routes
-Route::get('/login/fb', 'Auth\AuthController@redirectToProvider');
-Route::get('/login/fb/callback', 'Auth\AuthController@handleProviderCallback');
+Route::get('login/fb', 'Auth\AuthController@redirectToProvider');
+Route::get('login/fb/callback', 'Auth\AuthController@handleProviderCallback');
 
 // Authenticated guest user's profile routes
 Route::get('profile', 'RegisteredUsersController@profileView');
@@ -207,18 +202,19 @@ Route::get('change_password', 'RegisteredUsersController@changePasswordView');
 Route::post('change_password', 'RegisteredUsersController@changePassword');
 
 // User Blocked Notice route
-Route::get('/blocked_user', 'UserController@blockNotice');
+Route::get('blocked_user', 'UserController@blockNotice');
 
 // Hall Services routes (Controller is from Nilesh, View has been created in ./Resources/nilesh)
-Route::get('/hallServices', 'HallController@getHallServices');
-Route::get('/getHallServices', 'HallController@getHallServiceData');
-Route::get('/addHallService', 'HallController@addHallService');
-Route::get('/deleteHallService', 'HallController@deleteHallService');
+Route::get('hallServices', 'HallController@getHallServices');
+Route::get('getHallServices', 'HallController@getHallServiceData');
+Route::get('addHallService', 'HallController@addHallService');
+Route::get('deleteHallService', 'HallController@deleteHallService');
 
 // Inaccessible views testing route
 Route::get('/test', function(){
     return view('emails.newAdmin');
 });
+
 
 /*
 |
@@ -238,23 +234,55 @@ Route::get('/test', function(){
 |
 */
 
-
+//All the requests from admin_promotions URI will be handled in PromotionsController.
 Route::controller('admin_promotions','PromotionsController');
+
+//All the requests from admin_menus URI will be handled in MenusController.
 Route::controller('admin_menus','MenusController');
+
+//All the requests from admin_facilities URI will be handled in FacilitiesController.
 Route::controller('admin_facilities','FacilitiesController');
 
+//Search functions for bookings search.
 Route::get('admin_search/bookings','SearchController@bookings_search');
 Route::get('admin_bookings_search','SearchController@bookings_search_index');
 
+//Search functions for rooms search.
 Route::get('admin_rooms_search','SearchController@rooms_search_index');
 Route::get('admin_search/rooms','SearchController@rooms_search');
 
+//Search functions for customers search
 Route::get('admin_search/customers','SearchController@customers_search');
 Route::get('admin_customers_search','SearchController@customers_search_index');
 
+//Test email
+Route::get('testmail',function(){
 
+    Mail::send('emails.newAdmin', [], function ($message)  {
+        $message->from(env('MAIL_FROM'), env('MAIL_NAME'));
 
+        $message->to('hash.crackhead@gmail.com')->subject('Welcome to the team!');
+    });
+});
 
+route::post('upload',function(){
+    if(Input::hasFile('file')) {
+        //upload an image to the /img/tmp directory and return the filepath.
+
+        $file = Input::file('file');
+        $fname = Input::get('fname').".".$file->getClientOriginalExtension();
+        $tmpFilePath = '/img/tmp/';
+        $destFilePath = 'img/tmp/';
+
+        $tmpFileName = $fname ;
+        $file = $file->move(public_path() . $tmpFilePath, $tmpFileName);
+        $path = $destFilePath . $fname;
+        return response()->json(array('path'=> $path), 200);
+    } else {
+        return response()->json(false, 200);
+    }
+
+});
 /*
 |
 |

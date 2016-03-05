@@ -36,7 +36,7 @@
                 </div>
                 <div class="form-group">
                     <label for="address_line2">Address Line #2:</label>
-                    <input type="text" class="form-control" name="address_line2" id="address_line2" value="{{ $customer->address_line_2 }}" required placeholder="Address Line 2">
+                    <input type="text" class="form-control" name="address_line2" id="address_line2" value="{{ $customer->address_line_2 }}" placeholder="Address Line 2">
                     @if ($errors->has('address_line2')) <p class="text-danger">{{ $errors->first('address_line2') }}</p>@endif
                 </div>
                 <div class="form-group">

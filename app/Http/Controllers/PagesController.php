@@ -1,67 +1,142 @@
 <?php
+
 namespace App\Http\Controllers;
 
-
-use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Request;
 use DB;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\HALL;
 use App\ROOM_TYPE;
 use Session;
-use DOMDocument;
-
-
-
+use App\imageGallery;
 
 class PagesController extends Controller
 {
-
+    /*
+    |--------------------------------------------------------------------------
+    | Pages Controller
+    |--------------------------------------------------------------------------
+    |
+    |This controller provides views to the users and also do some
+    |of the session management tasks.
+    |
+    */
 
     /**
-     * view hall page.
+     * This function response the home page view and also it clears the session details of
+     * reservations if there are any.
      *
-     * @return Website.halls
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
+    public function HomePage()
+    {
+        //clears the room reservation session details if there are any.
+        if(Session::has('room_types')) {
+            $room_types = session('room_types');
 
+            foreach ($room_types as $room_type) {
 
-     public function halls(){
+                Session::forget('room_type_name' . $room_type);
+                Session::forget('no_of_rooms' . $room_type);
+                Session::forget('rate' . $room_type);
+                Session::forget('meal_type' . $room_type);
+                Session::forget('rate_code' . $room_type);
+                Session::forget('total_payable');
+            }
+        }
 
+        Session::forget('room_types');
+        Session::forget('check_in');
+        Session::forget('check_out');
+        Session::forget('adults');
+        Session::forget('kids');
+        Session::forget('rooms');
+        Session::forget('room_types');
 
+        //clears the hall reservation session details if there are any
+        Session::forget('hall_selected');
+        Session::forget('event_date');
+        Session::forget('total_payable');
 
+        //Clear the indicator to access the payment page
+        Session::forget('CanPay');
 
-         $halls = HALL::get();
-         return view('Website.Halls',["halls"=>$halls]);
+        $images = imageGallery::all();
 
-     }
+        return view('Website.Demo')
+            ->with('images',$images);
+    }
 
-    public function rooms(){
+    /**
+     * This function directs to the admin page
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function adminView()
+    {
+        return view('Admin.Demo');
+    }
 
+    /**
+     * This function directs to the contact view
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function contactView()
+    {
+        return view('Website.contact');
+    }
 
+    /**
+     * This function provides the view of the halls page with hall details
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function hallsView()
+    {
+        $halls = HALL::get();
+
+        return view('Website.Halls',["halls"=>$halls]);
+    }
+
+    /**
+     * This function provides the view of the rooms page with details
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function roomsView()
+    {
         $room_types = ROOM_TYPE::get();
 
         return view('Website.Room_Packages',["room_types"=>$room_types]);
     }
 
-    public function available_rooms(){
+    /**
+     * This function provides the view of the payment view if certain conditions
+     * are met.
+     *
+     * @param Request $request
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function makePayment(Request $request)
+    {
+        if(Request::has('CanPay') && Session::has('CanPay')) {
+            return view('Website.Payment');
+        }
+        else {
 
-        $room_types = ROOM_TYPE::get();
-
-
-        return view('Website.Rooms_availability',["room_types"=>$room_types]);
+            abort(405);
+        }
     }
 
-    function makePayment(){
-
-        return view('Website.Payment');
-    }
-
-
-    function MyReserve(){
-
+    /**
+     * This functions provides the view of the My Reservation page
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function myReserve()
+    {
         return view('Website.MyReservation');
     }
-
-
-
 }

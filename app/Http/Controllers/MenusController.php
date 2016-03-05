@@ -25,6 +25,19 @@ class MenusController extends Controller
     */
 
     /**
+     * Constructor for the MenusController class. Checks if a user has sufficient permission
+     * to access the Admin area.
+     *
+     */
+    public function __construct()
+    {
+        // Check if User is Authenticated
+        $this->middleware('auth', ['except' => ['blockNotice']]);
+
+        // Check if the authenticated user is an admin
+        $this->middleware('isAdmin', ['except' => ['blockNotice']]);
+    }
+    /**
      * Returns the Menus view.
      *
      * @param Request $request
@@ -187,4 +200,5 @@ class MenusController extends Controller
         $item_id=$request->input('row');
         DB::table('DETAILED_MENUS')->where('id','=',$item_id)->delete();
     }
+
 }
