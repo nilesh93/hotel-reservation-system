@@ -115,7 +115,7 @@ Home
 
 	</aside>
 	<section id="content">
-<h3>Our Available Services</h3>
+<h3>Our   Services & Facilities</h3>
 										<hr>
  
 		
@@ -132,7 +132,10 @@ Home
 	  		<img src="{{URL::asset('FrontEnd/img/preview-images/recent_posts_01.jpg')}}" alt="themesgravity">
 	  		<div class="img-overlay"><i class="fa fa-bars"></i></div><!-- /img-overlay -->
 	  	</div><!-- /post-img -->
-	  	<div class="post-content">
+		  <!--
+style="border-left:1px solid #000;border-bottom:1px solid #000;border-right:1px solid #000;margin-bottom:1%"
+		-->
+	  	<div class="post-content" >
 		  	<span class="post-category">{{$f->category}}</span>
 		  	<hr>
 		  	<h4><a href="#">Rs&nbsp;{{ number_format($f->price,2,".","")}} Per Hour</a></h4>

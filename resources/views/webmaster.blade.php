@@ -610,6 +610,9 @@
 		<!-- jQuery -->
 		<script src="{{URL::asset('FrontEnd/js/vendor/jquery-1.11.0.min.js')}}"></script>
 		<script src="{{URL::asset('FrontEnd/dp/jquery-ui.js')}}"></script>
+		
+<script  src="{{URL::asset('FrontEnd/FancyBox/source/jquery.fancybox.js')}}"> </script>
+ 
 
 		<!-- CUSTOM JavaScript so you can use jQuery or $ before it has been loaded in the footer. -->
 
@@ -884,6 +887,7 @@
 				$('#promoModel').modal('show');
 
 			}
+			
 		</script>
 
 		@yield('js')
