@@ -25,12 +25,12 @@
                 @endif
 
                 <div class="form-group">
-                    <label for="password">Password</label>
+                    <label for="password">New Password</label>
                     <input type="password" id="password" class="form-control" name="password" required pattern="^.{6,}$" title="6 Characters minimum" placeholder="Password should be minimum 6 characters long">
                 </div>
 
                 <div class="form-group">
-                    <label for="email">Confirm Password</label>
+                    <label for="email">Confirm New Password</label>
                     <input type="password" id="password_confirmation" class="form-control" name="password_confirmation" required pattern="^.{6,}$" title="6 Characters minimum">
                 </div>
 
