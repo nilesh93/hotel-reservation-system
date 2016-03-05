@@ -142,7 +142,7 @@
                             <label class="col-lg-3 control-label">Service Name</label>
 
                             <div class="col-lg-9">
-                                <input placeholder="Enter Hall Service Name" class="form-control" type="text" id="iname" name="name" required>
+                                <input placeholder="Enter Hall Service Name" class="form-control" type="text" id="iname" name="name" readonly>
                             </div>
                         </div>
 
@@ -212,7 +212,7 @@
                     },
                     {"data" : null,
                         "mRender": function(data, type, full) {
-                            return '<button class="btn btn-primary  btn-animate btn-animate-side btn-block btn-sm" onclick="editModalShow('+data.hs_id+')"> Update </button>' ;
+                            return '<button class="btn btn-primary  btn-animate btn-animate-side btn-block btn-sm" onclick="editModalShow('+data.hs_id+')"> Update rates </button>' ;
                         }
                     },
                     {"data" : null,

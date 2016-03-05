@@ -25,7 +25,7 @@ class UpdateProfileRequest extends Request
     {
         return [
             'name' => 'required|max:255',
-            'ID' => 'required|size:10',
+            'ID' => 'required',
             'telephone' => 'required|min:10|max:15',
             'address_line1' => 'required',
             'city' => 'required',

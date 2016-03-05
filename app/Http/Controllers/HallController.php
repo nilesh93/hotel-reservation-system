@@ -132,19 +132,19 @@ class HallController extends Controller
         $data = $request->all();
 
         // Checks if any services with this name already exist
-        $hallTest = Hall_Services::where('name', (trim($request->input('name'))))->first();
+        $hallService = Hall_Services::where('name', (trim($request->input('name'))))->first();
 
-        // if no service exists, then create
-        if ($hallTest == null) {
-            $hallService = Hall_Services::find($request->input('hs_id'));
+        // if service exists, then update
+        if ($hallService != null) {
+            //$hallService = Hall_Services::find($request->input('hs_id'));
 
-            $hallService->name = $request->input('name');
+            //$hallService->name = $request->input('name');
             $hallService->rate = $request->input('rate');
 
             $hallService->save();
         }
 
-        // if Service exists, say so.
+        // if Service doesn't exist, say so.
         else {
             abort(403, $message);
         }
