@@ -17,11 +17,11 @@
             <img src="{{URL::asset('FrontEnd/img/amalya.jpg')}}">
         </div>
         <div class="col-lg-6">
-            <form role="form" name="registrationForm" method="post" action="{{URL::to('auth/register')}}">
+            <form id="regisration" role="form" name="registrationForm" method="post" action="{{URL::to('auth/register')}}">
                 {!! csrf_field() !!}
                 <div class="form-group">
                     <label for="Name">Name:</label>
-                    <input type="text" class="form-control" name="name" value="{{ old('name') }}" required pattern="^(([A-Za-z]+[\-\']?)*([A-Za-z]+)?\s)+([A-Za-z]+[\-\']?)*([A-Za-z]+)?$" placeholder="Your name" title="">
+                    <input type="text" class="form-control" name="name" value="{{ old('name') }}" required pattern="^(([A-Za-z]+[\-\']?)*([A-Za-z]+)?\s)+([A-Za-z]+[\-\']?)*([A-Za-z]+)?$" placeholder="Your name" title="Please enter a valid first name and a last name">
                     @if ($errors->has('name')) <p class="text-danger">{{ $errors->first('name') }}</p>@endif
                 </div>
                 <div class="form-group">
@@ -36,12 +36,12 @@
                 </div>
                 <div class="form-group">
                     <label for="password">Password:</label>
-                    <input type="password" class="form-control" name="password" id="password" required placeholder="Password should be minimum 6 characters long">
+                    <input type="password" class="form-control" name="password" id="password" required pattern="^\d{6,}$" placeholder="Password should be minimum 6 characters long" title="Password should be minimum 6 characters long">
                     @if ($errors->has('password')) <p class="text-danger">{{ $errors->first('password') }}</p>@endif
                 </div>
                 <div class="form-group">
                     <label for="password">Confirm Password:</label>
-                    <input type="password" class="form-control" name="password_confirmation" id="password" required>
+                    <input type="password" class="form-control" name="password_confirmation" id="password_confirmation" required pattern="^\d{6,}$" title="Password should be minimum 6 characters long">
                     @if ($errors->has('password_confirmation')) <p class="text-danger">{{ $errors->first('password_confirmation') }}</p>@endif
                 </div>
                 <div class="form-group">
@@ -56,7 +56,7 @@
                 </div>
                 <div class="form-group">
                     <label for="address_line2">Address Line #2:</label>
-                    <input type="text" class="form-control" name="address_line2" id="address_line2" value="{{ old('address_line2') }}" required placeholder="Address Line 2">
+                    <input type="text" class="form-control" name="address_line2" id="address_line2" value="{{ old('address_line2') }}" placeholder="Address Line 2">
                     @if ($errors->has('address_line2')) <p class="text-danger">{{ $errors->first('address_line2') }}</p>@endif
                 </div>
                 <div class="form-group">
@@ -344,4 +344,22 @@
             </div>
         </div>
     </div>
+@endsection
+
+@section('js')
+    <script>
+        $('#regisration').submit(function(evt) {
+            if($('#pass_alert').length > 0) {
+                $('#pass_alert').remove();
+            }
+            if ($('#password').val() != $('#password_confirmation').val()) {
+                var msg = "<p id='pass_alert' class='text-danger'>Passwords did not match.</p>"
+                $("#password").after(msg);
+                evt.preventDefault();
+                $('html,body').animate({
+                            scrollTop: $('#password').offset().top},
+                        'slow');
+            }
+        })
+    </script>
 @endsection

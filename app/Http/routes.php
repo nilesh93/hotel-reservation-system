@@ -209,17 +209,17 @@ Route::get('password/reset/{token}', 'Auth\PasswordController@getReset');
 Route::post('password/reset', 'Auth\PasswordController@postReset');
 
 // View, Create, Delete Admin level users & Block Customers routes
-Route::get('/admin_users', 'UserController@Users');
-Route::get('/fill_data', 'UserController@fillData');
-Route::get('/block_customer', 'UserController@blockCustomer');
-Route::get('/unblock_customer', 'UserController@unblockCustomer');
-Route::get('/fill_data_admin', 'UserController@fillAdminData');
-Route::post('/new_admin', 'UserController@createNewAdmin');
-Route::get('/delete_admin','UserController@deleteAdmin');
+Route::get('admin_users', 'UserController@Users');
+Route::get('fill_data', 'UserController@fillData');
+Route::get('block_customer', 'UserController@blockCustomer');
+Route::get('unblock_customer', 'UserController@unblockCustomer');
+Route::get('fill_data_admin', 'UserController@fillAdminData');
+Route::post('new_admin', 'UserController@createNewAdmin');
+Route::get('delete_admin','UserController@deleteAdmin');
 
 // Facebook Login Routes
-Route::get('/login/fb', 'Auth\AuthController@redirectToProvider');
-Route::get('/login/fb/callback', 'Auth\AuthController@handleProviderCallback');
+Route::get('login/fb', 'Auth\AuthController@redirectToProvider');
+Route::get('login/fb/callback', 'Auth\AuthController@handleProviderCallback');
 
 // Authenticated guest user's profile routes
 Route::get('profile', 'RegisteredUsersController@profileView');
@@ -230,18 +230,19 @@ Route::get('change_password', 'RegisteredUsersController@changePasswordView');
 Route::post('change_password', 'RegisteredUsersController@changePassword');
 
 // User Blocked Notice route
-Route::get('/blocked_user', 'UserController@blockNotice');
+Route::get('blocked_user', 'UserController@blockNotice');
 
 // Hall Services routes (Controller is from Nilesh, View has been created in ./Resources/nilesh)
-Route::get('/hallServices', 'HallController@getHallServices');
-Route::get('/getHallServices', 'HallController@getHallServiceData');
-Route::get('/addHallService', 'HallController@addHallService');
-Route::get('/deleteHallService', 'HallController@deleteHallService');
+Route::get('hallServices', 'HallController@getHallServices');
+Route::get('getHallServices', 'HallController@getHallServiceData');
+Route::get('addHallService', 'HallController@addHallService');
+Route::get('deleteHallService', 'HallController@deleteHallService');
 
 // Inaccessible views testing route
 Route::get('/test', function(){
     return view('emails.newAdmin');
 });
+
 
 /*
 |
@@ -282,9 +283,34 @@ Route::get('admin_search/rooms','SearchController@rooms_search');
 Route::get('admin_search/customers','SearchController@customers_search');
 Route::get('admin_customers_search','SearchController@customers_search_index');
 
+//Test email
+Route::get('testmail',function(){
 
+    Mail::send('emails.newAdmin', [], function ($message)  {
+        $message->from(env('MAIL_FROM'), env('MAIL_NAME'));
 
+        $message->to('hash.crackhead@gmail.com')->subject('Welcome to the team!');
+    });
+});
 
+route::post('upload',function(){
+    if(Input::hasFile('file')) {
+        //upload an image to the /img/tmp directory and return the filepath.
+
+        $file = Input::file('file');
+        $fname = Input::get('fname').".".$file->getClientOriginalExtension();
+        $tmpFilePath = '/img/tmp/';
+        $destFilePath = 'img/tmp/';
+
+        $tmpFileName = $fname ;
+        $file = $file->move(public_path() . $tmpFilePath, $tmpFileName);
+        $path = $destFilePath . $fname;
+        return response()->json(array('path'=> $path), 200);
+    } else {
+        return response()->json(false, 200);
+    }
+
+});
 /*
 |
 |

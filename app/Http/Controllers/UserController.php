@@ -106,7 +106,7 @@ class UserController extends Controller
             $message->to($data['email'])->subject('Welcome to the team!');
         });
 
-        return redirect('/admin_users');
+        return redirect('admin_users');
     }
 
     /**
@@ -116,7 +116,13 @@ class UserController extends Controller
      */
     public function deleteAdmin(Request $request)
     {
-        $user = User::where('email', Admin::find($request->emp_id)->email);
+        $user = User::where('email', Admin::find($request->emp_id)->email)->first();
+
+        // Just in case someone tries to get clever using a manual get request
+        if($user->email == Auth::user()->email)
+        {
+            abort(403, 'Forbidden action. Admin cannot delete itself.');
+        }
 
         // On delete of the user entry associated with the admin, admin will be deleted too
         // (Reason: On delete cascade on foreign key admin->email refers user->email)

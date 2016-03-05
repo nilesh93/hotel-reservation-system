@@ -23,6 +23,8 @@
         <link href="{{URL::asset('BackEnd/assets/css/icons.css')}}" rel="stylesheet" type="text/css" />
         <link href="{{URL::asset('BackEnd/assets/css/pages.css')}}" rel="stylesheet" type="text/css" />
         <link href="{{URL::asset('BackEnd/assets/css/responsive.css')}}" rel="stylesheet" type="text/css" />
+        <link href="{{URL::asset('BackEnd/assets/css/dropzone.css')}}" rel="stylesheet" type="text/css" />
+
         <link href="{{URL::asset('BackEnd/assets/plugins/datatables/jquery.dataTables.min.css')}}" rel="stylesheet" type="text/css" />
 
         <link href="{{URL::asset('BackEnd/assets/plugins/timepicker/bootstrap-timepicker.min.css" rel="stylesheet')}}">
@@ -326,6 +328,8 @@
 
         <script src="{{URL::asset('BackEnd/assets/plugins/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js')}}"></script>
         <script src="{{URL::asset('BackEnd/assets/js/validation.js')}}"></script>
+        <script src="{{URL::asset('BackEnd/assets/js/Dropzone.js')}}"></script>
+
 
         <script src="{{URL::asset('BackEnd/assets/plugins/moment/moment.js')}}"></script>
         <script src="{{URL::asset('BackEnd/assets/plugins/timepicker/bootstrap-timepicker.min.js')}}"></script>

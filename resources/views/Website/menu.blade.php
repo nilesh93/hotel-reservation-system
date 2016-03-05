@@ -62,7 +62,7 @@ Menus
 		@foreach($menus as $m)
 <div class="col-md-4">
  <div class="head-v5-sliderbox">
-				<img src="FrontEnd/img/preview-images/sliderbox_03.png" alt="themesgravity">
+				<img src="img/tmp/{{$m->menu_id}}.jpg" alt="themesgravity">
 				<br>
 				<br>
 				<h4>{{$m->category}}</h4>
