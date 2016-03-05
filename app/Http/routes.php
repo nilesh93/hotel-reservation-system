@@ -13,54 +13,25 @@ use App\HALL;
 |
 */
 
-Route::get('/', function () {
+/*
+|--------------------------------------------------------------------------
+| General Routes
+|--------------------------------------------------------------------------
+|
+|
+*/
 
-
-    if(Session::has('room_types') || Session::has('hall_selected'))
-    {
-
-        return redirect()->intended('/');
-    }
-    else{
-            $images = App\imageGallery::all();
-    
-     return view('Website.Demo')
-        ->with('images',$images);
-       
-    }
-
-
-});
-
-Route::get('/home', function () {
-
-
-    return view('Website.Demo');
-});
-
-Route::get('admin', function () {
-    return view('Admin.Demo');
-});
-
-Route::get('/admin', function () {
-    return view('Admin.Demo');
-});
-
+Route::get('/', 'PagesController@HomePage');
+Route::get('/home', 'PagesController@HomePage');
+Route::get('admin', 'PagesController@adminView');
+Route::get('/contact', 'PagesController@contactView');
 Route::get('/gallery', function () {
-    
+
     $images = App\imageGallery::all();
-    
+
     return view('Website.webGallery')
         ->with('images',$images);
 });
-
-Route::get('/LOL',function(){
-
-
-    return view('webmaster');
-});
-
-
 
 /*
 |--------------------------------------------------------------------------
@@ -70,37 +41,38 @@ Route::get('/LOL',function(){
 |
 */
 
+
+
 //rooms
-
-Route::get('cancel_reserv','RoomAvailabilityController@cancel_reserv');
-Route::get('select_room_add','RoomAvailabilityController@addSelectedRooms');
-Route::get('delete_selected_room_type','RoomAvailabilityController@delSelectedRoom_type');
-Route::get('loadBooking','RoomAvailabilityController@loadMyBooking');
-Route::get('room_packages','PagesController@rooms');
-Route::post('room_availability','RoomAvailabilityController@check_room_availability');
-Route::get('room_reservation','ReservationController@RoomReservation');
-
-
+Route::get('loadBooking', 'RoomAvailabilityController@loadMyBooking');
+Route::get('room_packages', 'PagesController@roomsView');
+Route::get('cancel_reserv', 'RoomReservationController@cancelCurrentReservation');
+Route::get('select_room_add', 'RoomAvailabilityController@addSelectedRooms');
+Route::get('room_reservation', 'RoomReservationController@roomReservation');
+Route::post('room_availability', 'RoomAvailabilityController@checkRoomAvailability');
+Route::get('my_past_room_reservations', 'RoomReservationController@myPastReservation');
+Route::get('delete_selected_room_type', 'RoomAvailabilityController@delSelectedRoom_type');
+Route::get('my_future_room_reservations', 'RoomReservationController@myFutureReservation');
 
 //halls
-Route::get('halls','PagesController@halls');
-Route::get('hall_availability','HallavailabilityController@check_hall_availability');
-Route::get('book_hall_add','HallavailabilityController@book_hall_add');
-Route::get('cancel_hall_reserv','HallavailabilityController@cancel_hall_reserv');
-Route::get('hall_reserve_final','HallReservationController@HallReservation');
+Route::get('halls', 'PagesController@hallsView');
+Route::get('book_hall_add', 'HallAvailabilityController@addHallsToReserve');
+Route::get('hall_availability', 'HallAvailabilityController@checkHallAvailability');
+Route::get('cancel_hall_reserv', 'HallReservationController@deleteAddedHallReservation');
+Route::get('hall_reserve_final', 'HallReservationController@hallReservation');
+Route::get('my_past_hall_reservations', 'HallReservationController@myPastReservation');
+Route::get('my_future_hall_reservations', 'HallReservationController@myFutureReservation');
 
 
-
+//reservation
+Route::get('myreserv', ['middleware' => 'auth', 'uses' =>'PagesController@myReserve']);
 
 //payment
-Route::get('payment',[
+Route::get('payment', ['middleware' => 'auth', 'uses' =>'PagesController@makePayment']);
 
-    'middleware' => 'auth',
-
-    'uses' =>'PagesController@makePayment']);
-
-
-
+//webmaster views
+Route::get('hall_view', 'WebMasterViewController@hallViewLoad');
+Route::get('room_view','WebMasterViewController@roomViewLoad');
 
 /*
 |
