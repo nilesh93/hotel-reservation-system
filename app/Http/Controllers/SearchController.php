@@ -8,6 +8,7 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
 use DB;
+use DateTime;
 
 /**
  * Class SearchController
@@ -93,6 +94,18 @@ class SearchController extends Controller
      */
     public function customers_search(){
         $result = DB::table('customer')->get();
+        return response()->json(['count' => count($result), 'data' => $result]);
+    }
+
+    public function roomlogspast(){
+        $today = new DateTime();
+        $result = DB::table('room_reservation')->where('check_in','<',$today)->get();
+        return response()->json(['count' => count($result), 'data' => $result]);
+    }
+
+    public function roomlogsfuture(){
+        $today = new DateTime();
+        $result = DB::table('room_reservation')->where('check_in','>',$today)->get();
         return response()->json(['count' => count($result), 'data' => $result]);
     }
 }

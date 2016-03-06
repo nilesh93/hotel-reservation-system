@@ -315,7 +315,6 @@
         <script src="{{URL::asset('BackEnd/assets/plugins/datatables/jquery.dataTables.min.js')}}"></script>
         <script src="{{URL::asset('BackEnd/assets/plugins/datatables/dataTables.bootstrap.js')}}"></script>
 
-
         <script src="{{URL::asset('BackEnd/assets/js/jquery.core.js')}}"></script>
         <script src="{{URL::asset('BackEnd/assets/js/jquery.app.js')}}"></script>
 
@@ -328,7 +327,7 @@
         <script src="{{URL::asset('BackEnd/assets/js/sweetalert.patch.js')}}"></script>
 
         <script src="{{URL::asset('BackEnd/assets/plugins/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js')}}"></script>
-        <script src="{{URL::asset('BackEnd/assets/js/validation.js')}}"></script>
+
         <script src="{{URL::asset('BackEnd/assets/js/Dropzone.js')}}"></script>
 
 
@@ -339,6 +338,7 @@
         <script src="{{URL::asset('BackEnd/assets/plugins/clockpicker/dist/jquery-clockpicker.min.js')}}"></script>
         <script src="{{URL::asset('BackEnd/assets/plugins/bootstrap-daterangepicker/daterangepicker.js')}}"></script>
 
+        <script src="{{URL::asset('BackEnd/assets/js/validation.js')}}"></script>
 
         @yield('js')
 

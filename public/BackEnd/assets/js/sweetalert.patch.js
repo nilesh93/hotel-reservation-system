@@ -42,8 +42,17 @@ function SweetAlertMultiInputAmalgamate()
         var inputElement = deleteInputs[i];
         if (inputElement.dataset.type=="string")
             inputBoxes.push(inputElement.value);
-        else if (inputElement.dataset.type=="float")
+        else if (inputElement.dataset.type=="float") {
             inputBoxes.push(parseFloat(inputElement.value));
+
+            inputElement.onkeypress = function(e) {
+                if(isNaN(inputElement.value+""+String.fromCharCode(e.charCode)))
+                    return false;
+            }
+            inputElement.onpaste = function(e){
+                e.preventDefault();
+            }
+        }
     }
 
     mainTextBox.value=JSON.stringify(inputBoxes);

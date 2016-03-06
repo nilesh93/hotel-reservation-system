@@ -46,7 +46,7 @@ Menus
                     <thead>
                     <tr>
                         <th>Menu ID</th>
-                        <th>Category</th>
+                        <th>Menu Name</th>
                         <th>Menu Description</th>
                         <th>Rate</th>
                         <th class="col-md-1"></th>
@@ -62,171 +62,176 @@ Menus
     </div>
         
 <!--Add Menus Modal-->
-<div  class="modal fade" id="add_menus_modal">
-    <div class="modal-dialog ">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                <h4 class="modal-title">Add A New Menu</h4>
-            </div>
+    <div  class="modal fade" id="add_menus_modal">
+        <div class="modal-dialog ">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" onclick="addModalClose()" aria-hidden="true">×</button>
+                    <h4 class="modal-title">Add A New Menu</h4>
+                </div>
 
-            <div class="modal-body">
-                <form class="form-horizontal" enctype="multipart/form-data" onsubmit="" action="upload" class="form single-dropzone" id="my-dropzone" method="post">
-                    <div class="row">
-                        <div class="form-group">
-                            <label for="quantity" class="col-lg-5 control-label">Menu Category</label>
-                            <div class="col-lg-6">
-                                <input class="form-control" id="menu_cat" placeholder="Menu Category" type="text">
+                <div class="modal-body">
+                    <form class="form-horizontal" enctype="multipart/form-data" onsubmit="" action="menuImageUpload" class="form single-dropzone" id="my-dropzone" method="post">
+                        <div class="row">
+                            <div class="form-group">
+                                <label for="quantity" class="col-lg-5 control-label">Menu Name</label>
+                                <div class="col-lg-6">
+                                    <input class="form-control" id="menu_cat" placeholder="Menu Category" type="text">
+                                </div>
                             </div>
                         </div>
-                    </div>
 
-                    <div class="row">
-                        <div class="form-group">
-                            <label for="item" class="col-lg-5 control-label">Menu Description</label>
-                            <div class="col-lg-6">
-                                <input class="form-control" id="menu_desc" placeholder="Description" type="text">
+                        <div class="row">
+                            <div class="form-group">
+                                <label for="item" class="col-lg-5 control-label">Menu Description</label>
+                                <div class="col-lg-6">
+                                    <input class="form-control" id="menu_desc" placeholder="Description" type="text">
+                                </div>
                             </div>
                         </div>
-                    </div>
 
-                    <div class="row">
-                        <div class="form-group">
-                            <label for="item" class="col-lg-5 control-label">Rate</label>
-                            <div class="col-lg-6">
-                                <input class="form-control number-only" id="menu_rate" placeholder="Rate" type="text">
-                                <input id="menu_number" type="text" hidden>
+                        <div class="row">
+                            <div class="form-group">
+                                <label for="item" class="col-lg-5 control-label">Rate</label>
+                                <div class="col-lg-6">
+                                    <input class="form-control number-only" id="menu_rate" placeholder="Rate" type="text">
+                                    <input id="menu_number" type="text" hidden>
+                                    <input id="imagepath" type="text" hidden>
 
+
+                                </div>
                             </div>
                         </div>
-                    </div>
 
-                    <div class="row">
-                        <div class="form-group">
-                            <div class="portlet">
-                                <div class="portlet-body">
-                                    <div class="row" id="temptable">
-                                        <table class="table table-striped table-bordered table-hover dataTables-example" id="menuitems" plugin="datatable" >
-                                            <thead>
-                                            <tr>
+                        <div class="row">
+                            <div class="form-group">
+                                <div class="portlet">
+                                    <div class="portlet-body">
+                                        <div class="row" id="temptable">
+                                            <table class="table table-striped table-bordered table-hover dataTables-example" id="menuitems" plugin="datatable" >
+                                                <thead>
+                                                <tr>
 
-                                                <th>ID</th>
-                                                <th>Menu ID</th>
-                                                <th>Item Name</th>
-                                                <th>Price</th>
-                                                <th class="col-md-1"></th>
-                                                <th class="col-md-1"></th>
-                                            </tr>
-                                            </thead>
-                                            <tbody>
-                                            </tbody>
+                                                    <th>ID</th>
+                                                    <th>Menu ID</th>
+                                                    <th>Item Name</th>
+                                                    <th>Price</th>
+                                                    <th class="col-md-1"></th>
+                                                    <th class="col-md-1"></th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                </tbody>
 
-                                        </table>
+                                            </table>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
 
-                    <div id="img-thumb-preview">
-                        <img id="img-thumb" class="user size-lg img-thumbnail">
-                    </div>
-                    <button id="upload-submit" class="btn btn-default margin-t-5"><i class="fa fa-upload"></i> Upload Picture</button>
-                    <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                    <input type="text" name="fname" id="fname" disabled="true">
+                        <div id="uploaderDiv">
+                            <div id="img-thumb-preview">
+                                <img id="img-thumb" class="user size-lg img-thumbnail">
+                            </div>
+                            <button id="upload-submit" class="btn btn-default margin-t-5"><i class="fa fa-upload"></i> Upload Picture</button>
+                            <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                            <input type="text" hidden="true" name="fname" id="fname" disabled="true">
+                            <button type="button" id="delete" disabled="true" onclick="deleteImage()" class="btn btn-default margin-t-5">Delete Image</button>
+                            <p style="color:red;">*Supporetd file types: jpg,jpeg,png,bmp</p>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" onclick="add_menu()" class="btn btn-primary" name="submit" >Add Menu</button>
+                    <button type="button" id="btnAddMenuItem" class="btn btn-primary btn-success" disabled="true" onclick="add_menu_item()"><span class="glyphicon glyphicon-plus"></span>Add new item</button>
+
+                    <button type="button" class="btn btn-default" onclick="addModalClose()">Close</button>
+                </div>
 
             </div>
-            <div class="modal-footer">
-                <button type="button" onclick="add_menu()" class="btn btn-primary" name="submit" >Add Menu</button>
-                <button type="button" id="btnAddMenuItem" class="btn btn-primary btn-success" disabled="true" onclick="add_menu_item()"><span class="glyphicon glyphicon-plus"></span>Add new item</button>
-
-                <button type="button" class="btn btn-default" onclick="addModalClose()">Close</button>
-            </div>
-            </form>
         </div>
     </div>
-</div>
 
 <!-------------------------------------Update Menus MODAL-------------------------------->
 
-<div  class="modal fade" id="update_menus_modal">
-    <div class="modal-dialog ">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                <h4 class="modal-title">Update Menu</h4>
-            </div>
+    <div  class="modal fade" id="update_menus_modal">
+        <div class="modal-dialog ">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h4 class="modal-title">Update Menu</h4>
+                </div>
 
-            <div class="modal-body">
-                <form class="form-horizontal" enctype="multipart/form-data" onsubmit="" method="post">
-                    <div class="row">
-                        <div class="form-group">
-                            <label for="quantity" class="col-lg-5 control-label">Menu Category</label>
-                            <div class="col-lg-6">
-                                <input class="form-control" id="menu_cat_edit" onclick="enable_update()" placeholder="Menu Category" type="text">
-                                <input type="text" id="menu_number" hidden>
+                <div class="modal-body">
+                    <form class="form-horizontal" enctype="multipart/form-data" action="menuImageUpload" class="form single-dropzone" id="my-dropzone" method="post">
+                        <div class="row">
+                            <div class="form-group">
+                                <label for="quantity" class="col-lg-5 control-label">Menu Name</label>
+                                <div class="col-lg-6">
+                                    <input class="form-control" id="menu_cat_edit" onclick="enable_update()" placeholder="Menu Category" type="text">
+                                    <input type="text" id="menu_number" hidden>
+                                </div>
                             </div>
                         </div>
-                    </div>
 
-                    <div class="row">
-                        <div class="form-group">
-                            <label for="item" class="col-lg-5 control-label">Menu Description</label>
-                            <div class="col-lg-6">
-                                <input class="form-control" id="menu_desc_edit" onclick="enable_update()" placeholder="Description" type="text">
+                        <div class="row">
+                            <div class="form-group">
+                                <label for="item" class="col-lg-5 control-label">Menu Description</label>
+                                <div class="col-lg-6">
+                                    <input class="form-control" id="menu_desc_edit" onclick="enable_update()" placeholder="Description" type="text">
+                                </div>
                             </div>
                         </div>
-                    </div>
 
-                    <div class="row">
-                        <div class="form-group">
-                            <label for="item" class="col-lg-5 control-label">Rate</label>
-                            <div class="col-lg-6">
-                                <input class="form-control number-only" id="menu_rate_edit" onclick="enable_update()" placeholder="Rate" type="text">
+                        <div class="row">
+                            <div class="form-group">
+                                <label for="item" class="col-lg-5 control-label">Rate</label>
+                                <div class="col-lg-6">
+                                    <input class="form-control number-only" id="menu_rate_edit" onclick="enable_update()" placeholder="Rate" type="text">
+                                </div>
                             </div>
                         </div>
-                    </div>
 
-                    <div class="row">
-                        <div class="form-group">
-                            <div class="portlet">
-                                <div class="portlet-body">
-                                    <div class="row" id="temptable">
-                                        <table class="table table-striped table-bordered table-hover dataTables-example" id="dm" plugin="datatable" >
-                                            <thead>
-                                            <tr>
-                                                <th>Item ID</th>
-                                                <th>Item Name</th>
-                                                <th>Price</th>
-                                                <th class="col-md-1"></th>
-                                                <th class="col-md-1"></th>
-                                            </tr>
-                                            </thead>
-                                            <tbody>
-                                            </tbody>
-                                        </table>
+                        <div class="row">
+                            <div class="form-group">
+                                <div class="portlet">
+                                    <div class="portlet-body">
+                                        <div class="row" id="temptable">
+                                            <table class="table table-striped table-bordered table-hover dataTables-example" id="dm" plugin="datatable" >
+                                                <thead>
+                                                <tr>
+                                                    <th>Item ID</th>
+                                                    <th>Item Name</th>
+                                                    <th>Price</th>
+                                                    <th class="col-md-1"></th>
+                                                    <th class="col-md-1"></th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                </tbody>
+                                            </table>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <img id="menuimage" class="user size-lg img-thumbnail">
+                        <img id="menuimage" src="" class="user size-lg img-thumbnail">
 
-
-            </div>
-            <div class="alert alert-dismissible alert-success" id="addedsuccessfully" hidden="true">
-                <button type="button" class="close" data-dismiss="alert">×</button>
-                <strong> Added Successfully!</strong>
-            </div>
-            <div class="modal-footer">
-                <button type="button" onclick="add_menu_item()" class="btn btn-primary"  >Add Item</button>
-                <button type="button" onclick="update_menu()" disabled="true" class="btn btn-primary" id="btnUpdate" name="submit" >Update Menu</button>
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                </form>
+                </div>
+                <div class="alert alert-dismissible alert-success" id="addedsuccessfully" hidden="true">
+                    <button type="button" class="close" data-dismiss="alert">×</button>
+                    <strong> Added Successfully!</strong>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" onclick="add_menu_item()" class="btn btn-primary"  >Add Item</button>
+                    <button type="button" onclick="update_menu()" disabled="true" class="btn btn-primary" id="btnUpdate" name="submit" >Update Menu</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
-</div>
 
     <!-- END OF UPDATE MENUS MODAL -->
         @endsection
@@ -235,19 +240,19 @@ Menus
 
 @section('js')
     <script>
+        /**
+         * When the user clicks on an input element on the update modal, Update button will be unlocked.
+         */
         function enable_update(){
             document.getElementById("btnUpdate").removeAttribute("disabled",false);
-            var ele = document.getElementById('menu_rate_edit');
-            ele.onkeypress = function(e) {
-                if(isNaN(this.value+""+String.fromCharCode(e.charCode)))
-                    return false;
-            }
-            ele.onpaste = function(e){
-                e.preventDefault();
-            }
-
         }
 
+
+        /**
+         * On document.ready event, the sidebar classes will change.
+         * A Dropzone.js instance will be created and initialized for the file upload.
+         * Upon file selection, the file will be uploaded to the server.
+         */
         $('document').ready(function(){
             document.getElementById("management").click();
             document.getElementById("MM").setAttribute("class","active");
@@ -271,8 +276,34 @@ Menus
                     });
                     this.on("success", function(file, res) {
                         console.log('upload success...');
+
+                        var filename = $('#fname').val();
+                        var data = "imagepath="+res.path+"&fname="+filename;
+
+                        if(res == 0){
+                            console.log('res='+res);
+                            sweetAlert("Oops...", "Invalid filetype!", "error");
+
+                        }
+                        else {
+                            $.ajax({
+                                type:"get",
+                                url:"admin_menus/addimagepath",
+                                data:data,
+                                success:function(ss){
+
+                                }
+                            });
+                            swal("Uploaded!", "Image was uploaded successfully.", "success");
+                            document.getElementById("delete").removeAttribute("disabled",false);
+
+                        }
+
+
                         $('#img-thumb').attr('src', res.path);
                         $('input[name="pic_url"]').val(res.path);
+                        $('.dz-success-mark.dz-error-mark').hide();
+
                     });
                 }
             };
@@ -285,15 +316,56 @@ Menus
             });
 
         });
-
         //we want to manually init the dropzone.
         Dropzone.autoDiscover = false;
 
+        /**
+         * The button action of the dropzone delete button in the Add menu modal. When clicked the uploaded image will
+         * be deleted and the Delete Image button will be disabled until a new Image is uploaded.
+         */
+        function deleteImage(){
+            var rowno = $('#menu_number').val();
+            var data = "rowno="+rowno;
+            $.ajax({
+                type:"get",
+                url:"deleteImage",
+                data:data,
+                success:function(ss){
+                    console.log(ss);
+                    $('#img-thumb').attr('src', null);
+                    $('input[name="pic_url"]').val(null);
+                    $('.dz-preview.dz-processing.dz-image-preview.dz-success.dz-complete').hide();
 
+                    $('#menuimage').hide();
+                    document.getElementById("delete").setAttribute("disabled","true");
+                    swal("Deleted!", "The menu was deleted successfully.", "success");
+                    document.getElementById("delete").setAttribute("disabled","true");
+
+
+                }
+            });
+        }
+
+        /**
+         * This method will be invoked when the Add New Menu button is clicked.
+         * Here the input fields of the modal will be set to blank and the dataTable inside the modal will reset.
+         * The validation script for Rates input will be executed.
+         */
         function add_menu_modal(){
             $("#add_menus_modal").modal("show");
             $('#menu_number').val(-1);
 
+            $('#uploaderDiv').css('visibility', 'hidden');
+
+            //Rate validation
+            var ele = document.getElementById('menu_rate');
+            ele.onkeypress = function(e) {
+                if(isNaN(this.value+""+String.fromCharCode(e.charCode)))
+                    return false;
+            }
+            ele.onpaste = function(e){
+                e.preventDefault();
+            }
 
             document.getElementById("menu_cat").value = "";
             document.getElementById("menu_desc").value = "";
@@ -303,6 +375,11 @@ Menus
             $('#menuitems').dataTable().fnClearTable();
         }
 
+        /**
+         * This function will be invoked then the user closes the Add new Menu modal.
+         * This will check all the input fields are filled and if there are any menu items by the id of the menu.
+         * If there are no menu items for that menu, the menu will be dismissed.
+         */
         function addModalClose(){
             var row = $('#menu_number').val();
             if (row == -1){
@@ -332,12 +409,16 @@ Menus
                                             url:"admin_menus/deleterow",
                                             data:data,
                                             success:function(data){
+                                                deleteImage();
                                                 swal("Deleted!", "The menu was deleted successfully.", "success");
                                                 $('#update_menus_modal').modal('hide');
                                                 $('#add_menus_modal').modal('hide');
 
+
                                                 dataLoad();
                                                 menuitemdataLoad();
+                                                location.reload();
+
 
                                             },
                                             complete: function (data) {
@@ -358,6 +439,9 @@ Menus
             }
         }
 
+        /**
+         * Changes done to existing menus are sent to the controller via this function.
+         */
         function update_menu(){
 
             var row = $('#menu_number').val();
@@ -398,6 +482,9 @@ Menus
             }
         }
 
+        /**
+         * Add a new menu.
+         */
         function add_menu(){
 
             var menu_category=$('#menu_cat').val();
@@ -420,6 +507,13 @@ Menus
                         $('#fname').val(ss);
                         var rowno = $('#menu_number').val();
                         console.log(rowno);
+                        $('#uploaderDiv').css('visibility', 'visible');
+
+                        document.getElementById("menu_cat").setAttribute("disabled","true");
+                        document.getElementById("menu_desc").setAttribute("disabled","true");
+                        document.getElementById("menu_rate").setAttribute("disabled","true");
+
+
                         document.getElementById("btnAddMenuItem").removeAttribute("disabled",false);
                         swal("Added!", "Record Added Successfully. Now you may add menu items.", "success");
                     }
@@ -427,9 +521,23 @@ Menus
             }
         }
 
+        /**
+         * Edit menu details.
+         * @param a
+         */
         function edit(a){
 
             $("#update_menus_modal").modal("show");
+
+            var ele = document.getElementById('menu_rate_edit');
+            ele.onkeypress = function(e) {
+                if(isNaN(this.value+""+String.fromCharCode(e.charCode)))
+                    return false;
+            }
+            ele.onpaste = function(e){
+                e.preventDefault();
+            }
+
             console.log(a);
             var data="row="+a;
             var dir = "/HOTEL_RESERVATION/public/img/tmp/"+a+".jpg";
@@ -454,6 +562,10 @@ Menus
             });
         }
 
+        /**
+         * Delete a menu.
+         * @param a
+         */
         function delete_menu(a){
 
             swal({
@@ -471,6 +583,19 @@ Menus
                             data:data,
                             success:function(data){
                                 swal("Deleted!", "The menu was deleted successfully.", "success");
+                                var imgname = "rowno="+a;
+                                $.ajax({
+                                    type:"get",
+                                    url:"deleteImage",
+                                    data:imgname,
+                                    success:function(ss){
+                                        console.log(ss);
+                                        $('#img-thumb').attr('src', null);
+                                        $('input[name="pic_url"]').val(null);
+                                        $('.dz-preview.dz-processing.dz-image-preview.dz-success.dz-complete').hide();
+
+                                    }
+                                });
                                 dataLoad();
                             },
                             complete: function (data) {
@@ -481,6 +606,9 @@ Menus
                     });
         }
 
+        /**
+         * This function Loads the data into the jQuery DataTable using Ajax.
+         */
         function dataLoad(){
 
             var oTable = $('#dd').DataTable();
@@ -507,6 +635,10 @@ Menus
             });
         }
 
+
+        /**
+         * Loads the details of the items of menu to DataTable.
+         */
         function menuitemdataLoad(){
 
             var oTable = $('#menuitems').DataTable();
@@ -576,17 +708,32 @@ Menus
                                 }
                                 else {
                                     var data = "menu_number=" + rowno + "&item_name=" + checkResults[0] + "&item_price=" + checkResults[1];
-
                                     $.ajax({
                                         type: "get",
-                                        url: "admin_menus/addmenuitem",
+                                        url: "admin_menus/checkavailability",
                                         data: data,
                                         success: function (ss) {
-                                            var rowno = $('#menu_number').val();
-                                            menuitemdataLoad();
-                                            detailedMenu(rowno);
+
+                                            if(ss == 1){
+                                                sweetAlert("Oops...", "There is already an item by that name", "error");
+
+                                            }
+                                            else{
+                                                $.ajax({
+                                                    type: "get",
+                                                    url: "admin_menus/addmenuitem",
+                                                    data: data,
+                                                    success: function (ss) {
+                                                        var rowno = $('#menu_number').val();
+                                                        menuitemdataLoad();
+                                                        detailedMenu(rowno);
+                                                    }
+                                                });
+                                            }
+
                                         }
                                     });
+
                                 }
                             }
                         }
@@ -703,7 +850,6 @@ Menus
                 }
             });
         }
-
 
         function delete_item(a,b){
 
