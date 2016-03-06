@@ -38,14 +38,9 @@ Home
 
  <div class="big-slider">
           <div id="big-slider-carousel" class="carousel slide" data-ride="carousel">
-          <a class="left carousel-nav" href="#big-slider-carousel" data-slide="prev"><span class="glyphicon glyphicon-chevron-left"></span></a>
-              <a class="right carousel-nav" href="#big-slider-carousel" data-slide="next"><span class="glyphicon glyphicon-chevron-right"></span></a>
+         
           <!-- Indicators -->
-          <ol class="carousel-indicators">
-            <li data-target="#big-slider-carousel" data-slide-to="0" class="active"></li>
-            <li data-target="#big-slider-carousel" data-slide-to="1"></li>
-            <li data-target="#big-slider-carousel" data-slide-to="2"></li>
-          </ol>
+          
 
           <!-- Wrapper for slides -->
           <div class="carousel-inner">
@@ -54,14 +49,16 @@ Home
 			  
 			  	
 			      <div class="item  {{$class}}">
-                <img src="{{$i->path}}" />
+                <img src="{{URL::asset($i->path)}}" />
               
               <div class="container">
-              <div class="carousel-text">
+              <div class="carousel-text" style="margin-left:4%;margin-top:10%">
               <a href="#">
-                  <h2>Amalya Reach Welcomes You</h2>
-                  <br>
-                  <h2>to Indulge Your Senses</h2>
+                  <h2>{{ $i->caption }}</h2>
+				  <br>
+				  
+				   <h2>{{ $i->caption_desc }}</h2>
+                   
               </a>
               </div><!-- /carousel-text -->
               </div><!-- /container -->
@@ -75,6 +72,11 @@ Home
 			  
         <!-- /item -->
           </div><!-- /carousel-inner -->
+			  
+			  
+			   <a class="left carousel-nav" href="#big-slider-carousel" data-slide="prev"><span class="glyphicon glyphicon-chevron-left"></span></a>
+              <a class="right carousel-nav" href="#big-slider-carousel" data-slide="next"><span class="glyphicon glyphicon-chevron-right"></span></a>
+			  
         </div><!-- /big-slider-carousel -->
         
         </div><!-- /big-slider -->
@@ -113,51 +115,51 @@ Home
 
 	</aside>
 	<section id="content">
-<h3>Services</h3>
+<h3>Our   Services & Facilities</h3>
 										<hr>
+ 
+		
 		<div class="row">
-			
-			<div  >
-  <div class="item" style="margin-bottom:2%">
-                            <div class="col-sm-4 col-md-4 col-lg-4" style="margin-bottom:2%">
-                                <div class="servicebox">
-                                    <div class="servicebox-content">
-                                        <h3><a href="#">Wellness &amp; Spa Weekend Getaway</a></h3>
-                                        <p>In addition to our Web Development services, we offer Mobile Applications In addition to our Web Development services </p>
-                                    </div><!-- /servicebox-content --> 
-                                </div><!-- /servicebox -->
-                            </div><!-- /col-sm-3 --></div>
-  <div class="item" style="margin-bottom:2%"> <div class="col-sm-4 col-md-4 col-lg-4" style="margin-bottom:2%">
-                                <div class="servicebox">
-                                    <div class="servicebox-content">
-                                        <h3><a href="#">World Cuisine for all your Tastes</a></h3>
-                                        <p>In addition to our Web Development services, we offer Mobile Applications In addition to our Web Development services </p>
-                                    </div><!-- /servicebox-content --> 
-                                </div><!-- /servicebox -->
-                            </div></div>
-  <div class="item" style="margin-bottom:2%">  <!-- /col-sm-3 -->
-                            <div class="col-sm-4 col-md-4 col-lg-4" style="margin-bottom:2%">
-                                <div class="servicebox">
-                                    <div class="servicebox-content">
-                                        <h3><a href="#">Business and VIP Exclussive Studios</a></h3>
-                                        <p>In addition to our Web Development services, we offer Mobile Applications In addition to our Web Development services </p>
-                                    </div><!-- /servicebox-content --> 
-                                </div><!-- /servicebox -->
-                            </div><!-- /col-sm-3 --></div>
-  <div class="item" style="margin-bottom:2%"><div class="col-sm-4 col-md-4 col-lg-4" style="margin-bottom:2%">
-                                <div class="servicebox">
-                                    <div class="servicebox-content">
-                                        <h3><a href="#">Let us Guide you through the Island</a></h3>
-                                        <p>In addition to our Web Development services, we offer Mobile Applications In addition to our Web Development services </p>
-                                    </div><!-- /servicebox-content --> 
-                                </div><!-- /servicebox -->
-                            </div><!-- /col-sm-3 --></div>
-   
-</div>
-			
-                         
-                            
-                        </div>
+		
+		
+		 <div class="recent-posts">
+	<div id="recent-posts-1" class="owl-carousel">
+		
+		
+		@foreach($facilities as $f)
+	  <div class="post-item">
+	  	<div class="post-img">
+	  		<img src="{{URL::asset('FrontEnd/img/preview-images/recent_posts_01.jpg')}}" alt="themesgravity">
+	  		<div class="img-overlay"><i class="fa fa-bars"></i></div><!-- /img-overlay -->
+	  	</div><!-- /post-img -->
+		  <!--
+style="border-left:1px solid #000;border-bottom:1px solid #000;border-right:1px solid #000;margin-bottom:1%"
+		-->
+	  	<div class="post-content" >
+		  	<span class="post-category">{{$f->category}}</span>
+		  	<hr>
+		  	<h4><a href="#">Rs&nbsp;{{ number_format($f->price,2,".","")}} Per Hour</a></h4>
+		  	<p> {{$f->description}}</p>
+		</div><!-- /post-content -->
+	  </div><!-- /post-item -->
+		
+		@endforeach
+		
+		<!-- /post-item -->
+	</div><!-- /owl-carousel -->
+	<div class="recent-posts-controls">
+		<div class="owl-menu-hover"><i class="fa fa-bars"></i></div><!-- /owl-menu -->
+		<div class="owl-next-hover"><i class="fa fa-arrow-circle-o-right"></i></div>
+		<div class="owl-prev-hover"><i class="fa fa-arrow-circle-o-left"></i></div>
+		<span class="hover-text"><small>Hover</small></span>
+		<span class="hover-prev"><small>Previous item</small></span>
+		<span class="hover-index"><small>Blog index</small></span>
+		<span class="hover-next"><small>Next Item</small></span>
+		<hr>
+	</div><!-- /recent-posts-controls -->
+</div><!-- /recent-posts -->
+
+		</div>
 		
 
 	<br>
@@ -247,6 +249,18 @@ $(document).ready(function() {
 		}
 	});
  
+	
+		$("#recent-posts-1").owlCarousel({
+		responsive: false,
+		items: 4,
+		navigation: false,
+		scrollPerPage: false,
+		autoPlay: true,
+	});
+  	// ADDING NEXT AND PREVIOUS BUTTONS
+	var owl = $("#recent-posts-1").data('owlCarousel');
+	$('.owl-next-hover').on('click',function(){owl.next();});
+	$('.owl-prev-hover').on('click',function(){owl.prev();});
 	
 
 });

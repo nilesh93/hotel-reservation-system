@@ -16,12 +16,12 @@
 
 @section('title')
 
-Image Gallery Upload
+Web Images
 @endsection
 
 
 @section('page_title')
-Image Gallery Management
+Web Home Gallery Management
 
 
 
@@ -29,7 +29,7 @@ Image Gallery Management
 
 @section('page_buttons')
 
-<!-- Image Upload Modal -->
+<!-- image update modal -->
 <div class="profile_img">
 
     <!-- end of image cropping -->
@@ -47,7 +47,7 @@ Image Gallery Management
         <div class="modal fade" id="avatar-modal" aria-hidden="true" aria-labelledby="avatar-modal-label" role="dialog" tabindex="-1">
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
-                    <form class="avatar-form"    enctype="multipart/form-data"  onsubmit="return upload()" method="post" id="formID" name="formID">
+                    <form class="avatar-form"    enctype="multipart/form-data"  onsubmit="return upload()"  method="post" id="formID" name="formID">
                         <div class="modal-header">
                             <button class="close" data-dismiss="modal" type="button">&times;</button>
                             <h4 class="modal-title" id="avatar-modal-label">Upload Image</h4>
@@ -75,11 +75,14 @@ Image Gallery Management
                                     </div>
                                 </div>
                                 <div class="row avatar-btns">
-                                    <div class="col-md-9">
-
+                                    <div class="col-md-5">
+                                        <textarea class="form-control" id="caption" rows="1" placeholder="Enter Caption 1" required></textarea>
                                     </div>
-                                    <div class="col-md-3">
-                                        <button class="btn btn-primary btn-block avatar-save" type="submit" >Done</button>
+                                    <div class="col-md-5">
+                                        <textarea class="form-control" id="caption2" rows="1" placeholder="Enter Caption 2" required></textarea>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <button class="btn btn-primary btn-block avatar-save" style="margin-top:40%" type="submit"  >Done</button>
                                     </div>
                                 </div>
 
@@ -133,7 +136,9 @@ Image Gallery Management
                 <div class="col-sm-4" style="margin-bottom:2%">
                     <img src="{{URL::asset($i->path)}}" alt="image" class="img-responsive">
                     <br>
-                    <button type="button" onclick="del({{$i->id}})" class=" col-md-offset-8 col-md-4 btn btn-danger">Remove</button>
+                    <button  class="   col-md-4 btn btn-primary" onclick="editImage('{{ $i->id }}' )">Edit</button>
+                    <button type="button" onclick="del({{$i->id}})" class=" col-md-offset-4 col-md-4 btn btn-danger">Remove</button>
+
                 </div>
 
                 @endforeach
@@ -149,7 +154,56 @@ Image Gallery Management
 </div>
 
 
+<!-- Image details update modal-->
+<div class="modal inmodal fade" id="imageModal" tabindex="-1" role="dialog"  aria-hidden="true">
+    <div class="modal-dialog ">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title">Edit Image Details</h4>
 
+            </div>
+            <form class="form-horizontal" id="editImg" onsubmit="return editFinal()">
+                <div class="modal-body">
+
+
+                    <input type="hidden" id="imageIde" name="id">
+
+                    <div class="form-group">
+                        <label class="col-lg-3 control-label">Caption 1</label>
+
+                        <div class="col-lg-9">  
+                            <textarea name="caption1e" id="caption1e" class="form-control" required></textarea>
+
+                        </div>
+                    </div>
+                    <div class="form-group">
+
+                        <label class="col-lg-3 control-label">Caption 2</label>
+
+                        <div class="col-lg-9"> 
+
+                            <textarea name="caption2e" id="caption2e" class="form-control" required></textarea>
+                        </div>
+                    </div>
+
+
+
+
+
+
+
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-white" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Save changes</button>
+                </div>
+                </div>
+
+            </form>
+    </div>
+</div>
 
 @endsection
 
@@ -159,7 +213,7 @@ Image Gallery Management
 
 
 <script src="{{ URL::asset('BackEnd/assets/plugins/cropping/cropper.min.js') }}"></script>
-<script src="{{ URL::asset('BackEnd/assets/plugins/cropping/main.js') }}"></script>
+<script src="{{ URL::asset('CustomJs/webHomeGallery.js') }}"></script>
 
 
 
@@ -170,7 +224,8 @@ Image Gallery Management
     $('document').ready(function(){
 
         document.getElementById('management').click();
-        document.getElementById('IG').setAttribute('class','active');
+        document.getElementById('WG').setAttribute('class','active');
+
 
         $('#avatarInput').change(function(){
 
@@ -184,14 +239,13 @@ Image Gallery Management
 
 
         }); 
-
-
     });
     function hasExtension(inputID, exts) {
         var fileName = document.getElementById(inputID).value;
         return (new RegExp('(' + exts.join('|').replace(/\./g, '\\.') + ')$')).test(fileName);
     }
     function upload(){
+
 
 
         if (!hasExtension('avatarInput',_validFileExtensions)) {
@@ -217,8 +271,10 @@ Image Gallery Management
         var f =   new FormData();
         f.append('img',document.getElementById("avatarInput").files[0]);
         f.append('img_data',document.getElementById("avatar_data").value);
+        f.append('caption',document.getElementById("caption").value);
+        f.append('caption_desc',document.getElementById("caption2").value);
         //console.log(new FormData(form));
-        var url= "admin_gallery_upload";
+        var url= "admin_web_gallery_upload";
         $.ajax({
             url: url,
             type:"post",
@@ -262,6 +318,61 @@ Image Gallery Management
 
         return false;
     }
+    function editImage(id){
+
+        $('#imageIde').val(id);
+
+
+        $.ajax({
+
+            url: "get_homeImage_details",
+            data:{id:id},
+            type:"get",
+            success:function(data){
+
+                $('#caption1e').val(data.caption);
+                $('#caption2e').val(data.caption_desc);
+                $('#imageModal').modal('show');
+
+            },
+            error : function(err){
+
+                swal("Something went wrong","code("+err+")","error");
+
+            }
+
+        });
+
+
+
+
+
+
+    }
+    function editFinal(){
+
+        $.ajax({
+
+            url:"admin_homeImage_update",
+            type:"get",
+            data:$('#editImg').serialize(),
+            success:function(data){
+
+                $('#imageModal').modal('hide');
+
+
+                swal("Image Updated Successfully","","success");
+            },
+            error:function(err){
+
+                swal("Something went wrong","code("+err+")","error");
+            }
+
+        });
+
+        return false;
+
+    }
     function del(id){
 
         swal({   
@@ -279,7 +390,7 @@ Image Gallery Management
 
             $.ajax({
 
-                url:"admin_webImage_del",
+                url:"admin_homeImage_del",
                 type:"get",
                 data:{id:id},
                 success:function(data){

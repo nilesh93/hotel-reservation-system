@@ -4,12 +4,16 @@ namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Request;
 use DB;
+use Input;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\HALL;
 use App\ROOM_TYPE;
 use Session;
 use App\imageGallery;
+use App\HOME_GALLERY;
+use App\FACILITY;
+use App\REVIEW;
 
 class PagesController extends Controller
 {
@@ -29,6 +33,7 @@ class PagesController extends Controller
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
+
     public function HomePage()
     {
         //clears the room reservation session details if there are any.
@@ -62,10 +67,32 @@ class PagesController extends Controller
         //Clear the indicator to access the payment page
         Session::forget('CanPay');
 
-        $images = imageGallery::all();
+        $images = HOME_GALLERY::all();
+
+        $facilities = FACILITY::all();
 
         return view('Website.Demo')
-            ->with('images',$images);
+            ->with('images',$images)
+            ->with('facilities',$facilities);
+    }
+
+    /**
+     * This function submits and saves a user review to the database.
+     *
+     * @param Request $request
+     * @return void
+     */
+
+    public function submit_review(Request $request)
+    {
+
+        $review = new REVIEW;
+
+        $review->name = Input::get('name');
+        $review->review = Input::get('review');
+
+        $review->save();
+
     }
 
     /**
@@ -73,6 +100,7 @@ class PagesController extends Controller
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
+
     public function adminView()
     {
         return view('Admin.Demo');
@@ -83,6 +111,7 @@ class PagesController extends Controller
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
+
     public function contactView()
     {
         return view('Website.contact');
@@ -93,6 +122,7 @@ class PagesController extends Controller
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
+
     public function hallsView()
     {
         $halls = HALL::get();
@@ -105,6 +135,7 @@ class PagesController extends Controller
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
+
     public function roomsView()
     {
         $room_types = ROOM_TYPE::get();
@@ -119,6 +150,7 @@ class PagesController extends Controller
      * @param Request $request
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
+
     public function makePayment(Request $request)
     {
         if(Request::has('CanPay') && Session::has('CanPay')) {
@@ -135,6 +167,7 @@ class PagesController extends Controller
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
+
     public function myReserve()
     {
         return view('Website.MyReservation');
