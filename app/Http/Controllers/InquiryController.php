@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use DB;
 use Illuminate\Http\Request;
 use App\Inquiry;
+use Illuminate\Support\Facades\Mail;
 
 class InquiryController extends Controller
 {
@@ -27,6 +28,12 @@ class InquiryController extends Controller
 
         $inq->save();
 
+        
+            Mail::send('emails.inquiry', ['inq'=> $inq], function ($message)   {
+            $message->from(env('MAIL_FROM'), env('MAIL_NAME'));
+
+            $message->to("nilesh.jayanandana@yahoo.com")->subject('Amalaya Reach Inquiry');
+        });
 
 
 
