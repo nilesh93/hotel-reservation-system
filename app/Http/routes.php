@@ -13,54 +13,25 @@ use App\HALL;
 |
 */
 
-Route::get('/', function () {
+/*
+|--------------------------------------------------------------------------
+| General Routes
+|--------------------------------------------------------------------------
+|
+|
+*/
 
-
-    if(Session::has('room_types') || Session::has('hall_selected'))
-    {
-
-        return redirect()->intended('/');
-    }
-    else{
-            $images = App\imageGallery::all();
-    
-     return view('Website.Demo')
-        ->with('images',$images);
-       
-    }
-
-
-});
-
-Route::get('/home', function () {
-
-
-    return view('Website.Demo');
-});
-
-Route::get('admin', function () {
-    return view('Admin.Demo');
-});
-
-Route::get('/admin', function () {
-    return view('Admin.Demo');
-});
-
+Route::get('/', 'PagesController@HomePage');
+Route::get('/home', 'PagesController@HomePage');
+Route::get('admin', 'PagesController@adminView');
+Route::get('/contact', 'PagesController@contactView');
 Route::get('/gallery', function () {
-    
+
     $images = App\imageGallery::all();
-    
+
     return view('Website.webGallery')
         ->with('images',$images);
 });
-
-Route::get('/LOL',function(){
-
-
-    return view('webmaster');
-});
-
-
 
 /*
 |--------------------------------------------------------------------------
@@ -70,37 +41,38 @@ Route::get('/LOL',function(){
 |
 */
 
+
+
 //rooms
-
-Route::get('cancel_reserv','RoomAvailabilityController@cancel_reserv');
-Route::get('select_room_add','RoomAvailabilityController@addSelectedRooms');
-Route::get('delete_selected_room_type','RoomAvailabilityController@delSelectedRoom_type');
-Route::get('loadBooking','RoomAvailabilityController@loadMyBooking');
-Route::get('room_packages','PagesController@rooms');
-Route::post('room_availability','RoomAvailabilityController@check_room_availability');
-Route::get('room_reservation','ReservationController@RoomReservation');
-
-
+Route::get('loadBooking', 'RoomAvailabilityController@loadMyBooking');
+Route::get('room_packages', 'PagesController@roomsView');
+Route::get('cancel_reserv', 'RoomReservationController@cancelCurrentReservation');
+Route::get('select_room_add', 'RoomAvailabilityController@addSelectedRooms');
+Route::get('room_reservation', 'RoomReservationController@roomReservation');
+Route::post('room_availability', 'RoomAvailabilityController@checkRoomAvailability');
+Route::get('my_past_room_reservations', 'RoomReservationController@myPastReservation');
+Route::get('delete_selected_room_type', 'RoomAvailabilityController@delSelectedRoom_type');
+Route::get('my_future_room_reservations', 'RoomReservationController@myFutureReservation');
 
 //halls
-Route::get('halls','PagesController@halls');
-Route::get('hall_availability','HallavailabilityController@check_hall_availability');
-Route::get('book_hall_add','HallavailabilityController@book_hall_add');
-Route::get('cancel_hall_reserv','HallavailabilityController@cancel_hall_reserv');
-Route::get('hall_reserve_final','HallReservationController@HallReservation');
+Route::get('halls', 'PagesController@hallsView');
+Route::get('book_hall_add', 'HallAvailabilityController@addHallsToReserve');
+Route::get('hall_availability', 'HallAvailabilityController@checkHallAvailability');
+Route::get('cancel_hall_reserv', 'HallReservationController@deleteAddedHallReservation');
+Route::get('hall_reserve_final', 'HallReservationController@hallReservation');
+Route::get('my_past_hall_reservations', 'HallReservationController@myPastReservation');
+Route::get('my_future_hall_reservations', 'HallReservationController@myFutureReservation');
 
 
-
+//reservation
+Route::get('myreserv', ['middleware' => 'auth', 'uses' =>'PagesController@myReserve']);
 
 //payment
-Route::get('payment',[
+Route::get('payment', ['middleware' => 'auth', 'uses' =>'PagesController@makePayment']);
 
-    'middleware' => 'auth',
-
-    'uses' =>'PagesController@makePayment']);
-
-
-
+//webmaster views
+Route::get('hall_view', 'WebMasterViewController@hallViewLoad');
+Route::get('room_view','WebMasterViewController@roomViewLoad');
 
 /*
 |
@@ -135,6 +107,9 @@ Route::post('admin_roomtype_upload', 'RoomController@admin_roomtype_upload');
 Route::get('admin_edit_roomtype', 'RoomController@admin_edit_roomtype'); 
 Route::get('admin_roomtype_update', 'RoomController@admin_roomtype_update'); 
 Route::get('admin_check_rnum', 'RoomController@admin_check_rnum'); 
+Route::get('admin_rt_image_del', 'RoomController@admin_rt_image_del'); 
+Route::get('admin_get_room_update_details', 'RoomController@admin_get_room_update_details'); 
+Route::get('admin_save_room_update_details', 'RoomController@admin_save_room_update_details'); 
 
 
 
@@ -151,7 +126,15 @@ Route::get('admin_delRS','RoomController@delRS');
 Route::get('admin_delRF','RoomController@delRF');
 
 Route::get('admin_imageGallery','ImageGalleryController@imageGallery');
+Route::get('admin_webImage_del','ImageGalleryController@admin_webImage_del');
 Route::post('admin_gallery_upload','ImageGalleryController@admin_gallery_upload');
+
+
+Route::get('admin_webGallery','ImageGalleryController@webimageGallery');
+Route::post('admin_web_gallery_upload','ImageGalleryController@admin_webgallery_upload');
+Route::get('admin_homeImage_update','ImageGalleryController@admin_homeImage_update');
+Route::get('get_homeImage_details','ImageGalleryController@get_homeImage_details');
+Route::get('admin_homeImage_del','ImageGalleryController@admin_homeImage_del');
 
  
 
@@ -160,6 +143,9 @@ Route::post('admin_gallery_upload','ImageGalleryController@admin_gallery_upload'
 Route::get('admin_halls','HallController@halls');
 Route::get('admin_get_halls','HallController@admin_get_halls');
 Route::get('admin_hall_add','HallController@admin_hall_add');
+Route::get('admin_edit_hall','HallController@admin_edit_hall');
+Route::get('admin_update_hall','HallController@admin_update_hall');
+Route::get('admin_hall_image_del','HallController@admin_hall_image_del');
 Route::get('admin_delete_hall','HallController@admin_delete_hall');
 Route::post('admin_hall_upload','HallController@admin_hall_upload');
 
@@ -173,7 +159,7 @@ Route::get('/contact',function(){
     return view('Website.contact');
 });
 
-
+Route::get('submit_review','PagesController@submit_review');
 
 /*
 |

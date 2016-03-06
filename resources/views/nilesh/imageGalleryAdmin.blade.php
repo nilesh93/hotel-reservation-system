@@ -16,7 +16,7 @@
 
 @section('title')
 
-Images
+Image Gallery Upload
 @endsection
 
 
@@ -29,7 +29,7 @@ Image Gallery Management
 
 @section('page_buttons')
 
-
+<!-- Image Upload Modal -->
 <div class="profile_img">
 
     <!-- end of image cropping -->
@@ -47,7 +47,7 @@ Image Gallery Management
         <div class="modal fade" id="avatar-modal" aria-hidden="true" aria-labelledby="avatar-modal-label" role="dialog" tabindex="-1">
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
-                    <form class="avatar-form"    enctype="multipart/form-data" action="{{URL::asset('admin_gallery_upload')}}" method="post" id="formID" name="formID">
+                    <form class="avatar-form"    enctype="multipart/form-data"  onsubmit="return upload()" method="post" id="formID" name="formID">
                         <div class="modal-header">
                             <button class="close" data-dismiss="modal" type="button">&times;</button>
                             <h4 class="modal-title" id="avatar-modal-label">Upload Image</h4>
@@ -60,7 +60,7 @@ Image Gallery Management
                                     <input class="avatar-src"  name="avatar_src"   id="avatar_src" type="hidden">
                                     <input class="avatar-data" name="avatar_data"  id="avatar_data"  type="hidden">
                                     <label for="avatarInput">Upload</label>
-                                    <input class="avatar-input btn btn-success"  id="avatarInput" name="avatarInput" type="file">
+                                    <input class="avatar-input btn btn-success"  id="avatarInput" name="avatarInput" type="file" required>
                                 </div>
 
                                 <!-- Crop and preview -->
@@ -76,24 +76,10 @@ Image Gallery Management
                                 </div>
                                 <div class="row avatar-btns">
                                     <div class="col-md-9">
-                                        <!--
-<div class="btn-group">
-<button class="btn btn-primary" data-method="rotate" data-option="-90" type="button" title="Rotate -90 degrees">Rotate Left</button>
-<button class="btn btn-primary" data-method="rotate" data-option="-15" type="button">-15deg</button>
-<button class="btn btn-primary" data-method="rotate" data-option="-30" type="button">-30deg</button>
-<button class="btn btn-primary" data-method="rotate" data-option="-45" type="button">-45deg</button>
-</div>
 
-<div class="btn-group">
-<button class="btn btn-primary" data-method="rotate" data-option="90" type="button" title="Rotate 90 degrees">Rotate Right</button>
-<button class="btn btn-primary" data-method="rotate" data-option="15" type="button">15deg</button>
-<button class="btn btn-primary" data-method="rotate" data-option="30" type="button">30deg</button>
-<button class="btn btn-primary" data-method="rotate" data-option="45" type="button">45deg</button>
-</div>
--->
                                     </div>
                                     <div class="col-md-3">
-                                        <button class="btn btn-primary btn-block avatar-save" type="button" onclick="abc()">Done</button>
+                                        <button class="btn btn-primary btn-block avatar-save" type="submit" >Done</button>
                                     </div>
                                 </div>
 
@@ -140,24 +126,23 @@ Image Gallery Management
     <div class="portlet">
 
         <div class="portlet-body">
-           
-        <legend> Uploaded Images</legend>
-            <div class="row">
-            @foreach($images as $i)
-            <div class="col-sm-4" style="margin-bottom:2%">
-                <img src="{{URL::asset($i->path)}}" alt="image" class="img-responsive">
-<br>
-                <button  class=" col-md-offset-8 col-md-4 btn btn-danger">Remove</button>
-                
-            </div>
 
-            @endforeach
+            <legend> Uploaded Images</legend>
+            <div class="row">
+                @foreach($images as $i)
+                <div class="col-sm-4" style="margin-bottom:2%">
+                    <img src="{{URL::asset($i->path)}}" alt="image" class="img-responsive">
+                    <br>
+                    <button type="button" onclick="del({{$i->id}})" class=" col-md-offset-8 col-md-4 btn btn-danger">Remove</button>
+                </div>
+
+                @endforeach
+
+            </div>
 
         </div>
 
     </div>
-
-</div>
 
 
 
@@ -179,19 +164,53 @@ Image Gallery Management
 
 
 <script>
+
+    var _validFileExtensions = [".jpg", ".jpeg", ".png"];
+
     $('document').ready(function(){
 
         document.getElementById('management').click();
         document.getElementById('IG').setAttribute('class','active');
 
-        //dataLoad();
+        $('#avatarInput').change(function(){
+
+            if (!hasExtension('avatarInput',_validFileExtensions)) {
+
+                swal("Invalid File Type!","Please choose a jpg, jpeg or a png Image.","error");
+                $('#avatarInput').val('');
+                return false;
+            }
+
+
+
+        }); 
 
 
     });
+    function hasExtension(inputID, exts) {
+        var fileName = document.getElementById(inputID).value;
+        return (new RegExp('(' + exts.join('|').replace(/\./g, '\\.') + ')$')).test(fileName);
+    }
+    function upload(){
 
 
+        if (!hasExtension('avatarInput',_validFileExtensions)) {
 
-    function abc(){
+            swal("Invalid File Type!","Please choose a jpg, jpeg or a png Image.","error");
+            return false;
+        }
+
+        swal({
+
+            title: "Uploading...Please wait!",   
+            text: "",   
+            type: "info",  
+            showCancelButton: false,   
+            showConfirmButton: false
+
+
+        });
+
 
         console.log(document.getElementById("avatar_data").value);
 
@@ -216,60 +235,85 @@ Image Gallery Management
 
                 if (data.status === 422) {
 
-                    name_error.html(data.responseJSON.name);
-                    link_error.html(data.responseJSON.link);
-                    image_error.html(data.responseJSON.image);
+                    console.log(data.status);
+                    swal("Upload Failed", "Something went wrong (code: "+data.status+")", "error");
 
                 } else {
+                    console.log(data.status);
 
-                    alert('success');
-                    alert(data.status);
+                    $('#avatar-modal').modal('hide');
+                    swal({   
+                        title: "Uploaded Successfully!",   
+                        text: "Page will reload upon pressing ok.",   
+                        type: "success",  
+                        showCancelButton: false,   
+                        confirmButtonText: "Ok",  
+                        closeOnConfirm: true },
+                         function(){  
+
+
+                        location.reload();
+
+                    });
+
                 }
             }
         });        
 
+        return false;
+    }
+    function del(id){
+
+        swal({   
+            title: "Delete?",   
+            text: "",   
+            type: "warning",   
+            showCancelButton: true,   
+            confirmButtonColor: "#DD6B55",   
+            confirmButtonText: "Delete",   
+            cancelButtonText: "Cancel",   
+            closeOnConfirm: false}, 
+             function(isConfirm){   if (isConfirm) {
+
+
+
+            $.ajax({
+
+                url:"admin_webImage_del",
+                type:"get",
+                data:{id:id},
+                success:function(data){
+
+                    $('#imageModal').modal('hide');
+
+
+                    swal({   
+                        title: "deleted Successfully!",   
+                        text: "Page will reload upon pressing ok.",   
+                        type: "success",  
+                        showCancelButton: false,   
+                        confirmButtonText: "Ok",  
+                        closeOnConfirm: true },
+                         function(){  
+
+
+                        location.reload();
+
+                    });
+                },
+                error:function(err){
+
+                    swal("Something went wrong","code("+err+")","error");
+                }
+
+            });
+
+
+        } });
+
 
     }
 
-
-    /*  $('form').submit(function(e) { // capture submit
-        e.preventDefault();
-        var fd = new FormData(this); // XXX: Neex AJAX2
-
-        // You could show a loading image for example...
-
-        $.ajax({
-          url:  'admin_gallery_upload',
-          xhr: function() { // custom xhr (is the best)
-
-               var xhr = new XMLHttpRequest();
-               var total = 0;
-
-               // Get the total size of files
-               $.each(document.getElementById('avatarInput').files, function(i, file) {
-                      total += file.size;
-               });
-
-               // Called when upload progress changes. xhr2
-               xhr.upload.addEventListener("progress", function(evt) {
-                      // show progress like example
-                      var loaded = (evt.loaded / total).toFixed(2)*100; // percent
-
-                     console.log('Uploading... ' + loaded + '%' );
-               }, false);
-
-               return xhr;
-          },
-          type: 'get',
-          processData: false,
-          contentType: false,
-          data: fd,
-          success: function(data) {
-               // do something...
-               alert('uploaded');
-          }
-        });
-    }); */
 </script>
 
 @endsection

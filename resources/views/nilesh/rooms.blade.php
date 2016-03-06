@@ -230,7 +230,7 @@ ROOM MANAGEMENT
 
                         <div class="col-lg-4"><input placeholder="Enter Room Type Name" class="form-control" type="text" required id="rtname" name="rtname">
                         </div>
-                        <label class="col-lg-2 control-label">Room Code</label>
+                        <label class="col-lg-2 control-label">Type Code</label>
 
                         <div class="col-lg-3"><input placeholder="Enter Short code  " class="form-control" type="text" required id="rtcode" name="rtcode">
                         </div>
@@ -344,7 +344,7 @@ ROOM MANAGEMENT
                     <div class="form-group" id="rateTBL">
 
 
-
+                        <button type="reset" id="resetRT" hidden="true"></button>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-white" data-dismiss="modal">Close</button>
@@ -376,7 +376,7 @@ ROOM MANAGEMENT
         <div class="modal fade" id="avatar-modal" aria-hidden="true" aria-labelledby="avatar-modal-label" role="dialog" tabindex="-1">
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
-                    <form class="avatar-form"    enctype="multipart/form-data" action="{{URL::asset('admin_gallery_upload')}}" method="post" id="formID" name="formID">
+                    <form class="avatar-form"    enctype="multipart/form-data"  onsubmit="return upload()" method="post" id="formID" name="formID">
                         <div class="modal-header">
                             <button class="close" data-dismiss="modal" type="button">&times;</button>
                             <h4 class="modal-title" id="avatar-modal-label">Upload Image</h4>
@@ -396,7 +396,9 @@ ROOM MANAGEMENT
                                 <!-- Crop and preview -->
                                 <div class="row">
                                     <div class="col-md-9">
-                                        <div class="avatar-wrapper"></div>
+                                        <div class="avatar-wrapper">
+                                        
+                                        </div>
                                     </div>
                                     <div class="col-md-3">
                                         <div class="avatar-preview preview-lg" id="lg1"></div>
@@ -409,7 +411,7 @@ ROOM MANAGEMENT
 
                                     </div>
                                     <div class="col-md-3">
-                                        <button class="btn btn-primary btn-block avatar-save" type="button" onclick="upload()">Done</button>
+                                        <button  class="btn btn-primary btn-block avatar-save" type="submit" >Done</button>
                                     </div>
                                 </div>
 
@@ -444,102 +446,161 @@ ROOM MANAGEMENT
             <form class="form-horizontal" id="editRT" onsubmit="return saveEditRT()">
                 <div class="modal-body">
 
+                    <ul class="nav nav-tabs tabs" style="width: 100%;">
+                        <li class="active tab" style="width: 25%;">
+                            <a href="#rmtGI" data-toggle="tab" aria-expanded="true" id="giInfo" > 
+                                <span class="visible-xs"><i class="fa fa-home"></i></span> 
+                                <span class="hidden-xs">General Info</span> 
+                            </a> 
+                        </li> 
+                        <li class="tab" style="width: 25%;"> 
+                            <a href="#rmtImages" data-toggle="tab" aria-expanded="false"> 
+                                <span class="visible-xs"><i class="fa fa-user"></i></span> 
+                                <span class="hidden-xs">Images</span> 
+                            </a> 
+                        </li> 
 
-                    <div class="form-group">
+                    </ul> 
 
-                        <label class="col-lg-2 control-label">Type Name</label>
-
-                        <div class="col-lg-4"><input placeholder="Enter Room Type Name" class="form-control" type="text" required id="rrtname" name="rtname">
-                        </div>
-
-                        <label class="col-lg-1 control-label">  Code</label>
-
-                        <div class="col-lg-2"><input placeholder="Enter Short code for Room Type" class="form-control" type="text" required id="rrtcode" name="rtcode">
-                        </div>
-                        <label class="col-lg-1 control-label"> Rate</label>
-
-
-                        <div class="col-lg-2"><input placeholder="Enter Price" class="form-control" type="text" required id="rrtrate" name="rtrate" pattern="[-+]?[0-9]*\.?[0-9]+" title="Float value needed">
-                        </div>
-                    </div>
-
-
-                    <div class="form-group">
-                        <label class="col-lg-2 control-label">Description</label>
-                        <div class="col-lg-4">
-                            <textarea id="rrtdes" class="form-control"  name="rtdes" placeholder="Description of this Room Type"></textarea>
-                        </div>
-                        <input type="hidden" id="main_id" name="main_id" >
-
-                        <label class="col-lg-1 control-label">Services</label>
-                        <div class="col-md-2">
-                            <?php $rrscount = 100; ?>
-
-                            @if(count($rs) == 0)
-                            <label class="  control-label">  <i>Not available</i> </label>
-
-                            @endif
-
-                            @foreach($rs as $r)
+                    <div class="tab-content"> 
+                        <div class="tab-pane active " id="rmtGI"> 
 
 
-                            <div class="checkbox checkbox-primary">
-                                <input class="service" id="service{{$rrscount}}" name="service{{$rrscount}}" value="{{$r->rs_id}}" type="checkbox">
-                                <label for="service{{$rrscount}}">
-                                    {{ $r->name}}   
-                                </label>
+                            <div class="form-group">
+
+                                <label class="col-lg-2 control-label">Type Name</label>
+
+                                <div class="col-lg-4"><input placeholder="Enter Room Type Name" class="form-control" type="text" required id="rrtname" name="rtname">
+                                </div>
+
+                                <label class="col-lg-2 control-label">  Code</label>
+
+                                <div class="col-lg-4"><input placeholder="Enter Short code for Room Type" class="form-control" type="text" required id="rrtcode" name="rtcode">
+                                </div>
+
                             </div>
 
-                            <?php $rrscount++; ?>
 
-                            @endforeach
-
-                            <input type="text" name="rscount" value="{{$rrscount}}" hidden="true">
-
-                        </div>
-
-                        <label class="col-lg-1 control-label">Furnish</label>
-                        <div class="col-md-2">
-                            <?php $rrfcount = 100; ?>
-
-                            @if(count($rf) == 0)
-                            <label class="  control-label">  <i>Not available</i> </label>
-
-                            @endif
-
-                            @foreach($rf as $f)
+                            <div class="form-group">
+                                <label class="col-lg-2 control-label">Description</label>
+                                <div class="col-lg-10">
+                                    <textarea id="rrtdes" class="form-control"  name="rtdes" placeholder="Description of this Room Type"></textarea>
+                                </div>
+                                <input type="hidden" id="main_id" name="main_id" >
 
 
-                            <div class="checkbox checkbox-primary">
-                                <input class="furnish" id="furnish{{$rrfcount}}" name="furnish{{$rrfcount}}" value="{{$f->rf_id}}" type="checkbox">
-                                <label for="furnish{{$rrfcount}}">
-                                    {{ $f->name}}   
-                                </label>
+                                <div class="form-group" style="margin-top:1%">
+                                    <label class="col-lg-2 control-label">Services</label>
+                                    <div class="col-md-4" style="margin-left:1%">
+                                        <?php $rrscount = 100; ?>
+
+                                        @if(count($rs) == 0)
+                                        <label class="  control-label">  <i>Not available</i> </label>
+
+                                        @endif
+
+                                        @foreach($rs as $r)
+
+
+                                        <div class="checkbox checkbox-primary">
+                                            <input class="service" id="service{{$rrscount}}" name="service{{$rrscount}}" value="{{$r->rs_id}}" type="checkbox">
+                                            <label for="service{{$rrscount}}">
+                                                {{ $r->name}}   
+                                            </label>
+                                        </div>
+
+                                        <?php $rrscount++; ?>
+
+                                        @endforeach
+
+                                        <input type="text" name="rscount" value="{{$rrscount}}" hidden="true">
+
+                                    </div>
+
+                                    <label class="col-lg-2 control-label">Furnish</label>
+                                    <div class="col-md-3">
+                                        <?php $rrfcount = 100; ?>
+
+                                        @if(count($rf) == 0)
+                                        <label class="  control-label">  <i>Not available</i> </label>
+
+                                        @endif
+
+                                        @foreach($rf as $f)
+
+
+                                        <div class="checkbox checkbox-primary">
+                                            <input class="furnish" id="furnish{{$rrfcount}}" name="furnish{{$rrfcount}}" value="{{$f->rf_id}}" type="checkbox">
+                                            <label for="furnish{{$rrfcount}}">
+                                                {{ $f->name}}   
+                                            </label>
+                                        </div>
+
+                                        <?php $rrfcount++; ?>
+
+                                        @endforeach
+
+                                        <input type="text" name="rfcount" value="{{$rrfcount}}" hidden="true">
+
+                                    </div>
+                                </div>
+
+
+
+
+
                             </div>
 
-                            <?php $rrfcount++; ?>
+                            <div class="form-group">
 
-                            @endforeach
+                                <label class="col-lg-2 control-label">Booking</label>
+                                <div class="col-md-3" id="mealErr1">
 
-                            <input type="text" name="rfcount" value="{{$rrfcount}}" hidden="true">
+                                    <select class=" form-control" id="rtmeal1" name="rtmeal">
+                                        <option value="0">Select Option </option>
+                                        @foreach($meals as $m)
+                                        <option value="{{$m->meal_type_id}}" data-name="{{$m->meal_type_name}}">{{$m->meal_type_name}} </option>
+
+                                        @endforeach    
+                                    </select>
+                                    <span id="helpBlock2" class="help-block">Booking Type required.</span>
+
+                                </div>
+                                <label class="col-lg-1 control-label">Rate</label>
+
+                                <div class="col-lg-3" id="rateErr1"><input placeholder="Enter Price" class="form-control" type="text"   id="rtrate1" name="rtrate"   title="Float value needed" aria-describedby="helpBlock2">
+                                    <span id="helpBlock2" class="help-block">A Float value is required.</span>
+                                </div>
+
+                                <div class="col-md-2">
+
+                                    <button  type="button" class="btn btn-success btn-block" onclick="rateAddEdit()">Add</button>
+                                </div>
+                            </div>
+
+                            <div class="form-group" id="rateTBL1">
+
+
+
+                            </div>
 
                         </div>
 
 
 
+                        <input type="hidden" name="data1" id="data2">
+
+                        <div class="tab-pane" id="rmtImages"> 
+
+
+                            <div class="form-group"  id="img_load">
 
 
 
+
+                            </div>
+                        </div>
                     </div>
-
-                    <legend> Uploaded Images</legend>
-                    <div class="form-group"  id="img_load">
-
-
-
-
-                    </div>
-
 
                     <div class="modal-footer">
                         <button type="button" class="btn btn-white" data-dismiss="modal">Close</button>
@@ -549,6 +610,84 @@ ROOM MANAGEMENT
 
             </form>
         </div>
+    </div>
+</div>
+<div class="modal inmodal fade" id="editRoom" tabindex="-1" role="dialog"  aria-hidden="true">
+    <div class="modal-dialog ">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title">Edit A Room</h4>
+
+            </div>
+            <form class="form-horizontal" id="editR" onsubmit="return updateR()">
+                <div class="modal-body">
+
+
+
+
+                    <div class="form-group">
+                        <label class="col-lg-3 control-label">Room Type</label>
+
+                        <div class="col-lg-9"> <select class="form-control" onchange="getRoomNum(this.value)" id="rtype1" name="rtype" required>
+
+
+
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+
+                        <label class="col-lg-3 control-label">Room No</label>
+
+                        <div class="col-lg-9"><input placeholder="Enter Room Number" class="form-control" type="text" required id="rnum1" name="rnum" required onchange="checknum(this.value,this)">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+
+                        <label class="col-lg-3 control-label">Size (SqFt)</label>
+
+                        <div class="col-lg-9"><input type="text" placeholder="Enter Room Size" class="form-control" type="text" required id="rsize1" name="rsize" pattern="[-+]?[0-9]*\.?[0-9]+" title="Float value needed" >
+
+                        </div>               
+                    </div>
+
+                    <input type="text"  id="max1" name="max" hidden="true">
+
+                    <div class="form-group">
+                        <label class="col-lg-3 control-label">Status</label>
+
+                        <div class="col-lg-9"> <select class="form-control" id="rstatus1" name="rstatus">
+                            <option value="AVAILABLE">Availabale</option>
+                            <option value="PENDING">Pending</option>
+
+
+                            </select>
+                        </div>
+                    </div>
+
+
+                    <input id="room_id" name="id" hidden="true">
+                    <div class="form-group">
+                        <label class="col-lg-3 control-label">Remarks</label>
+
+                        <div class="col-lg-9"><textarea placeholder="Any special Comments?" class="form-control" type="text" required id="rremarks1" name="rremarks"> </textarea>
+                        </div>
+                    </div>
+
+
+
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-white" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Save changes</button>
+                </div>
+                </div>
+
+            </form>
     </div>
 </div>
 
@@ -567,6 +706,8 @@ ROOM MANAGEMENT
 
 
     var tempRates = [];
+    var tempRatesEdit = [];
+    var _validFileExtensions = [".jpg", ".jpeg", ".png"];
 
 
     function rateAdd(){
@@ -611,8 +752,48 @@ ROOM MANAGEMENT
 
         tableLoad();
     }
+    function rateAddEdit(){
+        var rate = $('#rtrate1').val();
+        var meal = $('#rtmeal1').val();
+        var name = $('#rtmeal1').children('option:selected').data('name');
+        var patt = new RegExp("[-+]?[0-9]*\.?[0-9]+");
 
 
+
+        if(meal === null || meal == "0"){
+            $('#mealErr1').addClass("has-error");
+            return false;
+
+        }else{
+            $('#mealErr1').removeClass("has-error");
+
+        }
+        if(!patt.test(rate)){
+
+            $('#rateErr1').addClass("has-error");
+            return false;
+        }else{
+            $('#rateErr1').removeClass("has-error");
+
+        }
+
+
+
+        $('#rtrate1').val("");
+
+        $("#rtmeal1 option[value='"+ meal + "']").attr("disabled","disabled");
+        // $(" #rtmeal option:selected").removeAttr("selected");
+        $("#rtmeal1").val("0");
+        tempRatesEdit.push({
+
+            rate: rate,
+            meal : meal,
+            name : name
+
+        });
+
+        tableLoadEdit();
+    }
     function tableLoad(){
         if(tempRates.length >0 ){
 
@@ -620,7 +801,7 @@ ROOM MANAGEMENT
 
             for(var i = 0; i<tempRates.length ; i++){
 
-                body += "<tr> <td> "+(i+1)+" </td> <td> "+tempRates[i].name+"</td>  <td>"+tempRates[i].rate+" </td> <td> <button class='btn btn-danger btn-block btn-sm' onclick='delTemp("+i+","+tempRates[i].meal+")'> Delete </button></td>    </tr>";
+                body += "<tr> <td> "+(i+1)+" </td> <td> "+tempRates[i].name+"</td>  <td>"+parseFloat(tempRates[i].rate).toFixed(2)+" </td> <td> <button class='btn btn-danger btn-block btn-sm' onclick='delTemp("+i+","+tempRates[i].meal+")'> Delete </button></td>    </tr>";
 
             }
 
@@ -633,7 +814,26 @@ ROOM MANAGEMENT
         }
 
     }
+    function tableLoadEdit(){
+        if(tempRatesEdit.length >0 ){
 
+            var body ="<table class='table table-hover table-striped'> <thead> <th>#</th> <th> Meal Type </th>    <th>Rate (Rs.) </th> <th class='col-md-1'> </th> </thead> <tbody>  ";
+
+            for(var i = 0; i<tempRatesEdit.length ; i++){
+
+                body += "<tr> <td> "+(i+1)+" </td> <td> "+tempRatesEdit[i].name+"</td>  <td>"+parseFloat(tempRatesEdit[i].rate).toFixed(2)+" </td> <td> <button class='btn btn-danger btn-block btn-sm' onclick='delTemp1("+i+","+tempRatesEdit[i].meal+")'> Delete </button></td>    </tr>";
+
+            }
+
+            body+= "</tbody> </table>";
+            document.getElementById("rateTBL1").innerHTML = body;
+        }else{
+
+
+            document.getElementById("rateTBL1").innerHTML = '<div class="alert alert-warning alert-dismissable">  No rates Added Yet. Please Add rates </div>';
+        }
+
+    }
     function delTemp(index,id){
 
         tempRates.splice(index,1);
@@ -641,11 +841,31 @@ ROOM MANAGEMENT
 
         tableLoad();
     }
+    function delTemp1(index,id){
 
+        tempRatesEdit.splice(index,1);
+        $("#rtmeal1 option[value='"+ id + "']").removeAttr("disabled","disabled");
+
+        tableLoadEdit();
+    }
     $('document').ready(function(){
 
         document.getElementById('management').click();
         document.getElementById('RM').setAttribute('class','active');
+        
+          $('#avatarInput').change(function(){
+
+            if (!hasExtension('avatarInput',_validFileExtensions)) {
+
+                swal("Invalid File Type!","Please choose a jpg, jpeg or a png Image.","error");
+                $('#avatarInput').val('');
+                return false;
+            }
+
+
+
+        }); 
+
 
         dataLoad();
         loadTypes();
@@ -653,7 +873,6 @@ ROOM MANAGEMENT
         tableLoad();
 
     });
-
     function dataLoad(){
 
         var oTable = $('#dd').DataTable();
@@ -739,7 +958,6 @@ ROOM MANAGEMENT
 
 
     }
-
     function insertR(){
 
 
@@ -765,7 +983,6 @@ ROOM MANAGEMENT
 
 
     }
-
     function addimg(id){
 
         $('#imgLoad').click();
@@ -774,8 +991,6 @@ ROOM MANAGEMENT
 
 
     }
-
-
     function editRT(id){
 
         console.log(id);
@@ -796,15 +1011,32 @@ ROOM MANAGEMENT
 
                 if(data.rate.length > 0){
 
-                    $('#rrtrate').val(data.rate[0].single_rates);
-                }else{
+
+                    tempRatesEdit = [];
+
+                    console.log(data.rate);
+                    for(var a = 0; a<data.rate.length; a++){
 
 
-                    $('#rrtrate').val("");
+                        $("#rtmeal1 option[value='"+ data.rate[a].meal_type_id + "']").attr("disabled","disabled");
+                        // $(" #rtmeal option:selected").removeAttr("selected");
+                        $("#rtmeal1").val("");
+                        tempRatesEdit.push({
 
-                }
+                            rate: data.rate[a].single_rates,
+                            meal : data.rate[a].meal_type_id,
+                            name : data.rate[a].meal
+
+                        });
+
+
+                    }
+                    tableLoadEdit();
+
+                } 
 
                 $('#editRoomT').modal('show');
+                $('#giInfo').click();
 
                 for(var i = 0; i<data.rf.length; i++){
 
@@ -828,7 +1060,7 @@ ROOM MANAGEMENT
                     body+= '    <div class="col-sm-4" style="margin-bottom:2%">'+
                         '<img src="'+data.images[t].path+'" alt="image" class="img-responsive">'+
                         '<br>'+
-                        '<button class=" col-md-offset-8 col-md-4 btn btn-danger">Remove</button>'+
+                        '<button type="button" onclick="delImage('+data.images[t].room_image_id+','+data.images[t].room_type_id+')" class=" col-md-offset-8 col-md-4 btn btn-danger">Remove</button>'+
 
                         ' </div>';
                 }
@@ -851,12 +1083,10 @@ ROOM MANAGEMENT
 
 
     }
-
-
     function saveEditRT(){
 
         //admin_roomtype_update
-
+        $('#data2').val(JSON.stringify(tempRatesEdit));
         console.log('admin_roomtype_add?'+ $('#editRT').serialize());
         $.ajax({
             type: "get",
@@ -880,10 +1110,27 @@ ROOM MANAGEMENT
         return false;
 
     }
-
     function upload(){
 
 
+           if (!hasExtension('avatarInput',_validFileExtensions)) {
+
+            swal("Invalid File Type!","Please choose a jpg, jpeg or a png Image.","error");
+            return false;
+        }
+
+        swal({
+
+            title: "Uploading...Please wait!",   
+            text: "",   
+            type: "info",  
+            showCancelButton: false,   
+            showConfirmButton: false
+
+
+        });
+
+        
         console.log(document.getElementById("avatar_data").value);
 
         var f =   new FormData();
@@ -911,26 +1158,78 @@ ROOM MANAGEMENT
                     name_error.html(data.responseJSON.name);
                     link_error.html(data.responseJSON.link);
                     image_error.html(data.responseJSON.image);
+                     swal("Upload Failed", "Something went wrong (code: "+data.status+")", "error");
+
 
                 } else {
                     $('#avatar-modal').modal('hide');
                     swal("success","Image Successfully Uploaded","success");
                     console.log(data.status);
-                    $('.avatar-wrapper').html("");
-                    $('.avatar-preview').html("");
+                   $('.avatar-wrapper img').removeAttr('src');
+                    //$('.avatar-preview').html("");
                     $('#avatarInput').val("");
+                    
+                    ('#avatarInput').fireEvent("onchange");
                 }
             }
         });  
 
 
 
+return false;
+
+    }  
+    function hasExtension(inputID, exts) {
+        var fileName = document.getElementById(inputID).value;
+        return (new RegExp('(' + exts.join('|').replace(/\./g, '\\.') + ')$')).test(fileName);
+    }
+    function delImage(id,originalid){
+
+        $.ajax({
+
+            url:"admin_rt_image_del",
+            type:"get",
+            data:{
+                id:id,
+                type_id:originalid
+            },
+            success:function(data){
+
+                var body = "";
+
+                for(var t=0; t< data.images.length ; t++){
+
+
+                    body+= '<div class="col-sm-4" style="margin-bottom:2%">'+
+                        '<img src="'+data.images[t].path+'" alt="image" class="img-responsive">'+
+                        '<br>'+
+                        '<button type="button" onclick="delImage('+data.images[t].room_image_id+','+data.images[t].room_type_id+')" class=" col-md-offset-8 col-md-4 btn btn-danger">Remove</button>'+
+
+                        ' </div>';
+                }
+                if(data.images.length == 0){
+
+                    body = '<div class="alert alert-danger alert-dismissable">  Sorry No Images Avaialble. </div>';
+
+                }
+                console.log(body);
+                document.getElementById("img_load").innerHTML = body;
+                console.log(data);
+            },
+            error: function (err){
+
+
+                swal("Something went wrong","code("+err+")","error");
+            }
+
+
+
+        });
+
+
 
 
     }
-
-
-
     function insertRT(){
 
         $('#data1').val(JSON.stringify(tempRates));
@@ -949,6 +1248,8 @@ ROOM MANAGEMENT
                     loadTypes();
                     $('#updateRTReset').click();
                     tempRates = [];
+                    tableLoad();
+                    $("#resetRT").click();
 
                 },
                 error: function(xhr, ajaxOptions, thrownError) {
@@ -985,6 +1286,7 @@ ROOM MANAGEMENT
 
                 }
                 document.getElementById("rtype").innerHTML = body;
+                document.getElementById("rtype1").innerHTML = body;
 
             },
             error: function(xhr, ajaxOptions, thrownError) {
@@ -995,7 +1297,6 @@ ROOM MANAGEMENT
 
 
     }
-
     function delRT(id){
 
 
@@ -1038,8 +1339,6 @@ ROOM MANAGEMENT
 
 
     }
-
-
     function del(id){
 
 
@@ -1082,14 +1381,12 @@ ROOM MANAGEMENT
 
 
     }
-
     function delCancel(id){
 
         swal('Cannot delete!', 'Room type cannot be deleted because there are rooms associated with this room type. Please delete them or change them first!', 'error');
 
 
     }
-
     function getRoomNum(id){
 
         if(id == 0){
@@ -1125,7 +1422,6 @@ ROOM MANAGEMENT
 
 
     }
-
     function checknum(id,element){
 
         $.ajax({
@@ -1145,6 +1441,66 @@ ROOM MANAGEMENT
         });
 
     }
+    function edit(id){
+        
+        $('#room_id').val(id);
+        
+        $.ajax({
+            url:"admin_get_room_update_details",
+            type:"get",
+            data:{id:id},
+            success:function(data){
+                
+                $('#rtype1').val(data.room_type_id);
+                $('#rnum1').val(data.room_num);
+                $('#rsize1').val(data.room_size);
+                $('#rstatus1').val(data.status);
+                $('#rremarks1').val(data.remarks);
+                
+                $('#editRoom').modal('show');
+            },
+            error:function(err){
+                
+                
+                swal("Somethi went wrong!","code("+err+").","error");
+                 
+            }
+            
+            
+        });
+        
+        
+        
+        
+    } 
+    function updateR(){
+        
+           $.ajax({
+            url:"admin_save_room_update_details",
+            type:"get",
+            data:$('#editR').serialize(),
+            success:function(data){
+                
+          
+                
+                $('#editRoom').modal('hide');
+                swal("successfully Updated","","success");
+                dataLoad();
+            },
+            error:function(err){
+                
+                
+                swal("Somethi went wrong!","code("+err+").","error");
+                 
+            }
+            
+            
+        });
+        
+        return false;
+    }
+    
+    
 
 </script>
 
