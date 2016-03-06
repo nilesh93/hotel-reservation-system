@@ -19,6 +19,36 @@ use File;
 class HallController extends Controller
 {
 
+    /*
+   |--------------------------------------------------------------------------
+   | Hall  Controller
+   |--------------------------------------------------------------------------
+   |
+   |This controller provides functions regarding hall management functions.
+   |
+   |
+   */
+
+
+    /**
+     * Constructor for the UserController class. Checks if a user has sufficient permission
+     * to access the Admin area.
+     *
+     */
+    public function __construct()
+    {
+        // Check if User is Authenticated
+        $this->middleware('auth', ['except' => ['blockNotice']]);
+
+        // Check if the authenticated user is an admin
+        $this->middleware('isAdmin', ['except' => ['blockNotice']]);
+    }
+
+    /**
+     * Views the hall management admin view
+     *
+     * @return $this
+     */
     public function halls(){
 
 
@@ -28,7 +58,12 @@ class HallController extends Controller
 
     }
 
-
+    /**
+     * Gets all the hall information
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function admin_get_halls(Request $request){
 
         $halls = Hall::all();
@@ -37,6 +72,11 @@ class HallController extends Controller
 
     }
 
+    /**
+     * Adds a hall to the system
+     *
+     * @param Request $request
+     */
     public function admin_hall_add(Request $request){
 
         $hall = new Hall;
@@ -78,7 +118,12 @@ class HallController extends Controller
 
 
     }
-    
+
+    /**
+     * updates a hall in the system
+     *
+     * @param Request $request
+     */
     public function admin_update_hall(Request $request){
         
         $hall = Hall::find(Input::get('id'));
@@ -126,6 +171,13 @@ class HallController extends Controller
         
         
     }
+
+    /**
+     * get hall information of a specifc hall for view or update
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function admin_edit_hall(Request $request){
         
         $hall = Hall::find($request->input('id'));
@@ -136,7 +188,12 @@ class HallController extends Controller
         return response()->json(['hall'=>$hall, 'hs'=> $hs, 'images'=> $images, 'hr'=>$hr]);
         
     }
-    
+
+    /**
+     * deletes a hall
+     *
+     * @param Request $request
+     */
     public function admin_delete_hall(Request $request){
         
         $hall = Hall::find($request->input('id'));
@@ -146,6 +203,7 @@ class HallController extends Controller
         
         
     }
+
 
     public function getHallServices(){
         return view('nilesh.hallServices');
@@ -175,6 +233,12 @@ class HallController extends Controller
 
         $service->delete();
     }
+
+    /**
+     * upload hall image via AJAX
+     *
+     * @param Request $request
+     */
 
     public function admin_hall_upload(Request $request){
         
@@ -214,7 +278,13 @@ class HallController extends Controller
         
         
     }
-    
+
+    /**
+     * Delete hall image via AJAX
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     
     public function admin_hall_image_del(Request $request){
         

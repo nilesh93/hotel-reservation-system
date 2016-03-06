@@ -16,6 +16,36 @@ use File;
 class ImageGalleryController extends Controller
 {
 
+    /*
+   |--------------------------------------------------------------------------
+   | Image Gallery Controller
+   |--------------------------------------------------------------------------
+   |
+   |This controller provides functions to upload image, according
+   |to that upload/delete gallery images and home images.
+   |
+   */
+
+    /**
+     * Constructor for the UserController class. Checks if a user has sufficient permission
+     * to access the Admin area.
+     *
+     */
+    public function __construct()
+    {
+        // Check if User is Authenticated
+        $this->middleware('auth', ['except' => ['blockNotice']]);
+
+        // Check if the authenticated user is an admin
+        $this->middleware('isAdmin', ['except' => ['blockNotice']]);
+    }
+
+
+    /**
+     * return admin image gallery management
+     *
+     * @return $this
+     */
 
     public function imageGallery(){
 
@@ -28,7 +58,11 @@ class ImageGalleryController extends Controller
     }
 
 
-
+    /**
+     * upload gallery image via AJAX
+     *
+     * @param Request $request
+     */
 
     public function admin_gallery_upload(Request $request){
 
@@ -68,6 +102,13 @@ class ImageGalleryController extends Controller
 
     }
 
+    /**
+     * return Home gallery image management View
+     *
+     * @return $this
+     *
+     */
+
     public function webimageGallery(){
 
         $images = HOME_GALLERY::all();
@@ -77,6 +118,12 @@ class ImageGalleryController extends Controller
 
     }
 
+    /**
+     * Home gallery image upload via ajax
+     *
+     * @param Request $request
+     *
+     */
 
     public function  admin_webgallery_upload(Request $request){
 
@@ -118,6 +165,13 @@ class ImageGalleryController extends Controller
 
     }
 
+    /**
+     * update Home gallery image captions
+     *
+     * @param Request $request
+     *
+     */
+
     public function admin_homeImage_update(Request $request){
 
         $imgGal = HOME_GALLERY::find(Input::get("id"));
@@ -130,6 +184,14 @@ class ImageGalleryController extends Controller
 
     }
 
+    /**
+     *get home gallery details before updating or editing
+     *
+     * @param Request $request
+     * @return mixed
+     *
+     */
+
     public function get_homeImage_details(Request $request){
 
 
@@ -139,6 +201,12 @@ class ImageGalleryController extends Controller
 
     }
 
+    /**
+     * delete home gallery image
+     *
+     * @param Request $request
+     *
+     */
     public function admin_homeImage_del(Request $request){
 
 
@@ -151,6 +219,13 @@ class ImageGalleryController extends Controller
         $imgGal->delete();
 
     }
+
+    /**
+     * delete web gallery image
+     *
+     * @param Request $request
+     *
+     */
 
     public function admin_webImage_del(Request $request){
 
