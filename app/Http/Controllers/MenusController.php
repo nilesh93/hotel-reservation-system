@@ -123,6 +123,20 @@ class MenusController extends Controller
     }
 
     /**
+     * When adding a Menu Item, this function checks if the name of the item is available in the menu.
+     *
+     * @param Request $request
+     * @return mixed
+     */
+    public function getCheckavailability(Request $request){
+        $rowno = $request->input('menu_number');
+        $item_name = $request->input('item_name');
+        $result = DB::table('detailed_menus')->where('menu_id',$rowno)->where('item_name',$item_name)->count();
+        return $result;
+
+    }
+
+    /**
      * Insert a new Menu and return the row number of the new entry.
      *
      * @param Request $request
@@ -177,6 +191,18 @@ class MenusController extends Controller
         $row=$request->input('row');
 
         DB::table('menus')->where('menu_id',$row)->update(array('category'=> $category,'description'=> $description,'rate'=> $rate));
+    }
+
+    /**
+     * This function inserts the uploaded image path to the Menus database.
+     *
+     * @param Request $request
+     */
+    public function getAddimagepath(Request $request){
+        $imagepath = $request->input('imagepath');
+        $fname = $request->input('fname');
+        DB::table('menus')->where('menu_id',$fname)->update(array('imagepath'=>$imagepath));
+
     }
 
     /**

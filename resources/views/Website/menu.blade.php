@@ -62,13 +62,13 @@ Menus
 		@foreach($menus as $m)
 <div class="col-md-4">
  <div class="head-v5-sliderbox">
-				<img src="img/tmp/{{$m->menu_id}}.jpg" alt="themesgravity">
+				<img src="{{$m->imagepath}}" alt="themesgravity">
 				<br>
 				<br>
 				<h4>{{$m->category}}</h4>
 				<p>{{$m->description}}</p>
 	 <!--<h5>Rs. {{$m->rate}} Onwards</h5> -->
-				<a href="#">Download Menu</a><span> or </span><a href="#">Read More</a>
+				<a href="{{$m->imagepath}}" download>Download Menu</a>
 			</div>
 
 </div>

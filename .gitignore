@@ -7,6 +7,8 @@ Homestead.json
 /.idea
 /config/database.php
 /public/img/tmp
+/uploads
+/img
 .DS_Store
 
 
