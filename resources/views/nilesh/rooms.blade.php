@@ -612,6 +612,84 @@ ROOM MANAGEMENT
         </div>
     </div>
 </div>
+<div class="modal inmodal fade" id="editRoom" tabindex="-1" role="dialog"  aria-hidden="true">
+    <div class="modal-dialog ">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title">Edit A Room</h4>
+
+            </div>
+            <form class="form-horizontal" id="editR" onsubmit="return updateR()">
+                <div class="modal-body">
+
+
+
+
+                    <div class="form-group">
+                        <label class="col-lg-3 control-label">Room Type</label>
+
+                        <div class="col-lg-9"> <select class="form-control" onchange="getRoomNum(this.value)" id="rtype1" name="rtype" required>
+
+
+
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+
+                        <label class="col-lg-3 control-label">Room No</label>
+
+                        <div class="col-lg-9"><input placeholder="Enter Room Number" class="form-control" type="text" required id="rnum1" name="rnum" required onchange="checknum(this.value,this)">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+
+                        <label class="col-lg-3 control-label">Size (SqFt)</label>
+
+                        <div class="col-lg-9"><input type="text" placeholder="Enter Room Size" class="form-control" type="text" required id="rsize1" name="rsize" pattern="[-+]?[0-9]*\.?[0-9]+" title="Float value needed" >
+
+                        </div>               
+                    </div>
+
+                    <input type="text"  id="max1" name="max" hidden="true">
+
+                    <div class="form-group">
+                        <label class="col-lg-3 control-label">Status</label>
+
+                        <div class="col-lg-9"> <select class="form-control" id="rstatus1" name="rstatus">
+                            <option value="AVAILABLE">Availabale</option>
+                            <option value="PENDING">Pending</option>
+
+
+                            </select>
+                        </div>
+                    </div>
+
+
+                    <input id="room_id" name="id" hidden="true">
+                    <div class="form-group">
+                        <label class="col-lg-3 control-label">Remarks</label>
+
+                        <div class="col-lg-9"><textarea placeholder="Any special Comments?" class="form-control" type="text" required id="rremarks1" name="rremarks"> </textarea>
+                        </div>
+                    </div>
+
+
+
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-white" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Save changes</button>
+                </div>
+                </div>
+
+            </form>
+    </div>
+</div>
 
 
 @endsection
@@ -716,8 +794,6 @@ ROOM MANAGEMENT
 
         tableLoadEdit();
     }
-
-
     function tableLoad(){
         if(tempRates.length >0 ){
 
@@ -758,8 +834,6 @@ ROOM MANAGEMENT
         }
 
     }
-
-
     function delTemp(index,id){
 
         tempRates.splice(index,1);
@@ -774,7 +848,6 @@ ROOM MANAGEMENT
 
         tableLoadEdit();
     }
-
     $('document').ready(function(){
 
         document.getElementById('management').click();
@@ -800,7 +873,6 @@ ROOM MANAGEMENT
         tableLoad();
 
     });
-
     function dataLoad(){
 
         var oTable = $('#dd').DataTable();
@@ -886,7 +958,6 @@ ROOM MANAGEMENT
 
 
     }
-
     function insertR(){
 
 
@@ -912,7 +983,6 @@ ROOM MANAGEMENT
 
 
     }
-
     function addimg(id){
 
         $('#imgLoad').click();
@@ -921,8 +991,6 @@ ROOM MANAGEMENT
 
 
     }
-
-
     function editRT(id){
 
         console.log(id);
@@ -1015,8 +1083,6 @@ ROOM MANAGEMENT
 
 
     }
-
-
     function saveEditRT(){
 
         //admin_roomtype_update
@@ -1044,7 +1110,6 @@ ROOM MANAGEMENT
         return false;
 
     }
-
     function upload(){
 
 
@@ -1100,9 +1165,11 @@ ROOM MANAGEMENT
                     $('#avatar-modal').modal('hide');
                     swal("success","Image Successfully Uploaded","success");
                     console.log(data.status);
-                    $('.avatar-wrapper').html("");
-                    $('.avatar-preview').html("");
+                   $('.avatar-wrapper img').removeAttr('src');
+                    //$('.avatar-preview').html("");
                     $('#avatarInput').val("");
+                    
+                    ('#avatarInput').fireEvent("onchange");
                 }
             }
         });  
@@ -1111,9 +1178,7 @@ ROOM MANAGEMENT
 
 return false;
 
-    }
-
-    
+    }  
     function hasExtension(inputID, exts) {
         var fileName = document.getElementById(inputID).value;
         return (new RegExp('(' + exts.join('|').replace(/\./g, '\\.') + ')$')).test(fileName);
@@ -1165,7 +1230,6 @@ return false;
 
 
     }
-
     function insertRT(){
 
         $('#data1').val(JSON.stringify(tempRates));
@@ -1222,6 +1286,7 @@ return false;
 
                 }
                 document.getElementById("rtype").innerHTML = body;
+                document.getElementById("rtype1").innerHTML = body;
 
             },
             error: function(xhr, ajaxOptions, thrownError) {
@@ -1232,7 +1297,6 @@ return false;
 
 
     }
-
     function delRT(id){
 
 
@@ -1275,8 +1339,6 @@ return false;
 
 
     }
-
-
     function del(id){
 
 
@@ -1319,14 +1381,12 @@ return false;
 
 
     }
-
     function delCancel(id){
 
         swal('Cannot delete!', 'Room type cannot be deleted because there are rooms associated with this room type. Please delete them or change them first!', 'error');
 
 
     }
-
     function getRoomNum(id){
 
         if(id == 0){
@@ -1362,7 +1422,6 @@ return false;
 
 
     }
-
     function checknum(id,element){
 
         $.ajax({
@@ -1382,6 +1441,66 @@ return false;
         });
 
     }
+    function edit(id){
+        
+        $('#room_id').val(id);
+        
+        $.ajax({
+            url:"admin_get_room_update_details",
+            type:"get",
+            data:{id:id},
+            success:function(data){
+                
+                $('#rtype1').val(data.room_type_id);
+                $('#rnum1').val(data.room_num);
+                $('#rsize1').val(data.room_size);
+                $('#rstatus1').val(data.status);
+                $('#rremarks1').val(data.remarks);
+                
+                $('#editRoom').modal('show');
+            },
+            error:function(err){
+                
+                
+                swal("Somethi went wrong!","code("+err+").","error");
+                 
+            }
+            
+            
+        });
+        
+        
+        
+        
+    } 
+    function updateR(){
+        
+           $.ajax({
+            url:"admin_save_room_update_details",
+            type:"get",
+            data:$('#editR').serialize(),
+            success:function(data){
+                
+          
+                
+                $('#editRoom').modal('hide');
+                swal("successfully Updated","","success");
+                dataLoad();
+            },
+            error:function(err){
+                
+                
+                swal("Somethi went wrong!","code("+err+").","error");
+                 
+            }
+            
+            
+        });
+        
+        return false;
+    }
+    
+    
 
 </script>
 

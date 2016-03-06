@@ -136,7 +136,7 @@ Web Home Gallery Management
                 <div class="col-sm-4" style="margin-bottom:2%">
                     <img src="{{URL::asset($i->path)}}" alt="image" class="img-responsive">
                     <br>
-                    <button  class="   col-md-4 btn btn-primary" onclick="editImage('{{ $i->id }}','{{ $i->caption  }}',' {{ $i->caption_desc  }} ')">Edit</button>
+                    <button  class="   col-md-4 btn btn-primary" onclick="editImage('{{ $i->id }}' )">Edit</button>
                     <button type="button" onclick="del({{$i->id}})" class=" col-md-offset-4 col-md-4 btn btn-danger">Remove</button>
 
                 </div>
@@ -318,7 +318,7 @@ Web Home Gallery Management
 
         return false;
     }
-    function editImage(id,caption1,caption2){
+    function editImage(id){
 
         $('#imageIde').val(id);
 

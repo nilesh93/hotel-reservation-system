@@ -218,8 +218,8 @@ class RoomController extends Controller
 
 
         $images = ROOM_IMAGE::where('room_type_id',Input::get("type_id"))->get();
-        
-         return response()->json (['images'=>$images]);
+
+        return response()->json (['images'=>$images]);
 
     }
 
@@ -428,5 +428,27 @@ class RoomController extends Controller
 
     }
 
+    public function admin_get_room_update_details(Request $request){
+
+        $room = Room::find($request->input('id'));
+        return $room;
+
+    }
+    
+    public function admin_save_room_update_details(Request $request){
+        
+        $room = Room::find($request->input('id'));
+        
+        
+        $room->room_num = $request->input('rnum');
+        $room->room_size = $request->input('rsize');
+        $room->sequence_num = $request->input('max');
+        $room->room_type_id = $request->input('rtype'); 
+        $room->status = $request->input('rstatus'); 
+        $room->remarks = $request->input('rremarks');
+        $room->save();
+
+        
+    }
 
 }

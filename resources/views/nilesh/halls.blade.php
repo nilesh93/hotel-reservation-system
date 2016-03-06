@@ -108,7 +108,7 @@ HALL MANAGEMENT
         <div class="modal fade" id="avatar-modal" aria-hidden="true" aria-labelledby="avatar-modal-label" role="dialog" tabindex="-1">
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
-                    <form class="avatar-form"    enctype="multipart/form-data" action="{{URL::asset('admin_gallery_upload')}}" method="post" id="formID" name="formID">
+                    <form class="avatar-form"    enctype="multipart/form-data"  onsubmit="return upload()" method="post" id="formID" name="formID">
                         <div class="modal-header">
                             <button class="close" data-dismiss="modal" type="button">&times;</button>
                             <h4 class="modal-title" id="avatar-modal-label">Upload Image</h4>
@@ -122,7 +122,7 @@ HALL MANAGEMENT
                                     <input class="avatar-data" name="avatar_data"  id="avatar_data"  type="hidden">
                                     <input type="hidden" id="imgid">
                                     <label for="avatarInput">Upload</label>
-                                    <input class="avatar-input btn btn-success"  id="avatarInput" name="avatarInput" type="file">
+                                    <input class="avatar-input btn btn-success"  id="avatarInput" name="avatarInput" type="file" required>
                                 </div>
 
                                 <!-- Crop and preview -->
@@ -141,7 +141,7 @@ HALL MANAGEMENT
 
                                     </div>
                                     <div class="col-md-3">
-                                        <button class="btn btn-primary btn-block avatar-save" type="button" onclick="upload()">Done</button>
+                                        <button class="btn btn-primary btn-block avatar-save" type="submit"  >Done</button>
                                     </div>
                                 </div>
 
@@ -222,7 +222,40 @@ HALL MANAGEMENT
                         </div>
                     </div>
 
+                          <div class="form-group">
+                        <label class="col-lg-3 control-label">Services</label>
+                        <div class="col-lg-9">
+ 
+                            <div class="">
+                                <?php $rscount = 0; ?>
 
+                                @if(count($hs) == 0)
+                                <label class="  control-label">  <i>Not available</i> </label>
+
+                                @endif
+
+                                @foreach($hs as $h)
+
+
+                                <div class="checkbox checkbox-primary">
+                                    <input id="service{{$rscount}}" name="service{{$rscount}}" value="{{$h->hs_id}}" type="checkbox">
+                                    <label for="service{{$rscount}}">
+                                        {{ $h->name}}   
+                                    </label>
+                                </div>
+
+                                <?php $rscount++; ?>
+
+                                @endforeach
+
+                                <input type="text" name="hscount" value="{{$rscount}}" hidden="true">
+
+                            </div>
+
+
+                            
+                        </div>
+                    </div>
 
                     <div class="form-group">
                         <label class="col-lg-3 control-label">Remarks</label>
@@ -260,6 +293,13 @@ HALL MANAGEMENT
 <script src="{{ URL::asset('CustomJs/hallImg.js') }}"></script>
 
 <script>
+    
+        var _validFileExtensions = [".jpg", ".jpeg", ".png"];
+    
+    function hasExtension(inputID, exts) {
+        var fileName = document.getElementById(inputID).value;
+        return (new RegExp('(' + exts.join('|').replace(/\./g, '\\.') + ')$')).test(fileName);
+    }
     $('document').ready(function(){
 
         document.getElementById('management').click();
@@ -355,6 +395,23 @@ HALL MANAGEMENT
     
     function upload(){
 
+        
+        if (!hasExtension('avatarInput',_validFileExtensions)) {
+
+            swal("Invalid File Type!","Please choose a jpg, jpeg or a png Image.","error");
+            return false;
+        }
+
+        swal({
+
+            title: "Uploading...Please wait!",   
+            text: "",   
+            type: "info",  
+            showCancelButton: false,   
+            showConfirmButton: false
+
+
+        });
 
         console.log(document.getElementById("avatar_data").value);
 
@@ -388,14 +445,16 @@ HALL MANAGEMENT
                     $('#avatar-modal').modal('hide');
                     swal("success","Image Successfully Uploaded","success");
                     console.log(data.status);
-                   // $('.avatar-wrapper').html("");
+                   $('.avatar-wrapper img').removeAttr('src');
                     //$('.avatar-preview').html("");
                     $('#avatarInput').val("");
+                    
+                    ('#avatarInput').fireEvent("onchange");
                 }
             }
         });  
 
-
+return false;
 
 
 

@@ -108,6 +108,8 @@ Route::get('admin_edit_roomtype', 'RoomController@admin_edit_roomtype');
 Route::get('admin_roomtype_update', 'RoomController@admin_roomtype_update'); 
 Route::get('admin_check_rnum', 'RoomController@admin_check_rnum'); 
 Route::get('admin_rt_image_del', 'RoomController@admin_rt_image_del'); 
+Route::get('admin_get_room_update_details', 'RoomController@admin_get_room_update_details'); 
+Route::get('admin_save_room_update_details', 'RoomController@admin_save_room_update_details'); 
 
 
 

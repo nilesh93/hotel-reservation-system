@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use App\HALL;
 use App\HALL_IMAGE;
 use App\Hall_Services;
+use App\HALL_SERVICE_JOIN;
 use Image;
 use Input;
 
@@ -18,7 +19,9 @@ class HallController extends Controller
     public function halls(){
 
 
-        return view('nilesh.halls');
+        $hs = Hall_Services::all();
+        return view('nilesh.halls')
+            ->with('hs',$hs);
 
     }
 
@@ -42,6 +45,23 @@ class HallController extends Controller
         $hall->capacity_from       = $request->input('hfrom');    
         $hall->capacity_to     = $request->input('hto');
         $hall->save();
+        
+        
+        
+           for($i = 0; $i<$request->input('hscount'); $i++){
+
+
+            if( $request->input("service".$i) > 0){
+                $rts = new HALL_SERVICE_JOIN;
+
+                $rts->hall_id = $hall->hall_id;
+                $rts->service_id = $request->input("service".$i);
+
+                $rts->save();
+
+            }
+
+        }
 
 
     }
