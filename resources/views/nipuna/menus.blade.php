@@ -159,7 +159,7 @@ Menus
         <div class="modal-dialog ">
             <div class="modal-content">
                 <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <button type="button" class="close" onclick="updateModalClose()" aria-hidden="true">×</button>
                     <h4 class="modal-title">Update Menu</h4>
                 </div>
 
@@ -226,7 +226,7 @@ Menus
                 <div class="modal-footer">
                     <button type="button" onclick="add_menu_item()" class="btn btn-primary"  >Add Item</button>
                     <button type="button" onclick="update_menu()" disabled="true" class="btn btn-primary" id="btnUpdate" name="submit" >Update Menu</button>
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-default" onclick="updateModalClose()">Close</button>
                     </form>
                 </div>
             </div>
@@ -439,6 +439,11 @@ Menus
             }
         }
 
+        function updateModalClose(){
+            $('#update_menus_modal').modal('hide');
+            location.reload();
+        }
+
         /**
          * Changes done to existing menus are sent to the controller via this function.
          */
@@ -540,20 +545,22 @@ Menus
 
             console.log(a);
             var data="row="+a;
-            var dir = "/HOTEL_RESERVATION/public/img/tmp/"+a+".jpg";
-            $('#menuimage').attr('src', dir);
+
 
             $.ajax({
                 type:"get",
                 url:"admin_menus/retrievedetails",
                 data:data,
                 success:function(data){
+                    var dir = "/HOTEL_RESERVATION/public/"+data[0].imagepath;
+                    $('#menuimage').attr('src', dir);
                     //  console.log(data[0].promotion_name);
                     document.getElementById("menu_cat_edit").value = data[0].category;
                     document.getElementById("menu_desc_edit").value = data[0].description;
                     document.getElementById("menu_rate_edit").value = data[0].rate;
                     document.getElementById("menu_number").value = a;
                     detailedMenu(a);
+
                 },
                 complete: function (data) {
                 },

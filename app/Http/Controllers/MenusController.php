@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use DB;
+use \Input as Input;
+
 
 /**
  * Class MenusController
@@ -227,6 +229,32 @@ class MenusController extends Controller
         DB::table('DETAILED_MENUS')->where('id','=',$item_id)->delete();
     }
 
+    public function imageupload(){
+        if(Input::hasFile('file')) {
+            //upload an image to the /img/tmp directory and return the filepath.
+
+            $file = Input::file('file');
+
+            $filetype = $file->getClientOriginalExtension();
+
+            if($filetype == 'jpg' || $filetype == 'jpeg' || $filetype == 'png' || $filetype == 'bmp') {
+
+                $fname = Input::get('fname') . "." . $file->getClientOriginalExtension();
+                $tmpFilePath = '/img/tmp/';
+                $destFilePath = 'img/tmp/';
+
+                $tmpFileName = $fname;
+                $file = $file->move(public_path() . $tmpFilePath, $tmpFileName);
+                $path = $destFilePath . $fname;
+                return response()->json(array('path' => $path), 200);
+            }
+            else{
+                return 0;
+            }
+        } else {
+            return response()->json(false, 200);
+        }
+    }
 
 
 }
