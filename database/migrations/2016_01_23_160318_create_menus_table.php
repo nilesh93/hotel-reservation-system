@@ -17,6 +17,7 @@ class CreateMenusTable extends Migration
             $table->longText('category');
             $table->longText('description');          
             $table->double('rate');
+            $table->longText('imagepath');
         });
     }
 
