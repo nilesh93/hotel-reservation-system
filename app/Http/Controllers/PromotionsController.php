@@ -7,6 +7,9 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use DB;
+use Illuminate\Support\Facades\Mail;
+use Input;
+use Illuminate\Encryption;
 
 /**
  * Class PromotionsController
@@ -15,7 +18,19 @@ use DB;
 class PromotionsController extends Controller
 {
 
+    /**
+     * Constructor for the PromotionsController class. Checks if a user has sufficient permission
+     * to access the Admin area.
+     *
+     */
+    public function __construct()
+    {
+        // Check if User is Authenticated
+        $this->middleware('auth', ['except' => ['blockNotice']]);
 
+        // Check if the authenticated user is an admin
+        $this->middleware('isAdmin', ['except' => ['blockNotice']]);
+    }
     /**
      * Returns the promotions view.
      *
@@ -88,11 +103,17 @@ class PromotionsController extends Controller
         $rate = $request->input('promo_rate');
 
         DB::table('promotions')->insert(array('promotion_name'=> $promotion_name,'promotion_description'=> $promotion_description,'date_from'=> $date_from,'date_to'=> $date_to,'rate'=> $rate));
-        return 1;
 
+        $data = ['promo_name'=>$promotion_name,'promo_desc'=>$promotion_description,'date_from'=>$date_from,'date_to'=>$date_to,'rate'=>$rate];
 
+        $roles = DB::table('users')->lists('email');
+
+        Mail::send('emails.promotionEmail', $data, function ($message) use ($roles) {
+            $message->from(env('MAIL_FROM'), env('MAIL_NAME'));
+
+            $message->to($roles)->subject('New Promotions from Amalya Resorts!!');
+        });
     }
-
 }
 
 

@@ -5,7 +5,12 @@ Homestead.json
 .env
 .idea/
 /.idea
-
+/config/database.php
+/public/img/tmp
+/uploads
+/img
 .DS_Store
 
 
+
+*.jpg

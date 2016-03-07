@@ -12,6 +12,12 @@ use App\RoomService;
 use App\RoomFurnish;
 use App\RoomTypeFurnish;
 use App\RoomTypeService;
+use App\ROOM_IMAGE;
+use App\RATE;
+use App\MEAL_TYPE;
+use Input;
+use Image;
+use File;
 
 
 class RoomController extends Controller
@@ -21,12 +27,13 @@ class RoomController extends Controller
 
     public function rooms(Request $request){
 
-
+        $meals = MEAL_TYPE::all();
         $rs = RoomService::all();
         $rf = RoomFurnish::all();
         return view('nilesh.rooms')
             ->with('rs',$rs)
-            ->with('rf',$rf);
+            ->with('rf',$rf)
+            ->with('meals',$meals);
 
     }
 
@@ -44,7 +51,8 @@ class RoomController extends Controller
     public function getroom_types(Request $request){
 
         $types = DB::select(DB::raw("SELECT A.*,
-        (SELECT COUNT(*) FROM ROOMS WHERE ROOMS.room_type_id = A.room_type_id) as 'count' 
+        (SELECT COUNT(*) FROM ROOMS WHERE ROOMS.room_type_id = A.room_type_id) as 'count' ,
+        IFNULL(TRUNCATE((SELECT C.single_rates FROM `RATES` C WHERE C.room_type_id = A.room_type_id LIMIT 1 ),2),'NOT SET') as rate
         FROM ROOM_TYPES A
         "));
 
@@ -79,10 +87,23 @@ class RoomController extends Controller
         $rt->type_name = $request->input('rtname');
         $rt->description = $request->input('rtdes');
         $rt->type_code = $request->input('rtcode');
-        $rt->services_provided = $request->input('wifi').";".$request->input('tv');
+        //$rt->services_provided = $request->input('wifi').";".$request->input('tv');
 
         $rt->save(); 
 
+
+        $data =  json_decode($request->input('data1'));
+
+
+        foreach($data as $d){
+            $rate = new RATE;
+
+            $rate->meal_type_id = $d->meal;
+            $rate->room_type_id = $rt->room_type_id;
+            $rate->single_rates = $d->rate;
+            $rate->save();
+
+        }
 
         for($i = 0; $i<$request->input('rscount'); $i++){
 
@@ -115,6 +136,90 @@ class RoomController extends Controller
         }
 
 
+
+    }
+    public function admin_roomtype_update(Request $request){
+
+        $rt = RoomType::find($request->input('main_id'));
+
+
+        $rt->type_name = $request->input('rtname');
+        $rt->description = $request->input('rtdes');
+        $rt->type_code = $request->input('rtcode');
+        //$rt->services_provided = $request->input('wifi').";".$request->input('tv');
+
+        $rt->save(); 
+
+
+        $rate =  RATE::where('room_type_id',$request->input('main_id'))->delete();
+
+
+        $data =  json_decode($request->input('data1'));
+
+
+        foreach($data as $d){
+            $rate = new RATE;
+
+            $rate->meal_type_id = $d->meal;
+            $rate->room_type_id = $rt->room_type_id;
+            $rate->single_rates = $d->rate;
+            $rate->save();
+
+        }
+
+        RoomTypeService::where('room_type_id',$request->input('main_id'))->delete();
+
+        RoomTypeFurnish::where('room_type_id',$request->input('main_id'))->delete();
+
+        for($i = 100; $i<$request->input('rscount'); $i++){
+
+
+            if( $request->input("service".$i) > 0){
+                $rts = new RoomTypeService;
+
+                $rts->room_type_id = $rt->room_type_id;
+                $rts->service_id = $request->input("service".$i);
+
+                $rts->save();
+
+            }
+
+        }
+
+
+        for($x = 100; $x< $request->input('rfcount'); $x++){
+
+            if( $request->input("furnish".$x) > 0){
+                $rtf = new RoomTypeFurnish;
+
+                $rtf->room_type_id = $rt->room_type_id;
+                $rtf->furnish_id = $request->input("furnish".$x);
+
+                $rtf->save();
+
+            }
+
+        }
+
+
+
+    }
+
+    public function admin_rt_image_del(Request $request){
+
+
+        $imgGal = ROOM_IMAGE::find(Input::get("id"));
+
+        $path = $imgGal->path;
+
+        File::delete($path);
+
+        $imgGal->delete(); 
+
+
+        $images = ROOM_IMAGE::where('room_type_id',Input::get("type_id"))->get();
+
+        return response()->json (['images'=>$images]);
 
     }
 
@@ -252,5 +357,98 @@ class RoomController extends Controller
 
     }
 
+
+    public function admin_roomtype_upload(Request $request){
+
+
+
+        $img_data = Input::get("img_data");
+        $json = json_decode($img_data);
+
+        $image_real = Input::file('img');
+
+        $img = Image::make( $image_real->getRealPath());
+
+        $imgpath = "uploads/RoomTypeImages/".date('YmdHis').'.'.$image_real->getClientOriginalExtension();
+
+
+        $width = ceil($json->width);
+        $x =  ceil($json->x);
+        $y = ceil($json->y);
+        $height = ceil($json->height);
+
+        $img->crop($width,$height ,$x, $y );
+
+
+        $img->resize(846, null, function ($constraint) {
+            $constraint->aspectRatio();
+        });
+
+        $img->save($imgpath);
+
+        $roomImg = new ROOM_IMAGE;
+
+        $roomImg->path = $imgpath;
+        $roomImg->room_type_id = Input::get("imgid");
+
+        $roomImg->save();
+
+    }
+
+    public function admin_edit_roomtype(Request $request){
+
+        $roomType = RoomType::find($request->input('id'));
+
+        $id = $request->input('id');
+
+        $rate = DB::select(DB::raw("select a.*,
+        (select b.meal_type_name from MEAL_TYPES b  where b.meal_type_id = a.meal_type_id) as meal
+        from RATES a where a.room_type_id = '$id'"));
+        //RATE::where('room_type_id',$request->input('id'))->get();
+
+        $images = ROOM_IMAGE::where('room_type_id',$request->input('id'))->get();
+
+        $rf = RoomTypeFurnish::where('room_type_id',$request->input('id'))->get();
+        $rs = RoomTypeService::where('room_type_id',$request->input('id'))->get();
+
+
+
+
+        return response()->json(['info' => $roomType, 'images' => $images ,'rs' => $rs , 'rf' => $rf, 'rate' => $rate]);
+
+
+    }
+
+
+    public function admin_check_rnum(Request $request){
+
+        $info = Room::where('room_num',$request->input('id'))->count();
+
+        return $info;
+
+    }
+
+    public function admin_get_room_update_details(Request $request){
+
+        $room = Room::find($request->input('id'));
+        return $room;
+
+    }
+    
+    public function admin_save_room_update_details(Request $request){
+        
+        $room = Room::find($request->input('id'));
+        
+        
+        $room->room_num = $request->input('rnum');
+        $room->room_size = $request->input('rsize');
+        $room->sequence_num = $request->input('max');
+        $room->room_type_id = $request->input('rtype'); 
+        $room->status = $request->input('rstatus'); 
+        $room->remarks = $request->input('rremarks');
+        $room->save();
+
+        
+    }
 
 }

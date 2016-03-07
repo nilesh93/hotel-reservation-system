@@ -21,17 +21,21 @@
                 {!! csrf_field() !!}
 
                 @if (count($errors) > 0)
-                    <ul class="list-group">
-                        @foreach ($errors->all() as $error)
-                            <li class="list-group-item text-danger">{{ $error }}</li>
-                        @endforeach
-                    </ul>
+                    <div class="alert alert-danger">
+                        <ul class="list-group list-unstyled">
+                            @foreach ($errors->all() as $error)
+                                <li class="list-group-item-danger">{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
                 @endif
 
                 @if (session('status'))
-                    <ul class="list-group">
-                        <li class="list-group-item text-success">{{ session('status') }}</li>
-                    </ul>
+                    <div class="alert alert-success ">
+                        <ul class="list-group list-unstyled">
+                            <li class="list-group-item-success">{{ session('status') }}</li>
+                        </ul>
+                    </div>
                 @endif
 
                 <div class="form-group">

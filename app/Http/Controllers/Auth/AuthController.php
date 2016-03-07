@@ -56,9 +56,8 @@ class AuthController extends Controller
             'ID'=>'required|size:10',
             'email' => 'required|email|max:255|unique:users',
             'password' => 'required|confirmed|min:6',
-            'telephone'=> 'required|max:15',
+            'telephone'=> 'required|min:10|max:15',
             'address_line1'=>'required',
-            'address_line2'=>'required',
             'city'=>'required',
             'province'=>'required',
             'zipCode'=>'required',
@@ -112,25 +111,25 @@ class AuthController extends Controller
      */
     protected function authenticated()
     {
-        if(Auth::check()){
+        if(Auth::check()) {
             if(Auth::user()->role == "admin") {
 
                 // If user is an admin, last_login_ts field in ADMIN table is updated
                 Admin::where('email', Auth::user()->email)
                     ->update(['last_login_ts' => Carbon::now()]);
 
-                return redirect()->intended('/admin');
+                return redirect()->intended('admin');
             }
-            else{
+            else {
                 $user_email = Auth::user()->email;
                 $block_status = Customer::where('email', $user_email)->first()->block_status;
 
                 // If user has been blocked, user is redirected to a page announcing so.
-                if($block_status == "1"){
+                if($block_status == "1") {
                     Auth::logout();
-                    return redirect('/blocked_user');
+                    return redirect('blocked_user');
                 }
-                else{
+                else {
                     return redirect()->intended('/');
                 }
             }
@@ -163,7 +162,7 @@ class AuthController extends Controller
         // Check if this User is new or already registered.
         $user = User::where('email', $email)->first();
 
-        if($user == null){
+        if($user == null) {
             try{
                 // Creating a User table entry for this user.
                 $user = User::create([
@@ -205,7 +204,7 @@ class AuthController extends Controller
         $block_status = Customer::where('email', $user_email)->first()->block_status;
 
         if($block_status == "1"){
-            return redirect('/blocked_user');
+            return redirect('blocked_user');
         }
         else{
             // Log in the User

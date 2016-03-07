@@ -16,7 +16,8 @@ Rooms
 
 
 @section('page_title')
-ROOM MANAGEMENT
+
+ROOM SERVICES
 
 
 
@@ -124,7 +125,7 @@ ROOM MANAGEMENT
 </div>
 
 
-
+<!-- Add room service -->
 <div class="modal inmodal fade" id="addRSM" tabindex="-1" role="dialog"  aria-hidden="true">
     <div class="modal-dialog ">
         <div class="modal-content">
@@ -143,18 +144,18 @@ ROOM MANAGEMENT
 
                     <div class="form-group">
 
-                        <label class="col-lg-3 control-label">Service Name</label>
+                        <label class="col-lg-4 control-label">Service Name</label>
 
-                        <div class="col-lg-9">
+                        <div class="col-lg-8">
                             <input placeholder="Enter Room Service Name" class="form-control" type="text" required id="rsname" name="rsname" required>
                         </div>
                     </div>
 
                     <div class="form-group">
 
-                        <label class="col-lg-3 control-label"> Additional Price </label>
+                        <label class="col-lg-4 control-label"> Additional Price (Rs.) </label>
 
-                        <div class="col-lg-9">
+                        <div class="col-lg-8">
                             <input type="text" placeholder="If Free, Enter 0" class="form-control" type="text" required id="rsrate" name="rsrate" pattern="[-+]?[0-9]*\.?[0-9]+" title="Float value needed" >
 
                         </div>               
@@ -174,6 +175,7 @@ ROOM MANAGEMENT
             </form>
     </div>
 </div>
+<!-- Add room furnish -->
 <div class="modal inmodal fade" id="addRFM" tabindex="-1" role="dialog"  aria-hidden="true">
     <div class="modal-dialog ">
         <div class="modal-content">
@@ -192,18 +194,18 @@ ROOM MANAGEMENT
 
                     <div class="form-group">
 
-                        <label class="col-lg-3 control-label">Furnish Name</label>
+                        <label class="col-lg-4 control-label">Furnish Name</label>
 
-                        <div class="col-lg-9">
+                        <div class="col-lg-8">
                             <input placeholder="Enter Room Furnish Name" class="form-control" type="text" required id="rfname" name="rfname" required>
                         </div>
                     </div>
 
                     <div class="form-group">
 
-                        <label class="col-lg-3 control-label"> Additional Price </label>
+                        <label class="col-lg-4 control-label"> Additional Price (Rs.)</label>
 
-                        <div class="col-lg-9">
+                        <div class="col-lg-8">
                             <input type="text" placeholder="If Free, Enter 0" class="form-control" type="text" required id="rfrate" name="rfrate" pattern="[-+]?[0-9]*\.?[0-9]+" title="Float value needed" >
 
                         </div>               
@@ -226,7 +228,7 @@ ROOM MANAGEMENT
 
 
 
-
+<!-- Edit room service -->
 <div class="modal inmodal fade" id="addRSME" tabindex="-1" role="dialog"  aria-hidden="true">
     <div class="modal-dialog ">
         <div class="modal-content">
@@ -245,18 +247,18 @@ ROOM MANAGEMENT
 
                     <div class="form-group">
 
-                        <label class="col-lg-3 control-label">Service Name</label>
+                        <label class="col-lg-4 control-label">Service Name</label>
 
-                        <div class="col-lg-9">
+                        <div class="col-lg-8">
                             <input placeholder="Enter Room Service Name" class="form-control" type="text" required id="ersname" name="rsname" required>
                         </div>
                     </div>
 
                     <div class="form-group">
 
-                        <label class="col-lg-3 control-label"> Additional Price </label>
+                        <label class="col-lg-4 control-label"> Additional Price (Rs.) </label>
 
-                        <div class="col-lg-9">
+                        <div class="col-lg-8">
                             <input type="text" placeholder="If Free, Enter 0" class="form-control" type="text" required id="ersrate" name="rsrate" pattern="[-+]?[0-9]*\.?[0-9]+" title="Float value needed" >
 
                         </div>               
@@ -276,6 +278,7 @@ ROOM MANAGEMENT
             </form>
     </div>
 </div>
+<!-- Edit room furnish -->
 <div class="modal inmodal fade" id="addRFME" tabindex="-1" role="dialog"  aria-hidden="true">
     <div class="modal-dialog ">
         <div class="modal-content">
@@ -294,18 +297,18 @@ ROOM MANAGEMENT
 
                     <div class="form-group">
 
-                        <label class="col-lg-3 control-label">Furnish Name</label>
+                        <label class="col-lg-4 control-label">Furnish Name</label>
 
-                        <div class="col-lg-9">
+                        <div class="col-lg-8">
                             <input placeholder="Enter Room Furnish Name" class="form-control" type="text" required id="erfname" name="rfname" required>
                         </div>
                     </div>
 
                     <div class="form-group">
 
-                        <label class="col-lg-3 control-label"> Additional Price </label>
+                        <label class="col-lg-4 control-label"> Additional Price (Rs.) </label>
 
-                        <div class="col-lg-9">
+                        <div class="col-lg-8">
                             <input type="text" placeholder="If Free, Enter 0" class="form-control" type="text" required id="erfrate" name="rfrate" pattern="[-+]?[0-9]*\.?[0-9]+" title="Float value needed" >
 
                         </div>               
@@ -336,6 +339,7 @@ ROOM MANAGEMENT
 
 
 <script>
+
     $('document').ready(function(){
 
         document.getElementById('management').click();
@@ -364,7 +368,7 @@ ROOM MANAGEMENT
 
                      }else{
 
-                         return "<span class='label label-success'> Rs."+data.rate+" </span>";
+                         return "<span class='label label-success'> Rs."+data.rate.toFixed(2);+" </span>";
 
                      }
 
@@ -372,12 +376,12 @@ ROOM MANAGEMENT
                 },
                 {"data" : null,
                  "mRender": function(data, type, full) {
-                     return '<button class="btn btn-primary  btn-animate btn-animate-side btn-block btn-sm" onclick="editMainRS('+data.rs_id+')"> Edit </button>' ;
+                     return '<button class="btn btn-primary  btn-animate btn-animate-side   btn-sm" onclick="editMainRS('+data.rs_id+')"> Edit </button>' ;
                  }
                 },
                 {"data" : null,
                  "mRender": function(data, type, full) {
-                     return '<button class="btn btn-danger  btn-animate btn-animate-side btn-block btn-sm" onclick="delRS('+data.rs_id+')"> Delete </button>' ;
+                     return '<button class="btn btn-danger  btn-animate btn-animate-side   btn-sm" onclick="delRS('+data.rs_id+')"> Delete </button>' ;
                  }
                 }
             ]
@@ -402,7 +406,7 @@ ROOM MANAGEMENT
 
                      }else{
 
-                         return "<span class='label label-success'> Rs."+data.rate+" </span>";
+                         return "<span class='label label-success'> Rs."+data.rate.toFixed(2)+" </span>";
 
                      }
 
@@ -410,12 +414,12 @@ ROOM MANAGEMENT
                 },
                 {"data" : null,
                  "mRender": function(data, type, full) {
-                     return '<button class="btn btn-primary  btn-animate btn-animate-side btn-block btn-sm" onclick="editMainRF('+data.rf_id+')"> Edit </button>' ;
+                     return '<button class="btn btn-primary  btn-animate btn-animate-side   btn-sm" onclick="editMainRF('+data.rf_id+')"> Edit </button>' ;
                  }
                 },
                 {"data" : null,
                  "mRender": function(data, type, full) {
-                     return '<button class="btn btn-danger  btn-animate btn-animate-side btn-block btn-sm" onclick="delRF('+data.rf_id+')"> Delete </button>' ;
+                     return '<button class="btn btn-danger  btn-animate btn-animate-side   btn-sm" onclick="delRF('+data.rf_id+')"> Delete </button>' ;
                  }
                 }
             ]

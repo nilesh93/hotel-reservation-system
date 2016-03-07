@@ -17,11 +17,14 @@
         <link href="{{URL::asset('BackEnd/assets/plugins/sweetalert/dist/sweetalert.css')}}" rel="stylesheet" type="text/css">
 
         <link href="{{URL::asset('BackEnd/assets/css/bootstrap.min.css')}}" rel="stylesheet" type="text/css" />
+        
         <link href="{{URL::asset('BackEnd/assets/css/core.css')}}" rel="stylesheet" type="text/css" />
         <link href="{{URL::asset('BackEnd/assets/css/components.css')}}" rel="stylesheet" type="text/css" />
         <link href="{{URL::asset('BackEnd/assets/css/icons.css')}}" rel="stylesheet" type="text/css" />
         <link href="{{URL::asset('BackEnd/assets/css/pages.css')}}" rel="stylesheet" type="text/css" />
         <link href="{{URL::asset('BackEnd/assets/css/responsive.css')}}" rel="stylesheet" type="text/css" />
+        <link href="{{URL::asset('BackEnd/assets/css/dropzone.css')}}" rel="stylesheet" type="text/css" />
+
         <link href="{{URL::asset('BackEnd/assets/plugins/datatables/jquery.dataTables.min.css')}}" rel="stylesheet" type="text/css" />
 
         <link href="{{URL::asset('BackEnd/assets/plugins/timepicker/bootstrap-timepicker.min.css" rel="stylesheet')}}">
@@ -201,7 +204,7 @@
                 </div>
             </div>
             <!-- Top Bar End -->
-
+            <input class="number-only" hidden>
 
             <!-- ========== Left Sidebar Start ========== -->
 
@@ -227,6 +230,8 @@
                                     <li id="BS"><a href="admin_bookings_search">Bookings Search</a></li>
                                     <li id="RS"><a href="admin_rooms_search">Room Logs</a></li>
                                     <li id="CS"><a href="admin_customers_search">Customer Search</a></li>
+                                    <li id="IG"><a href="admin_imageGallery">Image Gallery </a></li>
+                                    <li id="WG"><a href="admin_webGallery">Web Home Gallery </a></li>
                                 </ul>
                             </li>
 
@@ -310,7 +315,6 @@
         <script src="{{URL::asset('BackEnd/assets/plugins/datatables/jquery.dataTables.min.js')}}"></script>
         <script src="{{URL::asset('BackEnd/assets/plugins/datatables/dataTables.bootstrap.js')}}"></script>
 
-
         <script src="{{URL::asset('BackEnd/assets/js/jquery.core.js')}}"></script>
         <script src="{{URL::asset('BackEnd/assets/js/jquery.app.js')}}"></script>
 
@@ -324,6 +328,9 @@
 
         <script src="{{URL::asset('BackEnd/assets/plugins/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js')}}"></script>
 
+        <script src="{{URL::asset('BackEnd/assets/js/Dropzone.js')}}"></script>
+
+
         <script src="{{URL::asset('BackEnd/assets/plugins/moment/moment.js')}}"></script>
         <script src="{{URL::asset('BackEnd/assets/plugins/timepicker/bootstrap-timepicker.min.js')}}"></script>
         <script src="{{URL::asset('BackEnd/assets/plugins/mjolnic-bootstrap-colorpicker/dist/js/bootstrap-colorpicker.min.js')}}"></script>
@@ -331,6 +338,7 @@
         <script src="{{URL::asset('BackEnd/assets/plugins/clockpicker/dist/jquery-clockpicker.min.js')}}"></script>
         <script src="{{URL::asset('BackEnd/assets/plugins/bootstrap-daterangepicker/daterangepicker.js')}}"></script>
 
+        <script src="{{URL::asset('BackEnd/assets/js/validation.js')}}"></script>
 
         @yield('js')
 
