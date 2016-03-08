@@ -60,8 +60,11 @@ class RoomReservationController extends Controller
             $no_of_nights = $interval->format('%d%') + 1;
 
             //predefined check in and check out times
-            $check_in_time = "14:00:00";
-            $check_out_time = "12:00:00";
+            $arr_dep_time = DB::table('HOTEL_INFO')
+                ->select('check_in','check_out')
+                ->first();
+            $check_in_time = $arr_dep_time->check_in;
+            $check_out_time =$arr_dep_time->check_out;
 
             //create a carbon timestamp instance merging the dates and time
             $check_in_datetime = Carbon::createFromTimestamp(strtotime($check_in . $check_in_time));
@@ -133,7 +136,7 @@ class RoomReservationController extends Controller
 
             return redirect('myreserv')->with(['reserv_status' => 'Room_Reservation']);
         }catch (\Exception $e){
-            abort(406,$e->getMessage());
+            abort(500,$e->getMessage());
         }
     }
 
@@ -152,8 +155,8 @@ class RoomReservationController extends Controller
         $date = Carbon::now();
 
         $future_reservations = ROOM_RESERVATION::where('cus_id','=',$customer_id)
-                            ->where('check_in','>',$date)
-                            ->get();
+            ->where('check_in','>',$date)
+            ->get();
 
         return response()->json(['res_id' => count($future_reservations), 'data' => $future_reservations]);
     }

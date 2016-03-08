@@ -14,13 +14,13 @@
 
 @section('content')
 
-    <div class="row">
+	<div class="row">
 
-        <div class="col-md-12">
-            <img src="{{URL::asset('FrontEnd/img/accomadation/accomdation-pg-bg.jpg')}}" alt="" width="100%">
+		<div class="col-md-12">
+			<img src="{{URL::asset('FrontEnd/img/accomadation/accomdation-pg-bg.jpg')}}" alt="" width="100%">
 		</div>
 
-        <div class="container left-sidebar">
+		<div class="container left-sidebar">
 
 			<aside id="sidebar">
 
@@ -51,7 +51,7 @@
 						<p>amalyareach@<br>yahoo.com</p>
 					</div><!-- /email -->
 
-                </div><!-- /widget-contact -->
+				</div><!-- /widget-contact -->
 
 			</aside>
 
@@ -60,20 +60,21 @@
 				<h1>Place Your Reservation</h1>
 
 				<div class="row">
-                    <div id="myBooking">
-                        <!--this div area will be used by ajax call-->
+					<div id="myBooking">
+						<!--this div area will be used by ajax call-->
 					</div>
-                </div>
-                <hr>
-                <br>
+				</div>
+				<hr>
+				<br>
 
-                <div class="row" id="paypal">
+				<div class="row" id="paypal">
 
-                    <div class="col-sm-12 col-md-12 col-lg-12">
+					<div class="col-sm-12 col-md-12 col-lg-12">
 
 						<div class="price" align="center">
 							<br>
-                            <!--this form is used to connect to the paypal API-->
+
+							<!--this form is used to connect to the paypal API-->
 							<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
 
 								<input type="hidden" name="cmd" value="_xclick">
@@ -82,10 +83,10 @@
 								<input type="hidden" name="no_item_price" value="0">
 								<input type="hidden" name="no_item_number" value="0">
 								<input type="hidden" name="amount" value="{{ session('total_payable')}}"><!--here the total payable amount is attached-->
-                                <input type="hidden" name="no_shipping" value="0">
+								<input type="hidden" name="no_shipping" value="0">
 								<input type="hidden" name="no_note" value="1">
 								<input type="hidden" name="currency_code" value="USD">
-                                <input type="hidden" name="lc" value="AU">
+								<input type="hidden" name="lc" value="AU">
 								<input type="hidden" name="bn" value="PP-BuyNowBF">
 
 								<input type="image" onclick="submitFormOkay = true;" src="https://www.paypalobjects.com/webstatic/en_US/btn/btn_paynow_107x26.png" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!"><br>
@@ -99,49 +100,49 @@
 
 					</div><!-- /col12 -->
 
-                </div><!-- /row -->
+				</div><!-- /row -->
 
-            </section><!-- content -->
+			</section><!-- content -->
 
-        </div><!-- /container -->
+		</div><!-- /container -->
 
-    </div>
-	<br>
-    <br>
+	</div>
 	<br>
 	<br>
 	<br>
 	<br>
-    <!--this is used to trigger whether the user clicked the back button-->
-    <input type="hidden" id="refresh" value="no">
+	<br>
+	<br>
+	<!--this is used to trigger whether the user clicked the back button-->
+	<input type="hidden" id="refresh" value="no">
 
 @endsection
 
 @section('js')
 
-    <script>
+	<script>
 
 
-        //if it is a hall reservation then load hall reservation details
-        @if(Session::has('hall_selected'))
+		//if it is a hall reservation then load hall reservation details
+		@if(Session::has('hall_selected'))
             $(document).ready(function(){
 
-				loadHallMyBooking()
-			});
-        @endif
+					loadHallMyBooking()
+				});
+		@endif
 
         //this function used to trigger whether the user clicks the back buttom
-    	window.onload = function () {
+		window.onload = function () {
 
 			if (typeof history.pushState === "function") {
 				history.pushState("jibberish", null, null);
 				window.onpopstate = function () {
 					history.pushState('newjibberish', null, null);
 
-                    //sweet alert function
-                    swal({
-                                title: "Navigate?",
-								text: "Do not use back buttons in your reservation process,if you continue to do so you will lose your details",
+					//sweet alert function
+					swal({
+								title: "Navigate?",
+								text: "Do not use back buttons in your reservation process,if you continue you will lose your details",
 								type: "warning",
 								showCancelButton: true,
 								confirmButtonColor: "#DD6B55",
@@ -149,17 +150,17 @@
 								cancelButtonText: "Cancel",
 								closeOnConfirm: false},
 
-                            function(isConfirm){   if (isConfirm) {
+							function(isConfirm){   if (isConfirm) {
 
 								window.location.href = "{{ url('/') }}";
-                            }
+							}
 
-                            });
+							});
 
-                    // Handle the back (or forward) buttons here
+					// Handle the back (or forward) buttons here
 					// Will NOT handle refresh, use onbeforeunload for this.
 				};
-            }
+			}
 			else {
 				var ignoreHashChange = true;
 				window.onhashchange = function () {
@@ -178,14 +179,14 @@
 			}
 		};
 
-        //this function is used to refresh the page when user comes to the pagw using back button
-        $(document).ready(function(e) {
+		//this function is used to refresh the page when user comes to the pagw using back button
+		$(document).ready(function(e) {
 
-            var $input = $('#refresh');
-            $input.val() == 'yes' ? location.reload(true) : $input.val('yes');
-        });
+			var $input = $('#refresh');
+			$input.val() == 'yes' ? location.reload(true) : $input.val('yes');
+		});
 
-        //this function is used to trigger when user try to navigate to any links
+		//this function is used to trigger when user try to navigate to any links
 		$(document).on("click", "a", function() {
 
 			swal({
@@ -200,242 +201,242 @@
 					},
 					function (isConfirm) {
 						if (isConfirm) {
-                            window.location.href = "{{ url('/') }}";
+							window.location.href = "{{ url('/') }}";
 							return false;
-                        }
-                    });
+						}
+					});
 
-            return false;
+			return false;
 		});
 
-        //if it is a room reservation then load the room reservation details
-        @if(Session::has('room_types'))
-    		$(document).ready(function(){
-	    		loadMybooking();
-		    });
-	    @endif
+		//if it is a room reservation then load the room reservation details
+		@if(Session::has('room_types'))
+            $(document).ready(function(){
+					loadMybooking();
+				});
+		@endif
 
         //this function is to load the content of room reservation
-        function loadMybooking(){
+		function loadMybooking(){
 
-            $.ajax({
+			$.ajax({
 
-                type:'get',
-			    url:'loadBooking',
+				type:'get',
+				url:'loadBooking',
 
-                success:function(data){
+				success:function(data){
 
-                    var body ='';
-                    var total = 0;
+					var body ='';
+					var total = 0;
 
-                    if(data.room_types.length !=0) {
-					    for (var i = 0; i < data.room_types.length; i++) {
+					if(data.room_types.length !=0) {
+						for (var i = 0; i < data.room_types.length; i++) {
 
-						    body += '<div class="row">' +
-							        	'<div class="col-md-12">' + '' +
-								            '<div align="center">' +
-								                '<div class="checkout-info row">' +
+							body += '<div class="row">' +
+									'<div class="col-md-12">' + '' +
+									'<div align="center">' +
+									'<div class="checkout-info row">' +
 
-                                                    '<div class="col-sm-3 col-md-3 col-lg-3">' +
-								                        '<span class="checkout-title">' + data.room_types[i] + '</span>' +
-                                                        '<span class="checkout-value"></span>' +
-								                    '</div><!-- /col-3 -->' +
+									'<div class="col-sm-3 col-md-3 col-lg-3">' +
+									'<span class="checkout-title">' + data.room_types[i] + '</span>' +
+									'<span class="checkout-value"></span>' +
+									'</div><!-- /col-3 -->' +
 
-								                    '<div class="col-sm-2 col-md-2 col-lg-2">' +
-								                        '<span class="checkout-title">' + data.no_of_rooms[i] + '</span>' +
-                                                        '<span class="checkout-value"></span>' +
-								                    '</div><!-- /col-3 -->' +
+									'<div class="col-sm-2 col-md-2 col-lg-2">' +
+									'<span class="checkout-title">' + data.no_of_rooms[i] + '</span>' +
+									'<span class="checkout-value"></span>' +
+									'</div><!-- /col-3 -->' +
 
-								                    '<div class="col-sm-2 col-md-2 col-lg-2">' +
-								                        '<span class="checkout-title">' + data.meals[i] + '</span>' +
-                                                        '<span class="checkout-value"></span>' +
-								                    '</div><!-- /col-3 -->' +
+									'<div class="col-sm-2 col-md-2 col-lg-2">' +
+									'<span class="checkout-title">' + data.meals[i] + '</span>' +
+									'<span class="checkout-value"></span>' +
+									'</div><!-- /col-3 -->' +
 
-								                    '<div class="col-sm-2 col-md-2 col-lg-2">' +
-								                        '<span class="checkout-title">' + data.rates[i] + '</span>' +
-								                        '<span class="checkout-value"></span>' +
-								                    '</div> <!-- /col-3 -->' +
+									'<div class="col-sm-2 col-md-2 col-lg-2">' +
+									'<span class="checkout-title">' + formatNumber(data.rates[i]) + '</span>' +
+									'<span class="checkout-value"></span>' +
+									'</div> <!-- /col-3 -->' +
 
-								                    '<div class="col-sm-2 col-md-2 col-lg-2">' +
-								                        '<span class="checkout-title">' + data.rates[i] * data.no_of_rooms[i] + '</span>' +
-								                        '<span class="checkout-value"></span>' +
-								                    '</div><!-- /col-2 -->' +
+									'<div class="col-sm-2 col-md-2 col-lg-2">' +
+									'<span class="checkout-title">' + formatNumber(data.rates[i] * data.no_of_rooms[i]) + '</span>' +
+									'<span class="checkout-value"></span>' +
+									'</div><!-- /col-2 -->' +
 
-								                    '<div class="col-sm-1 col-md-1 col-lg-1">' +
-								                        '<span class="checkout-title">' +
-								                    '</div><!-- /col-2 -->' +
-								                '</div>' +
-								            '</div>' +
-								        '</div>' +
-								    '</div>';
-
-                            //increment it order to get the total amount payable
-                            total += data.rates[i] * data.no_of_rooms[i];
-                        }
-
-                        var begin = '<hr>' +
-                                    '<div align="center">' +
-                                        '<div class="checkout-info row">' +
-
-                                            '<div class="col-sm-3 col-md-3 col-lg-3">' +
-                                                '<span class="checkout-title">Room Type</span>' +
-                                                '<span class="checkout-value"></span>' +
-                                            '</div><!-- /col-3 -->' +
-
-                                            '<div class="col-sm-2 col-md-2 col-lg-2">' +
-                                                '<span class="checkout-title">No. of rooms</span>' +
-                                                '<span class="checkout-value"></span>' +
-                                            '</div><!-- /col-2 -->' +
-
-                                            '<div class="col-sm-2 col-md-2 col-lg-2">' +
-                                                '<span class="checkout-title">Meal Type</span>' +
-                                                '<span class="checkout-value"></span>' +
-                                            '</div><!-- /col-3 -->' +
-
-                                            '<div class="col-sm-2 col-md-2 col-lg-2">' +
-                                                '<span class="checkout-title">Rates (Rs.)</span>' +
-                                                '<span class="checkout-value"></span>' +
-                                            '</div><!-- /col-3 -->' +
-
-                                            '<div class="col-sm-2 col-md-2 col-lg-2">' +
-                                                '<span class="checkout-title">Line Total (Rs.)</span>' +
-                                                '<span class="checkout-value"></span>' +
-                                            '</div><!-- /col-2 -->' +
-
-                                            '<div class="col-sm-1 col-md-1 col-lg-1">' +
-                                                '<span class="checkout-title"></span>' +
-                                                '<span class="checkout-value"></span>' +
-                                            '</div><!-- /col-2 -->' +
-
-                                        '</div>' +
-                                    '</div>' +
-                                    '<hr>';
-
-                        var end ='<div class="col-md-12"><hr>' +
-
-									'<div class="col-md-3">' +
-                                    '</div>' +
-
-									'<div class="col-md-6">' +
-                                        '<h2 align="center"><b>Total(Rs.) : ' + total + '</b><h2>' +
+									'<div class="col-sm-1 col-md-1 col-lg-1">' +
+									'<span class="checkout-title">' +
+									'</div><!-- /col-2 -->' +
 									'</div>' +
-
-									'<div class="col-md-3" align="right">' +
-
-										'<form method="get" action="{{ url('room_reservation') }}">' +
-                                            '<input type="hidden" name="_token" value="{{ csrf_token() }}">' +
-                                            '<input type="hidden" name="CanPay" value="Can">' +
-                                            '<button type="submit" class="btn btn-primary" >Make Payments</button>' +
-                                        '</form>' +
-
 									'</div>' +
-									'<hr>' +
+									'</div>' +
+									'</div>';
 
-                                '</div>';
+							//increment it order to get the total amount payable
+							total += data.rates[i] * data.no_of_rooms[i];
+						}
 
-					document.getElementById("myBooking").innerHTML = begin + body + end;
-                    }
-                    else {
-					    document.getElementById("myBooking").innerHTML = '';
-                    }
-                },
+						var begin = '<hr>' +
+								'<div align="center">' +
+								'<div class="checkout-info row">' +
+
+								'<div class="col-sm-3 col-md-3 col-lg-3">' +
+								'<span class="checkout-title">Room Type</span>' +
+								'<span class="checkout-value"></span>' +
+								'</div><!-- /col-3 -->' +
+
+								'<div class="col-sm-2 col-md-2 col-lg-2">' +
+								'<span class="checkout-title">No. of rooms</span>' +
+								'<span class="checkout-value"></span>' +
+								'</div><!-- /col-2 -->' +
+
+								'<div class="col-sm-2 col-md-2 col-lg-2">' +
+								'<span class="checkout-title">Meal Type</span>' +
+								'<span class="checkout-value"></span>' +
+								'</div><!-- /col-3 -->' +
+
+								'<div class="col-sm-2 col-md-2 col-lg-2">' +
+								'<span class="checkout-title">Rates (Rs.)</span>' +
+								'<span class="checkout-value"></span>' +
+								'</div><!-- /col-3 -->' +
+
+								'<div class="col-sm-2 col-md-2 col-lg-2">' +
+								'<span class="checkout-title">Line Total (Rs.)</span>' +
+								'<span class="checkout-value"></span>' +
+								'</div><!-- /col-2 -->' +
+
+								'<div class="col-sm-1 col-md-1 col-lg-1">' +
+								'<span class="checkout-title"></span>' +
+								'<span class="checkout-value"></span>' +
+								'</div><!-- /col-2 -->' +
+
+								'</div>' +
+								'</div>' +
+								'<hr>';
+
+						var end ='<div class="col-md-12"><hr>' +
+
+								'<div class="col-md-3">' +
+								'</div>' +
+
+								'<div class="col-md-6">' +
+								'<h2 align="center"><b>Total(Rs.) : ' + formatNumber(total) + '</b><h2>' +
+								'</div>' +
+
+								'<div class="col-md-3" align="right">' +
+
+								'<form method="get" action="{{ url('room_reservation') }}">' +
+								'<input type="hidden" name="_token" value="{{ csrf_token() }}">' +
+								'<input type="hidden" name="CanPay" value="Can">' +
+								'<button type="submit" class="btn btn-primary" >Make Payments</button>' +
+								'</form>' +
+
+								'</div>' +
+								'<hr>' +
+
+								'</div>';
+
+						document.getElementById("myBooking").innerHTML = begin + body + end;
+					}
+					else {
+						document.getElementById("myBooking").innerHTML = '';
+					}
+				},
 				error: function(xhr, ajaxOptions, thrownError) {
 					console.log(thrownError);
 
 					swal("Ooops!", "Something Went Wrong! ("+thrownError+")", "error");
 				}
-            });
-        }
+			});
+		}
 
-        //this function is to load the hall content
-        function loadHallMyBooking()
-	    {
-            var hall_id = "{{ session('hall_selected') }}";
+		//this function is to load the hall content
+		function loadHallMyBooking()
+		{
+			var hall_id = "{{ session('hall_selected') }}";
 
-		    $.ajax({
-			    type: 'get',
-			    url: 'book_hall_add',
-			    data: {
-				    'hall_id':hall_id
-                },
+			$.ajax({
+				type: 'get',
+				url: 'book_hall_add',
+				data: {
+					'hall_id':hall_id
+				},
 
-                success:function(data){
+				success:function(data){
 
-                    var begin = '<div align="center">' +
-                                    '<div class="checkout-info row">' +
+					var begin = '<div align="center">' +
+							'<div class="checkout-info row">' +
 
-                                        '<div class="col-sm-4 col-md-4 col-lg-4">' +
-                                            '<span class="checkout-title">Hall</span>' +
-                                            '<span class="checkout-value"></span>' +
-                                        '</div><!-- /col-4--->' +
+							'<div class="col-sm-4 col-md-4 col-lg-4">' +
+							'<span class="checkout-title">Hall</span>' +
+							'<span class="checkout-value"></span>' +
+							'</div><!-- /col-4--->' +
 
-                                        '<div class="col-sm-4 col-md-4 col-lg-4">' +
-                                            '<span class="checkout-title">Advance Payment (Rs.)</span>' +
-                                            '<span class="checkout-value"></span>' +
-                                        '</div><!-- /col-4--->' +
+							'<div class="col-sm-4 col-md-4 col-lg-4">' +
+							'<span class="checkout-title">Advance Payment (Rs.)</span>' +
+							'<span class="checkout-value"></span>' +
+							'</div><!-- /col-4--->' +
 
-                                        '<div class="col-sm-4 col-md-4 col-lg-4">' +
-                                            '<span class="checkout-title">Refundable Amount (Rs.)</span>' +
-                                            '<span class="checkout-value"></span>' +
-                                        '</div><!-- /col-4 -->' +
+							'<div class="col-sm-4 col-md-4 col-lg-4">' +
+							'<span class="checkout-title">Refundable Amount (Rs.)</span>' +
+							'<span class="checkout-value"></span>' +
+							'</div><!-- /col-4 -->' +
 
-                                    '</div>' +
-                                '</div>' +
-                                '<hr>';
+							'</div>' +
+							'</div>' +
+							'<hr>';
 
-                    var body = 	'<div class="row">' +
-					            	'<div class="col-md-12">' + '' +
-						                '<div align="center">' +
-						                    '<div class="checkout-info row">' +
+					var body = 	'<div class="row">' +
+							'<div class="col-md-12">' + '' +
+							'<div align="center">' +
+							'<div class="checkout-info row">' +
 
-						                        '<div class="col-sm-4 col-md-4 col-lg-4">' +
-						                            '<span class="checkout-title">' + data.hall_detail[0].title + '</span>' +
-						                            '<span class="checkout-value"></span>' +
-						                        '</div><!-- /col-4 -->' +
+							'<div class="col-sm-4 col-md-4 col-lg-4">' +
+							'<span class="checkout-title">' + data.hall_detail[0].title + '</span>' +
+							'<span class="checkout-value"></span>' +
+							'</div><!-- /col-4 -->' +
 
-						                        '<div class="col-sm-4 col-md-4 col-lg-4">' +
-						                            '<span class="checkout-title">' + data.hall_detail[0].advance_payment  + '</span>' +
-						                            '<span class="checkout-value"></span>' +
-                                                '</div><!-- /col-4 -->' +
+							'<div class="col-sm-4 col-md-4 col-lg-4">' +
+							'<span class="checkout-title">' + formatNumber(data.hall_detail[0].advance_payment)  + '</span>' +
+							'<span class="checkout-value"></span>' +
+							'</div><!-- /col-4 -->' +
 
-						                        '<div class="col-sm-4 col-md-4 col-lg-4">' +
-						                            '<span class="checkout-title">' + data.hall_detail[0].refundable_amount + '</span>' +
-						                            '<span class="checkout-value"></span>' +
-						                        '</div><!-- /col-4 -->' +
+							'<div class="col-sm-4 col-md-4 col-lg-4">' +
+							'<span class="checkout-title">' + formatNumber(data.hall_detail[0].refundable_amount) + '</span>' +
+							'<span class="checkout-value"></span>' +
+							'</div><!-- /col-4 -->' +
 
-						                    '</div><!--/checkout -->'+
-						                '</div><!--/center-->'+
-						            '</div><!--/col-md-12'+
-                                '</div><!-- row --><br><br>'
+							'</div><!--/checkout -->'+
+							'</div><!--/center-->'+
+							'</div><!--/col-md-12'+
+							'</div><!-- row --><br><br>'
 
-                    var end = '<div class="col-md-12"><hr>' +
-					    		'<div class="col-md-3"></div>' +
+					var end = '<div class="col-md-12"><hr>' +
+							'<div class="col-md-3"></div>' +
 
-						    	'<div class="col-md-6">' +
-							    	'<h2 align="center"><b>Total(Rs.) : ' + data.hall_detail[0].advance_payment + '</b><h2>' +
-							    '</div>' +
+							'<div class="col-md-6">' +
+							'<h2 align="center"><b>Total(Rs.) : ' + formatNumber(data.hall_detail[0].advance_payment) + '</b><h2>' +
+							'</div>' +
 
-                                '<div class="col-md-3" align="right">' +
-						            '<form method="get" action="{!! url('hall_reserve_final') !!}">' +
-                                        '<input type="hidden" name="_token" value="{{ csrf_token() }}">' +
-                                        '<input type="hidden" name="CanPay" value="Can">' +
-                                        '<button type="submit" class="btn btn-primary" >Make Payments</button>' +
-                                    '</form>' +
-                                '</div>' +
+							'<div class="col-md-3" align="right">' +
+							'<form method="get" action="{!! url('hall_reserve_final') !!}">' +
+							'<input type="hidden" name="_token" value="{{ csrf_token() }}">' +
+							'<input type="hidden" name="CanPay" value="Can">' +
+							'<button type="submit" class="btn btn-primary" >Make Payments</button>' +
+							'</form>' +
+							'</div>' +
 
-                                '<hr>' +
+							'<hr>' +
 							'</div>';
 
-                    document.getElementById('myBooking').innerHTML = begin + body +end;
-                },
+					document.getElementById('myBooking').innerHTML = begin + body +end;
+				},
 				error: function(xhr, ajaxOptions, thrownError) {
 					console.log(thrownError);
 
 					swal("Ooops!", "Something Went Wrong! ("+thrownError+")", "error");
 				}
-            });
-        }
+			});
+		}
 
-    </script>
+	</script>
 
 @endsection

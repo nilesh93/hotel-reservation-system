@@ -47,16 +47,17 @@ class HallAvailabilityController extends Controller
         $hall_status = array();
 
         $halls = HALL::get();
-        //$row_count = 0;
+        $total_halls = 0;
 
         //for each halls check whether they are already reserved in a reservation
         foreach($halls as $hall) {
             $row_count = HALL_RESERVATION::where('hall_id','=',$hall->hall_id)
-                        ->where('reserve_date','=',$event_date)
-                        ->count();
+                ->where('reserve_date','=',$event_date)
+                ->count();
 
             //if the row count is zero means that is not reserved
             if($row_count == 0) {
+                $total_halls += 1;
                 $hall_status[$hall->hall_id] = "Available";
             }
             else{
@@ -65,7 +66,7 @@ class HallAvailabilityController extends Controller
             }
         }
 
-        return response()->json(['hall_status'=>$hall_status,'hall_ids'=>$halls,'edate'=>$event_date]);
+        return response()->json(['hall_status'=>$hall_status,'hall_ids'=>$halls,'edate'=>$event_date,'total_halls'=>$total_halls]);
     }
 
     /**
@@ -86,14 +87,14 @@ class HallAvailabilityController extends Controller
 
         //retrieve the hall details from the table
         $hall_detail =  HALL::join('HALL_RATES','HALL_RATES.hall_id','=','HALLS.hall_id')
-                        ->where('HALLS.hall_id','=',$hall_id)
-                        ->select('HALLS.hall_id','HALLS.title','HALL_RATES.advance_payment','HALL_RATES.refundable_amount')
-                        ->get();
+            ->where('HALLS.hall_id','=',$hall_id)
+            ->select('HALLS.hall_id','HALLS.title','HALL_RATES.advance_payment','HALL_RATES.refundable_amount')
+            ->get();
 
         //retrieve the advance payment of the halls in order to add to the session
         $advance = DB::table('HALL_RATES')
-                    ->where('hall_id','=',$hall_id)
-                    ->value('advance_payment');
+            ->where('hall_id','=',$hall_id)
+            ->value('advance_payment');
         $request->session()->put('total_payable',$advance);
 
         return response()->json(['hall_detail'=>$hall_detail]);

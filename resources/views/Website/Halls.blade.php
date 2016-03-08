@@ -2,14 +2,14 @@
 
 @section('title')
 	Function Halls
-@endsection
+	@endsection
 
-@section('links')
+	@section('links')
 
-@endsection
+	@endsection
 
-@section('css')
-	<!-- This style is disable the warning cursor for disabled fields -->
+	@section('css')
+			<!-- This style is disable the warning cursor for disabled fields -->
 	<style>
 		input[readonly].default-cursor {
 			cursor: default;
@@ -125,10 +125,10 @@
 						@foreach($halls as $hall)
 
 							<?php
-								//query a image of a hall to display
-								$himage = DB::table('HALL_IMAGES')
-								->where('hall_id','=',$hall->hall_id)
-								->value('path');
+							//query a image of a hall to display
+							$himage = DB::table('HALL_IMAGES')
+									->where('hall_id','=',$hall->hall_id)
+									->value('path');
 							?>
 
 							<div class="col-sm-6 col-md-6 col-lg-6">
@@ -186,35 +186,43 @@
 		@if(Session::has('event_date'))
 
 			$(document).ready(function(){
-				var end = "";
-				$.ajax({
-					type:'get',
-					url: 'hall_availability',
-					data :{
-						'event_date':"{{ session('event_date') }}"
-					},
-					success:function(data){
+					var end = "";
+					$.ajax({
+						type:'get',
+						url: 'hall_availability',
+						data :{
+							'event_date':"{{ session('event_date') }}"
+						},
+						success:function(data){
+							document.getElementById('edate').innerHTML = '<h2><label class="label label-info ">Your Requested Date :' + data.edate + '</label></h2>'
 
-						for (var i = 0; i < data.hall_ids.length; i++) {
+							if(data.total_halls != 0) {
+								for (var i = 0; i < data.hall_ids.length; i++) {
 
-							if(data.hall_status[data.hall_ids[i].hall_id] == "Available") {
-								end = '<a type="button"  onclick="book_halls('+data.hall_ids[i].hall_id +')" class="btn btn-primary "style="width: 100%">Book</a>'
+									if (data.hall_status[data.hall_ids[i].hall_id] == "Available") {
+										end = '<a type="button"  onclick="book_halls(' + data.hall_ids[i].hall_id + ')" class="btn btn-primary "style="width: 100%">Book</a>'
 
-								document.getElementById(data.hall_ids[i].hall_id + 'avail').innerHTML = "<h4 align='center'><b><br>Status :" + data.hall_status[data.hall_ids[i].hall_id] +"   </b>" +end+ "</h4>"
+										document.getElementById(data.hall_ids[i].hall_id + 'avail').innerHTML = "<h4 align='center'><b><br>Status :" + data.hall_status[data.hall_ids[i].hall_id] + "   </b>" + end + "</h4>"
+									}
+									else {
+										end = '<a type="button"  onclick="book_halls(' + data.hall_ids[i].hall_id + ')" class="btn btn-primary "style="width: 100%" disabled>Book</a>'
+
+										document.getElementById(data.hall_ids[i].hall_id + 'avail').innerHTML = "<h4 align='center'><b><br>Status :" + data.hall_status[data.hall_ids[i].hall_id] + "  </b>" + end + "</h4>"
+									}
+								}
+							} else {
+								swal({
+									title: "<div class='alert alert-danger'> <strong>Sorry! </strong> </div>",
+									text: "<span style='color:#ff2222'>No Halls are available on that date<span>",
+									html: true
+								});
 							}
-							else{
-								end = '<a type="button"  onclick="book_halls('+data.hall_ids[i].hall_id +')" class="btn btn-primary "style="width: 100%" disabled>Book</a>'
+						},
+						error: function(xhr, ajaxOptions, thrownError) {
+							console.log(thrownError);
 
-								document.getElementById(data.hall_ids[i].hall_id + 'avail').innerHTML = "<h4 align='center'><b><br>Status :" + data.hall_status[data.hall_ids[i].hall_id]   +"  </b>"+end+"</h4>"
-							}
+							swal("Ooops!", "Something Went Wrong! ("+thrownError+")", "error");
 						}
-						document.getElementById('edate').innerHTML = '<h2><label class="label label-info ">Your Requested Date :'+ data.edate+'</label></h2>'
-					},
-					error: function(xhr, ajaxOptions, thrownError) {
-						console.log(thrownError);
-
-						swal("Ooops!", "Something Went Wrong! ("+thrownError+")", "error");
-					}
 
 					});
 
@@ -225,37 +233,37 @@
 		@if(Session::has('hall_selected'))
 
 			$(document).ready(function(){
-				var hall_id = "{{ session('hall_selected') }}";
-				$.ajax({
-					type: 'get',
-					url: 'book_hall_add',
-					data: {
-						'hall_id':hall_id
-					},
-					success:function(data){
+					var hall_id = "{{ session('hall_selected') }}";
+					$.ajax({
+						type: 'get',
+						url: 'book_hall_add',
+						data: {
+							'hall_id':hall_id
+						},
+						success:function(data){
 
-						loadHallMyBooking(data);
-						$('body,html').animate({scrollTop:$("#hall_my_booking").offset().top},"slow");
-					},
-					error: function(xhr, ajaxOptions, thrownError) {
-						console.log(thrownError);
+							loadHallMyBooking(data);
+							$('body,html').animate({scrollTop:$("#hall_my_booking").offset().top},"slow");
+						},
+						error: function(xhr, ajaxOptions, thrownError) {
+							console.log(thrownError);
 
-						swal("Ooops!", "Something Went Wrong! ("+thrownError+")", "error");
-					}
+							swal("Ooops!", "Something Went Wrong! ("+thrownError+")", "error");
+						}
+					});
+
+
 				});
-
-
-			});
 		@else
 			//else load the div with nothing
-			document.getElementById('hall_my_booking').innerHTML = '';
+		document.getElementById('hall_my_booking').innerHTML = '';
 		@endif
 
 				//This function is use to trigger when back button is clicked and because of that refresh the page
-				$(document).ready(function(e) {
-					var $input = $('#refresh');
-					$input.val() == 'yes' ? location.reload(true) : $input.val('yes');
-				});
+		$(document).ready(function(e) {
+			var $input = $('#refresh');
+			$input.val() == 'yes' ? location.reload(true) : $input.val('yes');
+		});
 
 		//date picked used in the event date
 		$("#event_date").datepicker({
@@ -291,24 +299,33 @@
 
 					success:function(data){
 
-						for (var i = 0; i < data.hall_ids.length; i++) {
+						document.getElementById('edate').innerHTML = '<h2><label class="label label-info ">Your Requested Date :' + data.edate + '</label></h2>'
 
-							if(data.hall_status[data.hall_ids[i].hall_id] == "Available") {
+						if(data.total_halls != 0) {
+							for (var i = 0; i < data.hall_ids.length; i++) {
 
-								end = '<a type="button"  onclick="book_halls('+data.hall_ids[i].hall_id +')" class="btn btn-primary "style="width: 100%">Book</a>';
-								document.getElementById(data.hall_ids[i].hall_id + 'avail').innerHTML = "<h4 align='center'><b><br>Status :" + data.hall_status[data.hall_ids[i].hall_id] +"   </b>" +end+ "</h4>"
+								if (data.hall_status[data.hall_ids[i].hall_id] == "Available") {
+
+									end = '<a type="button"  onclick="book_halls(' + data.hall_ids[i].hall_id + ')" class="btn btn-primary "style="width: 100%">Book</a>';
+									document.getElementById(data.hall_ids[i].hall_id + 'avail').innerHTML = "<h4 align='center'><b><br>Status :" + data.hall_status[data.hall_ids[i].hall_id] + "   </b>" + end + "</h4>"
+								}
+								else {
+									end = '<a type="button"  onclick="book_halls(' + data.hall_ids[i].hall_id + ')" class="btn btn-primary "style="width: 100%" disabled>Book</a>'
+									document.getElementById(data.hall_ids[i].hall_id + 'avail').innerHTML = "<h4 align='center'><b><br>Status :" + data.hall_status[data.hall_ids[i].hall_id] + "  </b>" + end + "</h4>"
+								}
+
+								//this is used to scroll page and point to the div which has the id hall
+								$('html,body').animate({scrollTop: $("#hall").offset().top}, 'fast');
 							}
-							else {
-								end = '<a type="button"  onclick="book_halls('+data.hall_ids[i].hall_id +')" class="btn btn-primary "style="width: 100%" disabled>Book</a>'
-								document.getElementById(data.hall_ids[i].hall_id + 'avail').innerHTML = "<h4 align='center'><b><br>Status :" + data.hall_status[data.hall_ids[i].hall_id]   +"  </b>"+end+"</h4>"
-							}
 
-							//this is used to scroll page and point to the div which has the id hall
-							$('html,body').animate({scrollTop:$("#hall").offset().top}, 'fast');
+							document.getElementById('hall_my_booking').innerHTML = '';
+						} else{
+							swal({
+								title: "<div class='alert alert-danger'> <strong>Sorry! </strong> </div>",
+								text: "<span style='color:#ff2222'>No Halls are available on that date<span>",
+								html: true
+							});
 						}
-
-						document.getElementById('edate').innerHTML = '<h2><label class="label label-info ">Your Requested Date :'+ data.edate+'</label></h2>'
-						document.getElementById('hall_my_booking').innerHTML = '';
 					},
 					error: function(xhr, ajaxOptions, thrownError) {
 						console.log(thrownError);
@@ -351,74 +368,74 @@
 		function loadHallMyBooking(data)
 		{
 			//put this value ro the session in order to access the payment page
-			{{ Session::put('CanPay') }}
+					{{ Session::put('CanPay') }}
 
-			var begin = '<h1 align="center">My Booking</h1>' +
-						'<hr>' +
-						'<div align="center">' +
-							'<div class="checkout-info row">' +
-								'<div class="col-sm-4 col-md-4 col-lg-4">' +
-									'<span class="checkout-title">Hall</span>' +
-									'<span class="checkout-value"></span>' +
-								'</div><!-- /col-4--->' +
+                    var begin = '<h1 align="center">My Booking</h1>' +
+					'<hr>' +
+					'<div align="center">' +
+					'<div class="checkout-info row">' +
+					'<div class="col-sm-4 col-md-4 col-lg-4">' +
+					'<span class="checkout-title">Hall</span>' +
+					'<span class="checkout-value"></span>' +
+					'</div><!-- /col-4--->' +
 
-								'<div class="col-sm-4 col-md-4 col-lg-4">' +
-									'<span class="checkout-title">Advance Payment (Rs.)</span>' +
-									'<span class="checkout-value"></span>' +
-								'</div><!-- /col-4--->' +
+					'<div class="col-sm-4 col-md-4 col-lg-4">' +
+					'<span class="checkout-title">Advance Payment (Rs.)</span>' +
+					'<span class="checkout-value"></span>' +
+					'</div><!-- /col-4--->' +
 
-								'<div class="col-sm-4 col-md-4 col-lg-4">' +
-									'<span class="checkout-title">Refundable Amount (Rs.)</span>' +
-									'<span class="checkout-value"></span></div><!-- /col-4 -->' +
-								'</div>' +
-							'</div>' +
-							'<hr>';
+					'<div class="col-sm-4 col-md-4 col-lg-4">' +
+					'<span class="checkout-title">Refundable Amount (Rs.)</span>' +
+					'<span class="checkout-value"></span></div><!-- /col-4 -->' +
+					'</div>' +
+					'</div>' +
+					'<hr>';
 
 			var body = 	'<div class="row">' +
-							'<div class="col-md-12">' + '' +
-								'<div align="center">' +
-									'<div class="checkout-info row">' +
+					'<div class="col-md-12">' + '' +
+					'<div align="center">' +
+					'<div class="checkout-info row">' +
 
-										'<div class="col-sm-4 col-md-4 col-lg-4">' +
-											'<span class="checkout-title">' + data.hall_detail[0].title + '</span>' +
-											'<span class="checkout-value"></span>' +
-										'</div><!-- /col-4 -->' +
+					'<div class="col-sm-4 col-md-4 col-lg-4">' +
+					'<span class="checkout-title">' + data.hall_detail[0].title + '</span>' +
+					'<span class="checkout-value"></span>' +
+					'</div><!-- /col-4 -->' +
 
-										'<div class="col-sm-4 col-md-4 col-lg-4">' +
-											'<span class="checkout-title">' + data.hall_detail[0].advance_payment  + '</span>' +
-											'<span class="checkout-value"></span>' +
-										'</div><!-- /col-4 -->' +
+					'<div class="col-sm-4 col-md-4 col-lg-4">' +
+					'<span class="checkout-title">' + formatNumber(data.hall_detail[0].advance_payment)  + '</span>' +
+					'<span class="checkout-value"></span>' +
+					'</div><!-- /col-4 -->' +
 
-										'<div class="col-sm-4 col-md-4 col-lg-4">' +
-											'<span class="checkout-title">' + data.hall_detail[0].refundable_amount + '</span>' +
-											'<span class="checkout-value"></span>' +
-										'</div><!-- /col-4 -->' +
+					'<div class="col-sm-4 col-md-4 col-lg-4">' +
+					'<span class="checkout-title">' + formatNumber(data.hall_detail[0].refundable_amount) + '</span>' +
+					'<span class="checkout-value"></span>' +
+					'</div><!-- /col-4 -->' +
 
-									'</div><!--/checkout -->'+
-								'</div><!--/center-->'+
-							'</div><!--/col-md-12'+
-						'</div><!-- row --><br><br>'
+					'</div><!--/checkout -->'+
+					'</div><!--/center-->'+
+					'</div><!--/col-md-12'+
+					'</div><!-- row --><br><br>'
 
 			var end = '<div class="col-md-12">' +
-						'<hr>' +
-						'<div class="col-md-3">' +
-							'<a href="{!! url('cancel_hall_reserv') !!}" style="width: 60%;" type="button" class="btn-link btn-lg">Cancel</a>' +
-						'</div>' +
+					'<hr>' +
+					'<div class="col-md-3">' +
+					'<a href="{!! url('cancel_hall_reserv') !!}" style="width: 60%;" type="button" class="btn-link btn-lg">Cancel</a>' +
+					'</div>' +
 
-						'<div class="col-md-6">'+
-							'<h2 align="center"><b>Total(Rs.) : ' + data.hall_detail[0].advance_payment+'</b><h2>'+
-						'</div>' +
+					'<div class="col-md-6">'+
+					'<h2 align="center"><b>Total(Rs.) : ' + formatNumber(data.hall_detail[0].advance_payment)+'</b><h2>'+
+					'</div>' +
 
-						'<div class="col-md-3" align="right">'+
-							'<form method="get" onsubmit="return makepaymentchk()"action="{{ url('payment') }}">' +
-								'<input type="hidden" name="_token" value="{{ csrf_token() }}">' +
-								'<input type="hidden" name="CanPay" value="Can">' +
-								'<button type="submit" class="btn btn-primary" >Make Payments</button>' +
-							'</form>' +
-						'</div>' +
-						'<hr>' +
+					'<div class="col-md-3" align="right">'+
+					'<form method="get" onsubmit="return makepaymentchk()"action="{{ url('payment') }}">' +
+					'<input type="hidden" name="_token" value="{{ csrf_token() }}">' +
+					'<input type="hidden" name="CanPay" value="Can">' +
+					'<button type="submit" class="btn btn-primary" >Make Payments</button>' +
+					'</form>' +
+					'</div>' +
+					'<hr>' +
 
-						'</div>'
+					'</div>';
 
 			document.getElementById('hall_my_booking').innerHTML = begin + body +end;
 		}
