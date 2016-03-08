@@ -655,13 +655,13 @@
 
 				for (var i = 0; i < data.aservices.length; i++) {
 
-					aservices +='<li>'+data.aservices[i].name +'-Rs.'+data.aservices[i].rate+'</li>';
+					aservices +='<li>'+data.aservices[i].name +'-Rs.'+formatNumber(data.aservices[i].rate)+'</li>';
 				}
 
 				document.getElementById('aservices').innerHTML = aservices;
 
-				var hall_rates = 'Advance Payment : Rs.'+data.advance+'<br>'+
-						' Refundable : Rs.'+data.refundable;
+				var hall_rates = 'Advance Payment : Rs.'+formatNumber(data.advance)+'<br>'+
+						' Refundable : Rs.'+formatNumber(data.refundable);
 
 				document.getElementById('hall_rates').innerHTML = hall_rates;
 
@@ -738,7 +738,7 @@
 
 				for (var i = 0; i < data.room_rates.length; i++) {
 
-					room_rates += data.room_rates[i].meal_type_name+'- Rs.'+data.room_rates[i].single_rates+'<br>';
+					room_rates += data.room_rates[i].meal_type_name+'- Rs.'+formatNumber(data.room_rates[i].single_rates)+'<br>';
 				}
 
 				document.getElementById('room_rates').innerHTML = room_rates;
@@ -755,6 +755,20 @@
 			}
 		});
 
+	}
+
+	//function to format currency
+	function formatNumber(number)
+	{
+		number = number.toFixed(2) + '';
+		x = number.split('.');
+		x1 = x[0];
+		x2 = x.length > 1 ? '.' + x[1] : '';
+		var rgx = /(\d+)(\d{3})/;
+		while (rgx.test(x1)) {
+			x1 = x1.replace(rgx, '$1' + ',' + '$2');
+		}
+		return x1 + x2;
 	}
 </script>
 

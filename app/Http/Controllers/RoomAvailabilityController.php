@@ -48,6 +48,8 @@ class RoomAvailabilityController extends Controller
             $check_out = $inputs['check_out'];
             $adults = $inputs['adults'];
             $kids = $inputs['children'];
+
+            //requested number of rooms
             $rooms = $inputs['ono_of_rooms'];
 
             //put the requested reservation details to the session
@@ -95,7 +97,7 @@ class RoomAvailabilityController extends Controller
             }
 
             //query the reservations that are that have check in or check out dates between the requested date period
-            $reservations = ROOM_RESERVATION::where('check_in', '<=', $check_out)
+            $reservations = ROOM_RESERVATION::where('check_in','<=', $check_out)
                 ->where('check_out', '>=', $check_in)
                 ->orwhereIn('remarks', ['tendative', 'confirmed'])//change this orwhereIn after you finish booking section
                 ->select('room_reservation_id')
@@ -119,6 +121,7 @@ class RoomAvailabilityController extends Controller
                 }
             }
 
+            //to give an error message to the customer if the requested number of rooms are g
             $total_rooms_available = 0;
             $available_rooms = 0;
 
@@ -142,6 +145,17 @@ class RoomAvailabilityController extends Controller
                 $total_rooms_available += $available_rooms;
             }
 
+            //predefined variables for the room reservation form
+            $total_rooms=0;
+            $kids_can = 20;
+            $adults_can = 30;
+
+            foreach($room_types as $room_type)
+            {
+                $total_rooms += $room_type->count;
+            }
+
+
             //check the total rooms available with the requested total rooms
             if ($total_rooms_available < $rooms) {
                 if ($total_rooms_available < 0) {
@@ -150,11 +164,12 @@ class RoomAvailabilityController extends Controller
 
                 return redirect('room_packages')->with(['rooms_not_available' => 'Sorry requested no of rooms are not available.Only ' . $total_rooms_available . ' room(s) are available']);
             } else {
-                return view('Website.Rooms_availability', ['room_type_available' => $room_type_available, "room_types" => $room_types]);
+                return view('Website.Rooms_availability', ['room_type_available' => $room_type_available, "room_types" => $room_types,
+                    'total_rooms'=>$total_rooms,'kids_can'=>$kids_can,'adults_can'=>$adults_can]);
             }
         }catch (\Exception $e)
         {
-            abort(406,$e->getMessage());
+            abort(500,$e->getMessage());
         }
     }
 
@@ -177,21 +192,21 @@ class RoomAvailabilityController extends Controller
         $rate_price = RATE::where('rate_code','=',$rate_code)->value('single_rates');
 
         $meal_type_name = RATE::join('MEAL_TYPES','RATES.meal_type_id','=','MEAL_TYPES.meal_type_id')
-                        ->where('RATES.rate_code','=',$rate_code)
-                        ->value('meal_type_name');
+            ->where('RATES.rate_code','=',$rate_code)
+            ->value('meal_type_name');
 
         //this variable is to identify whether the selected room type already added in the session previously
         $session_have = 0;
 
         //check whether session has the room type added already
-       if(Session::has('room_types')) {
+        if(Session::has('room_types')) {
 
-           foreach(session('room_types') as $room_type) {
-               if($room_type == $room_type_id) {
-                   $session_have = 1;
-               }
-           }
-       }
+            foreach(session('room_types') as $room_type) {
+                if($room_type == $room_type_id) {
+                    $session_have = 1;
+                }
+            }
+        }
 
         //store the total payable amount from the session to a variable
         $total_payable = 0;
@@ -223,7 +238,7 @@ class RoomAvailabilityController extends Controller
         }
 
         //create arrays to store the session details to respond to a ajax request, this was done because without
-        // refreshing the pages session values wont updated in the views
+        // refreshing the pages session values wont be updated in the views
         $room_types = array();
         $number_rooms = array();
         $rates = array();
