@@ -10,6 +10,7 @@ use App\HALL;
 use App\ROOM_TYPE;
 use Session;
 use App\imageGallery;
+use App\FACILITY;
 
 class PagesController extends Controller
 {
@@ -63,9 +64,25 @@ class PagesController extends Controller
         Session::forget('CanPay');
 
         $images = imageGallery::all();
+        $facilities = FACILITY::all();
 
         return view('Website.Demo')
-            ->with('images',$images);
+            ->with('images',$images)
+            ->with('facilities',$facilities);
+    }
+
+    /**
+     * This function submits and saves a user review to the database.
+     *
+     * @param Request $request
+     * @return void
+     */
+    public function submit_review(Request $request)
+    {
+        $review = new REVIEW;
+        $review->name = Input::get('name');
+        $review->review = Input::get('review');
+        $review->save();
     }
 
     /**
