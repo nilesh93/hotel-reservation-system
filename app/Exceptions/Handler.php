@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use GuzzleHttp\Exception\ConnectException;
+use Swift_TransportException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 
 class Handler extends ExceptionHandler
@@ -62,6 +63,11 @@ class Handler extends ExceptionHandler
         // HTTP Status code 503 Service Unavailable -> Means Service is temporarily down
         elseif ($e instanceof ConnectException) {
             return response()->view('errors.ConnectException', [], 401);
+        }
+
+        // This occurs when Swift Mailer can't connect to the Internet
+        elseif ($e instanceof Swift_TransportException) {
+            return response()->view('errors.Swift_TransportException', [], 401);
         }
 
         return parent::render($request, $e);
