@@ -14,6 +14,8 @@ Contact Us
 
 @section('css')
 
+<link rel="stylesheet" href="{{URL::asset('FrontEnd/FancyBox/source/jquery.fancybox.css')}}">
+
 
 @endsection
 
@@ -59,44 +61,27 @@ Contact Us
 	
 	<h3> Image Gallery</h3>
 	<hr>
-	<div class="gallery">
+	<div class=" ">
 	  
 		<div class="row">
 
 			<?php $count = 1; ?>
 			@foreach($images as $i)
-			<div class="col-sm-4 col-md-4 col-lg-4 img-small" data-id="{{$count}}">
-				<img  src="{{URL::asset($i->path)}}"  >
+			<div class="col-sm-4 col-md-4 col-lg-4 img-small"   >
+				
+				<a class="fancybox" rel="group" href="{{URL::asset($i->path)}}">
+					<img  src="{{URL::asset($i->path)}}"  >
+				</a>
+				
 			</div><!-- /col-lg-3 -->
-
-			@if(($count%3) == 0)
-
-			<?php $newcount = $count - 3; ?> 
-
-			@for($x=0; $x<3; $x++)
-
-		<div class="col-sm-12    col-md-12   col-lg-12">
-			<div class="img-large" data-id="{{$newcount + 1 }}">
-				<img  src="{{URL::asset($images[$newcount]->path)}}" align="middle" >
-				<a class="cross"><i class="icon-cancel-1"></i></a>
-				<a class="plus"><i class="icon-plus-1"></i></a>
-				<a class="prev"><i class="icon-left-small"></i></a>
-				<a class="next"><i class="icon-right-small"></i></a>
-				<p class="caption"></p>
-			</div><!-- /img-large -->
-		</div><!-- /col-lg-9 -->
-
-		<?php $newcount++; ?>
-		@endfor
-		@endif
+ 
 
 		<?php $count++; ?>
 		@endforeach
 
 
 	</div><!-- /row -->
-</div><!-- /gallery -->
-
+</div><!-- /gallery --> 
 	</section>
 
 
@@ -113,4 +98,17 @@ Contact Us
 @section('js')
 
 
+<script>
+
+
+$(document).ready(function() {
+		 
+	
+	$(".fancybox").fancybox({
+    	openEffect	: 'elastic',
+    	closeEffect	: 'elastic'
+    	 
+    });
+	});
+</script>
 @endsection

@@ -1,11 +1,9 @@
-
 <!DOCTYPE html>
 <html lang="en">
 	<?php date_default_timezone_set("Asia/Colombo");  ?>
 	<head>
 
 		<title>@yield('title')</title>
-
 
 		<!-- SEO -->
 		<meta charset="utf-8">
@@ -15,19 +13,10 @@
 
 		<?php
 
-
 		$roomtypes = DB::table('ROOM_TYPES')->get();
 		$halls = DB::table('HALLS')->get();
 
-		//define variables
-
-		$images = array();
-		$himages = array();
-		$mealtypeRates = array();
-
 		?>
-
-
 		<!-- initializing looks -->
 		<!--[if IE]><meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'><![endif]-->
 		<meta name="viewport" content="width=device-width, initial-scale=1">
@@ -56,8 +45,6 @@
 <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
 <![endif]-->
 
-		<!-- CUSTOM JavaScript so you can use jQuery or $ before it has been loaded in the footer. -->
-		<!--	 <script>(function(w,d,u){w.readyQ=[];w.bindReadyQ=[];function p(x,y){if(x=="ready"){w.bindReadyQ.push(y);}else{w.readyQ.push(x);}};var a={ready:p,bind:p};w.$=w.jQuery=function(f){if(f===d||f===u){return a}else{p(f)}}})(window,document)</script> -->
 	</head>
 
 	<body>
@@ -65,111 +52,109 @@
 			<header class="main-header header-v1">
 				<div class="container">
 					<div class="row">
-						<div class="col-sm-3 col-md-2 col-lg-2">
 
+						<div class="col-sm-2 col-md-2 col-lg-2">
 							<img align="center" src="{{URL::asset('FrontEnd/img/amalya-logo.png')}}" alt="" style=" background-size: 227px;"><!-- /logo -->
-
 						</div><!-- /4 columns -->
+
 						<div class="col-lg-10 col-md-10">
-							<a class="nav-toggle pull-right"><i class="icon-menu"></i></a>
+							<div class="row">							<a class="nav-toggle pull-right"><i class="icon-menu"></i></a>
 
-							<nav class="col-sm-12 clear" id="mobile-nav"></nav>
+								<nav class="col-sm-12 clear" id="mobile-nav"></nav>
 
-							<!-- weather widget -->
-							<div class="col-sm-12 col-md-12 col-lg-12">
+								<!-- weather widget -->
+								<div class="col-sm-12 col-md-12 col-lg-12">
+									<div class="elements pull-right">
 
-								<div class="elements pull-right">
+										<div class="weather element">
+											<p id="deg"><strong> {{strtoupper(date('l'))}}</strong>, {{strtoupper(date('F'))}}  {{date('d')}} <i id="weatherid" class=""></i> </p>
+										</div><!-- /weather -->
 
-									<!-- <div class="language element">
-<p>thank you lord</p>
-</div>-->
+										<div class="header-info element">
+											<div class="info">
+												<p data-id="1"><strong>CALL US:</strong> +94 114404040 / +94 114368291</p>
+												<p data-id="2"><strong>ADDRESS:</strong>No.556,
+													Moragahahena Road, Pitipana North,
+													Homagama.</p>
+												<p data-id="3"><strong>EMAIL:</strong> amalyareach@yahoo.com</p>
+											</div><!-- /info -->
+											<div class="triggers">
+												<i data-id="1" class="icon-tablet-2"></i>
+												<i data-id="2" class="icon-location"></i>
+												<i data-id="3" class="icon-globe-3"></i>
+											</div><!-- /triggers -->
 
-									<div class="weather element">
-										<p id="deg"><strong> {{strtoupper(date('l'))}}</strong>, {{strtoupper(date('F'))}}  {{date('d')}} <i id="weatherid" class=""></i> </p>
-									</div><!-- /weather -->
+										</div><!-- /header-info -->
 
-									<div class="header-info element">
-										<div class="info">
-											<p data-id="1"><strong>CALL US:</strong> +94 114404040 / +94 114368291</p>
-											<p data-id="2"><strong>ADDRESS:</strong>No.556,
-												Moragahahena Road, Pitipana North,
-												Homagama.</p>
-											<p data-id="3"><strong>EMAIL:</strong> amalyareach@yahoo.com</p>
-										</div><!-- /info -->
-										<div class="triggers">
-											<i data-id="1" class="icon-tablet-2"></i>
-											<i data-id="2" class="icon-location"></i>
-											<i data-id="3" class="icon-globe-3"></i>
-										</div><!-- /triggers -->
-									</div><!-- /header-info -->
-								</div><!-- /elements -->
+									</div><!-- /elements -->
+								</div><!-- /col-sm-8 -->
+							</div>
 
-							</div><!-- /col-sm-8 -->
+							<div class="row">
 
-							<div class="col-sm-12   col-md-12 col-lg-12">
+
 								<nav id="main-nav">
 									<ul>
+
 										@if(Auth::check())
 										<li><a href="#">My Account</a>
 											<ul>
 												<li><a href="{{ URL::to('profile') }}">My Details</a></li>
+
+												<li><a href="{!! url('/myreserv') !!}">My Reservations</a></li>
 												<li><a href="{{ URL::to('change_password') }}">Change Password</a></li>
 												<li><a href="{{ URL::to('auth/logout') }}">Log out</a></li>
 											</ul>
 										</li>
 										@else
 										<li><a href="{{URL::to('auth/register')}}">Register</a></li>
-										<li><a href="{{URL::to('auth/login')}}">Login</a>
-											@endif
-											{{--<ul>
-											<li><a href="#">Blog Listing</a></li>
-											<li><a href="#">Blog Post Left Sidebar</a></li>
-											<!-- <li><a href="#">Blog Post Right Sidebar</a></li> -->
-											</ul>--}}
-										</li>
+										<li><a href="{{URL::to('auth/login')}}">Login</a></li>
+										@endif
 
-										<li><a href="{!! url('/contact') !!}">Contact</a></li>
 
-										
-										<li><a href="gallery">Gallery</a></li>
-										<li><a href="menu">Menus</a>
-											 
-										</li>
+
+
+										<li><a href="{!! url('/contact') !!}">Contact Us</a></li>
+										<li><a href="{!! url('/gallery') !!}">Gallery</a></li><li><a href="menu">Menus</a></li>
 
 										<li><a href="{!! url('/halls') !!}">Halls</a>
 											<ul>
 
 												@foreach($halls as $hall)
-												<li><a onclick="showModal('{{$hall->hall_id}}hall')">{{ $hall->title }}</a></li>
+												<li><a onclick="viewHall('{{$hall->hall_id}}','{{ $hall->title }}','{{$hall->capacity_from}}','{{ $hall->capacity_to }}')">{{ $hall->title }}</a></li>
 												@endforeach
 
 											</ul>
 										</li>
+
 										<li><a href="{!! url('/room_packages') !!}">Rooms</a>
-
 											<ul>
-
 												@foreach($roomtypes as $roomtype)
-												<li><a onclick="showModal({{$roomtype->room_type_id}})">{{ $roomtype->type_name}}</a></li>
+												<li><a onclick="viewRoomType('{{$roomtype->room_type_id}}','{{$roomtype->type_name}}')">{{ $roomtype->type_name}}</a></li>
 												@endforeach
-
 											</ul>
-
 										</li>
 
-										<li><a href="{!! url('/') !!}">Home</a>
-											{{--<ul>
-											<li><a href="#">Home Version 1</a></li>
-											<li><a href="#">Home Version 2</a></li>
-											<li><a href="#">Home Version 3</a></li>
-											</ul>--}}
-										</li>
+										<li><a href="{!! url('/') !!}">Home</a></li>
+
 									</ul>
 								</nav>
-							</div><!-- /8 columns -->
 
 
-						</div>				</div><!-- /row -->
+							</div>
+						</div>
+
+
+
+					</div><!-- /row -->
+
+					<div class="row">
+						<div class="col-sm-12 col-md-12 col-lg-12">
+
+
+						</div><!-- /8 columns -->
+					</div>
+
 				</div><!-- /container -->
 			</header><!-- /main-header -->
 
@@ -179,16 +164,16 @@
 				<div class="col-md-3">  </div>
 				<div class="col-md-6">
 					@if(session('noAccess'))
-						<ul class="list-group text-center">
-							<li class="list-group-item list-group-item-warning"><strong>{{ session('noAccess') }}</strong></li>
-						</ul>
+					<ul class="list-group text-center">
+						<li class="list-group-item list-group-item-warning"><strong>{{ session('noAccess') }}</strong></li>
+					</ul>
 					@endif
 
 					{{--This flash message is displayed when a fb login registration has been completed--}}
 					@if(session('success'))
-						<ul class="list-group text-center">
-							<li class="list-group-item list-group-item-success">{{session('success')}}</li>
-						</ul>
+					<ul class="list-group text-center">
+						<li class="list-group-item list-group-item-success">{{session('success')}}</li>
+					</ul>
 					@endif
 				</div>
 				<div class="col-md-3">  </div>
@@ -200,197 +185,83 @@
 
 				{{--This flash message is displayed if a customer tries to access admin area--}}
 				{{--<div class="row">
-					<div class="col-md-4">
-						@if(session('noAccess'))
-							<ul class="list-group text-center">
-								<li class="list-group-item list-group-item-warning"><strong>{{ session('noAccess') }}</strong></li>
-							</ul>
-						@endif
+				<div class="col-md-4">
+					@if(session('noAccess'))
+					<ul class="list-group text-center">
+						<li class="list-group-item list-group-item-warning"><strong>{{ session('noAccess') }}</strong></li>
+					</ul>
+					@endif
 
-						--}}{{--This flash message is displayed when a fb login registration has been completed--}}{{--
-						@if(session('success'))
-							<ul class="list-group text-center">
-								<li class="list-group-item list-group-item-success">{{session('success')}}</li>
-							</ul>
-						@endif
-					</div>
+					--}}{{--This flash message is displayed when a fb login registration has been completed--}}{{--
+					@if(session('success'))
+					<ul class="list-group text-center">
+						<li class="list-group-item list-group-item-success">{{session('success')}}</li>
+					</ul>
+					@endif
+				</div>
 				</div>--}}
 
 
+
 				<!-- room_type_modals_to _load_in_any_page-->
-				@foreach($roomtypes as $room_type)
-
-				<?php
-
-				$image1 = DB::table('ROOM_IMAGES')
-					->where('room_type_id','=',$room_type->room_type_id)
-					->first();
-				
-				
-				
-				if(!empty($image1) )	{
-					$images = DB::table('ROOM_IMAGES')
-						->where('room_type_id','=',$room_type->room_type_id)
-						->where('path','!=',$image1->path)
-						->select('path')
-						->get();
-				}
-
-
-				 $mealtypeRates = DB::table('RATES')
-					->join('MEAL_TYPES','RATES.meal_type_id','=','MEAL_TYPES.meal_type_id')
-					->where('RATES.room_type_id','=',$room_type->room_type_id)
-					->select('MEAL_TYPES.meal_type_name','RATES.rate_code','RATES.single_rates')
-					->get();  
-
-
-
-
-				?>
-
 				<modal><!-- room -->
-					<div class="modal fade" id="{{$room_type->room_type_id}}">
+					<div class="modal fade" id="room_modal">
 						<div class="modal-dialog modal-lg">
 							<div class="modal-content">
+
 								<div class="modal-header" style="background: cornsilk">
 									<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-									<h3 class="modal-title" align="center">{{ $room_type->type_name }}</h3>
+									<h3 class="modal-title" align="center"><div id="room_title"></div></h3>
 									<br>
 								</div>
+
 								<div class="modal-body">
 
 									<slides>
-
 										<div class="row">
 
 											<div class="col-md-3">
-
 												<h4 align="center">Furnishing and Fixtures</h4>
-
 												<ul>
-													<?php
- 
-													?>
+													<div id="room_furnishes">
+													</div>
 												</ul>
 											</div>
 
 											<div class="col-md-6">
+												<br><br><br><br><br>
 
-												<br>
-												<br>
-												<br>
-												<br>
-												<br>
-												<div class="carousel slide" id="carousel-{{$room_type->room_type_id}}">
-													<div class="carousel-inner">
-
-														<div class="item active">
-															<img class="img-thumbnail" @if(!empty($image1)) src="{{URL::asset($image1->path)}}"@endif width="100%">
-
-														</div>
-
-														@foreach($images as $image)
-														<div class="item">
-															<img class="img-thumbnail"  src="{{URL::asset($image->path)}}" width="100%">
-															<div class="carousel-caption">
-																<h4>
-
-																</h4>
-																<p>
-
-																</p>
-															</div>
-														</div>
-
-														@endforeach
+												<div class="carousel slide" id="carousel-room_modal">
 
 
-
-
-													</div>
-
-													<a class="left carousel-control" href="#carousel-{{$room_type->room_type_id}}" data-slide="prev"><span class="glyphicon glyphicon-chevron-left"></span></a> <a class="right carousel-control" href="#carousel-{{$room_type->room_type_id}}" data-slide="next"><span class="glyphicon glyphicon-chevron-right"></span></a>
 												</div>
 
 											</div>
 
 											<div class="col-md-3">
-
 												<h4 align="center">Services</h4>
-
 												<ul>
-													<?php
-												 
-													?>
+													<div id="room_services">
+
+													</div>
 												</ul>
 											</div>
-
-
-
 
 										</div><!--/row -->
 									</slides>
 									<br>
-									<services>
 
-										<div class="row">
-											<div class="col-md-4">
-
-
-											</div>
-
-											<div class="col-md-4">
-											</div>
-
-											<div class="col-md-4">
-											</div>
-
+									<div class="row">
+										<div align="center">
+											<b>$</b> - Additional Charges Apply
 										</div>
-									</services>
+									</div>
 
 								</div>
-
-
 
 								<div class="modal-footer" style="background:cornsilk">
 
 									<div class="row">
-
-										<div class="col-md-4">
-
-											<div align="center">
-												<h4>Area</h4>
-
-											</div>
-										</div>
-
-										<div class="col-md-4">
-
-											<div align="center">
-												<h4>Bed</h4>
-
-											</div>
-										</div>
-
-										<div class="col-md-4">
-											<div align="center">
-
-												<h4>Rate</h4>
- 
-											</div>
-										</div>
-
-									</div>
-									<br>
-									<div class="row">
-
-										<div class="col-md-4">
-											<div align="center">
-												<h4>Extra Bed</h4>
-
-											</div>
-
-										</div>
 
 										<div class="col-md-4">
 											<div align="center">
@@ -406,213 +277,148 @@
 											</div>
 										</div>
 
+										<div class="col-md-4">
+											<div align="center">
+												<h4>Rate</h4>
+												<ul>
+													<div id="room_rates">
+
+													</div>
+												</ul>
+											</div>
+
+										</div>
+
 									</div>
-									<br>
-									<br>
+
 								</div>
-
-
-
-
 
 							</div>
 						</div>
 					</div>
-				</modal>
-				@endforeach
-
-				<!-- /room_type_modals-->
-
+				</modal><!-- /room_type_modals-->
 
 				<!-- halls modal -->
 
-				@foreach($halls as $hall)
-
-
-				<?php
-				$himage1 = DB::table('HALL_IMAGES')
-					->where('hall_id','=',$hall->hall_id)
-					->first();
-				if(!empty($himage)){
-					$himages = DB::table('HALL_IMAGES')
-						->where('hall_id','=',$hall->hall_id)
-						->where('path','!=',$himage1->path)
-						->select('path')
-						->get();
-				}
-				$advance = DB::table('HALL_RATES')
-					->where('hall_id','=',$hall->hall_id)
-					->get();
-
-				$refundable = DB::table('HALL_RATES')
-					->where('hall_id','=',$hall->hall_id)
-					->get();
-
-				?>
-
-
 				<modal><!-- halls -->
-					<div class="modal fade" id="{{$hall->hall_id}}hall">
+					<div class="modal fade" id="hall_modal">
 						<div class="modal-dialog modal-lg">
 							<div class="modal-content">
+
 								<div class="modal-header" style="background: cornsilk">
 									<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-									<h3 class="modal-title" align="center">{{ $hall->title }}</h3>
+									<h3 class="modal-title" align="center"><div id="hall_title"> </div></h3>
 									<br>
 								</div>
+
 								<div class="modal-body">
+									<div class="row">
 
-									<slides>
-
-										<div class="row">
-
-											<div class="col-md-3">
-
-												<h4 align="center">  </h4>
-
-												<ul>
-													<!--	<?php
-/*
-																	$token = strtok($room_type->services_provided, ";")
-
-?>
-																	<?php
-																	while($token != false)
-																	{
-																		echo "<li >$token<br></li>";
-																		$token = strtok(";");
-
-																	} */
-?> -->
-												</ul>
+										<div class="col-md-3">
+											<h4 align="center">Services<br>(Free of Charge) </h4>
+											<div id="hall_services">
+												<!--ajax call-->
 											</div>
+										</div>
 
+										<slides>
 											<div class="col-md-6">
+												<br><br><br>
 
-
-												<br>
-												<br>
-												<br>
-												<div class="carousel slide" id="carousel-{{$hall->hall_id}}hall">
-													<div class="carousel-inner">
-														<div class="item active">
-															<img class="img-thumbnail"alt="Carousel Bootstrap First" @if(!empty($himage1))src="{{URL::asset($himage1->path)}}" @endif width="100%">
-															<!--	<div class="carousel-caption">
-<h4>
-
-
-</h4>
-<p>
-
-</p>
-</div> -->
-														</div>
-
-
-
-														@foreach($himages as $himage)
-														<div class="item">
-															<img class="img-thumbnail" alt="Carousel Bootstrap Second" src="{{URL::asset($himage->path)}}" width="100%">
-															<div class="carousel-caption">
-																<h4>
-
-																</h4>
-																<p>
-
-																</p>
-															</div>
-														</div>
-														@endforeach
-
-													</div>
-
-													<a class="left carousel-control" href="#carousel-{{$hall->hall_id}}hall" data-slide="prev"><span class="glyphicon glyphicon-chevron-left"></span></a> <a class="right carousel-control" href="#carousel-{{$hall->hall_id}}hall" data-slide="next"><span class="glyphicon glyphicon-chevron-right"></span></a>
-
+												<div class="carousel slide" id="carousel-hall_modal">
 
 												</div>
-
 											</div>
+										</slides>
 
-											<div class="col-md-3">
-
-												<h4 align="center"> </h4>
- 								</div>
-
-
-
-
-										</div><!--/row -->
-									</slides>
-									<br>
-									<services>
-
-										<div class="row">
-											<div class="col-md-4">
-
-
-											</div>
-
-											<div class="col-md-4">
-											</div>
-
-											<div class="col-md-4">
-											</div>
-
+										<div class="col-md-3">
+											<h4 align="center">Services<br>(Additional Charges) </h4>
+											<ul>
+												<div id="aservices">
+												</div>
+											</ul>
 										</div>
-									</services>
 
+									</div><!--/row -->
+									<br>
 								</div>
-
-
 
 								<div class="modal-footer" style="background:cornsilk">
 
 									<div class="row">
-
-										<div class="col-md-4">
-
+										<div class="col-md-6">
 											<div align="center">
-												<h4>Area</h4>
+												<h4>Rates</h4>
+												<div id="hall_rates">
 
+												</div>
 											</div>
 										</div>
 
-										<div class="col-md-4">
-
+										<div class="col-md-6">
 											<div align="center">
 												<h4>Capacity</h4>
-												{{ $hall->capacity_from }} - {{ $hall->capacity_to }}
-											</div>
-										</div>
-
-										<div class="col-md-4">
-											<div align="center">
-
-												<h4>Rates</h4>
-												Advance Payment : $@if(!empty($advance)){{  $advance->advance_payment }} @endif<br>
-												Refundable : $@if(!empty($refundable)  ){{ $refundable->refundable_amount }}@endif
-
+												<div id="hall_capacity">  </div>
 											</div>
 										</div>
 
 									</div>
 
-
 								</div>
-
-
-
-
-
 							</div>
 						</div>
 					</div>
 				</modal>
-				@endforeach
-
 
 			</div>
 
+			<?php 
+			$promotions = DB::table('PROMOTIONS')
+				->select(DB::raw("*, DATE_FORMAT(date_from,'%M %e, %Y') as dfrom, DATE_FORMAT(date_to,'%M %e, %Y') as dto"))
+				->where('date_from','<',date('Y-m-d'))
+				->where('date_to','>',date('Y-m-d'))
+				->get(); ?>
+
+
+			<div class="modal inmodal fade" id="promoModel" tabindex="-1" role="dialog"  aria-hidden="true">
+				<div class="modal-dialog modal-lg">
+					<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+							<h4 class="modal-title">Promotions</h4>
+
+						</div>
+						<div class="modal-body">
+
+							@foreach($promotions as $p)
+							<article class="post row" style="margin-top:0cm">
+								<!-- /end three columns -->
+
+								<div class="col-sm-12 col-md-12 col-lg-12">
+									<div class="infobox" style="background:#f0f1f1;color:#000000;">
+										<span class="post-date"> {{$p->dfrom}} to  {{$p->dto}}</span>
+
+										<h4 class="col5" style="margin-top:1%"><a href="#">  {{ $p->promotion_name }}  </a></h4>
+
+										<p> {{ $p->promotion_description }}</p>
+
+									</div><!-- /end nine columns -->
+								</div>
+							</article>
+
+							@endforeach
+
+
+						</div>
+
+						<div class="modal-footer">
+							<button type="button" class="btn btn-white" data-dismiss="modal">Close</button>
+						</div>
+					</div>
+
+
+				</div>
+			</div>
 
 
 
@@ -629,13 +435,7 @@
 							<div class="footercarousel carousel slide" id="footercarousel" data-ride="carousel">
 								<div class="carousel-inner">
 
-									<?php $promotions = DB::table('PROMOTIONS')
-	->where('date_from','<',date('Y-m-d'))
-	->where('date_to','>',date('Y-m-d'))
-	->get();
-
-
-
+									<?php  
 									$init = 0;
 									?>
 
@@ -647,7 +447,7 @@
 									<div class="item active">
 
 										<div class="col-md-6">
-											<i class="fa fa-calendar-o"></i><small class="date">AUGUST 26th</small>
+											<i class="fa fa-calendar-o"></i><small class="date">  {{$p->dfrom}} to  {{$p->dto}}</small>
 											<h4 class=" ">	
 
 
@@ -662,7 +462,7 @@
 									<div class="item  ">
 
 										<div class="col-md-6">
-											<i class="fa fa-calendar-o"></i><small class="date">AUGUST 26th</small>
+											<i class="fa fa-calendar-o"></i><small class="date"> {{$p->dfrom}} to  {{$p->dto}}</small>
 											<h4 class=" ">	
 
 
@@ -699,7 +499,7 @@
 
 
 								</div><!-- /carousel-inner -->
-								<a class="footercarousel-controls top" href="#">
+								<a class="footercarousel-controls top"  onclick="showPromos()" href="javascript:void(0);">
 									<i class="fa fa-bars"></i>
 								</a>
 								<a class="footercarousel-controls" href="#footercarousel" data-slide="prev">
@@ -721,7 +521,7 @@
 							<p style="word-wrap: break-word;">Amalya Reach resort situated in homagama on morgahahena road away from 26km from Colombo this hotel can be accommodate up to 750 guests on a function.</p>
 							<p style="word-wrap: break-word;">Well trained staff to give you the best services to experience the difference with us</p>
 						</div><!-- /col-md-3 -->
-					 <!-- /col-md-3 -->
+						<!-- /col-md-3 -->
 						<div class="col-sm-4 col-md-4 col-lg-4">
 							<div class="widget widget-contact">
 								<h5>Contact</h5>
@@ -740,10 +540,7 @@
 									</p>
 								</div><!-- /phone -->
 
-								<!-- <div class="time">
-<i class="fa fa-clock-o"></i>
-<p>08-16 hours<br>Monday - Friday</p>
-</div> -->
+
 
 								<div class="email">
 									<i class="fa fa-envelope-o"></i>
@@ -757,11 +554,15 @@
 						<div class="col-sm-5 col-md-5 col-lg-5">
 							<div class="widget widget-newsletter">
 								<h5>Write a review</h5>
+								<div class="" id="rsubmit"></div>
 
-								<form method="get" action="#">
-									<input type="text" name="rname" placeholder="Your Name?">
-									<textarea class="form-control" name="rtext" placeholder="What do you have to say?"></textarea>
-									<a type="button" class="btn btn-primary">Submit</a>
+								<form  id="submitform" onsubmit="return submitReview()">
+									<input type="text" name="name" placeholder="Your Name?" required>
+									<textarea class="form-control" name="review" placeholder="What do you have to say?" required></textarea>
+									<a type="button" class="btn btn-primary" onclick="validateReview()" href="javascript:void(0);">Submit</a>
+									<button type="submit"  hidden="true" id="submitBtn"></button>
+									<button type="reset"  hidden="true" id="resetBtn"></button>
+
 								</form>
 
 							</div><!-- /widget-newsletter -->
@@ -776,13 +577,9 @@
 					<div class="row">
 						<div class="col-sm-3 col-md-3 col-lg-3">
 							<div class="footer-social">
-								<a href="#"><i class="fa fa-facebook"></i></a>
-								<a href="#"><i class="fa fa-twitter"></i></a>
-								<a href="#"><i class="fa fa-pinterest"></i></a>
+								<a href="#"><i class="fa fa-facebook"></i></a> 
 								<a href="#"><i class="fa fa-google-plus"></i></a>
-								<a href="#"><i class="fa fa-github"></i></a>
-								<a href="#"><i class="fa fa-youtube"></i></a>
-								<a href="#"><i class="fa fa-linkedin"></i></a>
+
 							</div><!-- /footer-social -->
 						</div><!-- /col-md-3 -->
 						<div class="col-sm-5 col-md-5 col-lg-5">
@@ -807,95 +604,80 @@
 
 		</section><!-- /wrapper -->
 
+
+
+
 		<!-- jQuery -->
-
-
-
-
-
-
 		<script src="{{URL::asset('FrontEnd/js/vendor/jquery-1.11.0.min.js')}}"></script>
-
 		<script src="{{URL::asset('FrontEnd/dp/jquery-ui.js')}}"></script>
+		
+<script  src="{{URL::asset('FrontEnd/FancyBox/source/jquery.fancybox.js')}}"> </script>
+ 
 
 		<!-- CUSTOM JavaScript so you can use jQuery or $ before it has been loaded in the footer. -->
 
 		<!-- Google Maps Plugin -->
 		<!--	<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?libraries=geometry"></script>
 
-
-<!-- <script src="{{URL::asset('FrontEnd/js/vendor/maplace.min.js')}}"></script>
 <!-- Bootstrap JavaScript -->
 		<script src="{{URL::asset('FrontEnd/bootstrap/js/bootstrap.min.js')}}"></script>
 
-
 		<!-- Custom Bootstrap Select Dropdown Javascript -->
 		<script src="{{URL::asset('FrontEnd/js/vendor/bootstrap-select.min.js')}}"></script>
-
 
 		<!-- Custom Bootstrap Datepicker Javascript -->
 		<script src="{{URL::asset('FrontEnd/js/vendor/picker.js')}}"></script>
 		<script src="{{URL::asset('FrontEnd/js/vendor/picker.date.js')}}"></script>
 
-
 		<!-- Main JavaScript File for the theme -->
 		<script src="{{URL::asset('FrontEnd/js/scripts.js')}}"></script>
 
-
 		<!-- Shortcodes JavaScript File for the theme -->
-
 		<script src="{{URL::asset('FrontEnd/js/shortcodes.js')}}"></script>
+
 		<!-- widgets/footer-widgets JavaScript File for the theme -->
 		<script src="{{URL::asset('FrontEnd/js/widgets.js')}}"></script>
-		<script src=''></script>
 
 		<!-- Newsletter Shortcode DEPENDANCY JS -->
-
 		<script src="{{URL::asset('FrontEnd/js/vendor/classie.js')}}"></script>
 		<script src="{{URL::asset('FrontEnd/js/vendor/modernizr.custom.js')}}"></script>
 
 		<!-- Newsletter Shortcode main JS -->
-
 		<script src="{{URL::asset('FrontEnd/js/vendor/newsletter.js')}}"></script>
 
 		<!-- Owl Carousel Main Js File -->
-
 		<script src="{{URL::asset('FrontEnd/js/vendor/owl.carousel.js')}}"></script>
 
 		<!-- Sweet Alert -->
 		<script src="{{URL::asset('FrontEnd/sweetalert/sweetalert.min.js')}}"></script>
 
-
-		<script>
-			function showModal(id){
-
-
-				var temp = '#'+id;
-
-				$(temp).modal('show');
-
-
-			}
-		</script>
-
 		<script src="{{URL::asset('FrontEnd/js/jquery.simpleWeather.js')}}"></script>
-
 		<script src="{{URL::asset('FrontEnd/js/sugar.js')}}"></script>
-
 		<script src="{{URL::asset('FrontEnd/js/weather.js')}}"></script>
 
 		<script>
 
+
+			function showModal(id)
+			{
+				var temp = '#'+id;
+				$(temp).modal('show');
+			}
+
+			//validate review submit
+			function validateReview()
+			{
+				$('#submitBtn').click();
+
+			}
+
+			//JQuery onload function
 			$('document').ready(function(){
-
-
 
 				var myLatLng = {lat:6.840172, lng: 80.020895};
 
-
 				Weather.getCurrent("colombo", function(current) {
 					console.log(current.data.list[0].weather[0].main );
-
 
 					if(current.data.list[0].weather[0].main == "Rain"){
 						document.getElementById("weatherid").removeAttribute("class","");
@@ -905,17 +687,13 @@
 
 						document.getElementById("weatherid").removeAttribute("class","");
 						document.getElementById("weatherid").setAttribute("class","icon-cloud-1");
-
 					}
 					else{
 
 						document.getElementById("weatherid").removeAttribute("class","");
 						document.getElementById("weatherid").setAttribute("class","icon-sun-1");
-
 					}
 				});
-
-
 
 				Weather.getForecast("colombo", function(forecast) {
 					console.log("Forecast High in Kelvin: " + forecast.high());
@@ -925,21 +703,194 @@
 					var F = Math.ceil(Weather.kelvinToFahrenheit(forecast.high()));
 					var C = Math.ceil(Weather.kelvinToCelsius(forecast.high()));
 					document.getElementById("deg").innerHTML += C+"&deg;C/"+F+"&deg;F";
+				});
+			});
+
+
+			//hall modal view using ajax 
+			function viewHall(id,title,capa_from,capa_to)
+			{
+				$.ajax({
+					type:"get",
+					url :"hall_view",
+					data:{
+						'hall_id':id
+					},
+					success:function(data){
+
+						var services = "";
+
+						for (var i = 0; i < data.services.length; i++) {
+							services +='<li>'+data.services[i].name +'</li>';
+						}
+
+						document.getElementById('hall_services').innerHTML = services;
+
+						var image_active ='<div id="hall_slide" class="carousel-inner">' +
+							'<div class="item active"><img class="img-thumbnail" alt="Carousel Bootstrap First" src="'+data.himage1+'" width="100%"></div>';
+
+						var hall_images = "";
+
+						for (var i = 0; i < data.himages.length; i++) {
+							hall_images +=  '<div class="item">'+
+								'<img class="img-thumbnail" alt="Carousel Bootstrap Second" src="'+data.himages[i].path+'" width="100%">'+
+								'<div class="carousel-caption">'+
+								'</div>'+
+								'</div>';
+						}
+
+						var end = '<a class="left carousel-control" href="#carousel-hall_modal" data-slide="prev"><span class="glyphicon glyphicon-chevron-left"></span></a> <a class="right carousel-control" href="#carousel-hall_modal" data-slide="next"><span class="glyphicon glyphicon-chevron-right"></span></a>'
+
+						document.getElementById('carousel-hall_modal').innerHTML = image_active+hall_images+'</div>'+end;
+
+						var aservices = "";
+
+						for (var i = 0; i < data.aservices.length; i++) {
+
+							aservices +='<li>'+data.aservices[i].name +'-Rs.'+data.aservices[i].rate+'</li>';
+						}
+
+						document.getElementById('aservices').innerHTML = aservices;
+
+						var hall_rates = 'Advance Payment : Rs.'+data.advance+'<br>'+
+							' Refundable : Rs.'+data.refundable;
+
+						document.getElementById('hall_rates').innerHTML = hall_rates;
+
+						document.getElementById('hall_title').innerHTML = title;
+
+						document.getElementById('hall_capacity').innerHTML = capa_from +' - '+capa_to;
+
+
+
+						$('#hall_modal').modal('show');
+
+					},
+					error: function(xhr, ajaxOptions, thrownError) {
+
+						console.log(thrownError);
+						swal("Ooops!", "Something Went Wrong! ("+thrownError+")", "error");
+					}
+				});
+			}
+
+			function viewRoomType(id,name)
+			{
+				$.ajax({
+					type:"get",
+					url :"room_view",
+					data:{
+						'room_id':id
+					},
+					success:function(data){
+
+
+						document.getElementById('room_title').innerHTML = name;
+
+						var room_furnishes = "";
+
+						for (var i = 0; i < data.room_furnishes.length; i++) {
+
+							room_furnishes +='<li>'+data.room_furnishes[i].name +'</li>';
+						}
+
+						document.getElementById('room_furnishes').innerHTML = room_furnishes;
+
+
+						var room_services = "";
+
+						for (var i = 0; i < data.room_services.length; i++) {
+
+							room_services +='<li>'+data.room_services[i].name +'</li>';
+						}
+
+						document.getElementById('room_services').innerHTML = room_services;
+
+
+
+						var image_active ='<div id="room_slide" class="carousel-inner">' +
+							'<div class="item active" id="room_image_active"><img class="img-thumbnail" alt="Carousel Bootstrap First" src="'+data.rimage1+'" width="100%"></div>';
+
+						var room_images = "";
+
+						for (var i = 0; i < data.rimages.length; i++) {
+							room_images +=  '<div class="item">'+
+								'<img class="img-thumbnail" alt="Carousel Bootstrap Second" src="'+data.rimages[i].path+'" width="100%">'+
+								'<div class="carousel-caption">'+
+								'</div>'+
+								'</div>';
+						}
+
+
+						var end = '<a class="left carousel-control" href="carousel-room_modal" data-slide="prev"><span class="glyphicon glyphicon-chevron-left"></span></a> <a class="right carousel-control" href="#carousel-room_modal" data-slide="next"><span class="glyphicon glyphicon-chevron-right"></span></a>'
+
+						document.getElementById('carousel-room_modal').innerHTML = image_active+room_images+'</div>'+end;
+
+						var room_rates = "";
+
+						for (var i = 0; i < data.room_rates.length; i++) {
+
+							room_rates += data.room_rates[i].meal_type_name+'- Rs.'+data.room_rates[i].single_rates+'<br>';
+						}
+
+						document.getElementById('room_rates').innerHTML = room_rates;
+
+
+
+						$('#room_modal').modal('show');
+
+					},
+					error: function(xhr, ajaxOptions, thrownError) {
+
+						console.log(thrownError);
+						swal("Ooops!", "Something Went Wrong! ("+thrownError+")", "error");
+					}
+				});
+
+			}
+
+			//review submit
+			function submitReview()
+			{
+
+				document.getElementById("rsubmit").innerHTML = "";
+
+				$.ajax({
+
+
+					url:"submit_review",
+					type:"get",
+					data:$('#submitform').serialize(),
+					success:function(data){
+
+						var body = '<div class="alert alert-dismissible alert-success"><button type="button" class="close" data-dismiss="alert">X</button><strong>Well done!</strong> You successfully reviewed!.</div>';
+						document.getElementById("rsubmit").innerHTML = body;
+						$('#resetBtn').click();
+					},
+					error:function (err){
+
+
+						var body = '<div class="alert alert-dismissible alert-danger"><button type="button" class="close" data-dismiss="alert">X</button><strong>Oops!</strong>Something went wrong! Please try again.</div>';
+						document.getElementById("rsubmit").innerHTML = body;
+
+					}
 
 
 				});
 
+				return false;
+			}
 
-			});
+			function showPromos(){
+
+
+				$('#promoModel').modal('show');
+
+			}
+			
 		</script>
-
 
 		@yield('js')
 
-
-
-
 	</body>
 </html>
-
-

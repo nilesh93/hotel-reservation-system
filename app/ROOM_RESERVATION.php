@@ -12,7 +12,7 @@ class ROOM_RESERVATION extends Model
 
     protected $primaryKey = 'room_reservation_id';
 
-    public $timestamps  = false;
+
 
 
 }

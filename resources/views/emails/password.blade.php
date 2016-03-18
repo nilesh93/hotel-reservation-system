@@ -15,7 +15,7 @@
 <body style="background-color: #ffffff; background: none">
     <div class="row">
         <div class="col-md-2">
-            <img src="<?php echo $message->embed('FrontEnd/img/amalya-logo.png'); ?>"><br><br><br>
+            <img src="{{URL::asset('FrontEnd/img/amalya-logo.png')}}"> <br><br><br>
         </div>
         <div class="col-md-10">
             <h1 style="display: inline" class="text-info">Amalya Reach Holiday Resorts</h1>

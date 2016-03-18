@@ -15,6 +15,7 @@ class VerifyCsrfToken extends BaseVerifier
         //
         'admin_gallery_upload',
         'admin_roomtype_upload',
-        'admin_hall_upload'
+        'admin_hall_upload',
+        'admin_web_gallery_upload'
     ];
 }

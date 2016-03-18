@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use DB;
+use \Input as Input;
+
 
 /**
  * Class MenusController
@@ -123,6 +125,20 @@ class MenusController extends Controller
     }
 
     /**
+     * When adding a Menu Item, this function checks if the name of the item is available in the menu.
+     *
+     * @param Request $request
+     * @return mixed
+     */
+    public function getCheckavailability(Request $request){
+        $rowno = $request->input('menu_number');
+        $item_name = $request->input('item_name');
+        $result = DB::table('detailed_menus')->where('menu_id',$rowno)->where('item_name',$item_name)->count();
+        return $result;
+
+    }
+
+    /**
      * Insert a new Menu and return the row number of the new entry.
      *
      * @param Request $request
@@ -180,6 +196,18 @@ class MenusController extends Controller
     }
 
     /**
+     * This function inserts the uploaded image path to the Menus database.
+     *
+     * @param Request $request
+     */
+    public function getAddimagepath(Request $request){
+        $imagepath = $request->input('imagepath');
+        $fname = $request->input('fname');
+        DB::table('menus')->where('menu_id',$fname)->update(array('imagepath'=>$imagepath));
+
+    }
+
+    /**
      * Delete the Menu when the row number is given.
      *
      * @param Request $request
@@ -200,5 +228,33 @@ class MenusController extends Controller
         $item_id=$request->input('row');
         DB::table('DETAILED_MENUS')->where('id','=',$item_id)->delete();
     }
+
+    public function imageupload(){
+        if(Input::hasFile('file')) {
+            //upload an image to the /img/tmp directory and return the filepath.
+
+            $file = Input::file('file');
+
+            $filetype = $file->getClientOriginalExtension();
+
+            if($filetype == 'jpg' || $filetype == 'jpeg' || $filetype == 'png' || $filetype == 'bmp') {
+
+                $fname = Input::get('fname') . "." . $file->getClientOriginalExtension();
+                $tmpFilePath = '/img/tmp/';
+                $destFilePath = 'img/tmp/';
+
+                $tmpFileName = $fname;
+                $file = $file->move(public_path() . $tmpFilePath, $tmpFileName);
+                $path = $destFilePath . $fname;
+                return response()->json(array('path' => $path), 200);
+            }
+            else{
+                return 0;
+            }
+        } else {
+            return response()->json(false, 200);
+        }
+    }
+
 
 }

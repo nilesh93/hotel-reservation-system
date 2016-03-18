@@ -14,6 +14,7 @@ use DB;
  */
 class FacilitiesController extends Controller
 {
+
     /**
      * Constructor for the FacilitiesController class. Checks if a user has sufficient permission
      * to access the Admin area.
@@ -34,6 +35,7 @@ class FacilitiesController extends Controller
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function getIndex (Request $request){
+
         return view('nipuna.facilities');
     }
 

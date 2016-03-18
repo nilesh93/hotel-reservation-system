@@ -276,6 +276,9 @@ Route::controller('admin_facilities','FacilitiesController');
 //Search functions for bookings search.
 Route::get('admin_search/bookings','SearchController@bookings_search');
 Route::get('admin_bookings_search','SearchController@bookings_search_index');
+Route::get('admin_search/roomlogspast','SearchController@roomlogspast');
+Route::get('admin_search/roomlogsfuture','SearchController@roomlogsfuture');
+
 
 //Search functions for rooms search.
 Route::get('admin_rooms_search','SearchController@rooms_search_index');
@@ -285,33 +288,25 @@ Route::get('admin_search/rooms','SearchController@rooms_search');
 Route::get('admin_search/customers','SearchController@customers_search');
 Route::get('admin_customers_search','SearchController@customers_search_index');
 
-//Test email
-Route::get('testmail',function(){
+Route::post('admin_promotions/menuImageUpload','PromotionsController@menuImageUpload');
+Route::post('menuImageUpload','MenusController@imageupload');
 
-    Mail::send('emails.newAdmin', [], function ($message)  {
-        $message->from(env('MAIL_FROM'), env('MAIL_NAME'));
+//Menu image upload
+//Route::post('menuImageUpload',function(){
+//
+//
+//});
 
-        $message->to('hash.crackhead@gmail.com')->subject('Welcome to the team!');
-    });
+
+Route::get('deleteImage',function(){
+   $filename = Input::get('rowno');
+    $fname = public_path().'/img/tmp/'.$filename.'.jpg';
+    File::delete($fname);
+    return $fname;
 });
 
-route::post('upload',function(){
-    if(Input::hasFile('file')) {
-        //upload an image to the /img/tmp directory and return the filepath.
-
-        $file = Input::file('file');
-        $fname = Input::get('fname').".".$file->getClientOriginalExtension();
-        $tmpFilePath = '/img/tmp/';
-        $destFilePath = 'img/tmp/';
-
-        $tmpFileName = $fname ;
-        $file = $file->move(public_path() . $tmpFilePath, $tmpFileName);
-        $path = $destFilePath . $fname;
-        return response()->json(array('path'=> $path), 200);
-    } else {
-        return response()->json(false, 200);
-    }
-
+Route::get('testroute/{id}',function($id){
+   return $id;
 });
 /*
 |

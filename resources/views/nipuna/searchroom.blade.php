@@ -53,13 +53,12 @@
                 <table class="table table-striped table-bordered table-hover dataTables-example" id="ddt" plugin="datatable" >
                     <thead>
                     <tr>
-                        <th>Code</th>
-                        <th>Type</th>
-                        <th>Description</th>
-                        <th>Services</th>
-                        <th>Count</th>
-                        <th class="col-md-1"></th>
-                        <th class="col-md-1"></th>
+                        <th>Reservation ID</th>
+                        <th>Remarks</th>
+                        <th>Customer ID</th>
+                        <th>Total Amount</th>
+                        <th>Checked In</th>
+                        <th>Created At</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -71,12 +70,12 @@
                 <table class="table table-striped table-bordered table-hover dataTables-example" id="dd" plugin="datatable" >
                     <thead>
                     <tr>
-                        <th>#</th>
-                        <th>Room_No.</th>
-                        <th>Room Type</th>
-                        <th>Size</th>
-                        <th>status</th>
+                        <th>Reservation ID</th>
                         <th>Remarks</th>
+                        <th>Customer ID</th>
+                        <th>Total Amount</th>
+                        <th>Checked In</th>
+                        <th>Created At</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -153,21 +152,41 @@
             document.getElementById("management").click();
             document.getElementById("RS").setAttribute("class","active");
             dataLoad();
+            dataLoadBooking();
         });
 
         function dataLoad(){
-            var oTable = $('#dd').DataTable();
+            var oTable = $('#abc').DataTable();
             oTable.destroy();
 
             $('#dd').DataTable( {
-                "ajax": "admin_search/rooms",
+                "ajax": "admin_search/roomlogspast",
                 "columns": [
-                    { "data": "room_id" },
-                    { "data": "room_num"},
-                    { "data": "room_size" },
-                    { "data": "room_type_id" },
+                    { "data": "room_reservation_id" },
                     { "data": "remarks"},
-                    { "data": "status"}
+                    { "data": "cus_id" },
+                    { "data": "total_amount" },
+                    { "data": "check_in"},
+                    { "data": "created_at"}
+                ]
+            } );
+
+
+        }
+
+        function dataLoadBooking(){
+            var oTable = $('#ab').DataTable();
+            oTable.destroy();
+
+            $('#ddt').DataTable( {
+                "ajax": "admin_search/roomlogsfuture",
+                "columns": [
+                    { "data": "room_reservation_id" },
+                    { "data": "remarks"},
+                    { "data": "cus_id" },
+                    { "data": "total_amount" },
+                    { "data": "check_in"},
+                    { "data": "created_at"}
                 ]
             } );
 
