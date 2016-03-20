@@ -19,7 +19,6 @@ use Input;
 use Image;
 use File;
 
-
 class RoomController extends Controller
 {
 
@@ -35,14 +34,12 @@ class RoomController extends Controller
        */
 
 
-
     /**
      * Constructor for the UserController class. Checks if a user has sufficient permission
      * to access the Admin area.
      *
      */
-    public function __construct()
-    {
+    public function __construct(){
         // Check if User is Authenticated
         $this->middleware('auth', ['except' => ['blockNotice']]);
 
@@ -129,7 +126,7 @@ class RoomController extends Controller
         $room->remarks = $request->input('rremarks');
         $room->save();
 
-        return view('nilesh.rooms');
+        
 
     }
 
@@ -317,7 +314,7 @@ class RoomController extends Controller
     }
 
     /**
-     * get room number upon entering a room
+     * autogenerate room number upon entering a room
      *
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse
@@ -328,7 +325,8 @@ class RoomController extends Controller
         $rt = RoomType::find($request->input('id'));
 
         $type_code = $rt->type_code;
-        $max = Room::where('room_type_id',$rt)->max('sequence_num');
+        $max = Room::where('room_type_id',$rt->room_type_id)->max('sequence_num');
+        
         $max++;
         $maxNumberCode = strtoupper($type_code) . str_pad($max,4,"0",STR_PAD_LEFT);
 
@@ -365,7 +363,7 @@ class RoomController extends Controller
     }
 
     /**
-     * return room servicesx
+     * return room services
      *
      * @return \Illuminate\Http\JsonResponse
      */
@@ -635,7 +633,7 @@ class RoomController extends Controller
     }
 
     /**
-     *save room update details
+     * save room update details
      *
      * @param Request $request
      */
@@ -647,7 +645,7 @@ class RoomController extends Controller
         
         $room->room_num = $request->input('rnum');
         $room->room_size = $request->input('rsize');
-        $room->sequence_num = $request->input('max');
+        //$room->sequence_num = $request->input('max');
         $room->room_type_id = $request->input('rtype'); 
         $room->status = $request->input('rstatus'); 
         $room->remarks = $request->input('rremarks');

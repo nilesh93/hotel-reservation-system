@@ -340,6 +340,7 @@ ROOM SERVICES
 
 <script>
 
+    //onload function
     $('document').ready(function(){
 
         document.getElementById('management').click();
@@ -348,6 +349,7 @@ ROOM SERVICES
         dataLoad();
     });
 
+    //datalaod
     function dataLoad(){
 
         var oTable = $('#dd').DataTable();
@@ -428,6 +430,8 @@ ROOM SERVICES
 
 
     }
+    
+    //insert room services
     function insertRS(){
 
 
@@ -453,6 +457,8 @@ ROOM SERVICES
 
 
     }
+    
+    //insert room furnishing
     function insertRF(){
 
 
@@ -479,6 +485,8 @@ ROOM SERVICES
 
 
     }
+    
+    //edit get roomm furnish details
     function editMainRF(id){
 
         $.ajax({
@@ -506,6 +514,8 @@ ROOM SERVICES
 
 
     }
+    
+    //edit main room service details
     function editMainRS(id){
 
         $.ajax({
@@ -535,6 +545,8 @@ ROOM SERVICES
 
 
     }
+    
+    //edit room services
     function editRS(){
 
 
@@ -565,6 +577,8 @@ ROOM SERVICES
 
 
     }
+    
+    //edit room functions
     function editRF(){
 
 
@@ -595,6 +609,8 @@ ROOM SERVICES
 
 
     }
+    
+    //delete room furnicher
     function delRF(id){
 
 
@@ -637,6 +653,8 @@ ROOM SERVICES
 
 
     }
+    
+    //delete room service
     function delRS(id){
 
 

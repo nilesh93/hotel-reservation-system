@@ -164,7 +164,7 @@ HALL MANAGEMENT
 
 </div> 
 
-
+<!-- add Hall -->
 <div class="modal inmodal fade" id="addHall" tabindex="-1" role="dialog"  aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
@@ -303,7 +303,7 @@ HALL MANAGEMENT
     </div>
 </div>
 
-
+<!-- edit hall -->
 <div class="modal inmodal fade" id="editHall" tabindex="-1" role="dialog"  aria-hidden="true">
     <div class="modal-dialog modal-lg">
          <form class="form-horizontal" id="editH" onsubmit="return updateH()">
@@ -487,12 +487,16 @@ HALL MANAGEMENT
 
 <script>
 
+    //image validation extensions
     var _validFileExtensions = [".jpg", ".jpeg", ".png"];
 
+    //image validate
     function hasExtension(inputID, exts) {
         var fileName = document.getElementById(inputID).value;
         return (new RegExp('(' + exts.join('|').replace(/\./g, '\\.') + ')$')).test(fileName);
     }
+    
+    //onload function
     $('document').ready(function(){
 
         document.getElementById('management').click();
@@ -505,6 +509,7 @@ HALL MANAGEMENT
 
     });
 
+    //dataload
     function dataLoad(){
 
         var oTable = $('#hh').DataTable();
@@ -550,6 +555,7 @@ HALL MANAGEMENT
 
     }
 
+    //add hall
     function insertH(){
 
 
@@ -577,6 +583,7 @@ HALL MANAGEMENT
 
     }
 
+    //add image to hall
     function addimg(id){
 
         $('#imgLoad').click();
@@ -586,7 +593,7 @@ HALL MANAGEMENT
 
     }
 
-
+    //upload image via AJAX
     function upload(){
 
 
@@ -653,7 +660,8 @@ HALL MANAGEMENT
 
 
     }
-
+    
+    //edit hall details get info
     function edit(id){
 
         $.ajax({
@@ -729,7 +737,7 @@ HALL MANAGEMENT
 
     }
 
-    
+    //delete image
     function delImage(id,originalid){
 
         $.ajax({
@@ -778,7 +786,7 @@ HALL MANAGEMENT
 
     }
     
-    
+    //update hall edit save
     function updateH(){
         
             $.ajax({
@@ -806,6 +814,7 @@ HALL MANAGEMENT
         return false;
     }
 
+    //delete hall
     function del(id){
 
 
@@ -849,6 +858,7 @@ HALL MANAGEMENT
 
     }
 
+    //cancel alert on delete
     function delCancel(id){
 
         swal('Cannot delete!', 'Room type cannot be deleted because there are rooms associated with this room type. Please delete them or change them first!', 'error');
@@ -856,6 +866,8 @@ HALL MANAGEMENT
 
     }
 
+    
+    //depcrecated function
     function getRoomNum(id){
 
         if(id == 0){

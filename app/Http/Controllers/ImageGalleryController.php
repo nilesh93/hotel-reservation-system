@@ -31,8 +31,7 @@ class ImageGalleryController extends Controller
      * to access the Admin area.
      *
      */
-    public function __construct()
-    {
+    public function __construct() {
         // Check if User is Authenticated
         $this->middleware('auth', ['except' => ['blockNotice']]);
 

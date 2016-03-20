@@ -57,8 +57,8 @@ class InquiryController extends Controller
 
         $inq->save();
 
-        
-            Mail::send('emails.inquiry', ['inq'=> $inq], function ($message)   {
+
+        Mail::send('emails.inquiry', ['inq'=> $inq], function ($message)   {
             $message->from(env('MAIL_FROM'), env('MAIL_NAME'));
 
             $message->to("nilesh.jayanandana@yahoo.com")->subject('Amalaya Reach Inquiry');

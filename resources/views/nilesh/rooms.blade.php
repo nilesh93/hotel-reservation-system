@@ -133,7 +133,7 @@ ROOM MANAGEMENT
 </div>
 
 
-
+<!-- add room -->
 <div class="modal inmodal fade" id="addRoom" tabindex="-1" role="dialog"  aria-hidden="true">
     <div class="modal-dialog ">
         <div class="modal-content">
@@ -159,11 +159,12 @@ ROOM MANAGEMENT
                         </div>
                     </div>
 
-                    <div class="form-group">
+                    <div class="form-group" id="roomNumErr">
 
                         <label class="col-lg-3 control-label">Room No</label>
 
-                        <div class="col-lg-9"><input placeholder="Enter Room Number" class="form-control" type="text" required id="rnum" name="rnum" required onchange="checknum(this.value,this)">
+                        <div class="col-lg-9"><input placeholder="Enter Room Number" class="form-control" type="text" required id="rnum" name="rnum" required onchange="checkRoomNum(this.value,this)" onkeyup="checkRoomNum(this.value,this)">
+                            <span id="helpBlock3" class="help-block">This should be unique.</span>
                         </div>
                     </div>
 
@@ -212,6 +213,8 @@ ROOM MANAGEMENT
             </form>
     </div>
 </div>
+
+<!-- add room type -->
 <div class="modal inmodal fade" id="addRoomT" tabindex="-1" role="dialog"  aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
@@ -232,7 +235,10 @@ ROOM MANAGEMENT
                         </div>
                         <label class="col-lg-2 control-label">Type Code</label>
 
-                        <div class="col-lg-3"><input placeholder="Enter Short code  " class="form-control" type="text" required id="rtcode" name="rtcode">
+                        <div class="col-lg-3 " id="roomTErr"><input placeholder="Enter Short code  " class="form-control" type="text" required id="rtcode" name="rtcode" onchange="checkRTCode(this.value)" onkeyup="checkRTCode(this.value)">
+
+                            <span id="helpBlock2" class="help-block">This should be unique.</span>
+
                         </div>
                     </div>
 
@@ -358,7 +364,7 @@ ROOM MANAGEMENT
     </div>
 </div>
 
-
+<!-- upload image -->
 <div class="profile_img">
 
     <!-- end of image cropping -->
@@ -397,7 +403,7 @@ ROOM MANAGEMENT
                                 <div class="row">
                                     <div class="col-md-9">
                                         <div class="avatar-wrapper">
-                                        
+
                                         </div>
                                     </div>
                                     <div class="col-md-3">
@@ -435,6 +441,7 @@ ROOM MANAGEMENT
 </div> 
 
 
+<!-- edit room type -->
 <div class="modal inmodal fade" id="editRoomT" tabindex="-1" role="dialog"  aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
@@ -475,7 +482,7 @@ ROOM MANAGEMENT
 
                                 <label class="col-lg-2 control-label">  Code</label>
 
-                                <div class="col-lg-4"><input placeholder="Enter Short code for Room Type" class="form-control" type="text" required id="rrtcode" name="rtcode">
+                                <div class="col-lg-4"><input placeholder="Enter Short code for Room Type" class="form-control" type="text" required id="rrtcode" name="rtcode" readonly>
                                 </div>
 
                             </div>
@@ -612,6 +619,8 @@ ROOM MANAGEMENT
         </div>
     </div>
 </div>
+
+<!-- edit rooms -->
 <div class="modal inmodal fade" id="editRoom" tabindex="-1" role="dialog"  aria-hidden="true">
     <div class="modal-dialog ">
         <div class="modal-content">
@@ -641,7 +650,7 @@ ROOM MANAGEMENT
 
                         <label class="col-lg-3 control-label">Room No</label>
 
-                        <div class="col-lg-9"><input placeholder="Enter Room Number" class="form-control" type="text" required id="rnum1" name="rnum" required onchange="checknum(this.value,this)">
+                        <div class="col-lg-9"><input placeholder="Enter Room Number" class="form-control" type="text" required id="rnum1" name="rnum" required  readonly>
                         </div>
                     </div>
 
@@ -705,11 +714,64 @@ ROOM MANAGEMENT
 <script>
 
 
+    //temp rates for room type add
     var tempRates = [];
+    
+    //temp rates for room type edit
     var tempRatesEdit = [];
+    
+    //img valdiation extensions
     var _validFileExtensions = [".jpg", ".jpeg", ".png"];
 
+    //room codes for valdiation
+    var roomNumbers = [];
+    
+    //room type codes for validation
+    var rtCodes = [];
 
+    //room trigger to save validation
+    var roomTrigger = false;
+    
+    // room type trigger to save validation
+    var rTrigger = false;
+
+    //check room number validation
+    function checkRoomNum(value,element){
+
+
+        if(roomNumbers.indexOf(value) > -1){
+
+            $('#roomNumErr').addClass("has-error"); 
+            roomTrigger = true;
+
+        } else{
+
+
+            $('#roomNumErr').removeClass("has-error");
+            roomTrigger = false;
+        }
+
+    } 
+    
+    //room type code validation
+    function checkRTCode(value){
+
+        if(rtCodes.indexOf(value) > -1){
+
+            $('#roomTErr').addClass("has-error"); 
+            rTrigger = true;
+
+        } else{
+
+
+            $('#roomTErr').removeClass("has-error");
+            rTrigger = false;
+        }
+
+
+    } 
+    
+    //add temprates
     function rateAdd(){
         var rate = $('#rtrate').val();
         var meal = $('#rtmeal').val();
@@ -752,6 +814,8 @@ ROOM MANAGEMENT
 
         tableLoad();
     }
+    
+    //add temp rates for edit
     function rateAddEdit(){
         var rate = $('#rtrate1').val();
         var meal = $('#rtmeal1').val();
@@ -794,6 +858,8 @@ ROOM MANAGEMENT
 
         tableLoadEdit();
     }
+    
+    //load table for add rates
     function tableLoad(){
         if(tempRates.length >0 ){
 
@@ -814,6 +880,8 @@ ROOM MANAGEMENT
         }
 
     }
+    
+    //load table for edit rates
     function tableLoadEdit(){
         if(tempRatesEdit.length >0 ){
 
@@ -834,6 +902,8 @@ ROOM MANAGEMENT
         }
 
     }
+    
+    //delete temprate add row
     function delTemp(index,id){
 
         tempRates.splice(index,1);
@@ -841,6 +911,8 @@ ROOM MANAGEMENT
 
         tableLoad();
     }
+    
+    //delete temp rate edit  row
     function delTemp1(index,id){
 
         tempRatesEdit.splice(index,1);
@@ -848,12 +920,14 @@ ROOM MANAGEMENT
 
         tableLoadEdit();
     }
+    
+    //onload function
     $('document').ready(function(){
 
         document.getElementById('management').click();
         document.getElementById('RM').setAttribute('class','active');
-        
-          $('#avatarInput').change(function(){
+
+        $('#avatarInput').change(function(){
 
             if (!hasExtension('avatarInput',_validFileExtensions)) {
 
@@ -873,7 +947,13 @@ ROOM MANAGEMENT
         tableLoad();
 
     });
+    
+    //initital dataload
     function dataLoad(){
+
+        roomNumbers = [];
+        rtCodes = [];
+
 
         var oTable = $('#dd').DataTable();
         oTable.destroy();
@@ -887,6 +967,10 @@ ROOM MANAGEMENT
                 { "data": "room_size" },
                 {"data" : null,
                  "mRender": function(data, type, full) {
+
+
+                     roomNumbers.push(data.room_num);
+
 
                      if(data.status == '0'){
 
@@ -929,6 +1013,10 @@ ROOM MANAGEMENT
                 { "data": "count" },
                 {"data" : null,
                  "mRender": function(data, type, full) {
+
+
+                     rtCodes.push(data.type_code);
+
                      return '<button class="btn btn-success btn-animate btn-animate-side btn-block btn-sm" onclick="addimg('+data.room_type_id+')">  Images </button>' ;
                  }
                 },
@@ -958,8 +1046,17 @@ ROOM MANAGEMENT
 
 
     }
+    
+    //insert room
     function insertR(){
 
+
+        if(roomTrigger){
+
+            swal("You cannot use a previous used room code here","", "error");
+
+            return false;
+        }
 
         $.ajax({
             type: "get",
@@ -983,6 +1080,8 @@ ROOM MANAGEMENT
 
 
     }
+    
+    //add image for room type
     function addimg(id){
 
         $('#imgLoad').click();
@@ -991,6 +1090,8 @@ ROOM MANAGEMENT
 
 
     }
+    
+    //edit room type
     function editRT(id){
 
         console.log(id);
@@ -1083,6 +1184,8 @@ ROOM MANAGEMENT
 
 
     }
+    
+    //save edited room type
     function saveEditRT(){
 
         //admin_roomtype_update
@@ -1110,10 +1213,12 @@ ROOM MANAGEMENT
         return false;
 
     }
+    
+    //ajax upload of image
     function upload(){
 
 
-           if (!hasExtension('avatarInput',_validFileExtensions)) {
+        if (!hasExtension('avatarInput',_validFileExtensions)) {
 
             swal("Invalid File Type!","Please choose a jpg, jpeg or a png Image.","error");
             return false;
@@ -1130,7 +1235,7 @@ ROOM MANAGEMENT
 
         });
 
-        
+
         console.log(document.getElementById("avatar_data").value);
 
         var f =   new FormData();
@@ -1158,17 +1263,17 @@ ROOM MANAGEMENT
                     name_error.html(data.responseJSON.name);
                     link_error.html(data.responseJSON.link);
                     image_error.html(data.responseJSON.image);
-                     swal("Upload Failed", "Something went wrong (code: "+data.status+")", "error");
+                    swal("Upload Failed", "Something went wrong (code: "+data.status+")", "error");
 
 
                 } else {
                     $('#avatar-modal').modal('hide');
                     swal("success","Image Successfully Uploaded","success");
                     console.log(data.status);
-                   $('.avatar-wrapper img').removeAttr('src');
+                    $('.avatar-wrapper img').removeAttr('src');
                     //$('.avatar-preview').html("");
                     $('#avatarInput').val("");
-                    
+
                     ('#avatarInput').fireEvent("onchange");
                 }
             }
@@ -1176,13 +1281,17 @@ ROOM MANAGEMENT
 
 
 
-return false;
+        return false;
 
     }  
+    
+    //image validation
     function hasExtension(inputID, exts) {
         var fileName = document.getElementById(inputID).value;
         return (new RegExp('(' + exts.join('|').replace(/\./g, '\\.') + ')$')).test(fileName);
     }
+    
+    //delete image
     function delImage(id,originalid){
 
         $.ajax({
@@ -1230,7 +1339,16 @@ return false;
 
 
     }
+    
+    //insert room type
     function insertRT(){
+
+
+        if(rTrigger){
+
+            swal("You cannot use a previously used room type code here","", "error");
+            return false;
+        }
 
         $('#data1').val(JSON.stringify(tempRates));
         console.log('admin_roomtype_add?'+ $('#addRT').serialize());
@@ -1249,7 +1367,7 @@ return false;
                     $('#updateRTReset').click();
                     tempRates = [];
                     tableLoad();
-                    $("#resetRT").click();
+                    $("#nsertRTReset").click();
 
                 },
                 error: function(xhr, ajaxOptions, thrownError) {
@@ -1266,6 +1384,8 @@ return false;
 
 
     }
+    
+    //load dropdown for rooms
     function loadTypes(){
 
 
@@ -1297,6 +1417,8 @@ return false;
 
 
     }
+    
+    //delete room types
     function delRT(id){
 
 
@@ -1339,6 +1461,8 @@ return false;
 
 
     }
+    
+    //delete room
     function del(id){
 
 
@@ -1381,12 +1505,16 @@ return false;
 
 
     }
+    
+    //cannot delete error message
     function delCancel(id){
 
         swal('Cannot delete!', 'Room type cannot be deleted because there are rooms associated with this room type. Please delete them or change them first!', 'error');
 
 
     }
+    
+    //autogenerate room number via ajax
     function getRoomNum(id){
 
         if(id == 0){
@@ -1409,7 +1537,7 @@ return false;
 
                 document.getElementById('rnum').value = data.code;
                 document.getElementById('max').value = data.max;
-
+                console.log(data.max);
 
             },
             error: function(xhr, ajaxOptions, thrownError) {
@@ -1422,6 +1550,8 @@ return false;
 
 
     }
+    
+    //deprecated funciton to validate room number
     function checknum(id,element){
 
         $.ajax({
@@ -1441,66 +1571,70 @@ return false;
         });
 
     }
+    
+    //edit room
     function edit(id){
-        
+
         $('#room_id').val(id);
-        
+
         $.ajax({
             url:"admin_get_room_update_details",
             type:"get",
             data:{id:id},
             success:function(data){
-                
+
                 $('#rtype1').val(data.room_type_id);
                 $('#rnum1').val(data.room_num);
                 $('#rsize1').val(data.room_size);
                 $('#rstatus1').val(data.status);
                 $('#rremarks1').val(data.remarks);
-                
+
                 $('#editRoom').modal('show');
             },
             error:function(err){
-                
-                
+
+
                 swal("Somethi went wrong!","code("+err+").","error");
-                 
+
             }
-            
-            
+
+
         });
-        
-        
-        
-        
+
+
+
+
     } 
+    
+    //update room
     function updateR(){
-        
-           $.ajax({
+
+        $.ajax({
             url:"admin_save_room_update_details",
             type:"get",
             data:$('#editR').serialize(),
             success:function(data){
-                
-          
-                
+
+
+
                 $('#editRoom').modal('hide');
                 swal("successfully Updated","","success");
                 dataLoad();
             },
             error:function(err){
-                
-                
+
+
                 swal("Somethi went wrong!","code("+err+").","error");
-                 
+
             }
-            
-            
+
+
         });
-        
+
         return false;
     }
-    
-    
+
+
 
 </script>
 
