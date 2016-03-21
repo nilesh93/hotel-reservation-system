@@ -147,29 +147,107 @@ class HallController extends Controller
         
     }
 
-    public function getHallServices(){
+    /**
+     * Return view for Hall Services
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function getHallServices()
+    {
         return view('nilesh.hallServices');
     }
 
-    public function getHallServiceData(){
+    /**
+     * Provide data to fill the Hall Services DataTable.
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function getHallServiceData()
+    {
 
         $data = Hall_Services::all();
 
         return response()->json(['count'=> count($data), 'data'=> $data]);
-
     }
 
-    public function addHallService(Request $request){
+    /**
+     * Add a hall service according to the details
+     * provided in the Request.
+     *
+     * @param Request $request
+     */
+    public function addHallService(Request $request)
+    {
+        $message = "This Service already exists.";
 
         $data = $request->all();
 
-        Hall_Services::create([
-            'name' => $data['name'],
-            'rate' => $data['rate']
-        ]);
+        // Checks if any services with this name already exist
+        $hallService = Hall_Services::where('name', (trim($request->input('name'))))->first();
+
+        // if no service exists, then create
+        if ($hallService == null) {
+            Hall_Services::create([
+                'name' => $data['name'],
+                'rate' => $data['rate']
+            ]);
+        }
+
+        // if Service exists, say so.
+        else {
+            abort(403, $message);
+        }
     }
 
-    public function deleteHallService(Request $request){
+    /**
+     * Send HallService information to the editHallService modal
+     *
+     * @param Request $request
+     * @return mixed
+     */
+    public function getHallServiceInfo(Request $request){
+
+        $hallService = Hall_Services::find($request->input('hs_id'));
+        return $hallService;
+    }
+
+    /**
+     * Update Hall Service information
+     *
+     * @param Request $request
+     */
+    public function updateHallService(Request $request){
+
+        $message = "This Service already exists.";
+
+        $data = $request->all();
+
+        // Checks if any services with this name already exist
+        $hallService = Hall_Services::where('name', (trim($request->input('name'))))->first();
+
+        // if service exists, then update
+        if ($hallService != null) {
+            //$hallService = Hall_Services::find($request->input('hs_id'));
+
+            //$hallService->name = $request->input('name');
+            $hallService->rate = $request->input('rate');
+
+            $hallService->save();
+        }
+
+        // if Service doesn't exist, say so.
+        else {
+            abort(403, $message);
+        }
+    }
+
+    /**
+     * Delete a hall service with a given ID
+     *
+     * @param Request $request
+     */
+    public function deleteHallService(Request $request)
+    {
 
         $service = Hall_Services::find($request->input('id'));
 

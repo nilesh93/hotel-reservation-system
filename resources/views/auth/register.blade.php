@@ -36,12 +36,12 @@
                 </div>
                 <div class="form-group">
                     <label for="password">Password:</label>
-                    <input type="password" class="form-control" name="password" id="password" required pattern="^\d{6,}$" placeholder="Password should be minimum 6 characters long" title="Password should be minimum 6 characters long">
+                    <input type="password" class="form-control" name="password" id="password" required pattern="^[a-zA-Z0-9!@#$%^&*\s\'\-]{6,}$" placeholder="Password should be minimum 6 characters long" title="Password should be minimum 6 characters long">
                     @if ($errors->has('password')) <p class="text-danger">{{ $errors->first('password') }}</p>@endif
                 </div>
                 <div class="form-group">
                     <label for="password">Confirm Password:</label>
-                    <input type="password" class="form-control" name="password_confirmation" id="password_confirmation" required pattern="^\d{6,}$" title="Password should be minimum 6 characters long">
+                    <input type="password" class="form-control" name="password_confirmation" id="password_confirmation" required pattern="^[a-zA-Z0-9!@#$%^&*\s\'\-]{6,}$" title="Password should be minimum 6 characters long">
                     @if ($errors->has('password_confirmation')) <p class="text-danger">{{ $errors->first('password_confirmation') }}</p>@endif
                 </div>
                 <div class="form-group">
