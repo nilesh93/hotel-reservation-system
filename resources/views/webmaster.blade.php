@@ -115,7 +115,7 @@
 
 
 							<li><a href="{!! url('/contact') !!}">Contact Us</a></li>
-							<li><a href="gallery">Gallery</a></li><li><a href="menu">Menus</a></li>
+							<li><a href="{!! url('gallery') !!}">Gallery</a></li><li><a href="{{ url('menu') }}">Menus</a></li>
 
 							<li><a href="{!! url('/halls') !!}">Halls</a>
 								<ul>

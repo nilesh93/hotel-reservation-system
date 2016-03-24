@@ -232,6 +232,7 @@
                                     <li id="CS"><a href="admin_customers_search">Customer Search</a></li>
                                     <li id="IG"><a href="admin_imageGallery">Image Gallery </a></li>
                                     <li id="WG"><a href="admin_webGallery">Web Home Gallery </a></li>
+                                    <li id="PER"><a href="admin_pending_reservation">Pending Reservation </a></li>
                                 </ul>
                             </li>
 

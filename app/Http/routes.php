@@ -74,6 +74,15 @@ Route::get('payment', ['middleware' => 'auth', 'uses' =>'PagesController@makePay
 Route::get('hall_view', 'WebMasterViewController@hallViewLoad');
 Route::get('room_view','WebMasterViewController@roomViewLoad');
 
+//admin
+Route::get('admin_pending_reservation', 'AdminReservationController@pendingReservation');
+Route::get('admin_get_pending_room_reservations', 'AdminReservationController@pendingRoomReservation');
+Route::get('admin_get_pending_hall_reservations', 'AdminReservationController@pendingHallReservation');
+Route::get('admin_individual_reservation', 'AdminReservationController@getIndividualReservationDetails');
+Route::get('admin_check_room','AdminReservationController@checkRoomAvailability');
+
+
+
 /*
 |
 |
