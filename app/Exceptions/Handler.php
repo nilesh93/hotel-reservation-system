@@ -70,6 +70,11 @@ class Handler extends ExceptionHandler
             return response()->view('errors.Swift_TransportException', [], 401);
         }
 
+        // 500 -> Internal Server Error
+        else {
+            return response()->view('errors.generalException', [], 500);
+        }
+
         return parent::render($request, $e);
     }
 }

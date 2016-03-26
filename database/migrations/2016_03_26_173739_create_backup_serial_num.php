@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class EditHallRates extends Migration
+class CreateBackupSerialNum extends Migration
 {
     /**
      * Run the migrations.
@@ -12,14 +12,11 @@ class EditHallRates extends Migration
      */
     public function up()
     {
-        //
-        
-        Schema::table('HALL_RATES', function ($table) {
-
-            $table->double('rate')->nullable();
-
-
+        Schema::create('BACKUP_SERIAL_NUM', function (Blueprint $table) {
+            $table->integer('serial_num');
         });
+
+        DB::table('BACKUP_SERIAL_NUM')->insert(['serial_num' => 0]);
     }
 
     /**
@@ -29,6 +26,6 @@ class EditHallRates extends Migration
      */
     public function down()
     {
-        //
+        Schema::drop('BACKUP_SERIAL_NUM');
     }
 }

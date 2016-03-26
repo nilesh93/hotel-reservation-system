@@ -40,13 +40,12 @@
 <body>
 <div class="container">
     <div class="content">
-        <div class="title">Network is unreachable</div>
+        <div class="title">The Site is temporarily unavailable</div>
         <div class="row">
             <div class="col-md-3">  </div>
             <div class="col-md-6">
                 <p class="text-warning text-center">
-                    There seems to be an issue with connecting to facebook. Maybe you should try again later.<br>
-                    <a href="{{URL::to('/')}}">Go back to the front page</a>.
+                    Please do try again later.
                 </p>
             </div>
             <div class="col-md-3">  </div>

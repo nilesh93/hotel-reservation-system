@@ -236,6 +236,13 @@
                                 </ul>
                             </li>
 
+                            <li class="has_sub">
+                                <a href="#" class="waves-effect" id="siteAdmin"><i class="ti-home"></i> <span>Site Administration</span> </a>
+                                <ul class="list-unstyled">
+                                    <li id="BR"><a href="{{URL::to('get_backup')}}">Backup & Restore</a></li>
+                                </ul>
+                            </li>
+
 
                         </ul>
                         <div class="clearfix"></div>

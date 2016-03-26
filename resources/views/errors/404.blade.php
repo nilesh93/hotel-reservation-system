@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>A small glitch</title>
+    <title>Be right back.</title>
 
     <link href="https://fonts.googleapis.com/css?family=Lato:100" rel="stylesheet" type="text/css">
 
@@ -40,13 +40,12 @@
 <body>
 <div class="container">
     <div class="content">
-        <div class="title">Network is unreachable</div>
+        <div class="title">404: Not Found</div>
         <div class="row">
             <div class="col-md-3">  </div>
             <div class="col-md-6">
                 <p class="text-warning text-center">
-                    There seems to be an issue with connecting to facebook. Maybe you should try again later.<br>
-                    <a href="{{URL::to('/')}}">Go back to the front page</a>.
+                    The resource you requested doesn't seem to exist.
                 </p>
             </div>
             <div class="col-md-3">  </div>

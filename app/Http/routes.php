@@ -221,6 +221,14 @@ Route::get('editHallService', 'HallController@updateHallService');
 Route::get('addHallService', 'HallController@addHallService');
 Route::get('deleteHallService', 'HallController@deleteHallService');
 
+// Backup and Restore routes
+Route::get('get_backup', 'BackupController@getView');
+Route::get('get_backupData', 'BackupController@getBackupData');
+Route::get('make_backup', 'BackupController@makeBackup');
+Route::get('downloadDataDump/{serial_num}', 'BackupController@downloadBackup');
+Route::get('restore/{serial_num}', 'BackupController@restoreView');
+Route::post('restore/auth', 'BackupController@restoreDatabase');
+
 // Inaccessible views testing route
 Route::get('/test', function(){
     return view('errors.modelNotFound');
