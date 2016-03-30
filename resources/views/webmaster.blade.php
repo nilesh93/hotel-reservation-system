@@ -241,7 +241,7 @@
 				<div class="col-md-3">  </div>
 			</div>
 
-<h1>{{Session::getId()}}</h1>
+ 
 			<div class="container-fluid">
 				@yield('content')
 
