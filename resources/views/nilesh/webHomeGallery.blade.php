@@ -219,8 +219,10 @@ Web Home Gallery Management
 
 <script>
 
+    //extensions validate for image
     var _validFileExtensions = [".jpg", ".jpeg", ".png"];
-
+    
+    //onload function
     $('document').ready(function(){
 
         document.getElementById('management').click();
@@ -240,10 +242,14 @@ Web Home Gallery Management
 
         }); 
     });
+    
+    //image valdiate
     function hasExtension(inputID, exts) {
         var fileName = document.getElementById(inputID).value;
         return (new RegExp('(' + exts.join('|').replace(/\./g, '\\.') + ')$')).test(fileName);
     }
+    
+    //AJAX image upload
     function upload(){
 
 
@@ -318,6 +324,8 @@ Web Home Gallery Management
 
         return false;
     }
+    
+    //edit image  captions get details
     function editImage(id){
 
         $('#imageIde').val(id);
@@ -349,6 +357,8 @@ Web Home Gallery Management
 
 
     }
+    
+    //edit image captions save
     function editFinal(){
 
         $.ajax({
@@ -373,6 +383,8 @@ Web Home Gallery Management
         return false;
 
     }
+    
+    //delete image
     function del(id){
 
         swal({   

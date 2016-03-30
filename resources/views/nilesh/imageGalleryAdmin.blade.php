@@ -167,6 +167,7 @@ Image Gallery Management
 
     var _validFileExtensions = [".jpg", ".jpeg", ".png"];
 
+    //onload
     $('document').ready(function(){
 
         document.getElementById('management').click();
@@ -187,10 +188,14 @@ Image Gallery Management
 
 
     });
+    
+    //valdiate image
     function hasExtension(inputID, exts) {
         var fileName = document.getElementById(inputID).value;
         return (new RegExp('(' + exts.join('|').replace(/\./g, '\\.') + ')$')).test(fileName);
     }
+    
+    //upload image via AJAX
     function upload(){
 
 
@@ -262,6 +267,8 @@ Image Gallery Management
 
         return false;
     }
+    
+    //delete image
     function del(id){
 
         swal({   

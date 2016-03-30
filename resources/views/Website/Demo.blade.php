@@ -40,7 +40,7 @@ Home
           <div id="big-slider-carousel" class="carousel slide" data-ride="carousel">
          
           <!-- Indicators -->
-          
+       
 
           <!-- Wrapper for slides -->
           <div class="carousel-inner">

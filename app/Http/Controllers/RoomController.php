@@ -19,11 +19,42 @@ use Input;
 use Image;
 use File;
 
-
 class RoomController extends Controller
 {
 
 
+    /*
+       |--------------------------------------------------------------------------
+       | Room Controller
+       |--------------------------------------------------------------------------
+       |
+       |This controller provides functions to manage rooms and room types.
+       |
+       |
+       */
+
+
+    /**
+     * Constructor for the UserController class. Checks if a user has sufficient permission
+     * to access the Admin area.
+     *
+     */
+    public function __construct(){
+        // Check if User is Authenticated
+        $this->middleware('auth', ['except' => ['blockNotice']]);
+
+        // Check if the authenticated user is an admin
+        $this->middleware('isAdmin', ['except' => ['blockNotice']]);
+    }
+
+
+    /**
+     * main rooms / room types management page for admin
+     *
+     *
+     * @param Request $request
+     * @return mixed
+     */
 
     public function rooms(Request $request){
 
@@ -37,6 +68,13 @@ class RoomController extends Controller
 
     }
 
+    /**
+     * get room list
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+
     public function getrooms(Request $request){
 
 
@@ -47,6 +85,13 @@ class RoomController extends Controller
         return response()->json(['count' => count($rooms), 'data' => $rooms]);
 
     }
+
+    /**
+     * get room type list
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
 
     public function getroom_types(Request $request){
 
@@ -62,6 +107,12 @@ class RoomController extends Controller
 
     }
 
+    /**
+     * add room to the system
+     *
+     * @param Request $request
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
 
     public function room_add(Request $request){
 
@@ -75,10 +126,18 @@ class RoomController extends Controller
         $room->remarks = $request->input('rremarks');
         $room->save();
 
-        return view('nilesh.rooms');
+        
 
     }
 
+    /**
+     * add room type to the system
+     *
+     *
+     * @param Request $request
+     *
+     *
+     */
     public function admin_roomtype_add(Request $request){
 
         $rt = new RoomType;
@@ -138,6 +197,13 @@ class RoomController extends Controller
 
 
     }
+
+    /**
+     * update room type
+     *
+     * @param Request $request
+     *
+     */
     public function admin_roomtype_update(Request $request){
 
         $rt = RoomType::find($request->input('main_id'));
@@ -205,6 +271,13 @@ class RoomController extends Controller
 
     }
 
+    /**
+     * delete room type image and return new updates
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     *
+     */
     public function admin_rt_image_del(Request $request){
 
 
@@ -223,6 +296,12 @@ class RoomController extends Controller
 
     }
 
+    /**
+     * delete room type from the system
+     *
+     * @param Request $request
+     *
+     */
 
     public function delete_room_type(Request $request){
 
@@ -234,13 +313,20 @@ class RoomController extends Controller
 
     }
 
-
+    /**
+     * autogenerate room number upon entering a room
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     *
+     */
     public function admin_getRoomNum(Request $request){
 
         $rt = RoomType::find($request->input('id'));
 
         $type_code = $rt->type_code;
-        $max = Room::where('room_type_id',$rt)->max('sequence_num');
+        $max = Room::where('room_type_id',$rt->room_type_id)->max('sequence_num');
+        
         $max++;
         $maxNumberCode = strtoupper($type_code) . str_pad($max,4,"0",STR_PAD_LEFT);
 
@@ -248,6 +334,12 @@ class RoomController extends Controller
 
     }
 
+    /**
+     * delete a room
+     *
+     * @param Request $request
+     *
+     */
     public function admin_delete_room(Request $request){
 
         $room = Room::find($request->input('id'));
@@ -256,6 +348,12 @@ class RoomController extends Controller
 
     }
 
+    /**
+     * returns the room service managemnt view
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     *
+     */
 
     public function roomservices(){
 
@@ -264,6 +362,12 @@ class RoomController extends Controller
 
     }
 
+    /**
+     * return room services
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+
     public function get_room_services(){
 
         $rs = RoomService::all();
@@ -271,6 +375,14 @@ class RoomController extends Controller
 
 
     }
+
+    /**
+     * return room furnishing otpions
+     *
+     * @return \Illuminate\Http\JsonResponse
+     *
+     */
+
     public function get_room_furnish(){
 
 
@@ -281,7 +393,12 @@ class RoomController extends Controller
 
     }
 
-
+    /**
+     * add room service
+     *
+     * @param Request $request
+     *
+     */
     public function room_service_add(Request $request){
 
 
@@ -293,6 +410,14 @@ class RoomController extends Controller
         $rs->save();
 
     }
+
+    /**
+     * add room furnish option to the system
+     *
+     * @param Request $request
+     *
+     *
+     */
 
     public function room_furnish_add(Request $request){
 
@@ -306,6 +431,14 @@ class RoomController extends Controller
 
     }
 
+    /**
+     * get room furnish info for update
+     *
+     * @param Request $request
+     * @return mixed
+     *
+     */
+
     public function getRF_info(Request $request){
 
         $rf = RoomFurnish::find($request->input('id'));
@@ -314,7 +447,13 @@ class RoomController extends Controller
     }
 
 
-
+    /**
+     * get room service info for update
+     *
+     * @param Request $request
+     * @return mixed
+     *
+     */
     public function getRS_info(Request $request){
 
         $rs = RoomService::find($request->input('id'));
@@ -322,6 +461,12 @@ class RoomController extends Controller
 
     }
 
+    /**
+     * update room service
+     *
+     * @param Request $request
+     *
+     */
     public function updateRS(Request $request){
 
         $rs = RoomService::find($request->input('rsid'));
@@ -332,6 +477,13 @@ class RoomController extends Controller
         $rs->save();  
 
     }
+
+    /**
+     * update room furnish
+     *
+     * @param Request $request
+     *
+     */
     public function updateRF(Request $request){
 
         $rf = RoomFurnish::find($request->input('rfid'));
@@ -343,12 +495,27 @@ class RoomController extends Controller
 
     }
 
+    /**
+     * delete room furnish
+     *
+     * @param Request $request
+     *
+     */
+
     public function delRF(Request $request){
 
         $rf = RoomFurnish::find($request->input('id'));
         $rf->delete();
 
     }
+
+    /**
+     * delete room service
+     *
+     * @param Request $request
+     *
+     *
+     */
 
     public function delRS(Request $request){
 
@@ -357,6 +524,12 @@ class RoomController extends Controller
 
     }
 
+    /**
+     * upload room type image via AJAX
+     *
+     * @param Request $request
+     *
+     */
 
     public function admin_roomtype_upload(Request $request){
 
@@ -395,6 +568,14 @@ class RoomController extends Controller
 
     }
 
+    /**
+     * edit room tye info
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     *
+     */
+
     public function admin_edit_roomtype(Request $request){
 
         $roomType = RoomType::find($request->input('id'));
@@ -419,6 +600,15 @@ class RoomController extends Controller
 
     }
 
+    /**
+     * validate room number
+     * deprecated not in use anymore
+     *
+     * @param Request $request
+     * @return mixed
+     *
+     *
+     */
 
     public function admin_check_rnum(Request $request){
 
@@ -428,12 +618,25 @@ class RoomController extends Controller
 
     }
 
+    /**
+     * get room details for update
+     *
+     * @param Request $request
+     * @return mixed
+     *
+     */
     public function admin_get_room_update_details(Request $request){
 
         $room = Room::find($request->input('id'));
         return $room;
 
     }
+
+    /**
+     * save room update details
+     *
+     * @param Request $request
+     */
     
     public function admin_save_room_update_details(Request $request){
         
@@ -442,7 +645,7 @@ class RoomController extends Controller
         
         $room->room_num = $request->input('rnum');
         $room->room_size = $request->input('rsize');
-        $room->sequence_num = $request->input('max');
+        //$room->sequence_num = $request->input('max');
         $room->room_type_id = $request->input('rtype'); 
         $room->status = $request->input('rstatus'); 
         $room->remarks = $request->input('rremarks');

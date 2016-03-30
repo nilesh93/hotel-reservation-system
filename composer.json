@@ -11,7 +11,10 @@
         "laravel/socialite": "^2.0",
         "intervention/image": "^2.3",
         "casinelli/currency": "dev-master",
-        "senemoglu/currency": "dev-master"
+        "senemoglu/currency": "dev-master",
+        "vinkla/pusher": "^2.2",
+        "graham-campbell/manager": "^2.3",
+        "pusher/pusher-php-server": "^2.3"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
