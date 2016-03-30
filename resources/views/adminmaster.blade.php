@@ -232,6 +232,14 @@
                                     <li id="CS"><a href="admin_customers_search">Customer Search</a></li>
                                     <li id="IG"><a href="admin_imageGallery">Image Gallery </a></li>
                                     <li id="WG"><a href="admin_webGallery">Web Home Gallery </a></li>
+                                    <li id="PER"><a href="admin_pending_reservation">Pending Reservation </a></li>
+                                </ul>
+                            </li>
+
+                            <li class="has_sub">
+                                <a href="#" class="waves-effect" id="siteAdmin"><i class="ti-home"></i> <span>Site Administration</span> </a>
+                                <ul class="list-unstyled">
+                                    <li id="BR"><a href="{{URL::to('get_backup')}}">Backup & Restore</a></li>
                                 </ul>
                             </li>
 
@@ -315,7 +323,6 @@
         <script src="{{URL::asset('BackEnd/assets/plugins/datatables/jquery.dataTables.min.js')}}"></script>
         <script src="{{URL::asset('BackEnd/assets/plugins/datatables/dataTables.bootstrap.js')}}"></script>
 
-
         <script src="{{URL::asset('BackEnd/assets/js/jquery.core.js')}}"></script>
         <script src="{{URL::asset('BackEnd/assets/js/jquery.app.js')}}"></script>
 
@@ -328,7 +335,7 @@
         <script src="{{URL::asset('BackEnd/assets/js/sweetalert.patch.js')}}"></script>
 
         <script src="{{URL::asset('BackEnd/assets/plugins/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js')}}"></script>
-        <script src="{{URL::asset('BackEnd/assets/js/validation.js')}}"></script>
+
         <script src="{{URL::asset('BackEnd/assets/js/Dropzone.js')}}"></script>
 
 
@@ -339,6 +346,7 @@
         <script src="{{URL::asset('BackEnd/assets/plugins/clockpicker/dist/jquery-clockpicker.min.js')}}"></script>
         <script src="{{URL::asset('BackEnd/assets/plugins/bootstrap-daterangepicker/daterangepicker.js')}}"></script>
 
+        <script src="{{URL::asset('BackEnd/assets/js/validation.js')}}"></script>
 
         @yield('js')
 

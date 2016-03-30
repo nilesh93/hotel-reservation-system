@@ -64,7 +64,7 @@ ROOM MANAGEMENT
         <li class="active tab" style="width: 25%;">
             <a href="#rooms" data-toggle="tab" aria-expanded="false" class="active"> 
                 <span class="visible-xs"><i class="fa fa-home"></i></span> 
-                <span class="hidden-xs">Rooms</span> 
+                <span class="hidden-xs">Rooms</span>
             </a> 
         </li> 
         <li class="tab" style="width: 25%;"> 

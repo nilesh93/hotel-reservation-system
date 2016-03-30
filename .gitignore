@@ -6,6 +6,13 @@ Homestead.json
 .idea/
 /.idea
 /config/database.php
+/public/img/tmp
+/uploads
+/img
 .DS_Store
 
 
+
+*.jpg
+
+*.png

@@ -426,7 +426,6 @@
 
     }
 
-
     function add_promotion(){
 
         var promo_name=$('#prom_name').val();
@@ -442,15 +441,27 @@
         else{
             var data="promo_name="+promo_name+"&promo_description="+promo_description+"&promo_start="+promo_start+"&promo_end="+promo_end+"&promo_rate="+promo_rate;
 
-            $.ajax({
-                type:"get",
-                url:"admin_promotions/addpromotion",
-                data:data,
-                success:function(ss){
-                    dataLoad();
-                    swal("Added!", "Record Added Successfully.", "success");
-                }
-            });
+            swal({
+                title: "Confirm adding promotion",
+                text: "Click OK to add promotion",
+                type: "info",
+                showCancelButton: true,
+                closeOnConfirm: false,
+                showLoaderOnConfirm: true,
+            },
+                    function(){
+                        $.ajax({
+                            type:"get",
+                            url:"admin_promotions/addpromotion",
+                            data:data,
+                            success:function(ss){
+                                dataLoad();
+
+                                swal("Added!", "Record Added Successfully.", "success");
+                            }
+                        });
+                    });
+
         }
     }
 
@@ -509,7 +520,6 @@
                     });
                 });
     }
-
 
     function dataLoad(){
 

@@ -87,7 +87,7 @@
                             <div class="form-group">
                                 <label for="item" class="col-lg-5 control-label">Price</label>
                                 <div class="col-lg-6">
-                                    <input class="form-control" id="facility_price" placeholder="Price" type="text">
+                                    <input class="form-control" id="facility_price" onclick="validatePrice()" placeholder="Price" type="text">
                                 </div>
                             </div>
                         </div>
@@ -140,7 +140,7 @@
                             <div class="form-group">
                                 <label for="item" class="col-lg-5 control-label">Price</label>
                                 <div class="col-lg-6">
-                                    <input class="form-control" id="facility_price_edit" placeholder="Price" type="text">
+                                    <input class="form-control" id="facility_price_edit" onclick="validatePriceUpdate()" placeholder="Price" type="text">
                                 </div>
                             </div>
                         </div>
@@ -172,6 +172,28 @@
             document.getElementById("FS").setAttribute("class","active");
             dataLoad();
         });
+
+        function validatePrice(){
+            var ele = document.getElementById('facility_price');
+            ele.onkeypress = function(e) {
+                if(isNaN(this.value+""+String.fromCharCode(e.charCode)))
+                    return false;
+            }
+            ele.onpaste = function(e){
+                e.preventDefault();
+            }
+        }
+
+        function validatePriceUpdate(){
+            var ele = document.getElementById('facility_price_edit');
+            ele.onkeypress = function(e) {
+                if(isNaN(this.value+""+String.fromCharCode(e.charCode)))
+                    return false;
+            }
+            ele.onpaste = function(e){
+                e.preventDefault();
+            }
+        }
 
         function add_facilities_modal(){
             $("#add_facilities_modal").modal("show");

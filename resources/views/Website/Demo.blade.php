@@ -40,7 +40,7 @@ Home
           <div id="big-slider-carousel" class="carousel slide" data-ride="carousel">
          
           <!-- Indicators -->
-          
+       
 
           <!-- Wrapper for slides -->
           <div class="carousel-inner">
@@ -132,9 +132,7 @@ Home
 	  		<img src="{{URL::asset('FrontEnd/img/preview-images/recent_posts_01.jpg')}}" alt="themesgravity">
 	  		<div class="img-overlay"><i class="fa fa-bars"></i></div><!-- /img-overlay -->
 	  	</div><!-- /post-img -->
-		  <!--
-style="border-left:1px solid #000;border-bottom:1px solid #000;border-right:1px solid #000;margin-bottom:1%"
-		-->
+
 	  	<div class="post-content" >
 		  	<span class="post-category">{{$f->category}}</span>
 		  	<hr>

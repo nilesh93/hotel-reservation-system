@@ -78,6 +78,15 @@ Route::get('payment', ['middleware' => 'auth', 'uses' =>'PagesController@makePay
 Route::get('hall_view', 'WebMasterViewController@hallViewLoad');
 Route::get('room_view','WebMasterViewController@roomViewLoad');
 
+//admin
+Route::get('admin_pending_reservation', 'AdminReservationController@pendingReservation');
+Route::get('admin_get_pending_room_reservations', 'AdminReservationController@pendingRoomReservation');
+Route::get('admin_get_pending_hall_reservations', 'AdminReservationController@pendingHallReservation');
+Route::get('admin_individual_reservation', 'AdminReservationController@getIndividualReservationDetails');
+Route::get('admin_check_room','AdminReservationController@checkRoomAvailability');
+
+
+
 /*
 |
 |
@@ -114,10 +123,15 @@ Route::get('admin_getroom_types', 'RoomController@getroom_types');
 Route::get('admin_room_add', 'RoomController@room_add');
 Route::get('admin_roomtype_add','RoomController@admin_roomtype_add');
 Route::get('admin_delete_room_type','RoomController@delete_room_type');
-Route::post('admin_roomtype_upload', 'RoomController@admin_roomtype_upload'); 
-Route::get('admin_edit_roomtype', 'RoomController@admin_edit_roomtype'); 
-Route::get('admin_roomtype_update', 'RoomController@admin_roomtype_update');
+
 Route::get('admin_rt_image_del', 'RoomController@admin_rt_image_del');
+Route::get('admin_getRoomNum','RoomController@admin_getRoomNum');
+Route::get('admin_delete_room', 'RoomController@admin_delete_room');
+Route::post('admin_roomtype_upload', 'RoomController@admin_roomtype_upload');
+Route::get('admin_edit_roomtype', 'RoomController@admin_edit_roomtype');
+Route::get('admin_roomtype_update', 'RoomController@admin_roomtype_update');
+Route::get('admin_check_rnum', 'RoomController@admin_check_rnum');
+ 
 
 
 //room services management
@@ -137,8 +151,8 @@ Route::get('admin_delRF','RoomController@delRF');
 
 //Image gallery management
 Route::get('admin_imageGallery','ImageGalleryController@imageGallery');
-Route::get('admin_webImage_del','ImageGalleryController@admin_webImage_del');
 Route::post('admin_gallery_upload','ImageGalleryController@admin_gallery_upload');
+
 
 //Image home gallery management
 Route::get('admin_webGallery','ImageGalleryController@webimageGallery');
@@ -146,6 +160,7 @@ Route::post('admin_web_gallery_upload','ImageGalleryController@admin_webgallery_
 Route::get('admin_homeImage_update','ImageGalleryController@admin_homeImage_update');
 Route::get('get_homeImage_details','ImageGalleryController@get_homeImage_details');
 Route::get('admin_homeImage_del','ImageGalleryController@admin_homeImage_del');
+ 
 
 
 
@@ -154,9 +169,6 @@ Route::get('admin_homeImage_del','ImageGalleryController@admin_homeImage_del');
 Route::get('admin_halls','HallController@halls');
 Route::get('admin_get_halls','HallController@admin_get_halls');
 Route::get('admin_hall_add','HallController@admin_hall_add');
-Route::get('admin_edit_hall','HallController@admin_edit_hall');
-Route::get('admin_update_hall','HallController@admin_update_hall');
-Route::get('admin_hall_image_del','HallController@admin_hall_image_del');
 Route::get('admin_delete_hall','HallController@admin_delete_hall');
 Route::post('admin_hall_upload','HallController@admin_hall_upload');
 
@@ -177,6 +189,7 @@ Route::get('abc',function(){
     
 });*/
 
+ 
 
 /*
 |
@@ -238,12 +251,22 @@ Route::get('blocked_user', 'UserController@blockNotice');
 // Hall Services routes (Controller is from Nilesh, View has been created in ./Resources/nilesh)
 Route::get('hallServices', 'HallController@getHallServices');
 Route::get('getHallServices', 'HallController@getHallServiceData');
+Route::get('getHallServiceInfo', 'HallController@getHallServiceInfo');
+Route::get('editHallService', 'HallController@updateHallService');
 Route::get('addHallService', 'HallController@addHallService');
 Route::get('deleteHallService', 'HallController@deleteHallService');
 
+// Backup and Restore routes
+Route::get('get_backup', 'BackupController@getView');
+Route::get('get_backupData', 'BackupController@getBackupData');
+Route::get('make_backup', 'BackupController@makeBackup');
+Route::get('downloadDataDump/{serial_num}', 'BackupController@downloadBackup');
+Route::get('restore/{serial_num}', 'BackupController@restoreView');
+Route::post('restore/auth', 'BackupController@restoreDatabase');
+
 // Inaccessible views testing route
 Route::get('/test', function(){
-    return view('emails.newAdmin');
+    return view('errors.modelNotFound');
 });
 
 

@@ -40,6 +40,7 @@
 		@yield('css')
 		<!-- Custom Stylesheet == Make sure u put all ur css changes in this file == -->
 
+
 		<!-- HTML5 shim, for IE6-8 support of HTML elements -->
 		<!--[if lt IE 9]>
 <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
@@ -91,23 +92,31 @@
 			.btn-circle.btn-xl:hover {
 
 				background-color:#1b344b;
-				
+
 				color:#fff;	
-	 
+
 
 			}	
-			
+
 			.btn-circle.btn-xl:active {
 
 				background-color:#1b344b;
-				
+
 				color:#fff;	
-	 
+
 
 			}
 
 		</style>
+
+
+		<!-- HTML5 shim, for IE6-8 support of HTML elements -->
+		<!--[if lt IE 9]>
+<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
+
 	</head>
+
 
 	<body>
 		<section id="wrapper">
@@ -120,99 +129,87 @@
 						</div><!-- /4 columns -->
 
 						<div class="col-lg-10 col-md-10">
-							<div class="row">							<a class="nav-toggle pull-right"><i class="icon-menu"></i></a>
+							<a class="nav-toggle pull-right"><i class="icon-menu"></i></a>
 
-								<nav class="col-sm-12 clear" id="mobile-nav"></nav>
+							<nav class="col-sm-12 clear" id="mobile-nav"></nav>
 
-								<!-- weather widget -->
-								<div class="col-sm-12 col-md-12 col-lg-12">
-									<div class="elements pull-right">
+							<!-- weather widget -->
+							<div class="col-sm-12 col-md-12 col-lg-12">
+								<div class="elements pull-right">
 
-										<div class="weather element">
-											<p id="deg"><strong> {{strtoupper(date('l'))}}</strong>, {{strtoupper(date('F'))}}  {{date('d')}} <i id="weatherid" class=""></i> </p>
-										</div><!-- /weather -->
+									<div class="weather element">
+										<p id="deg"><strong> {{strtoupper(date('l'))}}</strong>, {{strtoupper(date('F'))}}  {{date('d')}} <i id="weatherid" class=""></i> </p>
+									</div><!-- /weather -->
 
-										<div class="header-info element">
-											<div class="info">
-												<p data-id="1"><strong>CALL US:</strong> +94 114404040 / +94 114368291</p>
-												<p data-id="2"><strong>ADDRESS:</strong>No.556,
-													Moragahahena Road, Pitipana North,
-													Homagama.</p>
-												<p data-id="3"><strong>EMAIL:</strong> amalyareach@yahoo.com</p>
-											</div><!-- /info -->
-											<div class="triggers">
-												<i data-id="1" class="icon-tablet-2"></i>
-												<i data-id="2" class="icon-location"></i>
-												<i data-id="3" class="icon-globe-3"></i>
-											</div><!-- /triggers -->
+									<div class="header-info element">
+										<div class="info">
+											<p data-id="1"><strong>CALL US:</strong> +94 114404040 / +94 114368291</p>
+											<p data-id="2"><strong>ADDRESS:</strong>No.556,
+												Moragahahena Road, Pitipana North,
+												Homagama.</p>
+											<p data-id="3"><strong>EMAIL:</strong> amalyareach@yahoo.com</p>
+										</div><!-- /info -->
+										<div class="triggers">
+											<i data-id="1" class="icon-tablet-2"></i>
+											<i data-id="2" class="icon-location"></i>
+											<i data-id="3" class="icon-globe-3"></i>
+										</div><!-- /triggers -->
+									</div><!-- /header-info -->
 
-										</div><!-- /header-info -->
-
-									</div><!-- /elements -->
-								</div><!-- /col-sm-8 -->
-							</div>
-
-							<div class="row">
-
-
-								<nav id="main-nav">
-									<ul>
-
-										@if(Auth::check())
-										<li><a href="#">My Account</a>
-											<ul>
-												<li><a href="{{ URL::to('profile') }}">My Details</a></li>
-
-												<li><a href="{!! url('/myreserv') !!}">My Reservations</a></li>
-												<li><a href="{{ URL::to('change_password') }}">Change Password</a></li>
-												<li><a href="{{ URL::to('auth/logout') }}">Log out</a></li>
-											</ul>
-										</li>
-										@else
-										<li><a href="{{URL::to('auth/register')}}">Register</a></li>
-										<li><a href="{{URL::to('auth/login')}}">Login</a></li>
-										@endif
-
-
-
-
-										<li><a href="{!! url('/contact') !!}">Contact Us</a></li>
-										<li><a href="{!! url('/gallery') !!}">Gallery</a></li><li><a href="menu">Menus</a></li>
-
-										<li><a href="{!! url('/halls') !!}">Halls</a>
-											<ul>
-
-												@foreach($halls as $hall)
-												<li><a onclick="viewHall('{{$hall->hall_id}}','{{ $hall->title }}','{{$hall->capacity_from}}','{{ $hall->capacity_to }}')">{{ $hall->title }}</a></li>
-												@endforeach
-
-											</ul>
-										</li>
-
-										<li><a href="{!! url('/room_packages') !!}">Rooms</a>
-											<ul>
-												@foreach($roomtypes as $roomtype)
-												<li><a onclick="viewRoomType('{{$roomtype->room_type_id}}','{{$roomtype->type_name}}')">{{ $roomtype->type_name}}</a></li>
-												@endforeach
-											</ul>
-										</li>
-
-										<li><a href="{!! url('/') !!}">Home</a></li>
-
-									</ul>
-								</nav>
-
-
-							</div>
+								</div><!-- /elements -->
+							</div><!-- /col-sm-8 -->
 						</div>
-
-
-
 					</div><!-- /row -->
 
 					<div class="row">
 						<div class="col-sm-12 col-md-12 col-lg-12">
 
+							<nav id="main-nav">
+								<ul>
+
+									@if(Auth::check())
+									<li><a href="#">My Account</a>
+										<ul>
+											<li><a href="{{ URL::to('profile') }}">My Details</a></li>
+											<li><a href="{{ URL::to('change_password') }}">Change Password</a></li>
+											<li><a href="{{ URL::to('auth/logout') }}">Log out</a></li>
+										</ul>
+									</li>
+									@else
+									<li><a href="{{URL::to('auth/register')}}">Register</a></li>
+									<li><a href="{{URL::to('auth/login')}}">Login</a></li>
+									@endif
+
+									@if(Auth::check())
+									<li><a href="{!! url('/myreserv') !!}">My Reservations</a></li>
+									@endif
+
+
+									<li><a href="{!! url('/contact') !!}">Contact Us</a></li>
+									<li><a href="{!! url('gallery') !!}">Gallery</a></li><li><a href="{{ url('menu') }}">Menus</a></li>
+
+									<li><a href="{!! url('/halls') !!}">Halls</a>
+										<ul>
+
+											@foreach($halls as $hall)
+											<li><a onclick="viewHall('{{$hall->hall_id}}','{{ $hall->title }}','{{$hall->capacity_from}}','{{ $hall->capacity_to }}')">{{ $hall->title }}</a></li>
+											@endforeach
+
+										</ul>
+									</li>
+
+									<li><a href="{!! url('/room_packages') !!}">Rooms</a>
+										<ul>
+											@foreach($roomtypes as $roomtype)
+											<li><a onclick="viewRoomType('{{$roomtype->room_type_id}}','{{$roomtype->type_name}}')">{{ $roomtype->type_name}}</a></li>
+											@endforeach
+										</ul>
+									</li>
+
+									<li><a href="{!! url('/') !!}">Home</a></li>
+
+								</ul>
+							</nav>
 
 						</div><!-- /8 columns -->
 					</div>
@@ -241,29 +238,24 @@
 				<div class="col-md-3">  </div>
 			</div>
 
- 
+
 			<div class="container-fluid">
 				@yield('content')
 
 				{{--This flash message is displayed if a customer tries to access admin area--}}
-				{{--<div class="row">
-				<div class="col-md-4">
-					@if(session('noAccess'))
-					<ul class="list-group text-center">
-						<li class="list-group-item list-group-item-warning"><strong>{{ session('noAccess') }}</strong></li>
-					</ul>
-					@endif
+				{{--	@if(session('noAccess'))
+				<ul class="list-group text-center">
+					<li class="list-group-item list-group-item-warning"><strong>{{ session('noAccess') }}</strong></li>
+				</ul>
+				@endif
+				--}}{{--This flash message is displayed when a fb login registration has been completed--}}{{--
+				@if(session('success'))
+				<ul class="list-group text-center">
+					<li class="list-group-item list-group-item-success">{{session('success')}}</li>
+				</ul>
+				@endif
 
-					--}}{{--This flash message is displayed when a fb login registration has been completed--}}{{--
-					@if(session('success'))
-					<ul class="list-group text-center">
-						<li class="list-group-item list-group-item-success">{{session('success')}}</li>
-					</ul>
-					@endif
-				</div>
-				</div>--}}
-
-
+				--}}
 
 				<!-- room_type_modals_to _load_in_any_page-->
 				<modal><!-- room -->
@@ -278,6 +270,7 @@
 								</div>
 
 								<div class="modal-body">
+
 
 									<slides>
 										<div class="row">
@@ -328,14 +321,14 @@
 										<div class="col-md-4">
 											<div align="center">
 												<h4>Check In</h4>
-												14:00
+												<div id="check_in"></div>
 											</div>
 										</div>
 
 										<div class="col-md-4">
 											<div align="center">
 												<h4 >Check Out</h4>
-												12:00
+												<div id="check_out"></div>
 											</div>
 										</div>
 
@@ -432,8 +425,8 @@
 					</div>
 				</modal>
 
-			</div>
-
+			
+</div>
 			<?php 
 			$promotions = DB::table('PROMOTIONS')
 				->select(DB::raw("*, DATE_FORMAT(date_from,'%M %e, %Y') as dfrom, DATE_FORMAT(date_to,'%M %e, %Y') as dto"))
@@ -664,15 +657,10 @@
 			</div><!-- /copyright-section -->
 
 
-		</section><!-- /wrapper -->
-
-		<div id="divfix">
-
-			<button class="btn btn-success btn-circle btn-xl"  ><i class="fa fa-comment"></i></button>
+		</section> <!-- /wrapper -->
 
 
 
-		</div>
 
 
 		<!-- jQuery -->
@@ -682,7 +670,6 @@
 		<script  src="{{URL::asset('FrontEnd/FancyBox/source/jquery.fancybox.js')}}"> </script>
 
 		<script src="//js.pusher.com/3.0/pusher.min.js"></script>
-
 
 		<!-- CUSTOM JavaScript so you can use jQuery or $ before it has been loaded in the footer. -->
 
@@ -718,31 +705,28 @@
 		<!-- Owl Carousel Main Js File -->
 		<script src="{{URL::asset('FrontEnd/js/vendor/owl.carousel.js')}}"></script>
 
-		<!-- Sweet Alert -->
-		<script src="{{URL::asset('FrontEnd/sweetalert/sweetalert.min.js')}}"></script>
 
 		<script src="{{URL::asset('FrontEnd/js/jquery.simpleWeather.js')}}"></script>
 		<script src="{{URL::asset('FrontEnd/js/sugar.js')}}"></script>
 		<script src="{{URL::asset('FrontEnd/js/weather.js')}}"></script>
 		<script src="{{URL::asset('FrontEnd/money/money.js')}}"></script>
 
+		<!-- Sweet Alert -->
+		<script src="{{URL::asset('FrontEnd/sweetalert/sweetalert.min.js')}}"></script>
+
+
+		<script src="{{URL::asset('FrontEnd/js/jquery.simpleWeather.js')}}"></script>
+		<script src="{{URL::asset('FrontEnd/js/sugar.js')}}"></script>
+		<script src="{{URL::asset('FrontEnd/js/weather.js')}}"></script>
+
 		<script>
 
-
-			function showModal(id)
-			{
+			function showModal(id){
 				var temp = '#'+id;
 				$(temp).modal('show');
 			}
 
-			//validate review submit
-			function validateReview()
-			{
-				$('#submitBtn').click();
 
-			}
-
-			//JQuery onload function
 			$('document').ready(function(){
 
 				var myLatLng = {lat:6.840172, lng: 80.020895};
@@ -771,6 +755,7 @@
 					console.log("Forecast High in Fahrenheit" + Weather.kelvinToFahrenheit(forecast.high()));
 					console.log("Forecast High in Celsius" + Weather.kelvinToCelsius( forecast.high() ));
 
+
 					var F = Math.ceil(Weather.kelvinToFahrenheit(forecast.high()));
 					var C = Math.ceil(Weather.kelvinToCelsius(forecast.high()));
 					document.getElementById("deg").innerHTML += C+"&deg;C/"+F+"&deg;F";
@@ -778,6 +763,7 @@
 
 				pusher();
 			});
+
 
 
 			//hall modal view using ajax 
@@ -820,13 +806,13 @@
 
 						for (var i = 0; i < data.aservices.length; i++) {
 
-							aservices +='<li>'+data.aservices[i].name +'-Rs.'+data.aservices[i].rate+'</li>';
+							aservices +='<li>'+data.aservices[i].name +'-Rs.'+formatNumber(data.aservices[i].rate)+'</li>';
 						}
 
 						document.getElementById('aservices').innerHTML = aservices;
 
-						var hall_rates = 'Advance Payment : Rs.'+data.advance+'<br>'+
-							' Refundable : Rs.'+data.refundable;
+						var hall_rates = 'Advance Payment : Rs.'+formatNumber(data.advance)+'<br>'+
+							' Refundable : Rs.'+formatNumber(data.refundable);
 
 						document.getElementById('hall_rates').innerHTML = hall_rates;
 
@@ -903,14 +889,15 @@
 
 						for (var i = 0; i < data.room_rates.length; i++) {
 
-							room_rates += data.room_rates[i].meal_type_name+'- Rs.'+data.room_rates[i].single_rates+'<br>';
+							room_rates += data.room_rates[i].meal_type_name+'-Rs.'+formatNumber(data.room_rates[i].single_rates)+'<br>';
 						}
 
 						document.getElementById('room_rates').innerHTML = room_rates;
+						document.getElementById('check_in').innerHTML = data.check_in;
 
-
-
+						document.getElementById('check_out').innerHTML = data.check_out;
 						$('#room_modal').modal('show');
+
 
 					},
 					error: function(xhr, ajaxOptions, thrownError) {
@@ -919,41 +906,7 @@
 						swal("Ooops!", "Something Went Wrong! ("+thrownError+")", "error");
 					}
 				});
-
 			}
-
-			//review submit
-			function submitReview()
-			{
-
-				document.getElementById("rsubmit").innerHTML = "";
-
-				$.ajax({
-
-
-					url:"submit_review",
-					type:"get",
-					data:$('#submitform').serialize(),
-					success:function(data){
-
-						var body = '<div class="alert alert-dismissible alert-success"><button type="button" class="close" data-dismiss="alert">X</button><strong>Well done!</strong> You successfully reviewed!.</div>';
-						document.getElementById("rsubmit").innerHTML = body;
-						$('#resetBtn').click();
-					},
-					error:function (err){
-
-
-						var body = '<div class="alert alert-dismissible alert-danger"><button type="button" class="close" data-dismiss="alert">X</button><strong>Oops!</strong>Something went wrong! Please try again.</div>';
-						document.getElementById("rsubmit").innerHTML = body;
-
-					}
-
-
-				});
-
-				return false;
-			}
-
 			function showPromos(){
 
 
@@ -979,24 +932,43 @@
 
 				var channel = pusher.subscribe('test_channel');
 				channel.bind('my_event', function(data) {
-					
-					
-					
-					
+
+
+
+
 				});
-				
-				function convert(){
-					
-					
-					//http://api.fixer.io/latest?base=USD
-					
-				}
+
+
 
 			}
 
+
+
+
+			function convert(){
+
+
+				//http://api.fixer.io/latest?base=USD
+
+			}	 
+
+			//function to format currency
+			function formatNumber(number)
+			{
+				number = number.toFixed(2) + '';
+				x = number.split('.');
+				x1 = x[0];
+				x2 = x.length > 1 ? '.' + x[1] : '';
+				var rgx = /(\d+)(\d{3})/;
+				while (rgx.test(x1)) {
+					x1 = x1.replace(rgx, '$1' + ',' + '$2');
+				}
+				return x1 + x2;
+			}
 		</script>
 
 		@yield('js')
 
 	</body>
+
 </html>

@@ -82,7 +82,7 @@ class HallReservationController extends Controller
             return redirect('myreserv')->with(['hreserv_status' => 'Reservation has been successfully made']);
         } catch(\Exception $e){
 
-                abort(406,$e->getMessage());
+            abort(500,$e->getMessage());
         }
 
 

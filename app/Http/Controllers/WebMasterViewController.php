@@ -40,13 +40,13 @@ class WebMasterViewController extends Controller
 
 
         $himage1 = HALL_IMAGE::where('hall_id','=',$hall_id)
-                        ->select('path')
-                        ->first();
+            ->select('path')
+            ->first();
 
         $himages = HALL_IMAGE::where('hall_id','=',$hall_id)
-                ->where('path','!=',$himage1->path)
-                ->select('path')
-                ->get();
+            ->where('path','!=',$himage1->path)
+            ->select('path')
+            ->get();
 
         $advance = DB::table('HALL_RATES')
             ->where('hall_id','=',$hall_id)
@@ -68,10 +68,8 @@ class WebMasterViewController extends Controller
             ->select('name','rate')
             ->get();
 
-
-
         return response()->json(['himage1'=>$himage1->path,'himages'=>$himages,'advance'=>$advance->advance_payment,'refundable'=>$refundable->refundable_amount,
-                                'services'=>$services,'aservices'=>$aservices]);
+            'services'=>$services,'aservices'=>$aservices]);
     }
 
     /**
@@ -91,9 +89,9 @@ class WebMasterViewController extends Controller
 
 
         $images = ROOM_IMAGE::where('room_type_id','=',$room_id)
-                ->where('path','!=',$image1->path)
-                ->select('path')
-                ->get();
+            ->where('path','!=',$image1->path)
+            ->select('path')
+            ->get();
 
         $room_furnishes = RoomTypeFurnish::where('room_type_id','=',$room_id)
             ->join('ROOM_FURNISHING','ROOM_TYPE_FURNISH.furnish_id','=','ROOM_FURNISHING.rf_id')
@@ -110,9 +108,14 @@ class WebMasterViewController extends Controller
             ->select('MEAL_TYPES.meal_type_name','RATES.rate_code','RATES.single_rates')
             ->get();
 
+        $arr_dep_time = DB::table('HOTEL_INFO')
+            ->select('check_in','check_out')
+            ->first();
+
 
         return response()->json(['rimage1'=>$image1->path,'rimages'=>$images,'room_furnishes'=>$room_furnishes,
-                                'room_services'=>$room_services,'room_rates'=>$room_rates]);
+            'room_services'=>$room_services,'room_rates'=>$room_rates,'check_in'=>$arr_dep_time->check_in,
+            'check_out'=>$arr_dep_time->check_out]);
 
     }
 }

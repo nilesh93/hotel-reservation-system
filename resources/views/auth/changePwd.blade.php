@@ -50,8 +50,11 @@
 @section('js')
     <script>
         $('#password_reset').submit(function(evt) {
+            if($('#pass_alert').length > 0) {
+                $('#pass_alert').remove();
+            }
             if ($('#password').val() != $('#password_confirmation').val()) {
-                var msg = "<div class='alert alert-danger'><ul class='list-group list-unstyled text-center'><li class='list-group-item-danger'>Passwords did not match.</li></ul></div>"
+                var msg = "<div class='alert alert-danger' id='pass_alert'><ul class='list-group list-unstyled text-center'><li class='list-group-item-danger'>Passwords did not match.</li></ul></div>"
                 $("#password_reset").before(msg);
                 evt.preventDefault();
             }
