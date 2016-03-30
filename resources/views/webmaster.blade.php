@@ -44,7 +44,69 @@
 		<!--[if lt IE 9]>
 <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
 <![endif]-->
+		<style>
 
+			#divfix {
+				bottom: 0;
+				right: 0;
+				margin-bottom:7%;
+				margin-right:2%;
+				position: fixed;
+				z-index: 3000;
+			}
+
+
+			.btn-circle {
+				width: 30px;
+				height: 30px;
+				text-align: center;
+				padding: 6px 0;
+				font-size: 12px;
+				line-height: 1.428571429;
+				border-radius: 15px;
+			}
+			.btn-circle.btn-lg {
+				width: 50px;
+				height: 50px;
+				padding: 10px 16px;
+				font-size: 18px;
+				line-height: 1.33;
+				border-radius: 25px;
+
+			}
+			.btn-circle.btn-xl {
+				width: 70px;
+				height: 70px;
+				padding: 10px 16px;
+				font-size: 24px;
+				line-height: 1.33;
+				border-radius: 35px;
+				background-color:#fff;
+				color:#1b344b;	
+				border-style:solid;
+				border-color:#1b344b;
+
+
+			}
+			.btn-circle.btn-xl:hover {
+
+				background-color:#1b344b;
+				
+				color:#fff;	
+	 
+
+			}	
+			
+			.btn-circle.btn-xl:active {
+
+				background-color:#1b344b;
+				
+				color:#fff;	
+	 
+
+			}
+
+		</style>
 	</head>
 
 	<body>
@@ -179,7 +241,7 @@
 				<div class="col-md-3">  </div>
 			</div>
 
-
+<h1>{{Session::getId()}}</h1>
 			<div class="container-fluid">
 				@yield('content')
 
@@ -590,7 +652,7 @@
 									<li><a href="#">Careers</a></li>
 									<li><a href="#">FAQ</a></li>
 									<li><a href="#">Widgets</a></li>
-									<li><a href="#">Contact Us</a></li>
+									<li><a href="#">Contact  Us</a></li>
 								</ul>
 							</nav>
 						</div><!-- /col-md-5 -->
@@ -604,15 +666,23 @@
 
 		</section><!-- /wrapper -->
 
+		<div id="divfix">
 
+			<button class="btn btn-success btn-circle btn-xl"  ><i class="fa fa-comment"></i></button>
+
+
+
+		</div>
 
 
 		<!-- jQuery -->
 		<script src="{{URL::asset('FrontEnd/js/vendor/jquery-1.11.0.min.js')}}"></script>
 		<script src="{{URL::asset('FrontEnd/dp/jquery-ui.js')}}"></script>
-		
-<script  src="{{URL::asset('FrontEnd/FancyBox/source/jquery.fancybox.js')}}"> </script>
- 
+
+		<script  src="{{URL::asset('FrontEnd/FancyBox/source/jquery.fancybox.js')}}"> </script>
+
+		<script src="//js.pusher.com/3.0/pusher.min.js"></script>
+
 
 		<!-- CUSTOM JavaScript so you can use jQuery or $ before it has been loaded in the footer. -->
 
@@ -654,6 +724,7 @@
 		<script src="{{URL::asset('FrontEnd/js/jquery.simpleWeather.js')}}"></script>
 		<script src="{{URL::asset('FrontEnd/js/sugar.js')}}"></script>
 		<script src="{{URL::asset('FrontEnd/js/weather.js')}}"></script>
+		<script src="{{URL::asset('FrontEnd/money/money.js')}}"></script>
 
 		<script>
 
@@ -704,6 +775,8 @@
 					var C = Math.ceil(Weather.kelvinToCelsius(forecast.high()));
 					document.getElementById("deg").innerHTML += C+"&deg;C/"+F+"&deg;F";
 				});
+
+				pusher();
 			});
 
 
@@ -887,7 +960,40 @@
 				$('#promoModel').modal('show');
 
 			}
-			
+
+
+
+			function pusher(){
+
+
+				Pusher.log = function(message) {
+					if (window.console && window.console.log) {
+						window.console.log(message);
+					}
+				};
+
+				var pusher = new Pusher('40033006df6221cd315b', {
+					cluster: 'ap1',
+					encrypted: true
+				});
+
+				var channel = pusher.subscribe('test_channel');
+				channel.bind('my_event', function(data) {
+					
+					
+					
+					
+				});
+				
+				function convert(){
+					
+					
+					//http://api.fixer.io/latest?base=USD
+					
+				}
+
+			}
+
 		</script>
 
 		@yield('js')

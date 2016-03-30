@@ -167,6 +167,16 @@ Route::get('menu','MenuControllerWeb@menuMain');
 
 //review management
 Route::get('submit_review','PagesController@submit_review');
+Route::get('abc','PusherController@bar');
+
+/*
+Route::get('abc',function(){
+    
+   // LaravelPusher::connection('main')->log('They see me logging…');
+   LaravelPusher::trigger('test_channel', 'my_event', ['message' =>  "FUCK YOH"]); 
+    
+});*/
+
 
 /*
 |

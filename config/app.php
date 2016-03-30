@@ -140,6 +140,7 @@ return [
 
         
         Intervention\Image\ImageServiceProvider::class,
+        Vinkla\Pusher\PusherServiceProvider::class,
 
         /*
          * Application Service Providers...
@@ -152,7 +153,7 @@ return [
         /*
          * Social Media Authentication Provider...
          */
-        Laravel\Socialite\SocialiteServiceProvider::class,
+        Laravel\Socialite\SocialiteServiceProvider::class
 
 
 
@@ -207,6 +208,7 @@ return [
         'View'      => Illuminate\Support\Facades\View::class,
         'Socialite' => Laravel\Socialite\Facades\Socialite::class,
         'Image'     => Intervention\Image\Facades\Image::class,
+        'LaravelPusher' => Vinkla\Pusher\Facades\Pusher::class
 
     ],
 

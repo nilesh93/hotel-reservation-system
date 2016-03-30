@@ -14,7 +14,7 @@ class AddForeignKeysForRoomServices extends Migration
     {
         //
         
-        
+      /*  
            Schema::table('ROOM_TYPE_FURNISH', function ($table) {
 
                
@@ -42,7 +42,7 @@ class AddForeignKeysForRoomServices extends Migration
 
 
         });
-        
+        */
     }
 
     /**
@@ -52,7 +52,8 @@ class AddForeignKeysForRoomServices extends Migration
      */
     public function down()
     {
-        //
+        ///*
+        /*
           Schema::table('ROOM_TYPE_SERVICE', function ($table) {
 
             $table->dropForeign('ROOM_TYPE_SERVICE_room_type_id_foreign');
@@ -71,6 +72,7 @@ class AddForeignKeysForRoomServices extends Migration
         
 
         });
+        */
         
     }
 }
