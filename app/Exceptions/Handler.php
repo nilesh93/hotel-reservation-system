@@ -45,7 +45,8 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $e)
     {
-        if ($e instanceof ModelNotFoundException) {
+        // TODO: UNCOMMENT ALL THESE LINES TO HANDLE EXCEPTIONS!
+        /*if ($e instanceof ModelNotFoundException) {
             //$e = new NotFoundHttpException($e->getMessage(), $e);
 
             // HTTP Status code 422 Unprocessable Entity -> Means Request is valid
@@ -73,7 +74,7 @@ class Handler extends ExceptionHandler
         // 500 -> Internal Server Error
         else {
             return response()->view('errors.generalException', [], 500);
-        }
+        }*/
 
         return parent::render($request, $e);
     }

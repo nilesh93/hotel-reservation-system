@@ -229,6 +229,13 @@ Route::get('downloadDataDump/{serial_num}', 'BackupController@downloadBackup');
 Route::get('restore/{serial_num}', 'BackupController@restoreView');
 Route::post('restore/auth', 'BackupController@restoreDatabase');
 
+// About Us page routes
+Route::get('about_us', 'AboutUsPageController@viewPage');
+
+// Edit About Us page routes
+Route::get('admin_about_us', 'AboutUsPageController@viewAdminPage');
+Route::post('admin_about_us_edit', 'AboutUsPageController@editContent');
+
 // Inaccessible views testing route
 Route::get('/test', function(){
     return view('errors.modelNotFound');
