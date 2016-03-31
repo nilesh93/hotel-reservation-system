@@ -11,6 +11,7 @@ use App\ROOM_TYPE;
 use Session;
 use App\imageGallery;
 use App\FACILITY;
+use App\HOME_GALLERY;
 
 class PagesController extends Controller
 {
@@ -63,7 +64,7 @@ class PagesController extends Controller
         //Clear the indicator to access the payment page
         Session::forget('CanPay');
 
-        $images = imageGallery::all();
+       $images = HOME_GALLERY::all();
         $facilities = FACILITY::all();
 
         return view('Website.Demo')
