@@ -211,8 +211,20 @@
 								</ul>
 							</nav>
 
+<<<<<<< Updated upstream
 						</div><!-- /8 columns -->
 					</div>
+=======
+								<li><a href="{!! url('/room_packages') !!}">Facilities</a>
+									<ul>
+										@foreach($roomtypes as $roomtype)
+											<li><a onclick="viewRoomType('{{$roomtype->room_type_id}}','{{$roomtype->type_name}}')">{{ $roomtype->type_name}}</a></li>
+										@endforeach
+									</ul>
+								</li>
+
+							<li><a href="{!! url('/') !!}">Home</a></li>
+>>>>>>> Stashed changes
 
 				</div><!-- /container -->
 			</header><!-- /main-header -->
