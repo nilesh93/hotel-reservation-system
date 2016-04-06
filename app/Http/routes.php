@@ -184,31 +184,7 @@ Route::get('submit_review','PagesController@submit_review');
 Route::get('abc','PusherController@bar');
 
 
-Route::get('convert',function(){
-
-
-    $httpAdapter = new \Ivory\HttpAdapter\FileGetContentsHttpAdapter();
-
-
-    $yahooProvider = new \Swap\Provider\YahooFinanceProvider($httpAdapter);
-
-    // Create Swap with the provider
-    $swap = new \Swap\Swap($yahooProvider);
-
-
-    //usd to lkr
-    if(Input::get('cur')=='LKR'){
-        
-        $rate = $swap->quote('USD/LKR');
-        
-    }else{
-        
-        $rate = $swap->quote('LKR/USD');
-    }
-
-    // 1.187220
-    return  $rate;
-}); 
+Route::get('convert', 'CurrencyController@converter'); 
 
 
 
@@ -284,6 +260,13 @@ Route::get('make_backup', 'BackupController@makeBackup');
 Route::get('downloadDataDump/{serial_num}', 'BackupController@downloadBackup');
 Route::get('restore/{serial_num}', 'BackupController@restoreView');
 Route::post('restore/auth', 'BackupController@restoreDatabase');
+
+// About Us page routes
+Route::get('about_us', 'AboutUsPageController@viewPage');
+
+// Edit About Us page routes
+Route::get('admin_about_us', 'AboutUsPageController@viewAdminPage');
+Route::post('admin_about_us_edit', 'AboutUsPageController@editContent');
 
 // Inaccessible views testing route
 Route::get('/test', function(){
