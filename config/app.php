@@ -40,6 +40,7 @@ return [
     */
 
     'timezone' => 'Asia/Colombo',
+    //'timezone' => 'UTC', ------------> NOT RECOMMENDED! But in case Pusher stops working try this timezone
 
     /*
     |--------------------------------------------------------------------------

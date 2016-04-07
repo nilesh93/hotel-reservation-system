@@ -38,11 +38,11 @@ return [
     'connections' => [
 
         'main' => [
-            'auth_key' => '40033006df6221cd315b',
-            'secret' => 'c2d10e8c159070ace4d4',
-            'app_id' => 192204,
+            'auth_key' => 'a9cc4ec8de7727809a37',
+            'secret' => '3a141e8333f0ac40ad2e',
+            'app_id' => 195728,
             'options' => ['debug' =>true,
-                         'cluster' => 'ap1'],
+                'cluster' => 'mt1'],
             'host' => null,
             'port' => null,
             'timeout' => null,

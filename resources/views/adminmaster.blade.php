@@ -36,8 +36,11 @@
         <!-- HTML5 Shiv and Respond.js IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
         <!--[if lt IE 9]>
-<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-<script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+
+        <!--Pusher.js Client-side js-->
+        <script src="//js.pusher.com/2.2/pusher.min.js"></script>
 
 
 <![endif]-->
@@ -78,16 +81,56 @@
                                 <a href=""><i class="fa fa-search"></i></a>
                             </form>
 
+                            <?php
+                                $notification_count = DB::table('NOTIFICATIONS')
+                                        ->select('notification')
+                                        ->count();
+
+                                $unread_notification_count = DB::table('NOTIFICATIONS')
+                                        ->select('notification')
+                                        ->where('readStatus', '=', '0')
+                                        ->count();
+                            ?>
+                            @if($notification_count != 0)
+                            <?php
+                                $notifications = DB::table('NOTIFICATIONS')
+                                        ->select('notification', 'body', 'readStatus')
+                                        ->orderBy('created_at', 'desc')
+                                        ->get();
+                            ?>
+                            @endif
 
                             <ul class="nav navbar-nav navbar-right pull-right">
                                 <li class="dropdown hidden-xs">
-                                    <a href="#" data-target="#" class="dropdown-toggle waves-effect waves-light" data-toggle="dropdown" aria-expanded="true">
-                                        <i class="icon-bell"></i> <span class="badge badge-xs badge-danger">3</span>
+                                    <a href="#" data-target="#" class="dropdown-toggle waves-effect waves-light" data-toggle="dropdown" aria-expanded="true" onclick="$('#notificationNum-alert').text(''); setReadStatus()">
+                                        <i class="icon-bell"></i> <span class="badge badge-xs badge-danger" id="notificationNum-alert">@if($unread_notification_count != 0) {{$unread_notification_count}} @endif</span>
                                     </a>
                                     <ul class="dropdown-menu dropdown-menu-lg">
-                                        <li class="notifi-title"><span class="label label-default pull-right">New 3</span>Notification</li>
-                                        <li class="list-group nicescroll notification-list">
-                                            <!-- list item-->
+                                        <li class="notifi-title"><span id="notificationNum" class="label label-default pull-right">{{$unread_notification_count}} New</span> Notifications</li>
+                                        <li class="list-group nicescroll notification-list" id="notificationList">
+
+                                            @if($notification_count != 0)
+                                                @foreach($notifications as $notification)
+                                                    @if($notification->readStatus == 0)
+                                                        <a href="javascript:void(0);" class="list-group-item list-group-item-success">
+                                                    @else
+                                                        <a href="javascript:void(0);" class="list-group-item">
+                                                    @endif
+                                                        <div class="media">
+                                                            <div class="pull-left p-r-10">
+                                                                <em class="fa fa-cog fa-2x text-custom"></em>
+                                                            </div>
+                                                            <div class="media-body">
+                                                                <h5 class="media-heading">{{$notification->notification}}</h5>
+                                                                <p class="m-0">
+                                                                    <small>{{$notification->body}}</small>
+                                                                </p>
+                                                            </div>
+                                                        </div>
+                                                    </a>
+                                                @endforeach
+                                            @endif
+                                            {{--<!-- list item-->
                                             <a href="javascript:void(0);" class="list-group-item">
                                                 <div class="media">
                                                     <div class="pull-left p-r-10">
@@ -175,7 +218,7 @@
                                                         </p>
                                                     </div>
                                                 </div>
-                                            </a>
+                                            </a>--}}
                                         </li>
                                         <li>
                                             <a href="javascript:void(0);" class="list-group-item text-right">
@@ -292,7 +335,7 @@
                 </div> <!-- content -->
 
                 <footer class="footer">
-                    {{date('Y')}} © SEP_SE_WE_003.
+                    {{date('Y')}} © SEP_SE_WE_003
                 </footer>
 
             </div>
@@ -348,6 +391,14 @@
         <script src="{{URL::asset('BackEnd/assets/plugins/bootstrap-daterangepicker/daterangepicker.js')}}"></script>
 
         <script src="{{URL::asset('BackEnd/assets/js/validation.js')}}"></script>
+
+        <script>
+            function setReadStatus() {
+                $.ajax({url: "{{URL::to('setReadStatus')}}", success: function(result){
+                    console.log("Success")
+                }});
+            }
+        </script>
 
         @yield('js')
 

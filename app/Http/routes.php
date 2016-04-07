@@ -185,9 +185,11 @@ Route::get('abc','PusherController@bar');
 Route::get('abc',function(){
     
    // LaravelPusher::connection('main')->log('They see me logging…');
-   LaravelPusher::trigger('test_channel', 'my_event', ['message' =>  "FUCK YOH"]); 
+   LaravelPusher::trigger('test_channel', 'my_event', ['message' =>  "FUCK YOH"]);
     
 });*/
+
+Route::get('abc', 'PusherController@bar');
 
  
 
@@ -270,6 +272,9 @@ Route::get('about_us', 'AboutUsPageController@viewPage');
 // Edit About Us page routes
 Route::get('admin_about_us', 'AboutUsPageController@viewAdminPage');
 Route::post('admin_about_us_edit', 'AboutUsPageController@editContent');
+
+// Notifications read status update
+Route::get('setReadStatus', 'BackupController@setStatus');
 
 // Inaccessible views testing route
 Route::get('/test', function(){
