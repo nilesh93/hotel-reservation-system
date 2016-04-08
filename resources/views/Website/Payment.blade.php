@@ -75,7 +75,7 @@
 							<br>
 
 							<!--this form is used to connect to the paypal API-->
-							<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+							<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top" >
 
 								<input type="hidden" name="cmd" value="_xclick">
 								<input type="hidden" name="business" value="rishanthakumar@gmail.com">
@@ -312,6 +312,7 @@
 								'</div>' +
 								'<hr>';
 
+
 						var end ='<div class="col-md-12"><hr>' +
 
 								'<div class="col-md-3">' +
@@ -323,10 +324,10 @@
 
 								'<div class="col-md-3" align="right">' +
 
-								'<form method="get" action="{{ url('room_reservation') }}">' +
+								'<form id="payForm" name="payForm" method="get" action="{{ url('room_reservation') }}" >' +
 								'<input type="hidden" name="_token" value="{{ csrf_token() }}">' +
 								'<input type="hidden" name="CanPay" value="Can">' +
-								'<button type="submit" class="btn btn-primary" >Make Payments</button>' +
+								'<button type="submit" class="btn btn-primary" onclick="confirmPayment()">Make Payments</button>' +
 								'</form>' +
 
 								'</div>' +
@@ -417,10 +418,10 @@
 							'</div>' +
 
 							'<div class="col-md-3" align="right">' +
-							'<form method="get" action="{!! url('hall_reserve_final') !!}">' +
+							'<form id="payForm" method="get" action="{!! url('hall_reserve_final') !!}">' +
 							'<input type="hidden" name="_token" value="{{ csrf_token() }}">' +
 							'<input type="hidden" name="CanPay" value="Can">' +
-							'<button type="submit" class="btn btn-primary" >Make Payments</button>' +
+							'<button type="submit" class="btn btn-primary" onclick="confirmPayment()">Make Payments</button>' +
 							'</form>' +
 							'</div>' +
 
@@ -436,6 +437,39 @@
 				}
 			});
 		}
+
+		function confirmPayment()
+		{
+
+			swal({
+
+						title: "Are you sure?",
+						text: "Reservation will be confirmed",
+						type: "info",
+						showCancelButton: true,
+						confirmButtonText: "OK",
+						cancelButtonText: "Cancel",
+						closeOnConfirm: false,
+						closeOnCancel: true,
+						showLoaderOnConfirm: true
+
+					},
+					function(isConfirm){
+						if (isConfirm) {
+
+							document.getElementById('payForm').submit()
+
+						}
+
+					});
+
+			document.getElementById('payForm').onsubmit = function() {
+				return false;
+			}
+		}
+
+
+
 
 	</script>
 

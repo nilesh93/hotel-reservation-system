@@ -40,8 +40,10 @@ class HallAvailabilityController extends Controller
 
         $inputs = $request->all();
         $event_date = $inputs['event_date'];
+        $time_slot = $inputs['timeSlot'];
 
         $request->session()->put('event_date',$event_date);
+        $request->session()->put('timeSlot',$time_slot);
 
         //define an array to store the availability of the halls
         $hall_status = array();
@@ -53,6 +55,7 @@ class HallAvailabilityController extends Controller
         foreach($halls as $hall) {
             $row_count = HALL_RESERVATION::where('hall_id','=',$hall->hall_id)
                 ->where('reserve_date','=',$event_date)
+                ->where('time_slot','=',$time_slot)
                 ->count();
 
             //if the row count is zero means that is not reserved
@@ -66,7 +69,7 @@ class HallAvailabilityController extends Controller
             }
         }
 
-        return response()->json(['hall_status'=>$hall_status,'hall_ids'=>$halls,'edate'=>$event_date,'total_halls'=>$total_halls]);
+        return response()->json(['hall_status'=>$hall_status,'hall_ids'=>$halls,'edate'=>$event_date,'timeSlot'=>$time_slot,'total_halls'=>$total_halls]);
     }
 
     /**

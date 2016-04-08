@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Classes\ReservationRoom;
+use App\Classes\ReservationTask;
 use Illuminate\Support\Facades\Request;
 use DB;
 use App\Http\Requests;

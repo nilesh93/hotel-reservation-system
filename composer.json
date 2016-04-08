@@ -11,7 +11,8 @@
         "laravel/socialite": "^2.0",
         "intervention/image": "^2.3",
         "casinelli/currency": "dev-master",
-        "senemoglu/currency": "dev-master"
+        "senemoglu/currency": "dev-master",
+        "predis/predis": "~1.0"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

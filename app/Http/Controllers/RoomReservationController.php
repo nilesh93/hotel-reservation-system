@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Jobs\SendEmail;
 use App\ROOM_RESERVATION;
 use Request;
 use App\Http\Requests;
@@ -14,6 +15,8 @@ use DB;
 use Illuminate\Support\Facades\Session;
 use Mail;
 use Carbon\Carbon;
+use App\Classes\ReservationRoom;
+use App\Classes\ReservationTask;
 
 class RoomReservationController extends Controller
 {
@@ -36,7 +39,6 @@ class RoomReservationController extends Controller
      */
     public function roomReservation(Request $request)
     {
-        try {
             //set the timezone
             date_default_timezone_set("Asia/Colombo");
 
@@ -44,6 +46,7 @@ class RoomReservationController extends Controller
             $customer_email = Auth::user()->email;
             $customer_id = Customer::where('email', $customer_email)
                 ->value('cus_id');
+
             $customer_name = Customer::where('email', $customer_email)
                 ->value('name');
 
@@ -53,91 +56,36 @@ class RoomReservationController extends Controller
             $interval = $datetime1->diff($datetime2);
 
             //get the requested reservation details from the session
-            $check_in = session('check_in');
-            $check_out = session('check_out');
-            $no_of_rooms = session('rooms');
             $no_of_guests = session('adults') + session('kids');
-            $no_of_nights = $interval->format('%d%') + 1;
 
-            //predefined check in and check out times
-            $arr_dep_time = DB::table('HOTEL_INFO')
-                ->select('check_in','check_out')
-                ->first();
-            $check_in_time = $arr_dep_time->check_in;
-            $check_out_time =$arr_dep_time->check_out;
+            //formt the number of nights
+            $no_of_nights = $interval->format('%d%') + config('constants.ADD_ONE_NIGHT');
 
-            //create a carbon timestamp instance merging the dates and time
-            $check_in_datetime = Carbon::createFromTimestamp(strtotime($check_in . $check_in_time));
-            $check_out_datetime = Carbon::createFromTimestamp(strtotime($check_out . $check_out_time));
-
-            //creates a instance of the ROOM_RESERVATION model
-            $reservation = new ROOM_RESERVATION;
-
-            //store the details
-            $reservation->check_in = $check_in_datetime;
-            $reservation->check_out = $check_out_datetime;
-            $reservation->adults = session('adults');
-            $reservation->children = session('kids');
-            $reservation->num_of_rooms = session('rooms');
-            $reservation->num_of_nights = $interval->format('%d%') + 1;
-            $reservation->total_amount = session('total_payable');
-            $reservation->cus_id = $customer_id;
-
-            $reservation->save();
-
-            //get the last added reservation id
-            $res_id = $reservation->room_reservation_id;
+            //call the saveReservationDetails function to save the reservation details to the database
+            $res_id = $this->saveReservationDetails(session('check_in'),session('check_out'),$no_of_nights,$customer_id);
 
             //insert the the details to the RES_RMTYPE_CNT_RATE table
             foreach (session('room_types') as $room_type) {
 
-                DB::table('RES_RMTYPE_CNT_RATE')->insert(
-                    ['room_reservation_id' => $res_id,
-                        'room_type_id' => $room_type,
-                        'rate_code' => session('rate_code' . $room_type),
-                        'count' => session('no_of_rooms' . $room_type)
-
-
-                    ]
-                );
-
+                DB::table('RES_RMTYPE_CNT_RATE')->insert(['room_reservation_id' => $res_id,'room_type_id' => $room_type,'rate_code' => session('rate_code' . $room_type),
+                                                            'count' => session('no_of_rooms' . $room_type)]);
             }
 
-            //since the details are stored in the db clear the session values
-            foreach (session('room_types') as $room_type) {
-                Session::forget('room_type_name' . $room_type);
-                Session::forget('no_of_rooms' . $room_type);
-                Session::forget('rate' . $room_type);
-                Session::forget('meal_type' . $room_type);
-                Session::forget('rate_code' . $room_type);
-                Session::forget('total_payable');
-            }
+        //create an array with reservation details in ordr to send to the mail view
+        $data = array('res_id' => $res_id, 'check_in' => session('check_in'), 'check_out' => session('check_out'), 'nights' => $no_of_nights,
+            'no_of_rooms' => session('rooms'), 'guests' => $no_of_guests, 'name' => $customer_name);
 
-            //clear the requested details
-            Session::forget('room_types');
-            Session::forget('check_in');
-            Session::forget('check_out');
-            Session::forget('adults');
-            Session::forget('kids');
-            Session::forget('rooms');
-            Session::forget('total_payable');
-            Session::forget('CanPay');
 
-            //create an array with reservation details in ordr to send to the mail view
-            $data = array('res_id' => $res_id, 'check_in' => $check_in, 'check_out' => $check_out, 'nights' => $no_of_nights,
-                'no_of_rooms' => $no_of_rooms, 'guests' => $no_of_guests, 'name' => $customer_name);
+        //observer design pattern is used here, but this is design pattern is no use full
+            $sub =  new ReservationRoom();
+            $sub->attach(new ReservationTask());
+            $sub->clearSession();
 
-            //send mail to the customer confirming the reservation details
-            Mail::send('emails.RoomReservationMail', $data, function ($message) use ($customer_email) {
-                $message->from(env('MAIL_FROM'), env('MAIL_NAME'));
-
-                $message->to($customer_email)->subject('Welcome to Amalya Reach!');
-            });
+            //call the mailfunction send an email
+            $this->sendInitialMail($data,$customer_email);
 
             return redirect('myreserv')->with(['reserv_status' => 'Room_Reservation']);
-        }catch (\Exception $e){
-            abort(500,$e->getMessage());
-        }
+
     }
 
     /**
@@ -191,22 +139,85 @@ class RoomReservationController extends Controller
     public function cancelCurrentReservation(Request $request)
     {
         //Clears the current session room reservation values
-        if(Session::has('room_types')) {
-            $room_types = session('room_types');
+        $this->clearRoomSession("Full");
 
-            foreach ($room_types as $room_type) {
-
-                Session::forget('room_type_name' . $room_type);
-                Session::forget('no_of_rooms' . $room_type);
-                Session::forget('rate' . $room_type);
-                Session::forget('meal_type' . $room_type);
-                Session::forget('rate_code' . $room_type);
-                Session::forget('total_payable');
-            }
-            Session::forget('room_types');
-        }
+        //clears the canPay session attribute which is used as an indicator to enter to the payment page
         Session::forget('CanPay');
 
         return redirect('room_packages');
+    }
+
+    /**
+     *This function is used to clear the room reservation session.
+     *
+     * There are no output parameters in this function
+     */
+    public function clearRoomSession($type)
+    {
+            if(session('room_types')) {
+                //since the details are stored in the db clear the session values
+                foreach (session('room_types') as $room_type) {
+                    Session::forget(['room_type_name' . $room_type,'no_of_rooms' . $room_type,'rate' . $room_type,'meal_type' . $room_type]);
+                    Session::forget(['rate_code' . $room_type,'total_payable']);
+                }
+                if($type =="Full") {
+                    //clear the requested details
+                    Session::forget(['room_types', 'check_in', 'check_out', 'adults', 'kids', 'rooms', 'total_payable', 'CanPay']);
+                }
+            }
+
+
+    }
+
+    public function sendInitialMail($data,$customer_email)
+    {
+
+        $job = (new SendEmail($data,$customer_email,"initial_reservation_mail"));
+        $this->dispatch($job);
+
+        //send mail to the customer confirming the reservation details
+        /*Mail::send('emails.InitialRoomReservationMail', $data, function ($message) use ($customer_email) {
+            $message->from(env('MAIL_FROM'), env('MAIL_NAME'));
+
+            $message->to($customer_email)->subject('Welcome to Amalya Reach!');
+        });*/
+    }
+
+    public function saveReservationDetails($check_in,$check_out,$no_of_nights,$customer_id)
+    {
+
+        //predefined check in and check out times
+        $arr_dep_time = DB::table('HOTEL_INFO')
+                        ->select('check_in','check_out')
+                        ->first();
+
+        $check_in_time = $arr_dep_time->check_in;
+        $check_out_time =$arr_dep_time->check_out;
+
+        //create a carbon timestamp instance merging the dates and time
+        $check_in_datetime = Carbon::createFromTimestamp(strtotime($check_in . $check_in_time));
+        $check_out_datetime = Carbon::createFromTimestamp(strtotime($check_out . $check_out_time));
+
+        //creates a instance of the ROOM_RESERVATION model
+        $reservation = new ROOM_RESERVATION;
+
+        //store the details
+        $reservation->check_in = $check_in_datetime;
+        $reservation->check_out = $check_out_datetime;
+        $reservation->adults = session('adults');
+        $reservation->children = session('kids');
+        $reservation->num_of_rooms = session('rooms');
+        $reservation->num_of_nights =$no_of_nights ;
+        $reservation->total_amount = session('total_payable');
+        $reservation->cus_id = $customer_id;
+        $reservation->status = config('constants.RES_PENDING');
+
+        $reservation->save();
+
+        //get the last added reservation id
+        $res_id = $reservation->room_reservation_id;
+
+        return $res_id;
+
     }
 }
