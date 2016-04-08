@@ -455,9 +455,10 @@
                             url:"admin_promotions/addpromotion",
                             data:data,
                             success:function(ss){
-                                dataLoad();
 
+                                dataLoad();
                                 swal("Added!", "Record Added Successfully.", "success");
+
                             }
                         });
                     });
@@ -468,7 +469,6 @@
     function edit(a){
         $("#update_promotions_modal").modal("show");
         console.log(a);
-
         var data="row="+a;
         $.ajax({
             type:"get",
@@ -485,7 +485,6 @@
 
                 //swal("Deleted!", "Your imaginary file has been deleted.", "success");
                 // dataLoad();
-
             },
             complete: function (data) {
             },
@@ -502,7 +501,6 @@
                     confirmButtonText: "Yes, delete it!",
                     closeOnConfirm: false },
                 function(){
-
                     var data="row="+a;
                     $.ajax({
                         type:"get",
@@ -511,7 +509,6 @@
                         success:function(data){
                             swal("Deleted!", "Record has been deleted.", "success");
                             dataLoad();
-
                         },
                         complete: function (data) {
                         },

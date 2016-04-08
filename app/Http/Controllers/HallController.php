@@ -19,6 +19,35 @@ use File;
 class HallController extends Controller
 {
 
+    /*
+   |--------------------------------------------------------------------------
+   | Hall  Controller
+   |--------------------------------------------------------------------------
+   |
+   |This controller provides functions regarding hall management functions.
+   |
+   |
+   */
+
+
+    /**
+     * Constructor for the UserController class. Checks if a user has sufficient permission
+     * to access the Admin area.
+     *
+     */
+    public function __construct(){
+        // Check if User is Authenticated
+        $this->middleware('auth', ['except' => ['blockNotice']]);
+
+        // Check if the authenticated user is an admin
+        $this->middleware('isAdmin', ['except' => ['blockNotice']]);
+    }
+
+    /**
+     * Views the hall management admin view
+     *
+     * @return $this
+     */
     public function halls(){
 
 
@@ -28,7 +57,12 @@ class HallController extends Controller
 
     }
 
-
+    /**
+     * Gets all the hall information
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function admin_get_halls(Request $request){
 
         $halls = Hall::all();
@@ -37,6 +71,11 @@ class HallController extends Controller
 
     }
 
+    /**
+     * Adds a hall to the system
+     *
+     * @param Request $request
+     */
     public function admin_hall_add(Request $request){
 
         $hall = new Hall;
@@ -48,20 +87,20 @@ class HallController extends Controller
         $hall->capacity_from       = $request->input('hfrom');    
         $hall->capacity_to     = $request->input('hto');
         $hall->save();
-        
-        
+
+
         $hr = new HALL_RATE;
-        
+
         $hr->rate = $request->input('hrate');
         $hr->advance_payment = $request->input('advance');
         $hr->refundable_amount = $request->input('refund');
         $hr->hall_id = $hall->hall_id;
-        
-        
+
+
         $hr->save();
-        
-        
-           for($i = 0; $i<$request->input('hscount'); $i++){
+
+
+        for($i = 0; $i<$request->input('hscount'); $i++){
 
 
             if( $request->input("service".$i) > 0){
@@ -78,9 +117,14 @@ class HallController extends Controller
 
 
     }
-    
+
+    /**
+     * updates a hall in the system
+     *
+     * @param Request $request
+     */
     public function admin_update_hall(Request $request){
-        
+
         $hall = Hall::find(Input::get('id'));
 
         $hall->hall_num    = $request->input('hnum');
@@ -90,26 +134,26 @@ class HallController extends Controller
         $hall->capacity_from       = $request->input('hfrom');    
         $hall->capacity_to     = $request->input('hto');
         $hall->save();
-        
-        
-        
+
+
+
         $rate = HALL_RATE::where('hall_id',Input::get('id'))->delete();
-        
-        
+
+
         $hr = new HALL_RATE;
-        
+
         $hr->rate = $request->input('hrate');
         $hr->advance_payment = $request->input('advance');
         $hr->refundable_amount = $request->input('refund');
         $hr->hall_id = $hall->hall_id;
-        
-        
+
+
         $hr->save();
-        
-        
+
+
         $hs = HALL_SERVICE_JOIN::where('hall_id',Input::get('id'))->delete();
-        
-           for($i = 100; $i<$request->input('hscount'); $i++){
+
+        for($i = 100; $i<$request->input('hscount'); $i++){
 
 
             if( $request->input("service".$i) > 0){
@@ -123,30 +167,42 @@ class HallController extends Controller
             }
 
         }
-        
-        
+
+
     }
+
+    /**
+     * get hall information of a specifc hall for view or update
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function admin_edit_hall(Request $request){
-        
+
         $hall = Hall::find($request->input('id'));
         $hs   = HALL_SERVICE_JOIN::where('hall_id',$request->input('id'))->get(); 
         $images = HALL_IMAGE::where('hall_id',$request->input('id'))->get();
         $hr = HALL_RATE::where('hall_id',$request->input('id'))->first();
-        
+
         return response()->json(['hall'=>$hall, 'hs'=> $hs, 'images'=> $images, 'hr'=>$hr]);
-        
-    }
-    
-    public function admin_delete_hall(Request $request){
-        
-        $hall = Hall::find($request->input('id'));
-        
-        $hall->delete();
-        
-        
-        
+
     }
 
+    /**
+     * deletes a hall
+     *
+     * @param Request $request
+     */
+    public function admin_delete_hall(Request $request){
+
+        $hall = Hall::find($request->input('id'));
+
+        $hall->delete();
+
+
+
+    }
+ 
     /**
      * Return view for Hall Services
      *
@@ -154,6 +210,7 @@ class HallController extends Controller
      */
     public function getHallServices()
     {
+ 
         return view('nilesh.hallServices');
     }
 
@@ -254,10 +311,16 @@ class HallController extends Controller
         $service->delete();
     }
 
+    /**
+     * upload hall image via AJAX
+     *
+     * @param Request $request
+     */
+
     public function admin_hall_upload(Request $request){
-        
-        
-        
+
+
+
         $img_data = Input::get("img_data");
         $json = json_decode($img_data);
 
@@ -288,27 +351,33 @@ class HallController extends Controller
         $hallImg->hall_id = Input::get("imgid");
 
         $hallImg->save();
-        
-        
-        
+
+
+
     }
-    
-    
+
+    /**
+     * Delete hall image via AJAX
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+
     public function admin_hall_image_del(Request $request){
-        
+
         $hi = HALL_IMAGE::find(Input::get('id'));
-        
+
         $path = $hi->path;
-        
+
         File::delete($path);
-        
+
         $hi->delete();
-        
-        
+
+
         $images = HALL_IMAGE::where('hall_id',$request->input('type_id'))->get();
-        
+
         return response()->json([ 'images'=> $images]);
-        
+
     }
 
 }

@@ -12,7 +12,11 @@
         "intervention/image": "^2.3",
         "casinelli/currency": "dev-master",
         "senemoglu/currency": "dev-master",
-        "predis/predis": "~1.0"
+        "predis/predis": "~1.0",
+        "vinkla/pusher": "^2.2",
+        "graham-campbell/manager": "^2.3",
+        "pusher/pusher-php-server": "^2.3",
+        "florianv/swap": "^2.4"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

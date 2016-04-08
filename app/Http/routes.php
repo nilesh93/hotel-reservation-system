@@ -33,6 +33,10 @@ Route::get('/gallery', function () {
         ->with('images',$images);
 });
 
+Route::get('/contact',function(){
+    return view('Website.contact');
+});
+
 /*
 |--------------------------------------------------------------------------
 | Rish Routes
@@ -113,12 +117,22 @@ Route::get('admin_edit_reservation_info', 'AdminReservationController@updateRese
 |
 */
 
+//room management routes
 Route::get('admin_rooms', 'RoomController@rooms');
 Route::get('admin_getrooms', 'RoomController@getrooms');
+Route::get('admin_getRoomNum','RoomController@admin_getRoomNum');
+Route::get('admin_delete_room', 'RoomController@admin_delete_room');
+Route::get('admin_check_rnum', 'RoomController@admin_check_rnum');
+Route::get('admin_get_room_update_details', 'RoomController@admin_get_room_update_details');
+Route::get('admin_save_room_update_details', 'RoomController@admin_save_room_update_details');
+
+
+//room type manageent routes
 Route::get('admin_getroom_types', 'RoomController@getroom_types');
 Route::get('admin_room_add', 'RoomController@room_add');
 Route::get('admin_roomtype_add','RoomController@admin_roomtype_add');
 Route::get('admin_delete_room_type','RoomController@delete_room_type');
+Route::get('admin_rt_image_del', 'RoomController@admin_rt_image_del');
 Route::get('admin_getRoomNum','RoomController@admin_getRoomNum');
 Route::get('admin_delete_room', 'RoomController@admin_delete_room');
 Route::post('admin_roomtype_upload', 'RoomController@admin_roomtype_upload');
@@ -128,40 +142,58 @@ Route::get('admin_check_rnum', 'RoomController@admin_check_rnum');
 
 
 
+//room services management
 Route::get('admin_room_services', 'RoomController@roomservices');
 Route::get('admin_get_room_services', 'RoomController@get_room_services');
-Route::get('admin_get_room_furnish', 'RoomController@get_room_furnish');
-Route::get('admin_room_furnish_add', 'RoomController@room_furnish_add');
 Route::get('admin_room_service_add', 'RoomController@room_service_add');
 Route::get('admin_getRS_info', 'RoomController@getRS_info');
-Route::get('admin_getRF_info', 'RoomController@getRF_info');
-Route::get('admin_updateRF','RoomController@updateRF');
 Route::get('admin_updateRS','RoomController@updateRS');
 Route::get('admin_delRS','RoomController@delRS');
+
+//room furnish management
+Route::get('admin_get_room_furnish', 'RoomController@get_room_furnish');
+Route::get('admin_room_furnish_add', 'RoomController@room_furnish_add');
+Route::get('admin_getRF_info', 'RoomController@getRF_info');
+Route::get('admin_updateRF','RoomController@updateRF');
 Route::get('admin_delRF','RoomController@delRF');
 
+//Image gallery management
 Route::get('admin_imageGallery','ImageGalleryController@imageGallery');
+Route::get('admin_webImage_del','ImageGalleryController@admin_webImage_del');
 Route::post('admin_gallery_upload','ImageGalleryController@admin_gallery_upload');
 
 
+//Image home gallery management
+Route::get('admin_webGallery','ImageGalleryController@webimageGallery');
+Route::post('admin_web_gallery_upload','ImageGalleryController@admin_webgallery_upload');
+Route::get('admin_homeImage_update','ImageGalleryController@admin_homeImage_update');
+Route::get('get_homeImage_details','ImageGalleryController@get_homeImage_details');
+Route::get('admin_homeImage_del','ImageGalleryController@admin_homeImage_del');
 
 
 
+
+//hall management
 Route::get('admin_halls','HallController@halls');
 Route::get('admin_get_halls','HallController@admin_get_halls');
 Route::get('admin_hall_add','HallController@admin_hall_add');
+Route::get('admin_edit_hall','HallController@admin_edit_hall');
+Route::get('admin_update_hall','HallController@admin_update_hall');
+Route::get('admin_hall_image_del','HallController@admin_hall_image_del');
 Route::get('admin_delete_hall','HallController@admin_delete_hall');
 Route::post('admin_hall_upload','HallController@admin_hall_upload');
 
-
+//inquiry managemnt
 Route::get('saveinquiry','InquiryController@saveinquiry');
 Route::get('menu','MenuControllerWeb@menuMain');
 
 
+//review management
+Route::get('submit_review','PagesController@submit_review');
+Route::get('abc','PusherController@bar');
 
-Route::get('/contact',function(){
-    return view('Website.contact');
-});
+
+Route::get('convert', 'CurrencyController@converter'); 
 
 
 
@@ -229,6 +261,21 @@ Route::get('getHallServiceInfo', 'HallController@getHallServiceInfo');
 Route::get('editHallService', 'HallController@updateHallService');
 Route::get('addHallService', 'HallController@addHallService');
 Route::get('deleteHallService', 'HallController@deleteHallService');
+
+// Backup and Restore routes
+Route::get('get_backup', 'BackupController@getView');
+Route::get('get_backupData', 'BackupController@getBackupData');
+Route::get('make_backup', 'BackupController@makeBackup');
+Route::get('downloadDataDump/{serial_num}', 'BackupController@downloadBackup');
+Route::get('restore/{serial_num}', 'BackupController@restoreView');
+Route::post('restore/auth', 'BackupController@restoreDatabase');
+
+// About Us page routes
+Route::get('about_us', 'AboutUsPageController@viewPage');
+
+// Edit About Us page routes
+Route::get('admin_about_us', 'AboutUsPageController@viewAdminPage');
+Route::post('admin_about_us_edit', 'AboutUsPageController@editContent');
 
 // Inaccessible views testing route
 Route::get('/test', function(){
