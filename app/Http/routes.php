@@ -185,6 +185,8 @@ Route::get('abc','PusherController@bar');
 
 
 Route::get('convert', 'CurrencyController@converter'); 
+Route::get('admin_dashboard', 'DashboardController@dashboard'); 
+Route::get('getEvents', 'DashboardController@getEvents'); 
 
 
 

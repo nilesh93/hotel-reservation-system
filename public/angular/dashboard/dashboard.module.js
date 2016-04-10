@@ -1,0 +1,103 @@
+(function(){
+
+ 'use strict';
+ angular.module('dashboard',['ui.calendar'])
+
+  .controller('DashboardController',function($scope,$http,$rootScope,$log ){
+
+
+
+  $scope.eventSources = {
+   events: function(start, end, timezone, callback) {
+
+
+
+    $http.get("getEvents").then(function(data){
+ 
+     var events  = [];
+
+     data.data.forEach(function(item,index){
+      
+      events.push({
+
+       title:item.room_type + "-" + item.num_of_rooms,
+       start:item.check_in.replace(' ','T'),
+       end: item.check_out.replace(' ','T'),
+       color: 'yellow',   // an option!
+       textColor: 'black'
+      });
+
+     });
+
+
+     callback(events);
+
+    }); 
+   }
+    // an option!
+  };
+
+
+
+  function eventGenerate(start,end,timezone,callack){
+
+   $http.get("getEvents").then(function(data){
+
+    //console.log("done");
+    //
+    //console.log(data.data);
+
+
+    var events  = [];
+
+    events.push({
+
+     title:data.data.room_type + "-" + data.data.num_of_rooms,
+     start: data.data.check_in.replace(' ','T'),
+     end: data.data.check_out.replace(' ','T')
+    });
+
+    callback(events);
+
+   });
+
+  }
+
+
+
+
+
+
+  $scope.alertEventOnClick = function(event){
+   alert(event);
+
+  }
+
+  $scope.uiConfig = {
+   calendar:{
+    height: 450,
+    editable: true,
+    header:{
+     left: 'month agendaWeek agendaDay',
+     center: 'title',
+     right: 'today prev,next'
+    },
+
+    selectable :false,
+
+    eventDrop: $scope.alertOnDrop,
+    eventResize: $scope.alertOnResize,
+    eventClick:$scope.alertEventOnClick
+   }
+  };
+
+
+
+
+
+ });
+
+
+
+
+})();
