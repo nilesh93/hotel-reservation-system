@@ -18,13 +18,13 @@
 @section('title')
 
 
-Dashboard
+Calander
 
 @endsection
 
 
 @section('page_title')
-DASHBOARD
+CALENDAR
 @endsection
 
 
@@ -36,11 +36,23 @@ DASHBOARD
 	<a href="#">Admin</a>
 </li>
 <li  class="active">
-	<a href="#">Dashboard</a>
+	<a href="#">Calendar</a>
 </li>
 
 @endsection
 
+
+@section('page_buttons')
+<div class="col-md-4 col-md-offset-4">
+    <button type="button" class="btn btn-success waves-effect btn-block waves-light pull-right" data-toggle="modal" data-target="#addRoom">
+        <span class="btn-label pull-left"><i class="fa fa-plus"></i>
+        </span> HALL RESERVE</button>
+</div>
+<div class="col-md-4">
+    <button type="button" class="btn btn-primary waves-effect btn-block waves-light pull-right" data-toggle="modal" data-target="#addRoomT">
+        <span class="btn-label pull-left"><i class="fa fa-plus"></i>
+        </span>ROOM RESERVE</button></div>
+@endsection
 
 
 @section('content')
