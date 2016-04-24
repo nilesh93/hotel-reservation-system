@@ -75,7 +75,7 @@
 
   $scope.uiConfig = {
    calendar:{
-    height: 450,
+    height: 500,
     editable: true,
     header:{
      left: 'month agendaWeek agendaDay',
