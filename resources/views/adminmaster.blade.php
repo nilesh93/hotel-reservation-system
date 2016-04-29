@@ -72,12 +72,12 @@
                     <div class="">
                         <div class="pull-left">
                             <!--button class="button-menu-mobile open-left">
-                                <i class="ion-navicon"></i>
-                            </button> -->
+<i class="ion-navicon"></i>
+</button> -->
                             <span class="clearfix"></span>
                         </div>
 
-                        
+
 
 
                         <ul class="nav navbar-nav navbar-right pull-right">
@@ -215,7 +215,7 @@
                 <div id="sidebar-menu">
                     <ul>
 
-                       
+
 
                         <li class="has_sub">
                             <a href="#" class="waves-effect" id="management"><i class="ti-home"></i> <span> Rooms/Halls</span> </a>
@@ -276,6 +276,7 @@
                                 <li id="BR"><a href="{{URL::to('get_backup')}}">Backup & Restore</a></li>
                                 <li id="FS"><a href="admin_facilities">Edit Hotel Facilities</a></li>
                                 <li id="AU"><a href="{{URL::to('admin_about_us')}}">Edit About Us</a></li>
+                                <li id="RE"><a href="{{URL::to('admin_reviews')}}">Manage Reviews</a></li>
                             </ul>
                         </li>
 

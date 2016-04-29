@@ -24,8 +24,9 @@ ROOM SERVICES
 @endsection
 
 @section('page_buttons')
-<div class="col-md-4 col-md-offset-4">
+<div class="col-md-4  ">
     <button type="button" class="btn btn-success waves-effect btn-block waves-light pull-right" data-toggle="modal" data-target="#addRSM">
+
         <span class="btn-label pull-left"><i class="fa fa-plus"></i>
         </span> SERVICES</button>
 </div>
@@ -33,6 +34,10 @@ ROOM SERVICES
     <button type="button" class="btn btn-primary waves-effect btn-block waves-light pull-right" data-toggle="modal" data-target="#addRFM">
         <span class="btn-label pull-left"><i class="fa fa-plus"></i>
         </span>FURNISHING</button></div>
+<div class="col-md-4">
+    <button type="button" class="btn btn-default waves-effect btn-block waves-light pull-right" data-toggle="modal" data-target="#addRR">
+        <span class="btn-label pull-left"><i class="fa fa-plus"></i>
+        </span>BOOKING TYPES</button></div>
 @endsection
 
 @section('breadcrumbs')
@@ -68,6 +73,13 @@ ROOM SERVICES
             </a> 
         </li> 
 
+        <li class="tab" style="width: 25%;"> 
+            <a href="#bookingtypes" data-toggle="tab" aria-expanded="false"> 
+                <span class="visible-xs"><i class="fa fa-user"></i></span> 
+                <span class="hidden-xs">Room Booking Types</span> 
+            </a> 
+        </li> 
+
 
         <div class="indicator" style="right: 367px; left: 0px;"></div></ul> 
     <div class="tab-content"> 
@@ -79,6 +91,30 @@ ROOM SERVICES
                         <th>#</th>
                         <th>Furnish Name</th>
                         <th>Rate</th>
+                        <th class="col-md-1"></th>
+                        <th class="col-md-1"></th>
+                    </tr>
+                </thead>
+                <tbody>
+
+
+                </tbody>
+
+            </table>
+
+
+
+
+        </div> 
+
+        <div class="tab-pane " id="bookingtypes"> 
+
+            <table class="table table-striped table-bordered table-hover dataTables-example" id="ddr" plugin="datatable" >
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Booking Type Name</th>
+                        <th>Description</th>
                         <th class="col-md-1"></th>
                         <th class="col-md-1"></th>
                     </tr>
@@ -228,6 +264,52 @@ ROOM SERVICES
 
 
 
+<div class="modal inmodal fade" id="addRR" tabindex="-1" role="dialog"  aria-hidden="true">
+    <div class="modal-dialog ">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title">Add Room Booking Type</h4>
+
+            </div>
+            <form class="form-horizontal" id="addBT" onsubmit="return insertBT()">
+                <div class="modal-body">
+                    <div class="form-group">
+
+                        <label class="col-lg-4 control-label">Booking Type Name</label>
+
+                        <div class="col-lg-8">
+                            <input placeholder="Enter Booking Type Name" class="form-control" type="text" required   name="btname" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+
+                        <label class="col-lg-4 control-label"> Description</label>
+
+                        <div class="col-lg-8">
+                            <textarea class="form-control" name="desc"></textarea>
+
+                        </div>               
+                    </div>
+
+
+
+
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-white" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Save changes</button>
+                </div>
+                </div>
+
+            </form>
+    </div>
+</div>
+
+
+
 <!-- Edit room service -->
 <div class="modal inmodal fade" id="addRSME" tabindex="-1" role="dialog"  aria-hidden="true">
     <div class="modal-dialog ">
@@ -279,6 +361,8 @@ ROOM SERVICES
     </div>
 </div>
 <!-- Edit room furnish -->
+
+
 <div class="modal inmodal fade" id="addRFME" tabindex="-1" role="dialog"  aria-hidden="true">
     <div class="modal-dialog ">
         <div class="modal-content">
@@ -315,6 +399,52 @@ ROOM SERVICES
                     </div>
 
 
+
+
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-white" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Save changes</button>
+                </div>
+                </div>
+
+            </form>
+    </div>
+</div>
+
+
+
+<div class="modal inmodal fade" id="editRR" tabindex="-1" role="dialog"  aria-hidden="true">
+    <div class="modal-dialog ">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title">Edit Room Booking Type</h4>
+
+            </div>
+            <form class="form-horizontal" id="editBT" onsubmit="return editBT()">
+                <div class="modal-body">
+                    <div class="form-group">
+
+                        <label class="col-lg-4 control-label">Booking Type Name</label>
+
+                        <div class="col-lg-8">
+                            <input placeholder="Enter Booking Type Name" class="form-control" type="text" required   name="btname" id="btname" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+
+                        <label class="col-lg-4 control-label"> Description</label>
+
+                        <div class="col-lg-8">
+                            <textarea class="form-control" id="desc" name="desc"></textarea>
+
+                        </div>               
+                    </div>
+
+                    <input id="btid" hidden name="id">
 
 
                 </div>
@@ -390,8 +520,8 @@ ROOM SERVICES
         } );
 
 
-        var oTable = $('#ddt').DataTable();
-        oTable.destroy();
+        var oTable1 = $('#ddt').DataTable();
+        oTable1.destroy();
 
         $('#ddt').DataTable( {
             "ajax": "admin_get_room_furnish",
@@ -428,9 +558,31 @@ ROOM SERVICES
         } );
 
 
+        var oTable2 = $('#ddr').DataTable();
+        oTable2.destroy();
+        $('#ddr').DataTable( {
+            "ajax": "admin_get_room_booking",
+            "columns": [
+                { "data": "meal_type_id" },
+                { "data": "meal_type_name" },
+                { "data": "description" },
+
+                {"data" : null,
+                 "mRender": function(data, type, full) {
+                     return '<button class="btn btn-primary  btn-animate btn-animate-side   btn-sm" onclick="editMainBT('+data.meal_type_id+')"> Edit </button>' ;
+                 }
+                },
+                {"data" : null,
+                 "mRender": function(data, type, full) {
+                     return '<button class="btn btn-danger  btn-animate btn-animate-side   btn-sm" onclick="delBT('+data.meal_type_id+')"> Delete </button>' ;
+                 }
+                }
+            ]
+        } );
+
 
     }
-    
+
     //insert room services
     function insertRS(){
 
@@ -457,7 +609,7 @@ ROOM SERVICES
 
 
     }
-    
+
     //insert room furnishing
     function insertRF(){
 
@@ -485,7 +637,34 @@ ROOM SERVICES
 
 
     }
-    
+
+
+
+    function insertBT(){
+
+
+        $.ajax({
+            type: "get",
+            url: 'admin_booking_type_add',
+            data: $('#addBT').serialize(),
+
+            success : function(data){
+                $('#addRR').modal('hide');
+                swal('Success','Successfully Added!', 'success');
+                dataLoad();
+            },
+            error: function(xhr, ajaxOptions, thrownError) {
+                console.log(thrownError);
+            }	 
+        });
+
+
+
+        return false; 
+
+
+    }
+
     //edit get roomm furnish details
     function editMainRF(id){
 
@@ -514,7 +693,36 @@ ROOM SERVICES
 
 
     }
-    
+
+
+    function editMainBT(id){
+
+        $.ajax({
+            type: "get",
+            url: 'admin_getBT_info',
+            data: {
+                id:id
+            },
+
+            success : function(data){
+
+                $('#editRR').modal('show');
+                document.getElementById('btname').value = data.meal_type_name;
+                document.getElementById('desc').value = data.description;
+                document.getElementById('btid').value = data.meal_type_id;
+
+            },
+            error: function(xhr, ajaxOptions, thrownError) {
+                console.log(thrownError);
+
+                swal("Ooops!", "Cannot generate room number! ("+thrownError+")", "error");   
+            }	 
+        });
+
+
+
+    }
+
     //edit main room service details
     function editMainRS(id){
 
@@ -545,7 +753,7 @@ ROOM SERVICES
 
 
     }
-    
+
     //edit room services
     function editRS(){
 
@@ -578,6 +786,41 @@ ROOM SERVICES
 
     }
     
+    
+    
+    function editBT(){
+
+
+
+        $.ajax({
+            type: "get",
+            url: 'admin_editBT_info',
+            data:$('#editBT').serialize(),
+
+            success : function(data){
+
+                $('#editRR').modal('hide');
+                swal("Successfully Updated","","success");
+                dataLoad();
+
+
+
+            },
+            error: function(xhr, ajaxOptions, thrownError) {
+                console.log(thrownError);
+
+                swal("Ooops!", "Cannot generate room number! ("+thrownError+")", "error");   
+            }	 
+        });
+
+        return false;
+
+
+
+    }
+    
+    
+
     //edit room functions
     function editRF(){
 
@@ -609,7 +852,7 @@ ROOM SERVICES
 
 
     }
-    
+
     //delete room furnicher
     function delRF(id){
 
@@ -653,7 +896,7 @@ ROOM SERVICES
 
 
     }
-    
+
     //delete room service
     function delRS(id){
 
@@ -674,6 +917,50 @@ ROOM SERVICES
             $.ajax({
                 type: "get",
                 url: 'admin_delRS',
+                data: {
+                    id:id
+                },
+
+                success : function(data){
+
+
+                    swal("Removed!", "", "success");
+                    dataLoad();    
+
+                },
+                error: function(xhr, ajaxOptions, thrownError) {
+                    console.log(thrownError);
+
+                    swal("Ooops!", "Something Went Wrong! ("+thrownError+")", "error");   
+                }	 
+            });
+
+
+        } });
+
+
+    }
+    
+    
+    function delBT(id){
+
+
+        swal({   
+            title: "Delete?",   
+            text: "",   
+            type: "warning",   
+            showCancelButton: true,   
+            confirmButtonColor: "#DD6B55",   
+            confirmButtonText: "Delete",   
+            cancelButtonText: "Cancel",   
+            closeOnConfirm: false}, 
+             function(isConfirm){   if (isConfirm) {
+
+
+
+            $.ajax({
+                type: "get",
+                url: 'admin_delBT',
                 data: {
                     id:id
                 },
