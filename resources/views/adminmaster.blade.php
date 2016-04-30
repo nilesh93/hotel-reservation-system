@@ -32,6 +32,10 @@
         <link href="{{URL::asset('BackEnd/assets/plugins/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css')}}" rel="stylesheet">
         <link href="{{URL::asset('BackEnd/assets/plugins/clockpicker/dist/jquery-clockpicker.min.css')}}" rel="stylesheet">
         <link href="{{URL::asset('BackEnd/assets/plugins/bootstrap-daterangepicker/daterangepicker.css')}}" rel="stylesheet">
+        
+        <link href="{{URL::asset('bower_components/angular-bootstrap-calendar/dist/css/angular-bootstrap-calendar.css')}}"></link>
+        <link href="{{URL::asset('bower_components/angular-chart.js/dist/angular-chart.css')}}"></link>
+ 
 
         <!-- HTML5 Shiv and Respond.js IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -354,6 +358,19 @@
 
 
         <script src="{{URL::asset('BackEnd/assets/js/jquery.min.js')}}"></script>
+     
+        <script src="{{URL::asset('bower_components/moment/moment.js')}}"></script>
+           <script src="{{URL::asset('bower_components/angular/angular.js')}}"></script>
+           <script src="{{URL::asset('bower_components/angular-ui-calendar/src/calendar.js')}}"></script>
+        
+        
+        <script src="{{URL::asset('bower_components/fullcalendar/dist/fullcalendar.min.js')}}"></script>
+        <script src="{{URL::asset('bower_components/fullcalendar/dist/gcal.js')}}"></script>
+        
+        <script src="{{URL::asset('bower_components/Chart.js/Chart.js')}}"></script>
+        <script src="{{URL::asset('bower_components/angular-chart.js/dist/angular-chart.js')}}"></script> 
+         
+        
 
         <script src="{{URL::asset('BackEnd/assets/js/bootstrap.min.js')}}"></script>
         <script src="{{URL::asset('BackEnd/assets/js/detect.js')}}"></script>

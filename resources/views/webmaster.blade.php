@@ -135,84 +135,98 @@
 
 							<!-- weather widget -->
 							<div class="col-sm-12 col-md-12 col-lg-12">
-								<div class="elements pull-right">
+								<div class="elements "> <!--pull-right -->
 
-									<div class="weather element">
-										<p id="deg"><strong> {{strtoupper(date('l'))}}</strong>, {{strtoupper(date('F'))}}  {{date('d')}} <i id="weatherid" class=""></i> </p>
-									</div><!-- /weather -->
 
-									<div class="header-info element">
-										<div class="info">
-											<p data-id="1"><strong>CALL US:</strong> +94 114404040 / +94 114368291</p>
-											<p data-id="2"><strong>ADDRESS:</strong>No.556,
-												Moragahahena Road, Pitipana North,
-												Homagama.</p>
-											<p data-id="3"><strong>EMAIL:</strong> amalyareach@yahoo.com</p>
-										</div><!-- /info -->
-										<div class="triggers">
-											<i data-id="1" class="icon-tablet-2"></i>
-											<i data-id="2" class="icon-location"></i>
-											<i data-id="3" class="icon-globe-3"></i>
-										</div><!-- /triggers -->
-									</div><!-- /header-info -->
+									<div class="col-md-2"><select class="form-control" id="currencyRate"  onchange="convert()">
+
+										<option value="LKR"> LKR (Rs.)</option>
+										<option value="USD"> USD ($)</option>
+										</select></div>
+									<div class="col-md-6">
+
+										<div class="header-info element">
+											<div class="info">
+												<p data-id="1"><strong>CALL US:</strong> +94 114404040 / +94 114368291</p>
+
+												<p data-id="3"><strong>EMAIL:</strong> amalyareach@yahoo.com</p>
+											</div><!-- /info -->
+											<div class="triggers">
+												<i data-id="1" class="icon-tablet-2"></i>
+
+												<i data-id="3" class="icon-globe-3"></i>
+											</div><!-- /triggers -->
+										</div>
+
+									</div>
+									<div class="col-md-4">
+										<div class="weather element">
+											<p id="deg"><strong> {{strtoupper(date('l'))}}</strong>, {{strtoupper(date('F'))}}  {{date('d')}} <i id="weatherid" class=""></i> </p>
+										</div><!-- /weather -->
+									</div>
+
+									<!-- /header-info -->
+
 
 								</div><!-- /elements -->
-							</div><!-- /col-sm-8 -->
+							</div>
+
+							<div class="row">
+								<div class="col-sm-12 col-md-12 col-lg-12">
+
+									<nav id="main-nav">
+										<ul>
+
+											@if(Auth::check())
+											<li><a href="#">My Account</a>
+												<ul>
+													<li><a href="{{ URL::to('profile') }}">My Details</a></li>
+													<li><a href="{!! url('/myreserv') !!}">My Reservations</a></li>
+													<li><a href="{{ URL::to('change_password') }}">Change Password</a></li>
+													<li><a href="{{ URL::to('auth/logout') }}">Log out</a></li>
+												</ul>
+											</li>
+											@else
+											<li><a href="{{URL::to('auth/register')}}">Register</a></li>
+											<li><a href="{{URL::to('auth/login')}}">Login</a></li>
+											@endif
+											@if(Auth::check())
+
+											<li><a href="{!! url('/myreserv') !!}">  Reservations</a></li>
+											@endif
+											<li><a href="{!! url('/contact') !!}">Contact</a></li>
+											<li><a href="{!! url('gallery') !!}">Gallery</a></li><li><a href="{{ url('menu') }}">Menus</a></li>
+
+											<li><a href="{!! url('/halls') !!}">Halls</a>
+												<ul>
+
+													@foreach($halls as $hall)
+													<li><a onclick="viewHall('{{$hall->hall_id}}','{{ $hall->title }}','{{$hall->capacity_from}}','{{ $hall->capacity_to }}')">{{ $hall->title }}</a></li>
+													@endforeach
+
+												</ul>
+											</li>
+
+											<li><a href="{!! url('/room_packages') !!}">Rooms</a>
+												<ul>
+													@foreach($roomtypes as $roomtype)
+													<li><a onclick="viewRoomType('{{$roomtype->room_type_id}}','{{$roomtype->type_name}}')">{{ $roomtype->type_name}}</a></li>
+													@endforeach
+												</ul>
+											</li>
+
+											<li><a href="{!! url('/') !!}">Home</a></li>
+
+										</ul>
+									</nav>
+
+								</div><!-- /8 columns -->
+							</div>
+							<!-- /col-sm-8 -->
 						</div>
 					</div><!-- /row -->
-
-					<div class="row">
-						<div class="col-sm-12 col-md-12 col-lg-12">
-
-							<nav id="main-nav">
-								<ul>
-
-									@if(Auth::check())
-									<li><a href="#">My Account</a>
-										<ul>
-											<li><a href="{{ URL::to('profile') }}">My Details</a></li>
-											<li><a href="{{ URL::to('change_password') }}">Change Password</a></li>
-											<li><a href="{{ URL::to('auth/logout') }}">Log out</a></li>
-										</ul>
-									</li>
-									@else
-									<li><a href="{{URL::to('auth/register')}}">Register</a></li>
-									<li><a href="{{URL::to('auth/login')}}">Login</a></li>
-									@endif
-
-									@if(Auth::check())
-									<li><a href="{!! url('/myreserv') !!}">My Reservations</a></li>
-									@endif
-
-
-									<li><a href="{!! url('/contact') !!}">Contact Us</a></li>
-									<li><a href="{!! url('gallery') !!}">Gallery</a></li><li><a href="{{ url('menu') }}">Menus</a></li>
-
-									<li><a href="{!! url('/halls') !!}">Halls</a>
-										<ul>
-
-											@foreach($halls as $hall)
-											<li><a onclick="viewHall('{{$hall->hall_id}}','{{ $hall->title }}','{{$hall->capacity_from}}','{{ $hall->capacity_to }}')">{{ $hall->title }}</a></li>
-											@endforeach
-
-										</ul>
-									</li>
-
-									<li><a href="{!! url('/room_packages') !!}">Rooms</a>
-										<ul>
-											@foreach($roomtypes as $roomtype)
-											<li><a onclick="viewRoomType('{{$roomtype->room_type_id}}','{{$roomtype->type_name}}')">{{ $roomtype->type_name}}</a></li>
-											@endforeach
-										</ul>
-									</li>
-
-									<li><a href="{!! url('/') !!}">Home</a></li>
-
-								</ul>
-							</nav>
-
-						</div><!-- /8 columns -->
-					</div>
+ 
+ 
 
 				</div><!-- /container -->
 			</header><!-- /main-header -->
@@ -425,8 +439,8 @@
 					</div>
 				</modal>
 
-			
-</div>
+
+			</div>
 			<?php 
 			$promotions = DB::table('PROMOTIONS')
 				->select(DB::raw("*, DATE_FORMAT(date_from,'%M %e, %Y') as dfrom, DATE_FORMAT(date_to,'%M %e, %Y') as dto"))
@@ -639,6 +653,7 @@
 						</div><!-- /col-md-3 -->
 						<div class="col-sm-5 col-md-5 col-lg-5">
 							<nav class="footer-nav">
+							 
 								<ul>
 									<li><a href="#">Home</a></li>
 									<li><a href="#">About Us</a></li>
@@ -728,6 +743,18 @@
 
 
 			$('document').ready(function(){
+
+
+				if (typeof localStorage.currency === 'undefined' || localStorage.currency == 'LKR') {
+					
+					console.log("do nothing");
+					
+				}else{
+
+					$('#currencyRate').val('USD');
+					convert();
+				}
+
 
 				var myLatLng = {lat:6.840172, lng: 80.020895};
 
@@ -947,8 +974,59 @@
 
 			function convert(){
 
+				var list = 	$('.finance');
 
-				//http://api.fixer.io/latest?base=USD
+				var cur = $('#currencyRate').val();
+
+				localStorage.currency = cur;
+
+				var sign;
+
+				if(cur == 'LKR'){
+
+					sign = 'Rs. ';
+				}else{
+
+					sign = '$';
+
+				}
+
+				$.ajax({
+					url:"convert",
+					type:"get",
+					data:{cur: cur},
+					success:function(data){
+
+						var rate = data;
+
+						console.log(rate);
+
+						for(var i = 0; i<list.length; i++){
+
+							var temp = ((list[i].innerHTML).replace(/\D/g,''))/100;
+
+							var num = parseFloat(temp);
+
+							console.log(num);
+
+							list[i].innerHTML = sign+""+(num * rate).toFixed(2) ;
+
+
+						}
+
+					},
+					error:function(err){
+
+						console.log(err);
+					}
+
+				});
+
+
+
+
+
+
 
 			}	 
 

@@ -58,7 +58,7 @@
                         <th>#</th>
                         <th>Hall Service Name</th>
                         <th>Rate</th>
-                        <th class="col-md-1"></th>
+                        {{--<th class="col-md-1"></th>--}}
                         <th class="col-md-1"></th>
                     </tr>
                     </thead>
@@ -124,50 +124,6 @@
     </div>
 
 
-    <div class="modal inmodal fade" id="editHS" tabindex="-1" role="dialog"  aria-hidden="true">
-        <div class="modal-dialog ">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                    <h4 class="modal-title">Update Hall Service</h4>
-
-                </div>
-                <form class="form-horizontal" id="editHSF" onsubmit="return edit()">
-                    <div class="modal-body">
-
-                        <input type="text" hidden="true" id="ihs_id" name="hs_id" value="">
-
-                        <div class="form-group">
-
-                            <label class="col-lg-3 control-label">Service Name</label>
-
-                            <div class="col-lg-9">
-                                <input placeholder="Enter Hall Service Name" class="form-control" type="text" id="iname" name="name" readonly>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-
-                            <label class="col-lg-3 control-label"> Additional Price </label>
-
-                            <div class="col-lg-9">
-                                <input type="text" placeholder="If Free, Enter 0" class="form-control" type="text" required id="irate" name="rate" pattern="[-+]?[0-9]*\.?[0-9]+" title="Float value needed" >
-
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-white" data-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary">Save changes</button>
-                    </div>
-            </div>
-
-            </form>
-        </div>
-    </div>
-
-
 
 
 @endsection
@@ -210,11 +166,11 @@
                             }
                         }
                     },
-                    {"data" : null,
+                    /*{"data" : null,
                         "mRender": function(data, type, full) {
-                            return '<button class="btn btn-primary  btn-animate btn-animate-side btn-block btn-sm" onclick="editModalShow('+data.hs_id+')"> Update rates </button>' ;
+                            return '<button class="btn btn-primary  btn-animate btn-animate-side btn-block btn-sm" onclick="edit('+data.hs_id+')"> Edit </button>' ;
                         }
-                    },
+                    },*/
                     {"data" : null,
                         "mRender": function(data, type, full) {
                             return '<button class="btn btn-danger  btn-animate btn-animate-side btn-block btn-sm" onclick="del('+data.hs_id+')"> Delete </button>' ;
@@ -236,73 +192,14 @@
                 success : function(data){
                     $('#addService').modal('hide');
                     swal('Success','Successfully Added!', 'success');
-
-                    $('#addH').trigger("reset");
-
                     dataLoad();
 
                 },
                 error: function(xhr, ajaxOptions, thrownError) {
-                    if (thrownError == "Forbidden") {
-                        swal("Ooops!", "No duplicate entries are allowed. ("+thrownError+")", "error");
-                    }
-                    else {
-                        swal("Ooops!", "Something Went Wrong! ("+thrownError+")", "error");
-                    }
-                    console.log(thrownError);
-                }
-            });
-            return false;
-        }
-
-
-        function editModalShow(hs_id){
-            $.ajax({
-                type: "get",
-                url: 'getHallServiceInfo',
-                data:{hs_id:hs_id},
-
-                success : function(data){
-
-                    $('#editHS').modal('show');
-                    document.getElementById('iname').value = data.name;
-                    document.getElementById('irate').value = data.rate;
-                    document.getElementById('ihs_id').value = data.hs_id;
-                },
-                error: function(xhr, ajaxOptions, thrownError) {
-                    console.log(thrownError);
-
                     swal("Ooops!", "Something Went Wrong! ("+thrownError+")", "error");
-                }
-            });
-
-            return false;
-        }
-
-
-        function edit(){
-            $.ajax({
-                type: "get",
-                url: 'editHallService',
-                data:$('#editHSF').serialize(),
-
-                success : function(data){
-
-                    $('#editHS').modal('hide');
-                    swal("Successfully Updated!","","success");
-                    dataLoad();
-                },
-                error: function(xhr, ajaxOptions, thrownError) {
-                    if (thrownError == "Forbidden") {
-                        swal("Ooops!", "No duplicate entries are allowed. ("+thrownError+")", "error");
-                    }
-                    else {
-                        swal("Ooops!", "Something Went Wrong! ("+thrownError+")", "error");
-                    }
                     console.log(thrownError);
                 }
             });
-
             return false;
         }
 
@@ -310,7 +207,7 @@
        function del(id){
             swal({
                         title: "Delete?",
-                        text: "Are you sure you want to delete this rate?",
+                        text: "Are you sure you want to delete this rate? This might affect old business transactions.",
                         type: "warning",
                         showCancelButton: true,
                         confirmButtonColor: "#DD6B55",
@@ -343,6 +240,14 @@
                     });
         }
 
+        /*function delCancel(id){
+
+            swal('Cannot delete!', 'Room type cannot be deleted because there are rooms associated with this room type. Please delete them or change them first!', 'error');
+
+
+        }
+
+        */
 
     </script>
 
