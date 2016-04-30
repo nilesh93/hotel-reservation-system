@@ -393,12 +393,12 @@
 					'</div><!-- /col-4--->' +
 
 					'<div class="col-sm-4 col-md-4 col-lg-4">' +
-					'<span class="checkout-title">Advance Payment (Rs.)</span>' +
+					'<span class="checkout-title">Advance Payment</span>' +
 					'<span class="checkout-value"></span>' +
 					'</div><!-- /col-4--->' +
 
 					'<div class="col-sm-4 col-md-4 col-lg-4">' +
-					'<span class="checkout-title">Refundable Amount (Rs.)</span>' +
+					'<span class="checkout-title">Refundable Amount</span>' +
 					'<span class="checkout-value"></span></div><!-- /col-4 -->' +
 					'</div>' +
 					'</div>' +
@@ -415,12 +415,12 @@
 					'</div><!-- /col-4 -->' +
 
 					'<div class="col-sm-4 col-md-4 col-lg-4">' +
-					'<span class="checkout-title">' + formatNumber(data.hall_detail[0].advance_payment)  + '</span>' +
+					'<span class="checkout-title finance">Rs.' + formatNumber(data.hall_detail[0].advance_payment)  + '</span>' +
 					'<span class="checkout-value"></span>' +
 					'</div><!-- /col-4 -->' +
 
 					'<div class="col-sm-4 col-md-4 col-lg-4">' +
-					'<span class="checkout-title">' + formatNumber(data.hall_detail[0].refundable_amount) + '</span>' +
+					'<span class="checkout-title finance">Rs.' + formatNumber(data.hall_detail[0].refundable_amount) + '</span>' +
 					'<span class="checkout-value"></span>' +
 					'</div><!-- /col-4 -->' +
 
@@ -436,7 +436,7 @@
 					'</div>' +
 
 					'<div class="col-md-6">'+
-					'<h2 align="center"><b>Total(Rs.) : ' + formatNumber(data.hall_detail[0].advance_payment)+'</b><h2>'+
+					'<h2 align="center"><b>Total : <span class="finance">' + formatNumber(data.hall_detail[0].advance_payment)+'</span></b><h2>'+
 					'</div>' +
 
 					'<div class="col-md-3" align="right">'+

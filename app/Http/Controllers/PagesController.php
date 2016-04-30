@@ -151,6 +151,12 @@ class PagesController extends Controller
     public function makePayment(Request $request)
     {
         if(Request::has('CanPay') && Session::has('CanPay')) {
+
+            //convert LKR to USD before redirect to pay pal account
+            $total = $this->convert(session('total_payable'));
+
+            Session::put(['pay_pal_total_payable'=>$total]);
+
             return view('Website.Payment');
         }
         else {
@@ -167,5 +173,21 @@ class PagesController extends Controller
     public function myReserve()
     {
         return view('Website.MyReservation');
+    }
+
+    public function convert($total)
+    {
+
+        $httpAdapter = new \Ivory\HttpAdapter\FileGetContentsHttpAdapter();
+        $yahooProvider = new \Swap\Provider\YahooFinanceProvider($httpAdapter);
+
+
+        // Create Swap with the provider
+        $swap = new \Swap\Swap($yahooProvider);
+
+        $rate = $swap->quote('LKR/USD')->getValue();
+
+        return $rate*$total;
+
     }
 }

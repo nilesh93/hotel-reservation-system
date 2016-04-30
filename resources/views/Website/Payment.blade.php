@@ -82,7 +82,7 @@
 								<input type="hidden" name="item_name" value="Total Payable">
 								<input type="hidden" name="no_item_price" value="0">
 								<input type="hidden" name="no_item_number" value="0">
-								<input type="hidden" name="amount" value="{{ session('total_payable')}}"><!--here the total payable amount is attached-->
+								<input type="hidden" name="amount" value="{{ session('pay_pal_total_payable')}}"><!--here the total payable amount is attached-->
 								<input type="hidden" name="no_shipping" value="0">
 								<input type="hidden" name="no_note" value="1">
 								<input type="hidden" name="currency_code" value="USD">
@@ -253,12 +253,12 @@
 									'</div><!-- /col-3 -->' +
 
 									'<div class="col-sm-2 col-md-2 col-lg-2">' +
-									'<span class="checkout-title">' + formatNumber(data.rates[i]) + '</span>' +
+									'<span class="checkout-title finance">Rs.' + formatNumber(data.rates[i]) + '</span>' +
 									'<span class="checkout-value"></span>' +
 									'</div> <!-- /col-3 -->' +
 
 									'<div class="col-sm-2 col-md-2 col-lg-2">' +
-									'<span class="checkout-title">' + formatNumber(data.rates[i] * data.no_of_rooms[i]) + '</span>' +
+									'<span class="checkout-title finance">Rs.' + formatNumber(data.rates[i] * data.no_of_rooms[i]) + '</span>' +
 									'<span class="checkout-value"></span>' +
 									'</div><!-- /col-2 -->' +
 
@@ -294,12 +294,12 @@
 								'</div><!-- /col-3 -->' +
 
 								'<div class="col-sm-2 col-md-2 col-lg-2">' +
-								'<span class="checkout-title">Rates (Rs.)</span>' +
+								'<span class="checkout-title">Rates</span>' +
 								'<span class="checkout-value"></span>' +
 								'</div><!-- /col-3 -->' +
 
 								'<div class="col-sm-2 col-md-2 col-lg-2">' +
-								'<span class="checkout-title">Line Total (Rs.)</span>' +
+								'<span class="checkout-title">Line Total</span>' +
 								'<span class="checkout-value"></span>' +
 								'</div><!-- /col-2 -->' +
 
@@ -319,7 +319,7 @@
 								'</div>' +
 
 								'<div class="col-md-6">' +
-								'<h2 align="center"><b>Total(Rs.) : ' + formatNumber(total) + '</b><h2>' +
+								'<h2 align="center"><b>Total : <span class="finance">Rs.' + formatNumber(total) + '</span></b><h2>' +
 								'</div>' +
 
 								'<div class="col-md-3" align="right">' +
@@ -372,12 +372,12 @@
 							'</div><!-- /col-4--->' +
 
 							'<div class="col-sm-4 col-md-4 col-lg-4">' +
-							'<span class="checkout-title">Advance Payment (Rs.)</span>' +
+							'<span class="checkout-title">Advance Payment</span>' +
 							'<span class="checkout-value"></span>' +
 							'</div><!-- /col-4--->' +
 
 							'<div class="col-sm-4 col-md-4 col-lg-4">' +
-							'<span class="checkout-title">Refundable Amount (Rs.)</span>' +
+							'<span class="checkout-title">Refundable Amount</span>' +
 							'<span class="checkout-value"></span>' +
 							'</div><!-- /col-4 -->' +
 
@@ -396,12 +396,12 @@
 							'</div><!-- /col-4 -->' +
 
 							'<div class="col-sm-4 col-md-4 col-lg-4">' +
-							'<span class="checkout-title">' + formatNumber(data.hall_detail[0].advance_payment)  + '</span>' +
+							'<span class="checkout-title finance">Rs.' + formatNumber(data.hall_detail[0].advance_payment)  + '</span>' +
 							'<span class="checkout-value"></span>' +
 							'</div><!-- /col-4 -->' +
 
 							'<div class="col-sm-4 col-md-4 col-lg-4">' +
-							'<span class="checkout-title">' + formatNumber(data.hall_detail[0].refundable_amount) + '</span>' +
+							'<span class="checkout-title finance">Rs.' + formatNumber(data.hall_detail[0].refundable_amount) + '</span>' +
 							'<span class="checkout-value"></span>' +
 							'</div><!-- /col-4 -->' +
 
@@ -414,7 +414,7 @@
 							'<div class="col-md-3"></div>' +
 
 							'<div class="col-md-6">' +
-							'<h2 align="center"><b>Total(Rs.) : ' + formatNumber(data.hall_detail[0].advance_payment) + '</b><h2>' +
+							'<h2 align="center"><b>Total : <span class="finance">Rs.' + formatNumber(data.hall_detail[0].advance_payment) + '</span></b><h2>' +
 							'</div>' +
 
 							'<div class="col-md-3" align="right">' +

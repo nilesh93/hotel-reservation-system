@@ -104,11 +104,11 @@
                         <div class="col-md-1"> : </div>
 
                         <div class="col-md-3">
-                            From <input id="time_slot_2_non_from" type="time" value={{ $general_info->hall_time_slot_2_from  }} disabled >
+                            From <input id="time_slot_2_non_from" type="time" value={{ $general_info->hall_time_slot_2_from  }} readonly >
                         </div>
 
                         <div class="col-md-2">
-                            To <input id="time_slot_2_non_to" type="time" value={{ $general_info->hall_time_slot_2_to  }} disabled >
+                            To <input id="time_slot_2_non_to" type="time" value={{ $general_info->hall_time_slot_2_to  }} readonly>
                         </div>
 
                         <div class="col-md-2">
@@ -338,16 +338,21 @@
                                                                     '<button type="button" class="btn btn-primary" onclick=saveCHAN("'+id+'")>Save changes</button>';
 
             } else if (id == 'hall_time1') {
+
+
+                var time1_from = document.getElementById('time_slot_1_non_from').value;
+                var time1_to =  document.getElementById('time_slot_1_non_to').value;
+
                 document.getElementById('edit_field').innerHTML = '<div class="row"> <div class="col-md-1"></div>'+
                         ' <div class="col-md-3">'+
                         'Time Slot 1'+
                         '</div>'+
                         '<div class="col-md-1"> : </div>'+
                         '<div class="col-md-3">'+
-                            'From <input id="time_slot_1_from" type="time" value={{ $general_info->hall_time_slot_1_from }}>'+
+                            'From <input id="time_slot_1_from" type="time" value='+time1_from+'>'+
                         '</div>'+
                         '<div class="col-md-3">'+
-                        'To <input id="time_slot_1_to" type="time" value={{ $general_info->hall_time_slot_1_to }} >'+
+                        'To <input id="time_slot_1_to" type="time" value='+ time1_to+' >'+
                         '</div>'+
                         '</div>';
 
@@ -355,16 +360,19 @@
                         '<button type="button" class="btn btn-primary" onclick=saveCHAN("'+id+'")>Save changes</button>';
 
             } else if (id == 'hall_time2') {
+                var time2_from = document.getElementById('time_slot_2_non_from').value;
+                var time2_to =  document.getElementById('time_slot_2_non_to').value;
+
                 document.getElementById('edit_field').innerHTML = '<div class="row"> <div class="col-md-1"></div>'+
                         ' <div class="col-md-3">'+
                         'Time Slot 2'+
                         '</div>'+
                         '<div class="col-md-1"> : </div>'+
                         '<div class="col-md-3">'+
-                        'From <input id="time_slot_2_from" type="time" value={{ $general_info->hall_time_slot_2_from }}>'+
+                        'From <input id="time_slot_2_from" type="time" value='+time2_from+'>'+
                         '</div>'+
                         '<div class="col-md-3">'+
-                        'To <input id="time_slot_2_to" type="time" value={{ $general_info->hall_time_slot_2_to }} >'+
+                        'To <input id="time_slot_2_to" type="time" value='+time2_to+' >'+
                         '</div>'+
                         '</div>';
 
@@ -469,6 +477,24 @@
                 } else if(id == 'hall_time1') {
                     var time_from = document.getElementById('time_slot_1_from').value;
                     var time_to =  document.getElementById('time_slot_1_to').value;
+                    var time2_from = document.getElementById('time_slot_2_non_from').value;
+                    var time2_to =  document.getElementById('time_slot_2_non_to').value;
+                    
+
+                    if((time_from >= time2_from) && (time_from <= time2_to) || (time_to >= time2_from && time_to <= time2_to) ||
+                            (time_from <= time2_from && time_to >= time2_to) )
+                    {
+                        swal({
+                            title: "<div class='alert alert-danger'> <strong>Warning! </strong> </div>",
+                            text: "<span style='color:#ff2222'>Please provide a valid time,this time slot is conflicting with the other one <span>",
+                            html: true
+                        });
+
+                        return false;
+
+                    }
+
+
 
                     if (time_from == "" || time_to == "") {
                         swal({
@@ -488,6 +514,23 @@
                 }else if(id == 'hall_time2') {
                     var time_from = document.getElementById('time_slot_2_from').value;
                     var time_to =  document.getElementById('time_slot_2_to').value;
+                    var time1_from = document.getElementById('time_slot_1_non_from').value;
+                    var time1_to =  document.getElementById('time_slot_1_non_to').value;
+
+
+                    if((time_from >= time1_from) && (time_from <= time1_to) || (time_to >= time1_from && time_to <= time1_from) ||
+                            (time_from <= time1_from && time_to >= time1_to) )
+                    {
+                        swal({
+                            title: "<div class='alert alert-danger'> <strong>Warning! </strong> </div>",
+                            text: "<span style='color:#ff2222'>Please provide a valid time,this time slot is conflicting with the other one <span>",
+                            html: true
+                        });
+
+                        return false;
+
+                    }
+
 
                     if (time_from == "" || time_to == "") {
                         swal({
