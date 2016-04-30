@@ -81,6 +81,7 @@ class BackupController extends Controller
         $newNotification = new Notifications();
 
         // TODO: Remove magic numbers
+        // TODO: Put messages inside the constants file
         if ($sqldump == false) {
             $newNotification->notification = "Backup Failed!";
             $newNotification->body = "User generated Backup failed.";
