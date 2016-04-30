@@ -11,6 +11,8 @@ use Illuminate\Support\Facades\Storage;
 use App\BACKUP_LOG;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Auth;
+use Vinkla\Pusher\Facades\Pusher;
+use App\Notifications;
 
 class BackupController extends Controller
 {
@@ -70,6 +72,40 @@ class BackupController extends Controller
 
         shell_exec('mysqldump -u'.env('DB_USERNAME').' -p'.env('DB_PASSWORD').' '.env('DB_DATABASE').' > '.env('BACKUP_PATH').$newSerial_num."_user_backup_`date`".'.sql');
 
+        // TODO: put this in the constants file
+        $path = storage_path()."/app/Backups/";
+
+        // Search for the required file. Returns matching files.
+        $sqldump = File::glob($path.$newSerial_num.'_*.sql');
+
+        $newNotification = new Notifications();
+
+        // TODO: Remove magic numbers
+        // TODO: Put messages inside the constants file
+        if ($sqldump == false) {
+            $newNotification->notification = "Backup Failed!";
+            $newNotification->body = "User generated Backup failed.";
+            $newNotification->readStatus = '0';
+            $newNotification->save();
+
+            Pusher::trigger('notifications', 'failed_notification', ['message' => 'User generated Backup failed.']);
+        }
+        // TODO: Remove magic numbers
+        else {
+            $newNotification->notification = "Backup successful!";
+            $newNotification->body = 'Backup #'.$newSerial_num.' created.';
+            $newNotification->readStatus = '0';
+            $newNotification->save();
+
+            Pusher::trigger('notifications', 'new_backup_notification', ['message' => 'Backup #'.$newSerial_num.' created.']);
+        }
+    }
+
+    // TODO: Remove magic numbers
+    public function setStatus()
+    {
+        Notifications::where('readStatus', '=', '0')
+            ->update(['readStatus' => 1]);
     }
 
     public function downloadBackup($serial_num)

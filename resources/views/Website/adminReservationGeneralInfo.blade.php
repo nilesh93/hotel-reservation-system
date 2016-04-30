@@ -479,7 +479,7 @@
                     var time_to =  document.getElementById('time_slot_1_to').value;
                     var time2_from = document.getElementById('time_slot_2_non_from').value;
                     var time2_to =  document.getElementById('time_slot_2_non_to').value;
-                    
+
 
                     if((time_from >= time2_from) && (time_from <= time2_to) || (time_to >= time2_from && time_to <= time2_to) ||
                             (time_from <= time2_from && time_to >= time2_to) )

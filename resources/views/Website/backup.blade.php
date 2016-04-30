@@ -87,6 +87,7 @@
 
             $('#adt').DataTable(
                     {
+                        order: [[ 0, 'desc' ]],
                         "ajax": "get_backupData",
                         "columns": [
                             { "data": null,
@@ -152,7 +153,6 @@
                     }
             );
         }
-
         /*function download() {
             $.ajax(
                     {
@@ -168,4 +168,33 @@
                     });
         }*/
     </script>
+
+    <script>
+
+        var notification_count = $('#notificationNum-alert').text();
+
+        if($.trim($('#notification_count').html()) == ''){
+            notification_count = 0;
+        }
+
+
+        var pusher = new Pusher('a9cc4ec8de7727809a37');
+
+        var notificationsChannel = pusher.subscribe('notifications');
+
+        notificationsChannel.bind('new_backup_notification', function(notification) {
+
+            var message = notification.message;
+            $('#notificationNum-alert').text(notification_count + 1);
+            $('#notificationNum').text(notification_count + 1+" New");
+            $("#notificationList").prepend('<a href="javascript:void(0);" class="list-group-item list-group-item-success"> <div class="media"> <div class="pull-left p-r-10"> <em class="fa fa-cog fa-2x text-custom"></em> </div> <div class="media-body"> <h5 class="media-heading">Backup successful!</h5> <p class="m-0"> <small>'+message+'</small> </p> </div> </div> </a>');
+        });
+
+        notificationsChannel.bind('failed_notification', function(notification) {
+
+            var message = notification.message;
+            $("#notificationList").prepend('<a href="javascript:void(0);" class="list-group-item list-group-item-danger"> <div class="media"> <div class="pull-left p-r-10"> <em class="fa fa-cog fa-2x text-custom"></em> </div> <div class="media-body"> <h5 class="media-heading">Backup Failed!</h5> <p class="m-0"> <small>'+message+'</small> </p> </div> </div> </a>');
+        });
+    </script>
+
 @endsection

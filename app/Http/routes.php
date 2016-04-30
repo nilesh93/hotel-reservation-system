@@ -194,6 +194,8 @@ Route::get('abc','PusherController@bar');
 
 
 Route::get('convert', 'CurrencyController@converter'); 
+Route::get('admin_dashboard', 'DashboardController@dashboard'); 
+Route::get('getEvents', 'DashboardController@getEvents'); 
 
 
 
@@ -276,6 +278,9 @@ Route::get('about_us', 'AboutUsPageController@viewPage');
 // Edit About Us page routes
 Route::get('admin_about_us', 'AboutUsPageController@viewAdminPage');
 Route::post('admin_about_us_edit', 'AboutUsPageController@editContent');
+
+// Notifications read status update
+Route::get('setReadStatus', 'BackupController@setStatus');
 
 // Inaccessible views testing route
 Route::get('/test', function(){

@@ -26,7 +26,8 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->command('inspire')
+
+       /* $schedule->command('inspire')
                  ->hourly();
 
         // This scheduled task backs up the db at midnight everyday
@@ -39,6 +40,6 @@ class Kernel extends ConsoleKernel
 
         // This shell command will be executed at Midnight everyday
         $schedule->exec('mysqldump -u'.env('DB_USERNAME').' -p'.env('DB_PASSWORD').' '.env('DB_DATABASE').' > '.env('BACKUP_PATH').$newSerial_num."_scheduled_backup_`date`".'.sql')
-            ->daily();
+            ->daily();*/
     }
 }
