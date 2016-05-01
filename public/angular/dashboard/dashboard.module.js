@@ -69,7 +69,9 @@
 
 
   $scope.alertEventOnClick = function(event){
-   alert(event);
+   
+   console.log(event);
+   $('#info').modal('show');
 
   }
 

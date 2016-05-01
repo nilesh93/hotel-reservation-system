@@ -17,7 +17,7 @@
         <link href="{{URL::asset('BackEnd/assets/plugins/sweetalert/dist/sweetalert.css')}}" rel="stylesheet" type="text/css">
 
         <link href="{{URL::asset('BackEnd/assets/css/bootstrap.min.css')}}" rel="stylesheet" type="text/css" />
-        
+
         <link href="{{URL::asset('BackEnd/assets/css/core.css')}}" rel="stylesheet" type="text/css" />
         <link href="{{URL::asset('BackEnd/assets/css/components.css')}}" rel="stylesheet" type="text/css" />
         <link href="{{URL::asset('BackEnd/assets/css/icons.css')}}" rel="stylesheet" type="text/css" />
@@ -32,11 +32,18 @@
         <link href="{{URL::asset('BackEnd/assets/plugins/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css')}}" rel="stylesheet">
         <link href="{{URL::asset('BackEnd/assets/plugins/clockpicker/dist/jquery-clockpicker.min.css')}}" rel="stylesheet">
         <link href="{{URL::asset('BackEnd/assets/plugins/bootstrap-daterangepicker/daterangepicker.css')}}" rel="stylesheet">
-        
-        <link href="{{URL::asset('bower_components/angular-bootstrap-calendar/dist/css/angular-bootstrap-calendar.css')}}"></link>
-        <link href="{{URL::asset('bower_components/angular-chart.js/dist/angular-chart.css')}}"></link>
- 
 
+        <link href="{{URL::asset('bower_components/angular-bootstrap-calendar/dist/css/angular-bootstrap-calendar.css')}}"></link>
+    <link href="{{URL::asset('bower_components/angular-chart.js/dist/angular-chart.css')}}"></link>
+
+
+ 
+<!-- HTML5 Shiv and Respond.js IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+<script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+=======
         <!-- HTML5 Shiv and Respond.js IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
         <!--[if lt IE 9]>
@@ -45,30 +52,30 @@
 
         <!--Pusher.js Client-side js-->
         <script src="//js.pusher.com/2.2/pusher.min.js"></script>
+ 
 
+@yield('css')
+<script src="{{URL::asset('BackEnd/assets/js/modernizr.min.js')}}"></script>
 
-<![endif]-->
+</head>
 
-        @yield('css')
-        <script src="{{URL::asset('BackEnd/assets/js/modernizr.min.js')}}"></script>
+<body class="fixed-left">
 
-    </head>
+    <!-- Begin page -->
+    <div id="wrapper" class="forced ">
 
-    <body class="fixed-left">
+        <!-- Top Bar Start -->
+        <div class="topbar">
 
-        <!-- Begin page -->
-        <div id="wrapper" class="forced ">
-
-            <!-- Top Bar Start -->
-            <div class="topbar">
-
-                <!-- LOGO -->
-                <div class="topbar-left">
-                    <div class="text-center">
-                        <a href="index.html" class="logo"><i class="icon-magnet icon-c-logo"></i><span>Ad<i class="md md-album"></i>min</span></a>
-                    </div>
+            <!-- LOGO -->
+            <div class="topbar-left">
+                <div class="text-center">
+                    <a href="index.html" class="logo"><i class="icon-magnet icon-c-logo"></i><span>Admin Panel  </span></a>
                 </div>
+            </div>
 
+  
+ 
                 <!-- Button mobile view to collapse sidebar menu -->
                 <div class="navbar navbar-default" role="navigation">
                     <div class="container">
@@ -134,95 +141,7 @@
                                                     </a>
                                                 @endforeach
                                             @endif
-                                            {{--<!-- list item-->
-                                            <a href="javascript:void(0);" class="list-group-item">
-                                                <div class="media">
-                                                    <div class="pull-left p-r-10">
-                                                        <em class="fa fa-diamond fa-2x text-primary"></em>
-                                                    </div>
-                                                    <div class="media-body">
-                                                        <h5 class="media-heading">A new order has been placed A new order has been placed</h5>
-                                                        <p class="m-0">
-                                                            <small>There are new settings available</small>
-                                                        </p>
-                                                    </div>
-                                                </div>
-                                            </a>
-
-                                            <!-- list item-->
-                                            <a href="javascript:void(0);" class="list-group-item">
-                                                <div class="media">
-                                                    <div class="pull-left p-r-10">
-                                                        <em class="fa fa-cog fa-2x text-custom"></em>
-                                                    </div>
-                                                    <div class="media-body">
-                                                        <h5 class="media-heading">New settings</h5>
-                                                        <p class="m-0">
-                                                            <small>There are new settings available</small>
-                                                        </p>
-                                                    </div>
-                                                </div>
-                                            </a>
-
-                                            <!-- list item-->
-                                            <a href="javascript:void(0);" class="list-group-item">
-                                                <div class="media">
-                                                    <div class="pull-left p-r-10">
-                                                        <em class="fa fa-bell-o fa-2x text-danger"></em>
-                                                    </div>
-                                                    <div class="media-body">
-                                                        <h5 class="media-heading">Updates</h5>
-                                                        <p class="m-0">
-                                                            <small>There are <span class="text-primary font-600">2</span> new updates available</small>
-                                                        </p>
-                                                    </div>
-                                                </div>
-                                            </a>
-
-                                            <!-- list item-->
-                                            <a href="javascript:void(0);" class="list-group-item">
-                                                <div class="media">
-                                                    <div class="pull-left p-r-10">
-                                                        <em class="fa fa-user-plus fa-2x text-info"></em>
-                                                    </div>
-                                                    <div class="media-body">
-                                                        <h5 class="media-heading">New user registered</h5>
-                                                        <p class="m-0">
-                                                            <small>You have 10 unread messages</small>
-                                                        </p>
-                                                    </div>
-                                                </div>
-                                            </a>
-
-                                            <!-- list item-->
-                                            <a href="javascript:void(0);" class="list-group-item">
-                                                <div class="media">
-                                                    <div class="pull-left p-r-10">
-                                                        <em class="fa fa-diamond fa-2x text-primary"></em>
-                                                    </div>
-                                                    <div class="media-body">
-                                                        <h5 class="media-heading">A new order has been placed A new order has been placed</h5>
-                                                        <p class="m-0">
-                                                            <small>There are new settings available</small>
-                                                        </p>
-                                                    </div>
-                                                </div>
-                                            </a>
-
-                                            <!-- list item-->
-                                            <a href="javascript:void(0);" class="list-group-item">
-                                                <div class="media">
-                                                    <div class="pull-left p-r-10">
-                                                        <em class="fa fa-cog fa-2x text-custom"></em>
-                                                    </div>
-                                                    <div class="media-body">
-                                                        <h5 class="media-heading">New settings</h5>
-                                                        <p class="m-0">
-                                                            <small>There are new settings available</small>
-                                                        </p>
-                                                    </div>
-                                                </div>
-                                            </a>--}}
+                                            
                                         </li>
                                         <li>
                                             <a href="javascript:void(0);" class="list-group-item text-right">
@@ -251,164 +170,214 @@
                 </div>
             </div>
             <!-- Top Bar End -->
-            <input class="number-only" hidden>
+           
+        <!-- Top Bar End -->
+       
+        <!-- ========== Left Sidebar Start ========== -->
 
-            <!-- ========== Left Sidebar Start ========== -->
-
-            <div class="left side-menu">
-                <div class="sidebar-inner slimscrollleft">
-                    <!--- Divider -->
-                    <div id="sidebar-menu">
-                        <ul>
-
-                            <li class="text-muted menu-title">NAVIGATION</li>
-
-                            <li class="has_sub">
-                                <a href="#" class="waves-effect" id="management"><i class="ti-home"></i> <span> Management </span> </a>
-                                <ul class="list-unstyled">
-                                    <li id="RM"><a href="admin_rooms">Room Management</a></li>
-                                    <li id="ARS"><a href="admin_room_services">Room Services</a></li>
-                                    <li id="HM"><a href="admin_halls">Hall Management</a></li>
-                                    <li id="HS"><a href="hallServices">Hall Services</a></li>
-                                    <li id="PR"><a href="admin_promotions">Promotions Management</a></li>
-                                    <li id="MM"><a href="admin_menus">Menus Management</a></li>
-                                    <li id="UM"><a href="{{URL::to('/admin_users')}}">User Management</a></li>
-                                    <li id="FS"><a href="admin_facilities">Facilities Management</a></li>
-                                    <li id="BS"><a href="admin_bookings_search">Bookings Search</a></li>
-                                    <li id="RS"><a href="admin_rooms_search">Room Logs</a></li>
-                                    <li id="CS"><a href="admin_customers_search">Customer Search</a></li>
-                                    <li id="IG"><a href="admin_imageGallery">Image Gallery </a></li>
-                                    <li id="WG"><a href="admin_webGallery">Web Home Gallery </a></li>
-                                    <li id="PER"><a href="admin_pending_reservation">Pending Reservation </a></li>
-                                </ul>
-                            </li>
-
-                            <li class="has_sub">
-                                <a href="#" class="waves-effect" id="siteAdmin"><i class="ti-home"></i> <span>Site Administration</span> </a>
-                                <ul class="list-unstyled">
-                                    <li id="BR"><a href="{{URL::to('get_backup')}}">Backup & Restore</a></li>
-                                    <li id="AU"><a href="{{URL::to('admin_about_us')}}">Edit About Us</a></li>
-                                </ul>
-                            </li>
+        <div class="left side-menu">
+            <div class="sidebar-inner slimscrollleft">
+                <!--- Divider -->
+                <div id="sidebar-menu">
+                    <ul>
 
 
-                        </ul>
-                        <div class="clearfix"></div>
-                    </div>
+
+                        <li class="has_sub">
+                            <a href="#" class="waves-effect" id="management"><i class="ti-home"></i> <span> Rooms/Halls</span> </a>
+                            <ul class="list-unstyled">
+                                <li id="RM"><a href="admin_rooms">Room Management</a></li>
+                                <li id="ARS"><a href="admin_room_services">Room Services</a></li>
+                                <li id="HM"><a href="admin_halls">Hall Management</a></li>
+                                <li id="HS"><a href="hallServices">Hall Services</a></li>
+
+                            </ul>
+                        </li>
+
+
+
+                        <li class="has_sub">
+                            <a href="#" class="waves-effect" id="siteAdmin"><i class="ti-home"></i> <span>Reservations</span> </a>
+                            <ul class="list-unstyled">
+
+
+                                <li id="BS"><a href="admin_bookings_search">Bookings Search</a></li>
+                                <li id="RS"><a href="admin_rooms_search">Room Logs</a></li>
+
+                                <li id="PER"><a href="admin_pending_reservation">Pending Reservation </a></li>
+
+                            </ul>
+                        </li>
+
+
+                        <li class="has_sub">
+                            <a href="#" class="waves-effect" id="siteAdmin"><i class="ti-home"></i> <span>Rates Administration</span> </a>
+                            <ul class="list-unstyled">
+
+
+                                <li id="PR"><a href="admin_promotions">Promotions Management</a></li>
+                                <li id="MM"><a href="admin_menus">Menus Management</a></li>
+
+
+                            </ul>
+                        </li>
+
+
+
+
+
+                        <li class="has_sub">
+                            <a href="#" class="waves-effect" id="siteAdmin"><i class="ti-home"></i> <span> Gallery Management</span> </a>
+                            <ul class="list-unstyled">
+ 
+
+                                <li id="IG"><a href="admin_imageGallery">Image Gallery </a></li>
+                                <li id="WG"><a href="admin_webGallery">Web Home Gallery </a></li>
+                            </ul>
+                        </li>
+
+                        <li class="has_sub">
+                            <a href="#" class="waves-effect" id="siteAdmin"><i class="ti-home"></i> <span>Site Administration</span> </a>
+                            <ul class="list-unstyled">
+                                <li id="BR"><a href="{{URL::to('get_backup')}}">Backup & Restore</a></li>
+                                <li id="FS"><a href="admin_facilities">Edit Hotel Facilities</a></li>
+                                <li id="AU"><a href="{{URL::to('admin_about_us')}}">Edit About Us</a></li>
+                                <li id="RE"><a href="{{URL::to('admin_reviews')}}">Manage Reviews</a></li>
+                            </ul>
+                        </li>
+
+
+
+                        <li class="has_sub">
+                            <a href="#" class="waves-effect" id="siteAdmin"><i class="ti-home"></i> <span>Users Administration</span> </a>
+                            <ul class="list-unstyled">
+
+
+                                <li id="UM"><a href="{{URL::to('/admin_users')}}">User Management</a></li>
+                                <li id="CS"><a href="admin_customers_search">Customer Search</a></li>
+
+
+
+                            </ul>
+                        </li>
+                    </ul>
                     <div class="clearfix"></div>
                 </div>
+                <div class="clearfix"></div>
             </div>
-            <!-- Left Sidebar End -->
+        </div>
+        <!-- Left Sidebar End -->
 
-            <!-- ============================================================== -->
-            <!-- Start right Content here -->
-            <!-- ============================================================== -->
-            <div class="content-page">
-                <!-- Start content -->
-                <div class="content">
-                    <div class="container">
+        <!-- ============================================================== -->
+        <!-- Start right Content here -->
+        <!-- ============================================================== -->
+        <div class="content-page">
+            <!-- Start content -->
+            <div class="content">
+                <div class="container">
 
-                        <!-- Page-Title -->
-                        <div class="row">
-                            <div class="col-md-5">
-                                <h4 class="page-title">@yield('page_title')</h4>
-                                <ol class="breadcrumb">
-                                    @yield('breadcrumbs')
-
-
-                                </ol>
-                            </div>
-                            <div class="col-md-7">
-                                @yield('page_buttons')
+                    <!-- Page-Title -->
+                    <div class="row">
+                        <div class="col-md-5">
+                            <h4 class="page-title">@yield('page_title')</h4>
+                            <ol class="breadcrumb">
+                                @yield('breadcrumbs')
 
 
-                            </div>
+                            </ol>
                         </div>
+                        <div class="col-md-7">
+                            @yield('page_buttons')
 
-
-                        <div class="row">
-
-
-                            @yield('content')
 
                         </div>
+                    </div>
 
 
-                    </div> <!-- end of container -->
+                    <div class="row">
 
-                </div> <!-- content -->
 
-                <footer class="footer">
-                    {{date('Y')}} © SEP_SE_WE_003
-                </footer>
+                        @yield('content')
 
-            </div>
+                    </div>
 
+
+                </div> <!-- end of container -->
+
+            </div> <!-- content -->
+
+            <footer class="footer">
+                {{date('Y')}} © SEP_SE_WE_003.
+            </footer>
 
         </div>
-        <!-- END wrapper -->
-
-        <script>
-            var resizefunc = [];
-        </script>
-
-        <!-- jQuery  -->
 
 
+    </div>
+    <!-- END wrapper -->
+
+    <script>
+        var resizefunc = [];
+    </script>
+
+    <!-- jQuery  -->
 
 
-        <script src="{{URL::asset('BackEnd/assets/js/jquery.min.js')}}"></script>
-     
-        <script src="{{URL::asset('bower_components/moment/moment.js')}}"></script>
-           <script src="{{URL::asset('bower_components/angular/angular.js')}}"></script>
-           <script src="{{URL::asset('bower_components/angular-ui-calendar/src/calendar.js')}}"></script>
-        
-        
-        <script src="{{URL::asset('bower_components/fullcalendar/dist/fullcalendar.min.js')}}"></script>
-        <script src="{{URL::asset('bower_components/fullcalendar/dist/gcal.js')}}"></script>
-        
-        <script src="{{URL::asset('bower_components/Chart.js/Chart.js')}}"></script>
-        <script src="{{URL::asset('bower_components/angular-chart.js/dist/angular-chart.js')}}"></script> 
-         
-        
-
-        <script src="{{URL::asset('BackEnd/assets/js/bootstrap.min.js')}}"></script>
-        <script src="{{URL::asset('BackEnd/assets/js/detect.js')}}"></script>
-        <script src="{{URL::asset('BackEnd/assets/js/fastclick.js')}}"></script>
-        <script src="{{URL::asset('BackEnd/assets/js/jquery.slimscroll.js')}}"></script>
-        <script src="{{URL::asset('BackEnd/assets/js/jquery.blockUI.js')}}"></script>
-        <script src="{{URL::asset('BackEnd/assets/js/waves.js')}}"></script>
-        <script src="{{URL::asset('BackEnd/assets/js/wow.min.js')}}"></script>
-        <script src="{{URL::asset('BackEnd/assets/js/jquery.nicescroll.js')}}"></script>
-        <script src="{{URL::asset('BackEnd/assets/js/jquery.scrollTo.min.js')}}"></script>
-        <script src="{{URL::asset('BackEnd/assets/plugins/datatables/jquery.dataTables.min.js')}}"></script>
-        <script src="{{URL::asset('BackEnd/assets/plugins/datatables/dataTables.bootstrap.js')}}"></script>
-
-        <script src="{{URL::asset('BackEnd/assets/js/jquery.core.js')}}"></script>
-        <script src="{{URL::asset('BackEnd/assets/js/jquery.app.js')}}"></script>
-
-        <!-- Sweet-Alert  -->
-        <script src="{{URL::asset('BackEnd/assets/plugins/sweetalert/dist/sweetalert.min.js')}}"></script>
-        <script src="{{URL::asset('BackEnd/assets/pages/jquery.sweet-alert.init.js')}}"></script>
-
-        <script src="{{URL::asset('BackEnd/assets/js/moment.min.js')}}"></script>
-        <script src="{{URL::asset('BackEnd/assets/js/collapse.js')}}"></script>
-        <script src="{{URL::asset('BackEnd/assets/js/sweetalert.patch.js')}}"></script>
-
-        <script src="{{URL::asset('BackEnd/assets/plugins/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js')}}"></script>
-
-        <script src="{{URL::asset('BackEnd/assets/js/Dropzone.js')}}"></script>
 
 
-        <script src="{{URL::asset('BackEnd/assets/plugins/moment/moment.js')}}"></script>
-        <script src="{{URL::asset('BackEnd/assets/plugins/timepicker/bootstrap-timepicker.min.js')}}"></script>
-        <script src="{{URL::asset('BackEnd/assets/plugins/mjolnic-bootstrap-colorpicker/dist/js/bootstrap-colorpicker.min.js')}}"></script>
-        <script src="{{URL::asset('BackEnd/assets/plugins/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js')}}"></script>
-        <script src="{{URL::asset('BackEnd/assets/plugins/clockpicker/dist/jquery-clockpicker.min.js')}}"></script>
-        <script src="{{URL::asset('BackEnd/assets/plugins/bootstrap-daterangepicker/daterangepicker.js')}}"></script>
+    <script src="{{URL::asset('BackEnd/assets/js/jquery.min.js')}}"></script>
 
-        <script src="{{URL::asset('BackEnd/assets/js/validation.js')}}"></script>
+    <script src="{{URL::asset('bower_components/moment/moment.js')}}"></script>
+    <script src="{{URL::asset('bower_components/angular/angular.js')}}"></script>
+    <script src="{{URL::asset('bower_components/angular-ui-calendar/src/calendar.js')}}"></script>
 
+
+    <script src="{{URL::asset('bower_components/fullcalendar/dist/fullcalendar.min.js')}}"></script>
+    <script src="{{URL::asset('bower_components/fullcalendar/dist/gcal.js')}}"></script>
+
+    <script src="{{URL::asset('bower_components/Chart.js/Chart.js')}}"></script>
+    <script src="{{URL::asset('bower_components/angular-chart.js/dist/angular-chart.js')}}"></script> 
+
+
+
+    <script src="{{URL::asset('BackEnd/assets/js/bootstrap.min.js')}}"></script>
+    <script src="{{URL::asset('BackEnd/assets/js/detect.js')}}"></script>
+    <script src="{{URL::asset('BackEnd/assets/js/fastclick.js')}}"></script>
+    <script src="{{URL::asset('BackEnd/assets/js/jquery.slimscroll.js')}}"></script>
+    <script src="{{URL::asset('BackEnd/assets/js/jquery.blockUI.js')}}"></script>
+    <script src="{{URL::asset('BackEnd/assets/js/waves.js')}}"></script>
+    <script src="{{URL::asset('BackEnd/assets/js/wow.min.js')}}"></script>
+    <script src="{{URL::asset('BackEnd/assets/js/jquery.nicescroll.js')}}"></script>
+    <script src="{{URL::asset('BackEnd/assets/js/jquery.scrollTo.min.js')}}"></script>
+    <script src="{{URL::asset('BackEnd/assets/plugins/datatables/jquery.dataTables.min.js')}}"></script>
+    <script src="{{URL::asset('BackEnd/assets/plugins/datatables/dataTables.bootstrap.js')}}"></script>
+
+    <script src="{{URL::asset('BackEnd/assets/js/jquery.core.js')}}"></script>
+    <script src="{{URL::asset('BackEnd/assets/js/jquery.app.js')}}"></script>
+
+    <!-- Sweet-Alert  -->
+    <script src="{{URL::asset('BackEnd/assets/plugins/sweetalert/dist/sweetalert.min.js')}}"></script>
+    <script src="{{URL::asset('BackEnd/assets/pages/jquery.sweet-alert.init.js')}}"></script>
+
+    <script src="{{URL::asset('BackEnd/assets/js/moment.min.js')}}"></script>
+    <script src="{{URL::asset('BackEnd/assets/js/collapse.js')}}"></script>
+    <script src="{{URL::asset('BackEnd/assets/js/sweetalert.patch.js')}}"></script>
+
+    <script src="{{URL::asset('BackEnd/assets/plugins/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js')}}"></script>
+
+    <script src="{{URL::asset('BackEnd/assets/js/Dropzone.js')}}"></script>
+
+
+    <script src="{{URL::asset('BackEnd/assets/plugins/moment/moment.js')}}"></script>
+    <script src="{{URL::asset('BackEnd/assets/plugins/timepicker/bootstrap-timepicker.min.js')}}"></script>
+    <script src="{{URL::asset('BackEnd/assets/plugins/mjolnic-bootstrap-colorpicker/dist/js/bootstrap-colorpicker.min.js')}}"></script>
+    <script src="{{URL::asset('BackEnd/assets/plugins/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js')}}"></script>
+    <script src="{{URL::asset('BackEnd/assets/plugins/clockpicker/dist/jquery-clockpicker.min.js')}}"></script>
+    <script src="{{URL::asset('BackEnd/assets/plugins/bootstrap-daterangepicker/daterangepicker.js')}}"></script>
+
+    <script src="{{URL::asset('BackEnd/assets/js/validation.js')}}"></script>
+
+ 
         <script>
             function setReadStatus() {
                 $.ajax({url: "{{URL::to('setReadStatus')}}", success: function(result){
@@ -418,7 +387,8 @@
         </script>
 
         @yield('js')
+ 
 
 
-    </body>
+</body>
 </html>

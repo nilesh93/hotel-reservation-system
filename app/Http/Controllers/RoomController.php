@@ -126,7 +126,7 @@ class RoomController extends Controller
         $room->remarks = $request->input('rremarks');
         $room->save();
 
-        
+
 
     }
 
@@ -326,7 +326,7 @@ class RoomController extends Controller
 
         $type_code = $rt->type_code;
         $max = Room::where('room_type_id',$rt->room_type_id)->max('sequence_num');
-        
+
         $max++;
         $maxNumberCode = strtoupper($type_code) . str_pad($max,4,"0",STR_PAD_LEFT);
 
@@ -637,12 +637,12 @@ class RoomController extends Controller
      *
      * @param Request $request
      */
-    
+
     public function admin_save_room_update_details(Request $request){
-        
+
         $room = Room::find($request->input('id'));
-        
-        
+
+
         $room->room_num = $request->input('rnum');
         $room->room_size = $request->input('rsize');
         //$room->sequence_num = $request->input('max');
@@ -651,7 +651,60 @@ class RoomController extends Controller
         $room->remarks = $request->input('rremarks');
         $room->save();
 
-        
+
     }
+
+
+    public function getRoomBookings(){
+
+        $meals = MEAL_TYPE::all();
+
+        return response()->json(['count' => count($meals), 'data' => $meals]);
+
+    }
+
+    public function bookingAdd(Request $request){
+
+        $meal = new MEAL_TYPE;
+
+        $meal->meal_type_name = $request->input('btname');
+        $meal->description = $request->input('desc');
+
+        $meal->save();
+
+    }
+
+
+    public function getBTinfo(Request $request){
+
+        $meal = MEAL_TYPE::find($request->input('id'));
+
+        return  $meal; 
+
+    }
+
+
+    public function editBTinfo(Request $request){
+
+        $meal = MEAL_TYPE::find($request->input('id'));
+
+
+        $meal->meal_type_name = $request->input('btname');
+        $meal->description = $request->input('desc');
+
+        $meal->save();
+
+    }
+
+    public function delBT(Request $request){
+
+        $meal = MEAL_TYPE::find($request->input('id'));
+
+        $meal->delete();
+
+
+    }
+
+
 
 }

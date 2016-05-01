@@ -148,6 +148,22 @@ Route::get('admin_getRF_info', 'RoomController@getRF_info');
 Route::get('admin_updateRF','RoomController@updateRF');
 Route::get('admin_delRF','RoomController@delRF');
 
+
+Route::get('admin_get_room_booking','RoomController@getRoomBookings');
+Route::get('admin_booking_type_add','RoomController@bookingAdd');
+Route::get('admin_getBT_info','RoomController@getBTinfo');
+Route::get('admin_editBT_info','RoomController@editBTinfo');
+Route::get('admin_delBT','RoomController@delBT');
+
+
+Route::get('admin_reviews','ReviewController@reviews');
+Route::get('admin_get_reviews','ReviewController@getReviews');
+Route::get('admin_publish_review','ReviewController@publish');
+Route::get('admin_reject_review','ReviewController@reject');
+
+
+
+
 //Image gallery management
 Route::get('admin_imageGallery','ImageGalleryController@imageGallery');
 Route::get('admin_webImage_del','ImageGalleryController@admin_webImage_del');
@@ -188,6 +204,7 @@ Route::get('convert', 'CurrencyController@converter');
 Route::get('admin_dashboard', 'DashboardController@dashboard'); 
 Route::get('getEvents', 'DashboardController@getEvents'); 
 
+ 
 
 
 /*

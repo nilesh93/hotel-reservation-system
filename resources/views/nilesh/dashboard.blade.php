@@ -18,13 +18,13 @@
 @section('title')
 
 
-Dashboard
+Calander
 
 @endsection
 
 
 @section('page_title')
-DASHBOARD
+CALENDAR
 @endsection
 
 
@@ -36,11 +36,23 @@ DASHBOARD
 	<a href="#">Admin</a>
 </li>
 <li  class="active">
-	<a href="#">Dashboard</a>
+	<a href="#">Calendar</a>
 </li>
 
 @endsection
 
+
+@section('page_buttons')
+<div class="col-md-4 col-md-offset-4">
+    <button type="button" class="btn btn-success waves-effect btn-block waves-light pull-right" data-toggle="modal" data-target="#addRoom">
+        <span class="btn-label pull-left"><i class="fa fa-plus"></i>
+        </span> HALL RESERVE</button>
+</div>
+<div class="col-md-4">
+    <button type="button" class="btn btn-primary waves-effect btn-block waves-light pull-right" data-toggle="modal" data-target="#addRoomT">
+        <span class="btn-label pull-left"><i class="fa fa-plus"></i>
+        </span>ROOM RESERVE</button></div>
+@endsection
 
 
 @section('content')
@@ -65,6 +77,21 @@ DASHBOARD
 	</div>
 
 
+
+	<div class="modal inmodal fade" id="info" tabindex="-1" role="dialog"  aria-hidden="true">
+        <div class="modal-dialog ">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    <h4 class="modal-title">Event Information</h4>
+
+                </div>
+    <div class="modal-body">
+                info here...
+                
+                </div>
+        </div>
+    </div>
 
 
 
