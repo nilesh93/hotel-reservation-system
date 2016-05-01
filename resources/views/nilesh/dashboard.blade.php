@@ -211,8 +211,9 @@ CALENDAR
 
                                                 <th>Room_No.</th>
                                                 <th>Size</th>
-                                                <th>status</th>
+                                                <th>Status</th>
                                                 <th>Remarks</th>
+                                                <th ></th>
                                                 <th ></th>
 
                                             </tr>
