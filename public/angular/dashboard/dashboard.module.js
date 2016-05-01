@@ -3,9 +3,12 @@
  'use strict';
  angular.module('dashboard',['ui.calendar'])
 
+  .config(function($interpolateProvider){
+  $interpolateProvider.startSymbol('{{{').endSymbol('}}}');
+ })
   .controller('DashboardController',function($scope,$http,$rootScope,$log ){
 
-
+  //$scope.room = {};
 
   $scope.eventSources = {
    events: function(start, end, timezone, callback) {
@@ -13,11 +16,11 @@
 
 
     $http.get("getEvents").then(function(data){
- 
+
      var events  = [];
 
      data.data.forEach(function(item,index){
-      
+
       events.push({
 
        title:item.room_type + "-" + item.num_of_rooms,
@@ -34,7 +37,7 @@
 
     }); 
    }
-    // an option!
+   // an option!
   };
 
 
@@ -69,7 +72,7 @@
 
 
   $scope.alertEventOnClick = function(event){
-   
+
    console.log(event);
    $('#info').modal('show');
 
@@ -93,8 +96,7 @@
    }
   };
 
-
-
+ 
 
 
  });
