@@ -54,43 +54,60 @@ class SearchController extends Controller
      * @return \Illuminate\Http\JsonResponse
      */
  public function bookings_search(Request $request){
-  
-  
+
+
   $checkin = $request->input('checkin');
   $nic = $request->input('nic');
   $resid = $request->input('resid');
   $name = $request->input('name');
-  
+
   $result = DB::select(DB::raw("
 Select A.*,B.*,K.*,A.room_reservation_id as res
 FROM HRS.ROOM_RESERVATION A
 LEFT JOIN HRS.ROOM_RESERVATION_BLOCK B ON B.room_reservation_id = A.Room_reservation_id
 LEFT JOIN HRS.CUSTOMER K ON K.cus_id = A.cus_id
 WHERE K.name LIKE '$name' OR K.NIC_passport_num LIKE '$nic' OR A.room_reservation_id LIKE '$resid' OR DATE_FORMAT(A.check_in,'%Y-%m-%d') LIKE '$checkin' "));
-  
+
   return response()->json(['count' => count($result), 'data' => $result]);
  }
- 
- 
+
+
  public function bookings_search_get(Request $request){
-  
-  
-  
+
+
+
   $id = $request->input('id');
-  
-  
+
+
   $result = DB::select(DB::raw("
 Select A.*,B.*,K.*,A.room_reservation_id as res
 FROM HRS.ROOM_RESERVATION A
 LEFT JOIN HRS.ROOM_RESERVATION_BLOCK B ON B.room_reservation_id = A.Room_reservation_id
 LEFT JOIN HRS.CUSTOMER K ON K.cus_id = A.cus_id
 WHERE A.room_reservation_id = '$id'"));
+
+
+  $roomInfo = DB::select(DB::raw("SELECT A.*, (select B.type_name from HRS.ROOM_TYPES B where B.room_type_id = A.room_type_id) as type_name,
+(select C.meal_type_name from HRS.MEAL_TYPES C where C.meal_type_id = F.meal_type_id) as meal
+FROM HRS.RES_RMTYPE_CNT_RATE A
+Left JOIN HRS.RATES F ON F.rate_code = A.rate_code
+WHERE A.room_reservation_id = '$id'"));
+
+  
+  $roomblocks = DB::select(DB::raw("SELECT A.* ,
+(Select B.room_num from HRS.ROOMS B where B.room_id = A.room_id) as room_num,
+(Select (select C.type_name from HRS.ROOM_TYPES C where C.room_type_id = B.room_type_id) from HRS.ROOMS B where B.room_id = A.room_id) as type_name
+FROM HRS.ROOM_RESERVATION_BLOCK A
+where A.room_reservation_id = '$id'
+
+"));
   
   
- 
   return view('nilesh.reservation_info')
-         ->with('room',$result);
-  
+   ->with('room',$result)
+   ->with('roomblocks',$roomblocks)
+   ->with('roomInfo',$roomInfo);
+
  }
 
 
@@ -133,11 +150,11 @@ WHERE A.room_reservation_id = '$id'"));
         WHERE A.check_out > NOW()
         AND A.check_in < NOW()
         And B.room_id = '$id'"));
-  
+
   return  view('nipuna.reservation_current')
    ->with('result',$result);
-   
-  
+
+
  }
 
  public function rooms_search_future(Request $request){
