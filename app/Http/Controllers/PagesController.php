@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Classes\ReservationRoom;
 use App\Classes\ReservationTask;
+use App\HotelInfo;
 use Illuminate\Support\Facades\Request;
 use DB;
 use App\Http\Requests;
@@ -14,6 +15,8 @@ use Session;
 use App\imageGallery;
 use App\FACILITY;
 use App\HOME_GALLERY;
+use Auth;
+use App\Customer;
 
 class PagesController extends Controller
 {
@@ -35,36 +38,7 @@ class PagesController extends Controller
      */
     public function HomePage()
     {
-        //clears the room reservation session details if there are any.
-        if(Session::has('room_types')) {
-            $room_types = session('room_types');
-
-            foreach ($room_types as $room_type) {
-
-                Session::forget('room_type_name' . $room_type);
-                Session::forget('no_of_rooms' . $room_type);
-                Session::forget('rate' . $room_type);
-                Session::forget('meal_type' . $room_type);
-                Session::forget('rate_code' . $room_type);
-                Session::forget('total_payable');
-            }
-        }
-
-        Session::forget('room_types');
-        Session::forget('check_in');
-        Session::forget('check_out');
-        Session::forget('adults');
-        Session::forget('kids');
-        Session::forget('rooms');
-        Session::forget('room_types');
-
-        //clears the hall reservation session details if there are any
-        Session::forget('hall_selected');
-        Session::forget('event_date');
-        Session::forget('total_payable');
-
-        //Clear the indicator to access the payment page
-        Session::forget('CanPay');
+       $this->clearSession();
 
        $images = HOME_GALLERY::all();
         $facilities = FACILITY::all();
@@ -115,9 +89,22 @@ class PagesController extends Controller
      */
     public function hallsView()
     {
-        $halls = HALL::get();
 
-        return view('Website.Halls',["halls"=>$halls]);
+        $this->clearSession();
+
+        $halls = HALL::get();
+        $time_slot1_from = HotelInfo::value('hall_time_slot_1_from');
+        $time_slot1_to = HotelInfo::value('hall_time_slot_1_to');
+
+        $time_slot1 = "" .$time_slot1_from . " - " .$time_slot1_to;
+
+        $time_slot2_from = HotelInfo::value('hall_time_slot_2_from');
+        $time_slot2_to = HotelInfo::value('hall_time_slot_2_to');
+
+        $time_slot2 = "" .$time_slot2_from . " - " .$time_slot2_to;
+
+
+        return view('Website.Halls',["halls"=>$halls,"time_slot1"=>$time_slot1,"time_slot2"=>$time_slot2]);
     }
 
     /**
@@ -127,14 +114,25 @@ class PagesController extends Controller
      */
     public function roomsView()
     {
+        //this calls the clear session function in order to clear the session
+        $this->clearSession();
+
+
         $room_types = ROOM_TYPE::get();
-        $total_rooms=0;
-        $kids_can = 20;
-        $adults_can = 30;
+        $total_rooms_have = config('constants.CHK_ZERO');
+        $total_rooms=HotelInfo::value('selectable_no_of_rooms');
+        $kids_can = HotelInfo::value('no_of_kids');
+        $adults_can = HotelInfo::value('no_of_adults');
 
         foreach($room_types as $room_type)
         {
-            $total_rooms += $room_type->count;
+            $total_rooms_have += $room_type->count;
+        }
+
+        //check if the room count exceed the available rooms
+        if($total_rooms > $total_rooms_have)
+        {
+            $total_rooms = $total_rooms_have;
         }
 
         return view('Website.Room_Packages',["room_types"=>$room_types,'total_rooms'=>$total_rooms,'kids_can'=>$kids_can,
@@ -150,10 +148,41 @@ class PagesController extends Controller
      */
     public function makePayment(Request $request)
     {
-        if(Request::has('CanPay') && Session::has('CanPay')) {
+        if((Request::has('CanPay') && Session::has('CanPay') || Session::has('fblogin_payment'))) {
+
+
+            if(Auth::user()->role == 'admin')
+            {
+                return redirect('/')->with(['noAccess'=>'Access denied']);
+            }
+
+            $customer_email = Auth::user()->email;
+            $nic_passport = Customer::where('email', $customer_email)
+                ->value('NIC_passport_num');
+
+            if(empty($nic_passport))
+            {
+                //this is added in order to check facebook logged is users and redirect them after registration
+                Session::put(['fblogin_payment'=>'reached']);
+
+                return redirect('profile');
+            }
+
+
+            if(Session::has('promo_code'))
+            {
+                $total_promo = session('total_payable')*(config('constants.ONE_VALUE')-session('promo_rate'));
+                Session::put(['total_payable'=>$total_promo]);
+
+            }
 
             //convert LKR to USD before redirect to pay pal account
             $total = $this->convert(session('total_payable'));
+
+            if(Session::has('promo_code'))
+            {
+
+            }
 
             Session::put(['pay_pal_total_payable'=>$total]);
 
@@ -172,6 +201,7 @@ class PagesController extends Controller
      */
     public function myReserve()
     {
+        $this->clearSession();
         return view('Website.MyReservation');
     }
 
@@ -188,6 +218,48 @@ class PagesController extends Controller
         $rate = $swap->quote('LKR/USD')->getValue();
 
         return $rate*$total;
+
+    }
+
+    public function clearSession()
+    {
+        //clears the room reservation session details if there are any.
+        if(Session::has('room_types')) {
+            $room_types = session('room_types');
+
+            foreach ($room_types as $room_type) {
+
+                Session::forget('room_type_name' . $room_type);
+                Session::forget('no_of_rooms' . $room_type);
+                Session::forget('rate' . $room_type);
+                Session::forget('meal_type' . $room_type);
+                Session::forget('rate_code' . $room_type);
+                Session::forget('total_payable');
+            }
+        }
+
+        Session::forget('room_types');
+        Session::forget('check_in');
+        Session::forget('check_out');
+        Session::forget('adults');
+        Session::forget('kids');
+        Session::forget('rooms');
+        Session::forget('room_types');
+
+        //clears the hall reservation session details if there are any
+        Session::forget('hall_selected');
+        Session::forget('event_date');
+        Session::forget('total_payable');
+
+        //Clear the indicator to access the payment page
+        Session::forget('CanPay');
+
+        //Clear the fblogin attribute
+        Session::forget('fblogin_payment');
+
+        //clear promotion values
+        Session::forget('promo_code');
+        Session::forget('promo_rate');
 
     }
 }

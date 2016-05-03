@@ -27,6 +27,22 @@ class AdminReservationController extends Controller
     |
     */
 
+
+    /**
+     * Constructor for the BackupController class. Checks if a user has sufficient permission
+     * to access the Backup/ restore function.
+     *
+     */
+    public function __construct()
+    {
+        // Check if User is Authenticated
+        $this->middleware('auth', ['except' => []]);
+
+        // Check if the authenticated user is an admin
+        $this->middleware('isAdmin', ['except' => []]);
+    }
+
+
     /**
      * This function is used to view the pending reservation in order to
      *accept or reject the reservation
@@ -133,7 +149,7 @@ class AdminReservationController extends Controller
                                     ->value('email');
 
         ROOM_RESERVATION::where('room_reservation_id','=',$reservation_id)
-                            ->update(['status'=>'confirmed']);
+                            ->update(['status'=>'ACCEPTED']);
 
         //calls to a self class function to get room reservation details.
         $mail_reservation_details = $this->getReservationDetails($reservation_id);
@@ -215,7 +231,7 @@ class AdminReservationController extends Controller
         $reject_reason = $inputs['reason'];
 
         ROOM_RESERVATION::where('room_reservation_id','=',$reservation_id)
-            ->update(['status'=>'rejected']);
+            ->update(['status'=>'REJECTED']);
 
         //calls to a self class function to the reservation details when providing the reservation id.
         $mail_reservation_details = $this->getReservationDetails($reservation_id);
@@ -348,7 +364,7 @@ class AdminReservationController extends Controller
         $reservation_id = $input['hall_reservation_id'];
 
         HALL_RESERVATION::where('hall_reservation_id','=',$reservation_id)
-                     ->update(['status'=>'confirmed']);
+                     ->update(['status'=>'ACCEPTED']);
 
         //calls to a self class function to get the hall reservation details.
         $mail_reservation_details = $this->getHallReservationDetails($reservation_id);
@@ -392,7 +408,7 @@ class AdminReservationController extends Controller
         $reject_reason = $inputs['reason'];
 
         HALL_RESERVATION::where('hall_reservation_id','=',$reservation_id)
-            ->update(['status'=>'rejected']);
+            ->update(['status'=>'REJECTED']);
 
         //calls to a self class function to get the hall reservation details.
         $mail_reservation_details = $this->getHallReservationDetails($reservation_id);

@@ -59,7 +59,7 @@ class HallReservationController extends Controller
             $hall_reservation->total_amount = session('total_payable');
             $hall_reservation->cus_id = $customer_id;
             $hall_reservation->hall_id = session('hall_selected');
-            $hall_reservation->status = 'pending';
+            $hall_reservation->status = 'PENDING';
 
             $hall_reservation->save();
 

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\RATE;
 use App\RES_RMTYPE_CNT_RATE;
 use App\ROOM_TYPE;
+use Carbon\Carbon;
 use Session;
 use DB;
 use App\ROOM_RESERVATION;
@@ -12,6 +13,7 @@ use Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Classes\ReservationRoom;
+use App\HotelInfo;
 
 class RoomAvailabilityController extends Controller
 {
@@ -37,9 +39,16 @@ class RoomAvailabilityController extends Controller
     function checkRoomAvailability(Request $request)
     {
         //predefined variables for the room reservation form
-        $total_rooms= config('constants.CHK_ZERO');
-        $kids_can = config('constants.KIDS_CAN');
-        $adults_can = config('constants.ADULTS_CAN');
+        $total_rooms_have = config('constants.CHK_ZERO');
+        $total_rooms=HotelInfo::value('selectable_no_of_rooms');
+        $kids_can = HotelInfo::value('no_of_kids');
+        $adults_can = HotelInfo::value('no_of_adults');
+
+        //check if the room count exceed the available rooms
+        if($total_rooms > $total_rooms_have)
+        {
+            $total_rooms = $total_rooms_have;
+        }
 
         //clears the hall reservation session details if there are any
         Session::forget(['hall_selected','event_date','total_payable']);
@@ -346,9 +355,49 @@ class RoomAvailabilityController extends Controller
 
         return ["room_type_available"=>$room_type_available,"total_rooms_available"=>$total_rooms_available];
 
+    }
+
+    public function promotionValidate(Request $request)
+    {
+        $inputs = $request::all();
+
+        $promotion_code = $inputs['promo_code'];
+
+        $today = Carbon::now();
+
+        $promo_details = DB::table('PROMOTIONS')
+                            ->where('promotion_code','=',$promotion_code)
+                            ->select('date_from','date_to','rate')
+                            ->first();
+
+        if(empty($promo_details))
+        {
+            return response()->json(['message_type'=>'error','message'=>'Promotion code is invalid']);
+        }
+        else{
+
+
+            $date_from = $promo_details->date_from;
+            $date_to = $promo_details->date_to;
+
+            if($today < $date_from || $today > $date_to)
+            {
+                return response()->json(['message_type'=>'expired','message'=>'Sorry promotion code has been expired']);
+            }
+
+        }
+
+
+
+        Session::put(['promo_code'=>$promotion_code,'promo_rate'=>$promo_details->rate]);
+
+
+
+        return response()->json(['message_type'=>'success','message'=>"Success"]);
 
 
     }
+
 
 
 

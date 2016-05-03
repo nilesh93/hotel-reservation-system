@@ -158,19 +158,21 @@
 					</div>	<!-- /row -->
 					<br>
 
-					<div class="checkbox">
+					@if(session('promo_code'))
+
+					<div class="checkbox" align="center">
 						<label>
-							<input type="checkbox" id="promochk" onclick="enableDisable(this.checked,'promotxt')"><span style="color: darkslategray"> I have promotion code</span>
+							Promotion Code
 						</label>
 					</div>
 
 					<div class="row">
 						<div class="col-sm-12 col-md-12 col-lg-12">
-							<input class="form-control input-lg" type="text" id="promotxt" name="promotxt" placeholder="Enter Promo Code" disabled>
+							<input class="form-control input-lg" type="text" id="promotxt" name="promotxt" placeholder="Enter Promo Code" @if(session('promo_code')) value="{{ session('promo_code') }}"@endif readonly>
 						</div><!-- /col-md-12 -->
 					</div><!-- /row -->
 					<br>
-
+					@endif
 					<button type="submit" class="btn btn-primary">Check Availability</button>
 
 				</form>
@@ -550,13 +552,23 @@
 								'</div>' +
 								'<hr>';
 
+						var promo = "";
+						var promo_value = 0;
+
+						@if(session('promo_code'))
+
+								promo_value = "{{ session('promo_rate') }}";
+
+						promo = '<br><br><h3 align="center">Promotion Discount : <span class="finance"> Rs.' + formatNumber(total*promo_value) + '</span>  </h3>';
+
+						@endif
 
 						var end = 	'<input type="hidden" name="total_payable" id="total_payable" value='+total+'>' +
 								'<input type="hidden" name="total_rooms_selected" id="total_rooms_selected" value='+total_rooms+'>' +
 								'<div class="col-md-12"><hr><div class="col-md-3">' +
 								'<a  href="{!! url('cancel_reserv') !!}"  style="width: 60%;" type="button" class="btn-link btn-lg">Cancel</a>' +
 								'</div>' +
-								'<div class="col-md-6"><h2 align="center"><b>Total :<span class="finance"> Rs.' + formatNumber(total) + '</span></b><h2>' +
+								'<div class="col-md-6"><h2 align="center"><b>Total :<span class="finance"> Rs.' + formatNumber(total*(1-promo_value)) + '</span></b><h2>' +
 								'</div>' +
 
 								'<div class="col-md-3" align="right">' +
@@ -564,7 +576,7 @@
 								'</div><hr>' +
 								'</div>';
 
-						document.getElementById("myBooking").innerHTML = begin + body + end;
+						document.getElementById("myBooking").innerHTML = begin + body + promo + end;
 					}
 					else {
 						document.getElementById("myBooking").innerHTML = '';

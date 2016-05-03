@@ -17,6 +17,8 @@ use Mail;
 use Carbon\Carbon;
 use App\Classes\ReservationRoom;
 use App\Classes\ReservationTask;
+use Vinkla\Pusher\Facades\Pusher;
+use App\Notifications;
 
 class RoomReservationController extends Controller
 {
@@ -71,18 +73,35 @@ class RoomReservationController extends Controller
                                                             'count' => session('no_of_rooms' . $room_type)]);
             }
 
-        //create an array with reservation details in ordr to send to the mail view
-        $data = array('res_id' => $res_id, 'check_in' => session('check_in'), 'check_out' => session('check_out'), 'nights' => $no_of_nights,
-            'no_of_rooms' => session('rooms'), 'guests' => $no_of_guests, 'name' => $customer_name);
+            //create an array with reservation details in ordr to send to the mail view
+            $data = array('res_id' => $res_id, 'check_in' => session('check_in'), 'check_out' => session('check_out'), 'nights' => $no_of_nights,
+                'no_of_rooms' => session('rooms'), 'guests' => $no_of_guests, 'name' => $customer_name);
 
 
-        //observer design pattern is used here, but this is design pattern is no use full
-            $sub =  new ReservationRoom();
-            $sub->attach(new ReservationTask());
-            $sub->clearSession();
+            //observer design pattern is used here, but this is design pattern is no use full
+                /*$sub =  new ReservationRoom();
+                $sub->attach(new ReservationTask());
+                $sub->clearSession();*/
+
+
+            //clear session
+            $this->clearRoomSession("Full");
 
             //call the mailfunction send an email
             $this->sendInitialMail($data,$customer_email);
+
+            //send an pusher notification to the admin
+
+            //remove the magic values
+
+            $newNotification = new Notifications();
+
+            $newNotification->notification = "New Reservation";
+            $newNotification->body = "Room Reservation has been made";
+            $newNotification->readStatus = '0';
+            $newNotification->save();
+
+             Pusher::trigger('notifications', 'Reservation', ['message' => 'New Room Reservation has been made']);
 
             return redirect('myreserv')->with(['reserv_status' => 'Room_Reservation']);
 
@@ -144,6 +163,7 @@ class RoomReservationController extends Controller
         //clears the canPay session attribute which is used as an indicator to enter to the payment page
         Session::forget('CanPay');
 
+
         return redirect('room_packages');
     }
 
@@ -159,10 +179,19 @@ class RoomReservationController extends Controller
                 foreach (session('room_types') as $room_type) {
                     Session::forget(['room_type_name' . $room_type,'no_of_rooms' . $room_type,'rate' . $room_type,'meal_type' . $room_type]);
                     Session::forget(['rate_code' . $room_type,'total_payable']);
+                    Session::forget('fblogin_payment');
+
+                    //clear promotion values
+                    Session::forget('promo_code');
+                    Session::forget('promo_rate');
                 }
                 if($type =="Full") {
                     //clear the requested details
                     Session::forget(['room_types', 'check_in', 'check_out', 'adults', 'kids', 'rooms', 'total_payable', 'CanPay']);
+                    Session::forget('fblogin_payment');
+                         //clear promotion values
+                    Session::forget('promo_code');
+                    Session::forget('promo_rate');
                 }
             }
 
@@ -211,6 +240,12 @@ class RoomReservationController extends Controller
         $reservation->total_amount = session('total_payable');
         $reservation->cus_id = $customer_id;
         $reservation->status = config('constants.RES_PENDING');
+
+        if(Session::has('promo_code'))
+        {
+
+            $reservation->promo_code = session('promo_code');
+        }
 
         $reservation->save();
 

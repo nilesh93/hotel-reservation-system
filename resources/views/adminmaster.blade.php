@@ -17,7 +17,7 @@
         <link href="{{URL::asset('BackEnd/assets/plugins/sweetalert/dist/sweetalert.css')}}" rel="stylesheet" type="text/css">
 
         <link href="{{URL::asset('BackEnd/assets/css/bootstrap.min.css')}}" rel="stylesheet" type="text/css" />
-        
+
         <link href="{{URL::asset('BackEnd/assets/css/core.css')}}" rel="stylesheet" type="text/css" />
         <link href="{{URL::asset('BackEnd/assets/css/components.css')}}" rel="stylesheet" type="text/css" />
         <link href="{{URL::asset('BackEnd/assets/css/icons.css')}}" rel="stylesheet" type="text/css" />
@@ -32,10 +32,10 @@
         <link href="{{URL::asset('BackEnd/assets/plugins/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css')}}" rel="stylesheet">
         <link href="{{URL::asset('BackEnd/assets/plugins/clockpicker/dist/jquery-clockpicker.min.css')}}" rel="stylesheet">
         <link href="{{URL::asset('BackEnd/assets/plugins/bootstrap-daterangepicker/daterangepicker.css')}}" rel="stylesheet">
-        
-        <link href="{{URL::asset('bower_components/angular-bootstrap-calendar/dist/css/angular-bootstrap-calendar.css')}}"></link>
-        <link href="{{URL::asset('bower_components/angular-chart.js/dist/angular-chart.css')}}"></link>
- 
+
+        <link href="{{URL::asset('bower_components/angular-bootstrap-calendar/dist/css/angular-bootstrap-calendar.css')}}"> </link>
+        <link href="{{URL::asset('bower_components/angular-chart.js/dist/angular-chart.css')}}"> </link>
+
 
         <!-- HTML5 Shiv and Respond.js IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -359,19 +359,19 @@
 
 
         <script src="{{URL::asset('BackEnd/assets/js/jquery.min.js')}}"></script>
-     
+
         <script src="{{URL::asset('bower_components/moment/moment.js')}}"></script>
            <script src="{{URL::asset('bower_components/angular/angular.js')}}"></script>
            <script src="{{URL::asset('bower_components/angular-ui-calendar/src/calendar.js')}}"></script>
-        
-        
+
+
         <script src="{{URL::asset('bower_components/fullcalendar/dist/fullcalendar.min.js')}}"></script>
         <script src="{{URL::asset('bower_components/fullcalendar/dist/gcal.js')}}"></script>
-        
+
         <script src="{{URL::asset('bower_components/Chart.js/Chart.js')}}"></script>
-        <script src="{{URL::asset('bower_components/angular-chart.js/dist/angular-chart.js')}}"></script> 
-         
-        
+        <script src="{{URL::asset('bower_components/angular-chart.js/dist/angular-chart.js')}}"></script>
+
+
 
         <script src="{{URL::asset('BackEnd/assets/js/bootstrap.min.js')}}"></script>
         <script src="{{URL::asset('BackEnd/assets/js/detect.js')}}"></script>
@@ -416,6 +416,34 @@
                     console.log("Success")
                 }});
             }
+        </script>
+
+        <script>
+
+            var notification_count = $('#notificationNum-alert').text();
+
+            if($.trim($('#notification_count').html()) == ''){
+                notification_count = 0;
+            }
+
+
+            var pusher = new Pusher('a9cc4ec8de7727809a37');
+
+            var notificationsChannel = pusher.subscribe('notifications');
+
+            notificationsChannel.bind('Reservation', function(res) {
+
+                var message = res.message;
+                $('#notificationNum-alert').text(notification_count + 1);
+                $('#notificationNum').text(notification_count + 1+" New");
+                $("#notificationList").prepend('<a href="javascript:void(0);" class="list-group-item list-group-item-success"> ' +
+                        '<div class="media"> <div class="pull-left p-r-10"> ' +
+                        '<em class="fa fa-cog fa-2x text-custom"></em> </div> ' +
+                        '<div class="media-body"> <h5 class="media-heading">New Reservation</h5>' +
+                        ' <p class="m-0"> <small>'+message+'</small> </p> </div> </div> </a>');
+            });
+
+
         </script>
 
         @yield('js')

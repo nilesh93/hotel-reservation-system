@@ -52,8 +52,8 @@
 								<label><h3> Time Slot </h3></label>
 								<select class="form-control "  name="timeSlot" id="timeSlot" required>
 
-									<option value="{{ config('constants.HALL_TIME_SLOT_1') }}">{{ config('constants.HALL_TIME_SLOT_1') }} </option>
-									<option value="{{ config('constants.HALL_TIME_SLOT_2') }}">{{ config('constants.HALL_TIME_SLOT_2') }} </option>
+									<option value="{{ $time_slot1}}">{{ $time_slot1 }} </option>
+									<option value="{{ $time_slot2 }}">{{ $time_slot2 }} </option>
 
 								</select>
 							</div><!-- /col-md-12 -->

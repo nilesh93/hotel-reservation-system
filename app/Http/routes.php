@@ -57,6 +57,8 @@ Route::post('room_availability', 'RoomAvailabilityController@checkRoomAvailabili
 Route::get('my_past_room_reservations', 'RoomReservationController@myPastReservation');
 Route::get('delete_selected_room_type', 'RoomAvailabilityController@delSelectedRoom_type');
 Route::get('my_future_room_reservations', 'RoomReservationController@myFutureReservation');
+Route::get('promo_code_validate', 'RoomAvailabilityController@promotionValidate');
+
 
 //halls
 Route::get('halls', 'PagesController@hallsView');

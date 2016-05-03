@@ -312,6 +312,22 @@
 								'</div>' +
 								'<hr>';
 
+						var promo = "";
+						var promo_value = 0;
+
+
+								@if(session('promo_code'))
+
+
+
+						promo_value = "{{ session('promo_rate') }}";
+
+
+						promo = '<br><br><h3 align="center">Promotion Discount : <span class="finance"> Rs.' + formatNumber(total*promo_value) + '</span>  </h3>';
+
+								@endif
+
+
 
 						var end ='<div class="col-md-12"><hr>' +
 
@@ -319,7 +335,7 @@
 								'</div>' +
 
 								'<div class="col-md-6">' +
-								'<h2 align="center"><b>Total : <span class="finance">Rs.' + formatNumber(total) + '</span></b><h2>' +
+								'<h2 align="center"><b>Total : <span class="finance">Rs.' + formatNumber(total*(1-promo_value)) + '</span></b><h2>' +
 								'</div>' +
 
 								'<div class="col-md-3" align="right">' +
@@ -335,7 +351,7 @@
 
 								'</div>';
 
-						document.getElementById("myBooking").innerHTML = begin + body + end;
+						document.getElementById("myBooking").innerHTML = begin + body + promo+ end;
 					}
 					else {
 						document.getElementById("myBooking").innerHTML = '';
