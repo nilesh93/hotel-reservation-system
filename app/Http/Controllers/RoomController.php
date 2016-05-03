@@ -126,7 +126,7 @@ class RoomController extends Controller
         $room->remarks = $request->input('rremarks');
         $room->save();
 
-        
+
 
     }
 
@@ -326,7 +326,7 @@ class RoomController extends Controller
 
         $type_code = $rt->type_code;
         $max = Room::where('room_type_id',$rt->room_type_id)->max('sequence_num');
-        
+
         $max++;
         $maxNumberCode = strtoupper($type_code) . str_pad($max,4,"0",STR_PAD_LEFT);
 
@@ -637,12 +637,12 @@ class RoomController extends Controller
      *
      * @param Request $request
      */
-    
+
     public function admin_save_room_update_details(Request $request){
-        
+
         $room = Room::find($request->input('id'));
-        
-        
+
+
         $room->room_num = $request->input('rnum');
         $room->room_size = $request->input('rsize');
         //$room->sequence_num = $request->input('max');
@@ -651,7 +651,100 @@ class RoomController extends Controller
         $room->remarks = $request->input('rremarks');
         $room->save();
 
-        
+
+    }
+
+
+    public function getRoomBookings(){
+
+        $meals = MEAL_TYPE::all();
+
+        return response()->json(['count' => count($meals), 'data' => $meals]);
+
+    }
+
+    public function bookingAdd(Request $request){
+
+        $meal = new MEAL_TYPE;
+
+        $meal->meal_type_name = $request->input('btname');
+        $meal->description = $request->input('desc');
+
+        $meal->save();
+
+    }
+
+
+    public function getBTinfo(Request $request){
+
+        $meal = MEAL_TYPE::find($request->input('id'));
+
+        return  $meal; 
+
+    }
+
+
+    public function editBTinfo(Request $request){
+
+        $meal = MEAL_TYPE::find($request->input('id'));
+
+
+        $meal->meal_type_name = $request->input('btname');
+        $meal->description = $request->input('desc');
+
+        $meal->save();
+
+    }
+
+    public function delBT(Request $request){
+
+        $meal = MEAL_TYPE::find($request->input('id'));
+
+        $meal->delete();
+
+
+    }
+
+
+    public function get_current_rooms(){
+
+        $rooms =   DB::select(DB::raw("Select C.*, D.*, IFNULL(D.status,'AVAILABLE') as st, (Select F.type_name from HRS.ROOM_TYPES F where F.room_type_id = C.room_type_id) as type_name, C.remarks as room_remarks, C.status as st1
+from HRS.ROOMS C
+Left Join (SELECT IFNULL(B.room_id,0) as rid, A.*
+FROM HRS.ROOM_RESERVATION A
+LEFT JOIN HRS.ROOM_RESERVATION_BLOCK B ON B.room_reservation_id = A.Room_reservation_id) D on D.rid = C.room_id
+
+"));
+
+        return response()->json(['count' => count($rooms), 'data' => $rooms]);
+
+
+    }
+
+    public function current_rooms(){
+
+        return view('nilesh.currentRooms');
+
+    }
+
+
+    public function get_room_current(Request $request){
+
+        $id = $request->input('rid');
+
+        $rooms =   DB::select(DB::raw("Select C.*, D.*, IFNULL(D.status,'AVAILABLE') as st, (Select F.type_name from HRS.ROOM_TYPES F where F.room_type_id = C.room_type_id) as type_name, C.remarks as room_remarks, C.status as st1, K.*
+from HRS.ROOMS C
+Left Join (SELECT IFNULL(B.room_id,0) as rid, A.*
+FROM HRS.ROOM_RESERVATION A
+LEFT JOIN HRS.ROOM_RESERVATION_BLOCK B ON B.room_reservation_id = A.Room_reservation_id) D on D.rid = C.room_id
+LEFT JOIN HRS.CUSTOMER K ON K.cus_id = D.cus_id
+WHERE C.room_id = '$id'
+
+"));
+
+        return view('nilesh.reservation_info')
+            ->with('room',$rooms);
+
     }
 
 }

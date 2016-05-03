@@ -69,7 +69,7 @@ class WebMasterViewController extends Controller
             ->get();
 
         return response()->json(['himage1'=>$himage1->path,'himages'=>$himages,'advance'=>$advance->advance_payment,'refundable'=>$refundable->refundable_amount,
-            'services'=>$services,'aservices'=>$aservices]);
+                                 'services'=>$services,'aservices'=>$aservices]);
     }
 
     /**
@@ -88,10 +88,19 @@ class WebMasterViewController extends Controller
             ->first();
 
 
-        $images = ROOM_IMAGE::where('room_type_id','=',$room_id)
-            ->where('path','!=',$image1->path)
-            ->select('path')
-            ->get();
+
+        if(!empty($image1)){
+            $images = ROOM_IMAGE::where('room_type_id','=',$room_id)
+                ->where('path','!=',$image1->path)
+                ->select('path')
+                ->get();
+            $path = $image1->path;
+        }else{
+
+
+            $images = array();
+            $path = null;
+        }
 
         $room_furnishes = RoomTypeFurnish::where('room_type_id','=',$room_id)
             ->join('ROOM_FURNISHING','ROOM_TYPE_FURNISH.furnish_id','=','ROOM_FURNISHING.rf_id')
@@ -113,9 +122,23 @@ class WebMasterViewController extends Controller
             ->first();
 
 
-        return response()->json(['rimage1'=>$image1->path,'rimages'=>$images,'room_furnishes'=>$room_furnishes,
-            'room_services'=>$room_services,'room_rates'=>$room_rates,'check_in'=>$arr_dep_time->check_in,
-            'check_out'=>$arr_dep_time->check_out]);
+
+        if(!empty( $arr_dep_time)){
+            
+            $checkin = $arr_dep_time->check_in;
+            $checkout = $arr_dep_time->check_out;
+            
+        }else{
+             $checkin = null;
+             $checkout = null;
+            
+        }
+            
+
+
+        return response()->json(['rimage1'=>$path,'rimages'=>$images,'room_furnishes'=>$room_furnishes,
+                                 'room_services'=>$room_services,'room_rates'=>$room_rates,'check_in'=>$checkin,
+                                 'check_out'=>$checkout]);
 
     }
 }
