@@ -33,14 +33,10 @@
         <link href="{{URL::asset('BackEnd/assets/plugins/clockpicker/dist/jquery-clockpicker.min.css')}}" rel="stylesheet">
         <link href="{{URL::asset('BackEnd/assets/plugins/bootstrap-daterangepicker/daterangepicker.css')}}" rel="stylesheet">
 
-<<<<<<< HEAD
-        <link href="{{URL::asset('bower_components/angular-bootstrap-calendar/dist/css/angular-bootstrap-calendar.css')}}"> </link>
-        <link href="{{URL::asset('bower_components/angular-chart.js/dist/angular-chart.css')}}"> </link>
 
-=======
         <link href="{{URL::asset('bower_components/angular-bootstrap-calendar/dist/css/angular-bootstrap-calendar.css')}}"></link>
     <link href="{{URL::asset('bower_components/angular-chart.js/dist/angular-chart.css')}}"></link>
->>>>>>> origin/master
+
 
 
  
@@ -176,53 +172,7 @@
                 </div>
             </div>
             <!-- Top Bar End -->
-<<<<<<< HEAD
-            <input class="number-only" hidden>
 
-            <!-- ========== Left Sidebar Start ========== -->
-
-            <div class="left side-menu">
-                <div class="sidebar-inner slimscrollleft">
-                    <!--- Divider -->
-                    <div id="sidebar-menu">
-                        <ul>
-
-                            <li class="text-muted menu-title">NAVIGATION</li>
-
-                            <li class="has_sub">
-                                <a href="#" class="waves-effect" id="management"><i class="ti-home"></i> <span> Management </span> </a>
-                                <ul class="list-unstyled">
-                                    <li id="RM"><a href="admin_rooms">Room Management</a></li>
-                                    <li id="ARS"><a href="admin_room_services">Room Services</a></li>
-                                    <li id="HM"><a href="admin_halls">Hall Management</a></li>
-                                    <li id="HS"><a href="hallServices">Hall Services</a></li>
-                                    <li id="PR"><a href="admin_promotions">Promotions Management</a></li>
-                                    <li id="MM"><a href="admin_menus">Menus Management</a></li>
-                                    <li id="UM"><a href="{{URL::to('/admin_users')}}">User Management</a></li>
-                                    <li id="FS"><a href="admin_facilities">Facilities Management</a></li>
-                                    <li id="BS"><a href="admin_bookings_search">Bookings Search</a></li>
-                                    <li id="RS"><a href="admin_rooms_search">Room Logs</a></li>
-                                    <li id="CS"><a href="admin_customers_search">Customer Search</a></li>
-                                    <li id="IG"><a href="admin_imageGallery">Image Gallery </a></li>
-                                    <li id="WG"><a href="admin_webGallery">Web Home Gallery </a></li>
-                                    <li id="PER"><a href="admin_pending_reservation">Pending Reservation </a></li>
-                                    <li id="RGI"><a href="admin_reservation_general">Reservation Info </a></li>
-                                </ul>
-                            </li>
-
-                            <li class="has_sub">
-                                <a href="#" class="waves-effect" id="siteAdmin"><i class="ti-home"></i> <span>Site Administration</span> </a>
-                                <ul class="list-unstyled">
-                                    <li id="BR"><a href="{{URL::to('get_backup')}}">Backup & Restore</a></li>
-                                    <li id="AU"><a href="{{URL::to('admin_about_us')}}">Edit About Us</a></li>
-                                </ul>
-                            </li>
-
-
-                        </ul>
-                        <div class="clearfix"></div>
-                    </div>
-=======
            
         <!-- Top Bar End -->
        
@@ -314,7 +264,7 @@
                             </ul>
                         </li>
                     </ul>
->>>>>>> origin/master
+
                     <div class="clearfix"></div>
                 </div>
                 <div class="clearfix"></div>
