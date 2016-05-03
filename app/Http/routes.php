@@ -220,8 +220,12 @@ Route::get('convert', 'CurrencyController@converter');
 
 Route::get('admin_dashboard', 'DashboardController@dashboard'); 
 Route::get('getEvents', 'DashboardController@getEvents'); 
+Route::get('getHallEvents', 'DashboardController@getHallEvents'); 
 Route::get('admin_reserve_room', 'DashboardController@admin_reserve_room'); 
 Route::get('admin_getbookings', 'DashboardController@getbookings');
+
+
+Route::get('getHallEventInfo', 'DashboardController@getHallEventInfo'); 
 
 Route::get('admin_dash', 'DashboardController@dash');
 Route::get('admin_search_availability', 'DashboardController@search_availability');

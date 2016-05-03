@@ -156,13 +156,14 @@ CURRENT ROOM STATUS
                 {"data" : null,
                  "mRender": function(data, type, full) {
 
+                     console.log(data);
                      if(data.st != "AVAILABLE"){
 
-                         return '<button class="btn btn-success btn-animate btn-animate-side btn-block btn-sm" onclick="viewReservation('+data.room_id +')"> Reservation Info </button>' ;
+                         return '<button class="btn btn-success btn-animate btn-animate-side btn-block btn-sm" onclick="viewReservation('+data.res_id +')"> Reservation Info </button>' ;
                      }else{
 
 
-                        // return '<button class="btn btn-success btn-animate btn-animate-side btn-block btn-sm" onclick="viewReservation('+data.room_id +')"> Reservation Info </button>' ;
+                        //return '<button class="btn btn-success btn-animate btn-animate-side btn-block btn-sm" onclick="viewReservation('+data.res_id +')"> Reservation Info </button>' ;
                           return '<button class="btn btn-success btn-animate btn-animate-side btn-block btn-sm" disabled> Reservation Info </button>' ;
 
                      }
@@ -179,9 +180,9 @@ CURRENT ROOM STATUS
 
         $.ajax({
 
-            url:"admin_get_room_current",
+            url:"admin_search_bookings_get",
             type:"get",
-            data :{rid:data},
+            data :{id:data},
             success:function(data){
 
                 

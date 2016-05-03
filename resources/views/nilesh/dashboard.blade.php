@@ -41,27 +41,18 @@ CALENDAR
 
 @endsection
 
-
-@section('page_buttons')
-<div class="col-md-4 col-md-offset-4">
-    <button type="button" class="btn btn-success waves-effect btn-block waves-light pull-right" data-toggle="modal" data-target="#addRoom">
-        <span class="btn-label pull-left"><i class="fa fa-plus"></i>
-        </span> HALL RESERVE</button>
-</div>
-<div class="col-md-4">
-    <button type="button" class="btn btn-primary waves-effect btn-block waves-light pull-right" data-toggle="modal" data-target="#addHall">
-        <span class="btn-label pull-left"><i class="fa fa-plus"></i>
-        </span>ROOM RESERVE</button></div>
-@endsection
+ 
 
 
 @section('content')
 <div ng-app="dashboard" ng-controller ="DashboardController">
 
-    <div class="col-lg-12">
+    <div class="col-lg-6">
 
-        <div class="panel">
-
+        <div  class="panel panel-border panel-success">
+<div class="panel-heading">
+										<h3 class="panel-title">EVENT SCHEDULE - ROOMS</h3>
+									</div>
             <div class="panel-body">
 
 
@@ -77,9 +68,28 @@ CALENDAR
     </div>
 
 
+        <div class="col-lg-6">
+
+        <div  class="panel panel-border panel-primary">
+<div class="panel-heading">
+										<h3 class="panel-title">EVENT SCHEDULE - HALLS</h3>
+									</div>
+            <div class="panel-body">
+
+
+                <div ui-calendar="uiConfig2.calendar" ng-model="eventSources2">
+
+                </div>
+            </div>
+
+
+
+        </div>
+
+    </div>
 
     <div class="modal inmodal fade" id="info" tabindex="-1" role="dialog"  aria-hidden="true">
-        <div class="modal-dialog ">
+        <div class="modal-dialog modal-lg ">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
@@ -87,7 +97,7 @@ CALENDAR
 
                 </div>
                 <div class="modal-body">
-                    info here...
+                   <div id="reserveInfo"></div>
 
                 </div>
             </div>
