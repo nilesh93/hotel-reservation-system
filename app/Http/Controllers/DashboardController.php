@@ -28,16 +28,42 @@ class DashboardController extends Controller
 
         $room_reservations =  DB::select(DB::raw("select a.*, (select b.type_name from ROOM_TYPES b where b.room_type_id = a.type) as room_type, c.* from ROOM_RESERVATION a 
 LEFT JOIN CUSTOMER c ON c.cus_id = a.cus_id
-where check_in > DATE_SUB(NOW(),INTERVAL 2 YEAR)"));
+where check_in > DATE_SUB(NOW(),INTERVAL 2 YEAR)
+AND a.status NOT IN ('PENDING','CANCELLED','REJECTED')"));
 
 
         return  $room_reservations;
 
+    }
 
+    
+     public function getHallEvents(){
 
+        $halls =  DB::select(DB::raw("SELECT * FROM HRS.HALL_RESERVATION A
+Left JOIN HRS.HALL_RESERVATION B ON B.hall_id = A.hall_id
+LEFT JOIN HRS.CUSTOMER C ON A.cus_id = B.cus_id
+where A.status not in  ('PENDING','CANCELLED','REJECTED')
+and A.reserve_date  > DATE_SUB(NOW(),INTERVAL 2 YEAR)"));
+
+        return  $halls;
 
     }
 
+    
+    public function getHallEventInfo(Request $request){
+        
+        $id = $request->input('id');
+        
+        $hallres = DB::select(DB::raw("SELECT * FROM HRS.HALL_RESERVATION A
+Left JOIN HRS.HALLS B ON B.hall_id = A.hall_id
+LEFT JOIN HRS.CUSTOMER C ON A.cus_id = C.cus_id
+where A.hall_reservation_id = '$id'"));
+        
+        return view('nilesh.hallInfo')
+            ->with('room',$halls);
+        
+    }
+    
 
     public function getbookings(Request $request){
 

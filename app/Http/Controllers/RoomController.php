@@ -708,7 +708,8 @@ class RoomController extends Controller
 
     public function get_current_rooms(){
 
-        $rooms =   DB::select(DB::raw("Select C.*, D.*, IFNULL(D.status,'AVAILABLE') as st, (Select F.type_name from HRS.ROOM_TYPES F where F.room_type_id = C.room_type_id) as type_name, C.remarks as room_remarks, C.status as st1
+        $rooms =   DB::select(DB::raw("Select C.*, D.*, IFNULL(D.status,'AVAILABLE') as st, (Select F.type_name from HRS.ROOM_TYPES F where F.room_type_id = C.room_type_id) as type_name, C.remarks as room_remarks, C.status as st1,
+D.room_reservation_id as resid
 from HRS.ROOMS C
 Left Join (SELECT IFNULL(B.room_id,0) as rid, A.*
 FROM HRS.ROOM_RESERVATION A
