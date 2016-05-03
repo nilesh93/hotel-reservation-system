@@ -205,8 +205,17 @@ Route::get('getReservationDate','DashboardController@getReservationDates');
 
 
 Route::get('convert', 'CurrencyController@converter'); 
+
+
 Route::get('admin_dashboard', 'DashboardController@dashboard'); 
 Route::get('getEvents', 'DashboardController@getEvents'); 
+Route::get('admin_reserve_room', 'DashboardController@admin_reserve_room'); 
+Route::get('admin_getbookings', 'DashboardController@getbookings');
+
+
+Route::get('admin_current_rooms', 'RoomController@current_rooms'); 
+Route::get('admin_getcurrent_rooms', 'RoomController@get_current_rooms'); 
+Route::get('admin_get_room_current', 'RoomController@get_room_current'); 
 
  
 
@@ -328,12 +337,15 @@ Route::controller('admin_menus','MenusController');
 Route::controller('admin_facilities','FacilitiesController');
 
 //Search functions for bookings search.
-Route::get('admin_search/bookings','SearchController@bookings_search');
+Route::get('admin_search_bookings','SearchController@bookings_search');
+Route::get('admin_search_bookings_get','SearchController@bookings_search_get');
 Route::get('admin_bookings_search','SearchController@bookings_search_index');
 
 //Search functions for rooms search.
 Route::get('admin_rooms_search','SearchController@rooms_search_index');
-Route::get('admin_search/rooms','SearchController@rooms_search');
+Route::get('admin_room_search_past','SearchController@rooms_search_past');
+Route::get('admin_room_search_current','SearchController@rooms_search_current');
+Route::get('admin_room_search_future','SearchController@rooms_search_future');
 
 //Search functions for customers search
 Route::get('admin_search/customers','SearchController@customers_search');
