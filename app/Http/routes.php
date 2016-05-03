@@ -212,7 +212,12 @@ Route::get('getEvents', 'DashboardController@getEvents');
 Route::get('admin_reserve_room', 'DashboardController@admin_reserve_room'); 
 Route::get('admin_getbookings', 'DashboardController@getbookings');
 
+Route::get('admin_dash', 'DashboardController@dash');
+Route::get('admin_search_availability', 'DashboardController@search_availability');
 
+
+
+ 
 Route::get('admin_current_rooms', 'RoomController@current_rooms'); 
 Route::get('admin_getcurrent_rooms', 'RoomController@get_current_rooms'); 
 Route::get('admin_get_room_current', 'RoomController@get_room_current'); 
