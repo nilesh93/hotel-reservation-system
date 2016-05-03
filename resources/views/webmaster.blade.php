@@ -746,7 +746,7 @@
 
 
 				if (typeof localStorage.currency === 'undefined' || localStorage.currency == 'LKR') {
-					
+
 					console.log("do nothing");
 					
 				}else{
@@ -833,13 +833,13 @@
 
 						for (var i = 0; i < data.aservices.length; i++) {
 
-							aservices +='<li>'+data.aservices[i].name +'-Rs.'+formatNumber(data.aservices[i].rate)+'</li>';
+							aservices +='<li>'+data.aservices[i].name +'-<span class="finance">Rs.'+formatNumber(data.aservices[i].rate)+'</span></li>';
 						}
 
 						document.getElementById('aservices').innerHTML = aservices;
 
-						var hall_rates = 'Advance Payment : Rs.'+formatNumber(data.advance)+'<br>'+
-							' Refundable : Rs.'+formatNumber(data.refundable);
+						var hall_rates = 'Advance Payment : <span class="finance">Rs.'+formatNumber(data.advance)+'</span><br>'+
+							' Refundable : <span class="finance">Rs.'+formatNumber(data.refundable)+'</span>';
 
 						document.getElementById('hall_rates').innerHTML = hall_rates;
 
@@ -1021,12 +1021,6 @@
 					}
 
 				});
-
-
-
-
-
-
 
 			}	 
 

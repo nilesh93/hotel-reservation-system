@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Customer;
 use App\User;
 use App\Http\Controllers\Controller;
+use Session;
 
 class RegisteredUsersController extends Controller
 {
@@ -74,6 +75,13 @@ class RegisteredUsersController extends Controller
 
         // Save the updated Customer instance
         $customer->save();
+
+        //this lines are added, if the user is facebook logged in user he needs to fill his other details and he should be
+        //redirected to payment page, since return redirect()->intended() is not working for this purpose
+        if(Session::has('fblogin_payment')) {
+
+            return redirect('payment');
+        }
 
         return redirect()->intended('/')->with('success', 'Your details have been updated successfully.');
     }

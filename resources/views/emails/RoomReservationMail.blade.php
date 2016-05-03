@@ -47,7 +47,7 @@
             <tr>
 
                 <td>
-                    <img src="<?php echo $message->embed('FrontEnd/img/amalya-logo.png'); ?>" width="50%">
+                    <img src="<?php echo $message->embed('public/FrontEnd/img/amalya-logo.png'); ?>" width="50%">
                 </td>
 
                 <td>
@@ -91,7 +91,7 @@
                         </td>
                         <td>
 
-                        {{ $res_id}}
+                        {{ $mail_detail["reservation_details"]->room_reservation_id}}
                         </td>
                     </tr>
                 </table>
@@ -106,7 +106,7 @@
 
     <div style="width: 100%; position: absolute; top: 50%">
 
-        <p>Dear valued customer.,<br><br>
+        <p>Dear valued customer,<br><br>
 
             Thank you for choosing to stay with us at the Amalya Reach Holiday Resorts. We are pleased to confirm your reservation as follows:        </p>
         <br>
@@ -117,7 +117,7 @@
                 <td>
                     Customer Name :
                 </td>
-                    {{ $name }}
+                    {{ $mail_detail["customer_details"]->name }}
                 <td>
 
                 <td>
@@ -127,7 +127,7 @@
                 <td>
                     Arrival Date :
                 </td>
-                    {{ strtok($check_in, " ") }}
+                    {{ strtok($mail_detail["reservation_details"]->check_in, " ") }}
                 <td>
 
                 <td>
@@ -140,7 +140,7 @@
 
                 <td>
 
-                {{ strtok($check_out, " ") }}
+                {{ strtok($mail_detail["reservation_details"]->check_out, " ") }}
                 <td>
             <tr>
             <tr>
@@ -149,7 +149,7 @@
                 </td>
 
                 <td>
-                    {{ $nights }}
+                    {{ $mail_detail["reservation_details"]->num_of_nights }}
                 <td>
             <tr>
 
@@ -159,8 +159,12 @@
                 </td>
 
                 <td>
-                    {{ $guests }}
+                    Adults : {{ $mail_detail["reservation_details"]->adults }}
+                </td>
+
                 <td>
+                    Children : {{ $mail_detail["reservation_details"]->children }}
+                </td>
             <tr>
 
             <tr>
@@ -169,8 +173,14 @@
                 </td>
 
                 <td>
-                {{ $no_of_rooms }}
+                {{ $mail_detail["reservation_details"]->num_of_rooms }}
+                </td>
+
                 <td>
+                    @foreach($mail_detail["room_types"] as $room_type)
+                        {{ $room_type->type_name }}  : {{ $room_type->count }}  <br><br>
+                    @endforeach
+                </td>
             <tr>
 
 

@@ -57,6 +57,8 @@ Route::post('room_availability', 'RoomAvailabilityController@checkRoomAvailabili
 Route::get('my_past_room_reservations', 'RoomReservationController@myPastReservation');
 Route::get('delete_selected_room_type', 'RoomAvailabilityController@delSelectedRoom_type');
 Route::get('my_future_room_reservations', 'RoomReservationController@myFutureReservation');
+Route::get('promo_code_validate', 'RoomAvailabilityController@promotionValidate');
+
 
 //halls
 Route::get('halls', 'PagesController@hallsView');
@@ -84,6 +86,15 @@ Route::get('admin_get_pending_room_reservations', 'AdminReservationController@pe
 Route::get('admin_get_pending_hall_reservations', 'AdminReservationController@pendingHallReservation');
 Route::get('admin_individual_reservation', 'AdminReservationController@getIndividualReservationDetails');
 Route::get('admin_check_room','AdminReservationController@checkRoomAvailability');
+Route::get('admin_accept_update_reservation', 'AdminReservationController@updateAcceptReservation');
+Route::get('admin_reservation_general', 'AdminReservationController@reservationGeneralInfo');
+Route::get('admin_reject_room_reservation', 'AdminReservationController@updateRejectReservation');
+Route::get('admin_individual_hall_reservation', 'AdminReservationController@getIndividualHallReservationDetails');
+Route::get('admin_check_hall', 'AdminReservationController@checkHallAvailability');
+Route::get('admin_accept_hall_update_reservation', 'AdminReservationController@updateHallAcceptReservation');
+Route::get('admin_reject_hall_reservation', 'AdminReservationController@updateRejectHallReservation');
+Route::get('admin_edit_reservation_info', 'AdminReservationController@updateReservationInfo');
+
 
 
 

@@ -47,6 +47,18 @@
 							</div><!-- /col-md-12 -->
 						</div><!-- /row -->
 						<br>
+						<div class="row">
+							<div class="col-sm-12 col-md-12 col-lg-12" align="center">
+								<label><h3> Time Slot </h3></label>
+								<select class="form-control "  name="timeSlot" id="timeSlot" required>
+
+									<option value="{{ $time_slot1}}">{{ $time_slot1 }} </option>
+									<option value="{{ $time_slot2 }}">{{ $time_slot2 }} </option>
+
+								</select>
+							</div><!-- /col-md-12 -->
+						</div><!-- /row -->
+						<br>
 						<br>
 
 						<button type="submit" class="btn btn-primary">Check Availability</button>
@@ -100,11 +112,11 @@
 				<section id="content">
 
 					<div class="row">
-						<div class="col-md-3"></div>
+						<div class="col-md-1"></div>
 
-						<div class="col-md-9">
+						<div class="col-md-11">
 
-							<div id="edate" align="center" class="col-md-9 col-lg-9 ">
+							<div id="edate" align="center" class="col-md- col-lg-11 ">
 
 							</div>
 
@@ -191,10 +203,11 @@
 						type:'get',
 						url: 'hall_availability',
 						data :{
-							'event_date':"{{ session('event_date') }}"
+							'event_date':"{{ session('event_date') }}",
+							'timeSlot':"{{ session('timeSlot') }}"
 						},
 						success:function(data){
-							document.getElementById('edate').innerHTML = '<h2><label class="label label-info ">Your Requested Date :' + data.edate + '</label></h2>'
+							document.getElementById('edate').innerHTML = '<h2><label class="label label-info ">Your Requested  Date :' + data.edate + ',   Time Slot : '+data.timeSlot+'</label></h2>';
 
 							if(data.total_halls != 0) {
 								for (var i = 0; i < data.hall_ids.length; i++) {
@@ -299,7 +312,7 @@
 
 					success:function(data){
 
-						document.getElementById('edate').innerHTML = '<h2><label class="label label-info ">Your Requested Date :' + data.edate + '</label></h2>'
+						document.getElementById('edate').innerHTML = '<h2><label class="label label-info ">Your Requested Date :' + data.edate +',   Time Slot : '+data.timeSlot+ '</label></h2>'
 
 						if(data.total_halls != 0) {
 							for (var i = 0; i < data.hall_ids.length; i++) {
@@ -380,12 +393,12 @@
 					'</div><!-- /col-4--->' +
 
 					'<div class="col-sm-4 col-md-4 col-lg-4">' +
-					'<span class="checkout-title">Advance Payment (Rs.)</span>' +
+					'<span class="checkout-title">Advance Payment</span>' +
 					'<span class="checkout-value"></span>' +
 					'</div><!-- /col-4--->' +
 
 					'<div class="col-sm-4 col-md-4 col-lg-4">' +
-					'<span class="checkout-title">Refundable Amount (Rs.)</span>' +
+					'<span class="checkout-title">Refundable Amount</span>' +
 					'<span class="checkout-value"></span></div><!-- /col-4 -->' +
 					'</div>' +
 					'</div>' +
@@ -402,12 +415,12 @@
 					'</div><!-- /col-4 -->' +
 
 					'<div class="col-sm-4 col-md-4 col-lg-4">' +
-					'<span class="checkout-title">' + formatNumber(data.hall_detail[0].advance_payment)  + '</span>' +
+					'<span class="checkout-title finance">Rs.' + formatNumber(data.hall_detail[0].advance_payment)  + '</span>' +
 					'<span class="checkout-value"></span>' +
 					'</div><!-- /col-4 -->' +
 
 					'<div class="col-sm-4 col-md-4 col-lg-4">' +
-					'<span class="checkout-title">' + formatNumber(data.hall_detail[0].refundable_amount) + '</span>' +
+					'<span class="checkout-title finance">Rs.' + formatNumber(data.hall_detail[0].refundable_amount) + '</span>' +
 					'<span class="checkout-value"></span>' +
 					'</div><!-- /col-4 -->' +
 
@@ -423,7 +436,7 @@
 					'</div>' +
 
 					'<div class="col-md-6">'+
-					'<h2 align="center"><b>Total(Rs.) : ' + formatNumber(data.hall_detail[0].advance_payment)+'</b><h2>'+
+					'<h2 align="center"><b>Total : <span class="finance">' + formatNumber(data.hall_detail[0].advance_payment)+'</span></b><h2>'+
 					'</div>' +
 
 					'<div class="col-md-3" align="right">'+

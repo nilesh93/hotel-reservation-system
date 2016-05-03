@@ -33,8 +33,10 @@
         <link href="{{URL::asset('BackEnd/assets/plugins/clockpicker/dist/jquery-clockpicker.min.css')}}" rel="stylesheet">
         <link href="{{URL::asset('BackEnd/assets/plugins/bootstrap-daterangepicker/daterangepicker.css')}}" rel="stylesheet">
 
+
         <link href="{{URL::asset('bower_components/angular-bootstrap-calendar/dist/css/angular-bootstrap-calendar.css')}}"></link>
     <link href="{{URL::asset('bower_components/angular-chart.js/dist/angular-chart.css')}}"></link>
+
 
 
 
@@ -168,10 +170,11 @@
                     <!--/.nav-collapse -->
                 </div>
             </div>
+
         </div>
         <!-- Top Bar End -->
 
-        <!-- Top Bar End -->
+ 
 
         <!-- ========== Left Sidebar Start ========== -->
 
@@ -270,6 +273,7 @@
                             </ul>
                         </li>
                     </ul>
+
                     <div class="clearfix"></div>
                 </div>
                 <div class="clearfix"></div>
@@ -386,17 +390,47 @@
 
     <script src="{{URL::asset('BackEnd/assets/js/validation.js')}}"></script>
 
+ 
+ 
+        <script>
+            function setReadStatus() {
+                $.ajax({url: "{{URL::to('setReadStatus')}}", success: function(result){
+                    console.log("Success")
+                }});
+            }
+        </script>
 
-    <script>
-        function setReadStatus() {
-            $.ajax({url: "{{URL::to('setReadStatus')}}", success: function(result){
-                console.log("Success")
-            }});
-        }
-    </script>
+        <script>
 
-    @yield('js')
+            var notification_count = $('#notificationNum-alert').text();
 
+            if($.trim($('#notification_count').html()) == ''){
+                notification_count = 0;
+            }
+
+
+            var pusher = new Pusher('a9cc4ec8de7727809a37');
+
+            var notificationsChannel = pusher.subscribe('notifications');
+
+            notificationsChannel.bind('Reservation', function(res) {
+
+                var message = res.message;
+                $('#notificationNum-alert').text(notification_count + 1);
+                $('#notificationNum').text(notification_count + 1+" New");
+                $("#notificationList").prepend('<a href="javascript:void(0);" class="list-group-item list-group-item-success"> ' +
+                        '<div class="media"> <div class="pull-left p-r-10"> ' +
+                        '<em class="fa fa-cog fa-2x text-custom"></em> </div> ' +
+                        '<div class="media-body"> <h5 class="media-heading">New Reservation</h5>' +
+                        ' <p class="m-0"> <small>'+message+'</small> </p> </div> </div> </a>');
+            });
+
+
+        </script>
+
+        @yield('js')
+ 
+ 
 
 
 </body>

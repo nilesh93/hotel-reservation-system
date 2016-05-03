@@ -158,19 +158,21 @@
 					</div>	<!-- /row -->
 					<br>
 
-					<div class="checkbox">
+					@if(session('promo_code'))
+
+					<div class="checkbox" align="center">
 						<label>
-							<input type="checkbox" id="promochk" onclick="enableDisable(this.checked,'promotxt')"><span style="color: darkslategray"> I have promotion code</span>
+							Promotion Code
 						</label>
 					</div>
 
 					<div class="row">
 						<div class="col-sm-12 col-md-12 col-lg-12">
-							<input class="form-control input-lg" type="text" id="promotxt" name="promotxt" placeholder="Enter Promo Code" disabled>
+							<input class="form-control input-lg" type="text" id="promotxt" name="promotxt" placeholder="Enter Promo Code" @if(session('promo_code')) value="{{ session('promo_code') }}"@endif readonly>
 						</div><!-- /col-md-12 -->
 					</div><!-- /row -->
 					<br>
-
+					@endif
 					<button type="submit" class="btn btn-primary">Check Availability</button>
 
 				</form>
@@ -222,7 +224,7 @@
 							<span>Discover our</span>
 							<h3 class="room-title"><a onclick="viewRoomType('{{$room_type->room_type_id}}','{{$room_type->type_name}}')">{{ $room_type->type_name }}</a></h3>
 							<span>from</span>
-							<span class="room-cost"> Rs.{{ number_format($ratefrom,2) }}</span>
+							<span class="room-cost finance"> Rs.{{ number_format($ratefrom,2) }}</span>
 
 							<p>
 								<b>Available Rooms : {{ $room_type_available[$room_type->room_type_id]}}</b>
@@ -313,7 +315,7 @@
 												<select class="form-control"  name="{{ $room_type->room_type_id }}rate_code" id="{{ $room_type->room_type_id }}rate_code">
 													<option value=0>Select Meal Type </option>
 													@foreach($mealtypeRates as $mealtypeRate)
-														<option value="{{ $mealtypeRate->rate_code }}" @if(session('meal_type'.$room_type->room_type_id) == $mealtypeRate->rate_code) selected @endif>{{ $mealtypeRate->meal_type_name }} : Rs.{{ number_format($mealtypeRate->single_rates,2) }}</option>
+														<option value="{{ $mealtypeRate->rate_code }}" @if(session('meal_type'.$room_type->room_type_id) == $mealtypeRate->rate_code) selected @endif>{{ $mealtypeRate->meal_type_name }} :<span class="room-cost finance"> Rs.{{ number_format($mealtypeRate->single_rates,2) }}</span></option>
 													@endforeach
 												</select>
 											</div>
@@ -482,12 +484,12 @@
 									'</div><!-- /col-3 -->' +
 
 									'<div class="col-sm-2 col-md-2 col-lg-2">' +
-									'<span class="checkout-title">' + formatNumber(data.rates[i]) + '</span>' +
+									'<span class="checkout-title finance">Rs.' + formatNumber(data.rates[i]) + '</span>' +
 									'<span class="checkout-value"></span>' +
 									'</div> <!-- /col-3 -->' +
 
 									'<div class="col-sm-2 col-md-2 col-lg-2">' +
-									'<span class="checkout-title">' + formatNumber(data.rates[i] * data.no_of_rooms[i]) + '</span>' +
+									'<span class="checkout-title finance">Rs.' + formatNumber(data.rates[i] * data.no_of_rooms[i]) + '</span>' +
 									'<span class="checkout-value"></span>' +
 									'</div><!-- /col-2 -->' +
 
@@ -533,12 +535,12 @@
 								'</div><!-- /col-3 -->' +
 
 								'<div class="col-sm-2 col-md-2 col-lg-2">' +
-								'<span class="checkout-title">Rates (Rs.)</span>' +
+								'<span class="checkout-title">Rates</span>' +
 								'<span class="checkout-value"></span>' +
 								'</div><!-- /col-3 -->' +
 
 								'<div class="col-sm-2 col-md-2 col-lg-2">' +
-								'<span class="checkout-title">Line Total (Rs.)</span>' +
+								'<span class="checkout-title">Line Total</span>' +
 								'<span class="checkout-value"></span>' +
 								'</div><!-- /col-2 -->' +
 
@@ -550,13 +552,23 @@
 								'</div>' +
 								'<hr>';
 
+						var promo = "";
+						var promo_value = 0;
+
+						@if(session('promo_code'))
+
+								promo_value = "{{ session('promo_rate') }}";
+
+						promo = '<br><br><h3 align="center">Promotion Discount : <span class="finance"> Rs.' + formatNumber(total*promo_value) + '</span>  </h3>';
+
+						@endif
 
 						var end = 	'<input type="hidden" name="total_payable" id="total_payable" value='+total+'>' +
 								'<input type="hidden" name="total_rooms_selected" id="total_rooms_selected" value='+total_rooms+'>' +
 								'<div class="col-md-12"><hr><div class="col-md-3">' +
 								'<a  href="{!! url('cancel_reserv') !!}"  style="width: 60%;" type="button" class="btn-link btn-lg">Cancel</a>' +
 								'</div>' +
-								'<div class="col-md-6"><h2 align="center"><b>Total(Rs.) : ' + formatNumber(total) + '</b><h2>' +
+								'<div class="col-md-6"><h2 align="center"><b>Total :<span class="finance"> Rs.' + formatNumber(total*(1-promo_value)) + '</span></b><h2>' +
 								'</div>' +
 
 								'<div class="col-md-3" align="right">' +
@@ -564,7 +576,7 @@
 								'</div><hr>' +
 								'</div>';
 
-						document.getElementById("myBooking").innerHTML = begin + body + end;
+						document.getElementById("myBooking").innerHTML = begin + body + promo + end;
 					}
 					else {
 						document.getElementById("myBooking").innerHTML = '';
