@@ -9,6 +9,7 @@ use App\Http\Controllers\Controller;
 use DB;
 use App\RoomType;
 use App\Customer;
+use App\ROOM_RESERVATION;
 
 class DashboardController extends Controller
 {
@@ -38,6 +39,16 @@ where check_in > DATE_SUB(NOW(),INTERVAL 2 YEAR)"));
     }
 
 
+    public function getbookings(Request $request){
+
+        $bookings =  DB::select(DB::raw("SELECT A.*, (Select meal_type_name from HRS.MEAL_TYPES B where B.meal_type_id = A.meal_type_id)  as meal_name
+FROM HRS.RATES A
+where A.room_type_id = ''"));
+
+        return  $bookings;
+
+    }
+
     public function getReservationDates(Request $request){
 
         $checkin = $request->input("checkin");
@@ -52,8 +63,50 @@ where check_in > DATE_SUB(NOW(),INTERVAL 2 YEAR)"));
             OR  '$checkout' between A.check_in AND A.check_out
             )
             AND C.room_type_id = '$rt'"));
-      
+
         return response()->json(['count'=>count($rooms), 'data'=>$rooms]);
     }
 
+
+
+    public function admin_reserve_room(Request $request){
+
+
+        if($request->input('cus')== 0){
+
+            $cus = new Customer;
+
+            $cus->name = $request->input('cus_name');
+            $cus->NIC_passport_num = $request->input('cus_nic');
+            $cus->email = $request->input('cus_email');
+            $cus->telephone_num = $request->input('cus_phone');
+            $cus->save();
+
+            $cid = $cus->cus_id;
+
+
+
+        }else{
+
+            $cid = $request->input('cus');
+
+        }
+
+
+        $rs = new ROOM_RESERVATION;
+
+        $rs->remarks = $request->input('remarks');
+        $rs->check_in = $request->input('checkin');
+        $rs->check_out = $request->input('checkout');
+        $rs->adults = $request->input('adults');
+        $rs->children = $request->input('kids');
+        $rs->num_of_rooms = count($request->input('data'));
+        $rs->num_of_nights = date_diff(date_create($request->input('checkin')),date_create($request->input('checkout')))->format("%R%a");
+        // $rs->num_of_nights = 
+
+
+
+
+
+    }
 }

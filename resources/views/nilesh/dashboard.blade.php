@@ -144,7 +144,7 @@ CALENDAR
                                         <label class="control-label col-md-2"> Room Type</label>
                                         <div class="col-md-2">
 
-                                            <select type="text" class="form-control" name="type" id="rt">
+                                            <select type="text" onchange="getBookings(this.value)" class="form-control" name="type" id="rt">
 
                                                 @foreach($roomTypes as $r)
 
@@ -154,12 +154,12 @@ CALENDAR
                                             </select>
                                         </div>
 
-                                        
-                                        
+
+
                                     </div>
 
 
- 
+
 
 
 
@@ -168,17 +168,17 @@ CALENDAR
                                         <label class="control-label col-md-2"> Adults</label>
                                         <div class="col-md-2">
 
-                                            <input type="text" class="form-control" name="adults">
+                                            <input type="text" class="form-control" id="adults" name="adults">
                                         </div>
-                                        
-                                         <label class="control-label col-md-2"> Kids</label>
+
+                                        <label class="control-label col-md-2"> Kids</label>
                                         <div class="col-md-2">
 
-                                            <input type="text" class="form-control" name="kids">
+                                            <input type="text" class="form-control" id="kids" name="kids">
 
 
                                         </div>
-                                        
+
                                         <div class="col-md-3 col-md-offset-1">
 
                                             <button type="button" class="btn btn-block btn-warning" onclick="reserveList()">Check Availability</button>
@@ -186,19 +186,35 @@ CALENDAR
 
                                     </div>
 
-                                 
+
 
                                     <div class="form-group">
 
-                                            <label class="control-label col-md-2"> Rooms Reserved</label>
+                                        <label class="control-label col-md-2"> Rooms Reserved</label>
                                         <div class="col-md-2">
 
                                             <input type="text" readonly class="form-control" id="rooms" name="rooms">
                                         </div>
 
+  <label class="control-label col-md-2"> Remarks </label>
+                                        <div class="col-md-6">
 
+                                            <textarea type="text"  class="form-control" id="remarks" name="remarks"></textarea>
+                                        </div>
+                                        
                                     </div>
+                                    
+                                            <div class="form-group">
 
+                                        <label class="control-label col-md-2"> Booking Type</label>
+                                        <div class="col-md-10">
+
+                                        <select id="booking"></select>
+                                        </div>
+ 
+                                        
+                                    </div>
+//admin_getbookings
 
 
 
@@ -237,7 +253,7 @@ CALENDAR
 
                                     <label class="col-md-2 control-label">Select Customer</label>
                                     <div class="col-md-10">
-                                        <select class="form-control" onchange="cusSelect(this.value)">
+                                        <select class="form-control" id="customer" onchange="cusSelect(this.value)">
                                             <option value="0" selected> Add New Customer</option>
                                             @foreach($customers as $c)
                                             <option value="{{$c->cus_id}}"> {{$c->name}} - {{$c->NIC_passport_num}} </option>
@@ -252,7 +268,7 @@ CALENDAR
 
                                     <label class="col-md-2 control-label">Customer Name</label>
                                     <div class="col-md-10">
-                                        <input class="form-control customer" name="cus_name">
+                                        <input class="form-control customer" id="cus_name" name="cus_name">
                                     </div>
 
                                 </div>
@@ -262,7 +278,7 @@ CALENDAR
 
                                     <label class="col-md-2 control-label">Customer NIC</label>
                                     <div class="col-md-10">
-                                        <input class="form-control customer" name="cus_nic">
+                                        <input class="form-control customer" id="cus_nic" name="cus_nic">
                                     </div>
 
                                 </div>
@@ -271,7 +287,7 @@ CALENDAR
 
                                     <label class="col-md-2 control-label">Customer Phone</label>
                                     <div class="col-md-10">
-                                        <input class="form-control customer" name="cus_phone">
+                                        <input class="form-control customer" id="cus_phone" name="cus_phone">
                                     </div>
 
                                 </div>
@@ -280,7 +296,7 @@ CALENDAR
 
                                     <label class="col-md-2 control-label">Customer Email</label>
                                     <div class="col-md-10">
-                                        <input class="form-control customer" name="cus_email">
+                                        <input class="form-control customer" id="cus_email" name="cus_email">
                                     </div>
 
                                 </div>
@@ -297,7 +313,7 @@ CALENDAR
 
                     <button ng-click="ResShow = '2'" ng-show="ResShow=='1'" class="btn btn-primary">Next</button>
                     <button ng-click="ResShow = '1'" ng-show="ResShow=='2'" class="btn btn-warning">Previous</button>
-                    <button   ng-show="ResShow=='2'" class="btn btn-success">Confirm and Save</button>
+                    <button   ng-show="ResShow=='2'" class="btn btn-success" onclick="saveRoom()">Confirm and Save</button>
 
                 </div>
 
@@ -431,7 +447,7 @@ CALENDAR
             document.getElementById("save"+id).disabled = true;
             document.getElementById("remove"+id).disabled = false;
             roomList.push(id);
-            
+
             $('#rooms').val( roomList.length);
 
         }
@@ -446,7 +462,7 @@ CALENDAR
             roomList.splice(a,1);
 
             console.log(roomList);
-             $('#rooms').val( roomList.length);
+            $('#rooms').val( roomList.length);
 
         }
 
@@ -483,6 +499,66 @@ CALENDAR
             }
 
         }
+
+
+
+        function saveRoom(){
+
+
+            var checkin = $('#checkin').val();
+            var checkout = $('#checkout').val();
+            var rt = $('#rt').val();
+            var kids = $('#kids').val();
+            var adults = $('#adults').val();
+
+            //roomList;
+
+            var cus = $('#customer').val();
+            var cus_name = $('#cus_name').val();
+            var cus_nic = $('#cus_nic').val();
+            var cus_email = $('#cus_email').val();
+            var cus_phone = $('#cus_phone').val();
+            var remarks = $('#remarks').val();
+
+
+            var data = {
+                checkin : checkin,
+                checkout: checkout,
+                rt:rt,
+                kids:kids,
+                adults:adults,
+                cus:cus,
+                cus_name:cus_name,
+                cus_nic:cus_nic,
+                cus_email:cus_email,
+                cus_phone:cus_phone,
+                data:roomList,
+                remarks:remarks
+            };
+
+
+            $.ajax({
+
+                url:"admin_reserve_room",
+                data:data,
+                type:"get",
+                success:function(){
+
+                    swal("success","","success");
+
+                },
+                error:function(err){
+
+                    console.log(err);
+                }
+
+
+
+            });
+
+        }
+
+
     </script>
 
 
