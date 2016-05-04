@@ -226,11 +226,14 @@ Route::get('admin_getbookings', 'DashboardController@getbookings');
 Route::get('admin_showBlocks', 'DashboardController@showBlocks');
 Route::get('setroomBlock', 'DashboardController@setroomBlock');
 
+Route::get('admin_checkout', 'DashboardController@checkout');
+
 
 Route::get('getHallEventInfo', 'DashboardController@getHallEventInfo'); 
 
 Route::get('admin_dash', 'DashboardController@dash');
 Route::get('admin_search_availability', 'DashboardController@search_availability');
+Route::get('admin_search_hall_availability', 'DashboardController@search_hall_availability');
 
 
 

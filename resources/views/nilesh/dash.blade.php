@@ -15,13 +15,13 @@
 
 @section('title')
 
-Halls
+Dashboard
 
 @endsection
 
 
 @section('page_title')
-HALL MANAGEMENT
+AMALYA REACH MANAGEMENT DASHBOARD
 
 
 
@@ -35,10 +35,10 @@ HALL MANAGEMENT
 @section('breadcrumbs')
 
 <li>
-    <a href="#">Management</a>
+    <a href="#">Dashboard</a>
 </li>
 <li  class="active">
-    <a href="#">Hall Management</a>
+    <a href="#">Statistics</a>
 </li>
 
 @endsection
@@ -177,7 +177,6 @@ HALL MANAGEMENT
                 </div>
             </div>
         </div>
-
         <div class="row">
             <div class="col-lg-12">
                 <div class="panel panel-border panel-danger">
@@ -193,9 +192,49 @@ HALL MANAGEMENT
                                 <td>{{$r->check_out}}</td>
                                 <td>{{$r->check_in}}</td>
                                 <td>{{$r->name}}</td>
-                                <td>{{$r->telephone_num}}</td>
+
                                 <td>
                                     <button class="btn btn-primary btn-block btn-sm" onclick="viewRC({{$r->room_reservation_id}})">View</button> </td>
+
+                            </tr>
+                            @endforeach
+
+                        </tbody>
+                    </table>
+                    @else
+
+                    <div class="panel-body">
+
+                        <div class="alert alert-dismissible alert-warning">
+                            <button type="button" class="close" data-dismiss="alert">&times;</button>
+                            <strong>Sorry! </strong>
+                            No Reservations this week. 
+                        </div>
+
+                    </div>
+                    @endif
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="panel panel-border panel-info">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">On-Going Reservations</h3>
+                    </div>
+                    @if(!empty($ongoing))
+                    <table class="table table-hover">
+
+                        <tbody>
+                            @foreach($ongoing as $r)
+                            <tr> 
+                                <td>{{$r->check_out}}</td>
+                                <td>{{$r->check_in}}</td>
+                                <td>{{$r->name}}</td>
+
+                                <td>
+                                    <button class="btn btn-primary btn-block btn-sm" onclick="viewRO({{$r->room_reservation_id}})">View</button> </td>
 
                             </tr>
                             @endforeach
@@ -269,6 +308,46 @@ HALL MANAGEMENT
                 </div>
             </div>
         </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="panel panel-border panel-success">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">CHECK HALL AVAILABILITY</h3>
+                    </div>
+
+                    <div class="panel-body">
+                        <form class="form-horizontal" id="f2" onsubmit="return searchf2()">
+
+                            <div class="form-group">
+                                <label class="col-md-3">  Date</label>
+                                <div class="col-md-9">
+                                    <input type="text" id="checkin1" name="checkin" class="form-control" required>
+
+                                </div>
+
+                            </div>
+
+
+
+
+
+                            <div class="form-group">
+
+                                <div class="col-md-6 col-md-offset-6">
+                                    <button type="submit" class="btn btn-primary btn-block btn-success">CHECK AVAILABILITY </button>
+
+                                </div>
+                            </div>
+
+                        </form>
+
+                    </div>
+
+                    <div id="searchResult1"></div>
+
+                </div>
+            </div>
+        </div>
 
 
     </div>
@@ -299,16 +378,51 @@ HALL MANAGEMENT
 
             <div class="modal-footer">
 
-                <button type="button" class="btn btn-white" data-dismiss="modal">Close</button>
+                <div id="cblock2">
+                    <button type="button" class="btn btn-white" data-dismiss="modal">Close</button>
+                </div>
                 <div id="cblock">
-                <button type="button" class="btn btn-success"  onclick="checkIn()">Check In and Block Rooms</button>
-</div>
+                    <button type="button" class="btn btn-white" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-success"  onclick="checkIn()">Check In and Block Rooms</button>
+                </div>
             </div>
         </div>
 
 
     </div>
 </div>
+
+<div class="modal inmodal fade" id="dataView1" tabindex="-1" role="dialog"  aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="viewTitle1"></h4>
+
+            </div>
+            <div class="modal-body">
+
+                <div id="reserve_info1"></div>
+
+
+
+
+
+            </div>
+
+            <div class="modal-footer">
+
+
+                <button type="button" class="btn btn-white" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-danger" id="checkoutBtn" >Check Out</button>
+
+            </div>
+        </div>
+
+
+    </div>
+</div>
+
 <div class="modal inmodal fade" id="blockView" tabindex="-1" role="dialog"  aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
@@ -362,6 +476,15 @@ HALL MANAGEMENT
             format:'yyyy-mm-dd'
         });
 
+        $('#checkin1').datepicker({
+            todayBtn: "linked",
+            keyboardNavigation: false,
+            forceParse: false,
+            calendarWeeks: true,
+            autoclose: true,
+            format:'yyyy-mm-dd'
+        });
+
         $('#checkout').datepicker({
             todayBtn: "linked",
             keyboardNavigation: false,
@@ -380,7 +503,7 @@ HALL MANAGEMENT
         $.ajax({
             url:"admin_search_availability",
             type:"get",
-            data:$('#f1').serialize(),
+            data:$('#f').serialize(),
             success:function(data){
 
                 console.log(data);
@@ -413,8 +536,56 @@ HALL MANAGEMENT
     }
 
 
+    function searchf2(){
+
+        $.ajax({
+            url:"admin_search_hall_availability",
+            type:"get",
+            data:$('#f2').serialize(),
+            success:function(data){
+
+                console.log(data);
+
+                var str ="<table class='table table-hover'> <tbody>";
+                str+="<tr class='success'> <td colspan='2'><center> SEARCH RESULT </center> </td> </tr>";
+
+                console.log(data);
+                for(var i= 0; i<data.length;i++){
+
+                    str+= "<tr><td class='text-uppercase'><center>"+data[i].title+" - "+data[i].hall_num+"</center></td>";
+                    
+                    if(data[i].st == 0){
+                        
+                           str+= "<td class=''><center> <span class='label label-success'>   Available </span>  </center></td> </tr>";
+                    }else{
+                        
+                        
+                        
+                    str+= "<td class=''><center> <span class='label label-danger'> Not  Available </span>  </center></td> </tr>";
+                        }
+
+                }
+                str+= "</tbody> </table>"
+
+                document.getElementById("searchResult1").innerHTML = str;
+
+
+            },
+            error:function(err){
+
+                console.log(err);
+            }
+
+
+
+        });
+
+        return false;
+    }
+
     function viewR(id){
-         document.getElementById("cblock").removeAttribute("hidden",false);
+        document.getElementById("cblock").removeAttribute("hidden",false);
+        document.getElementById("cblock2").setAttribute("hidden",true);
 
         $.ajax({
             url:"admin_search_bookings_get",
@@ -435,37 +606,42 @@ HALL MANAGEMENT
 
         });
 
-        function viewRC(id){
 
-            $.ajax({
-                url:"admin_search_bookings_get",
-                data:{id:id},
-                type:"get",
-                success:function(data){
-
-                    $('#dataView').modal("show");
-                    document.getElementById("block_info").innerHTML = data;
-                    // document.getElementById("viewTitle").innerHTML = "Room Reservation  Check-Out";
-                },
-                error:function(err){
-
-                    console.log(err);
-
-                }
-
-
-            });
-
-
-        }
 
     } 
+    function viewRC(id){
 
+
+        $.ajax({
+            url:"admin_search_bookings_get",
+            data:{id:id},
+            type:"get",
+            success:function(data){
+
+                $('#dataView1').modal("show");
+                document.getElementById("reserve_info1").innerHTML = data;
+                document.getElementById("viewTitle1").innerHTML = "Room Reservation  Check-Out";
+                document.getElementById("checkoutBtn").removeAttribute("onclick",false);
+
+                document.getElementById("checkoutBtn").setAttribute("onclick","checkOut("+id+")");
+            },
+            error:function(err){
+
+                console.log(err);
+
+            }
+
+
+        });
+
+
+    }
 
     function viewH(id){
 
         document.getElementById("cblock").setAttribute("hidden",true);
-        
+        document.getElementById("cblock2").removeAttribute("hidden",false);
+
         $.ajax({
             url:"getHallEventInfo",
             data:{id:id},
@@ -475,6 +651,34 @@ HALL MANAGEMENT
                 $('#dataView').modal("show");
                 document.getElementById("reserve_info").innerHTML = data;
                 document.getElementById("viewTitle").innerHTML = "Hall Reservation Information";
+            },
+            error:function(err){
+
+                console.log(err);
+
+            }
+
+
+        });
+
+
+    }
+
+
+    function viewRO(id){
+
+        document.getElementById("cblock").setAttribute("hidden",true);
+        document.getElementById("cblock2").removeAttribute("hidden",false);
+
+        $.ajax({
+            url:"admin_search_bookings_get",
+            data:{id:id},
+            type:"get",
+            success:function(data){
+
+                $('#dataView').modal("show");
+                document.getElementById("reserve_info").innerHTML = data;
+                document.getElementById("viewTitle").innerHTML = "On-Going Reservations";
             },
             error:function(err){
 
@@ -502,12 +706,17 @@ HALL MANAGEMENT
             type:"get",
             success:function(data){
 
-                
+
                 if(data == 0){
-                    
+
+                    swal("You Cannot Check In until the actual Check In date Arrives!","","error");
+                    return false;
+
+                }else if(data == 1){
+
                     swal("You Have already checked this reservation In","","error");
                     return false;
-                    
+
                 }
                 $('#dataView').modal("hide");
                 $('#blockView').modal("show");
@@ -626,7 +835,7 @@ HALL MANAGEMENT
                       id:id},
                 type:"get",
                 success:function(data){
-                    
+
                     console.log(data);
                     $('#blockView').modal("hide");
                     swal("Successfully Checked In","","success");
@@ -644,6 +853,46 @@ HALL MANAGEMENT
 
 
         }
+    }
+
+
+    function checkOut(id){
+
+
+
+        swal({   
+            title: "Check Out?",   
+            text: "",   
+            type: "warning",   
+            showCancelButton: true,   
+            confirmButtonColor: "#DD6B55",   
+            confirmButtonText: "Check Out",   
+            cancelButtonText: "Cancel",   
+            closeOnConfirm: false}, 
+             function(isConfirm){   if (isConfirm) {
+
+
+            $.ajax({
+                url:"admin_checkout",
+                data:{id:id},
+                type:"get",
+                success:function(data){
+                    $('#dataView1').modal("hide");
+                    swal("Checked Out Successfully!","","success");
+                },
+                error:function(err){
+                    console.log(err);
+                }
+
+
+            });
+
+
+
+        } });
+
+
+
     }
 
 </script>
