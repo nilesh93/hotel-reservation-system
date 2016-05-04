@@ -223,6 +223,8 @@ Route::get('getEvents', 'DashboardController@getEvents');
 Route::get('getHallEvents', 'DashboardController@getHallEvents'); 
 Route::get('admin_reserve_room', 'DashboardController@admin_reserve_room'); 
 Route::get('admin_getbookings', 'DashboardController@getbookings');
+Route::get('admin_showBlocks', 'DashboardController@showBlocks');
+Route::get('setroomBlock', 'DashboardController@setroomBlock');
 
 
 Route::get('getHallEventInfo', 'DashboardController@getHallEventInfo'); 

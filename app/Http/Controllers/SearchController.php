@@ -106,7 +106,8 @@ where A.room_reservation_id = '$id'
   return view('nilesh.reservation_info')
    ->with('room',$result)
    ->with('roomblocks',$roomblocks)
-   ->with('roomInfo',$roomInfo);
+   ->with('roomInfo',$roomInfo)
+   ->with('resId',$id);
 
  }
 

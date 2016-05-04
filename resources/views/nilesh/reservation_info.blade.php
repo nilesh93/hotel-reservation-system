@@ -1,7 +1,7 @@
 @if(!empty($room))
  
 <div class="row">
-
+<input type="hidden" value="{{$resId}}" id="room_reservation_id">
 	<div class="card-box widget-inline" style="padding-top:0cm">
 		<div class="row">
 			<div class="col-lg-4 col-sm-6">

@@ -2,6 +2,7 @@
  
 <div class="row">
 
+<input type="hidden" value="{{$room[0]->hall_reservation_id}}" id="hall_reservation_id">
 	<div class="card-box widget-inline" style="padding-top:0cm">
 		<div class="row">
 			<div class="col-lg-6 col-sm-6">
