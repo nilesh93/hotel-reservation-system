@@ -377,14 +377,17 @@ Route::get('admin_search/customers','SearchController@customers_search');
 Route::get('admin_customers_search','SearchController@customers_search_index');
 
 //Test email
+//Menu image upload
+Route::post('menuImageUpload','MenusController@menuImageUpload');
+//Test email
 Route::get('testmail',function(){
 
     Mail::send('emails.newAdmin', [], function ($message)  {
         $message->from(env('MAIL_FROM'), env('MAIL_NAME'));
-
         $message->to('hash.crackhead@gmail.com')->subject('Welcome to the team!');
     });
 });
+
 
 route::post('upload',function(){
     if(Input::hasFile('file')) {

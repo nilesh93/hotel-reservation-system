@@ -229,7 +229,7 @@ class MenusController extends Controller
         DB::table('DETAILED_MENUS')->where('id','=',$item_id)->delete();
     }
 
-    public function imageupload(){
+    public function menuImageUpload(){
         if(Input::hasFile('file')) {
             //upload an image to the /img/tmp directory and return the filepath.
 
