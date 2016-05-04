@@ -99,7 +99,9 @@ HALL MANAGEMENT
 
 <div class="row">
 
-    <div class="col-lg-6">
+    <div class="col-lg-7">
+      <div class="row">
+           <div class="col-lg-12">
         <div class="panel panel-border panel-success">
             <div class="panel-heading">
                 <h3 class="panel-title">Coming Up This Week - Rooms</h3>
@@ -114,7 +116,7 @@ HALL MANAGEMENT
                         <td>{{$r->name}}</td>
                         <td>{{$r->telephone_num}}</td>
                         <td>
-                            <button class="btn btn-info btn-sm" onclick="viewR({{$r->room_reservation_id}})">View</button> </td>
+                            <button class="btn btn-success btn-block btn-sm" onclick="viewR({{$r->room_reservation_id}})">View</button> </td>
 
                     </tr>
                     @endforeach
@@ -134,10 +136,50 @@ HALL MANAGEMENT
             </div>
             @endif
         </div>
+          </div>
     </div>
+        <div class="row">
+            <div class="col-lg-12">
+        <div class="panel panel-border panel-custom">
+            <div class="panel-heading">
+                <h3 class="panel-title">Coming Up This Week - Halls</h3>
+            </div>
+            @if(!empty($hallWeek))
+            <table class="table table-hover">
 
+                <tbody>
+                    @foreach($hallWeek as $h)
+                    <tr> 
+                        <td>{{$h->reserve_date}}</td>
+                        <td>{{$h->name}}</td>
+                        
+                        <td>{{$h->title}}</td>
+                        <td>
+                            <button class="btn  btn-primary btn-block btn-sm" onclick="viewH({{$h->hall_reservation_id}})">View</button> </td>
 
-    <div class="col-lg-6">
+                    </tr>
+                    @endforeach
+
+                </tbody>
+            </table>
+            @else
+
+            <div class="panel-body">
+
+                <div class="alert alert-dismissible alert-warning">
+                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                    <strong>Sorry! </strong>
+                    No Reservations this week. 
+                </div>
+
+            </div>
+            @endif
+        </div>
+                </div>
+    </div>
+       
+          <div class="row">
+          <div class="col-lg-12">
         <div class="panel panel-border panel-danger">
             <div class="panel-heading">
                 <h3 class="panel-title">Checking Out Today</h3>
@@ -153,7 +195,7 @@ HALL MANAGEMENT
                         <td>{{$r->name}}</td>
                         <td>{{$r->telephone_num}}</td>
                         <td>
-                            <button class="btn btn-info btn-sm" onclick="viewRC({{$r->room_reservation_id}})">View</button> </td>
+                            <button class="btn btn-primary btn-block btn-sm" onclick="viewRC({{$r->room_reservation_id}})">View</button> </td>
 
                     </tr>
                     @endforeach
@@ -173,52 +215,15 @@ HALL MANAGEMENT
             </div>
             @endif
         </div>
+         </div>
     </div>
-
 </div>
-
-
-<div class="row">
-
-    <div class="col-lg-6">
-        <div class="panel panel-border panel-custom">
-            <div class="panel-heading">
-                <h3 class="panel-title">Coming Up This Week - Halls</h3>
-            </div>
-            @if(!empty($hallWeek))
-            <table class="table table-hover">
-
-                <tbody>
-                    @foreach($hallWeek as $h)
-                    <tr> 
-                        <td>{{$h->reserve_date}}</td>
-                        <td>{{$h->name}}</td>
-                        <td>{{$h->telephone_num}}</td>
-                        <td>{{$h->title}}</td>
-                        <td>
-                            <button class="btn btn-info btn-sm" onclick="viewH({{$h->hall_reservation_id}})">View</button> </td>
-
-                    </tr>
-                    @endforeach
-
-                </tbody>
-            </table>
-            @else
-
-            <div class="panel-body">
-
-                <div class="alert alert-dismissible alert-warning">
-                    <button type="button" class="close" data-dismiss="alert">&times;</button>
-                    <strong>Sorry! </strong>
-                    No Reservations this week. 
-                </div>
-
-            </div>
-            @endif
-        </div>
-    </div>
-
-    <div class="col-lg-6">
+    <div class="col-lg-5">
+        
+   
+        
+    <div class="row">
+         <div class="col-lg-12">
         <div class="panel panel-border panel-primary">
             <div class="panel-heading">
                 <h3 class="panel-title">CHECK ROOM AVAILABILITY</h3>
@@ -263,9 +268,46 @@ HALL MANAGEMENT
             
             </div>
         </div>
+        </div>
+   
+
+</div>
     
-     
+  
+
+   
+</div>
+ 
+
+<div class="modal inmodal fade" id="dataView" tabindex="-1" role="dialog"  aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="viewTitle"></h4>
+
+            </div>
+                  <div class="modal-body">
+
+                      <div id="reserve_info"></div>
+                      
+                      
+                      
+ 
+
+                </div>
+
+                <div class="modal-footer">
+                     
+                    <button type="button" class="btn btn-white" data-dismiss="modal">Close</button>
+                  
+                </div>
+                </div>
+
+             
     </div>
+</div>
+
     @endsection
 
 
@@ -338,6 +380,80 @@ HALL MANAGEMENT
             
             return false;
         }
+        
+        
+        function viewR(id){
+            
+            $.ajax({
+                url:"admin_search_bookings_get",
+                data:{id:id},
+                type:"get",
+                success:function(data){
+                    
+                    $('#dataView').modal("show");
+                    document.getElementById("reserve_info").innerHTML = data;
+                     document.getElementById("viewTitle").innerHTML = "Room Reservation  Check-In";
+                },
+                error:function(err){
+                    
+                    console.log(err);
+                    
+                }
+                
+                
+            });
+            
+            function viewRC(id){
+                
+                   $.ajax({
+                url:"admin_search_bookings_get",
+                data:{id:id},
+                type:"get",
+                success:function(data){
+                    
+                    $('#dataView').modal("show");
+                    document.getElementById("reserve_info").innerHTML = data;
+                     document.getElementById("viewTitle").innerHTML = "Room Reservation  Check-Out";
+                },
+                error:function(err){
+                    
+                    console.log(err);
+                    
+                }
+                
+                
+            });
+                
+                
+            }
+          
+        } 
+        
+          
+              function viewH(id){
+                
+                   $.ajax({
+                url:"getHallEventInfo",
+                data:{id:id},
+                type:"get",
+                success:function(data){
+                    
+                    $('#dataView').modal("show");
+                    document.getElementById("reserve_info").innerHTML = data;
+                     document.getElementById("viewTitle").innerHTML = "Hall Reservation Information";
+                },
+                error:function(err){
+                    
+                    console.log(err);
+                    
+                }
+                
+                
+            });
+                
+                
+            }
+            
     </script>
 
     @endsection
