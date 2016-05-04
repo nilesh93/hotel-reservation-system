@@ -223,12 +223,17 @@ Route::get('getEvents', 'DashboardController@getEvents');
 Route::get('getHallEvents', 'DashboardController@getHallEvents'); 
 Route::get('admin_reserve_room', 'DashboardController@admin_reserve_room'); 
 Route::get('admin_getbookings', 'DashboardController@getbookings');
+Route::get('admin_showBlocks', 'DashboardController@showBlocks');
+Route::get('setroomBlock', 'DashboardController@setroomBlock');
+
+Route::get('admin_checkout', 'DashboardController@checkout');
 
 
 Route::get('getHallEventInfo', 'DashboardController@getHallEventInfo'); 
 
 Route::get('admin_dash', 'DashboardController@dash');
 Route::get('admin_search_availability', 'DashboardController@search_availability');
+Route::get('admin_search_hall_availability', 'DashboardController@search_hall_availability');
 
 
 
@@ -376,14 +381,17 @@ Route::get('admin_search/customers','SearchController@customers_search');
 Route::get('admin_customers_search','SearchController@customers_search_index');
 
 //Test email
+//Menu image upload
+Route::post('menuImageUpload','MenusController@menuImageUpload');
+//Test email
 Route::get('testmail',function(){
 
     Mail::send('emails.newAdmin', [], function ($message)  {
         $message->from(env('MAIL_FROM'), env('MAIL_NAME'));
-
         $message->to('hash.crackhead@gmail.com')->subject('Welcome to the team!');
     });
 });
+
 
 route::post('upload',function(){
     if(Input::hasFile('file')) {

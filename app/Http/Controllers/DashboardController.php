@@ -10,6 +10,8 @@ use DB;
 use App\RoomType;
 use App\Customer;
 use App\ROOM_RESERVATION;
+use App\ROOM;
+use App\ROOM_RESERVATION_BLOCK;
 
 class DashboardController extends Controller
 {
@@ -36,8 +38,8 @@ AND a.status NOT IN ('PENDING','CANCELLED','REJECTED')"));
 
     }
 
-    
-     public function getHallEvents(){
+
+    public function getHallEvents(){
 
         $halls =  DB::select(DB::raw("SELECT * FROM HRS.HALL_RESERVATION A
 Left JOIN HRS.HALLS B ON B.hall_id = A.hall_id
@@ -49,21 +51,21 @@ and A.reserve_date  > DATE_SUB(NOW(),INTERVAL 2 YEAR)"));
 
     }
 
-    
+
     public function getHallEventInfo(Request $request){
-        
+
         $id = $request->input('id');
-        
+
         $halls = DB::select(DB::raw("SELECT * FROM HRS.HALL_RESERVATION A
 Left JOIN HRS.HALLS B ON B.hall_id = A.hall_id
 LEFT JOIN HRS.CUSTOMER C ON A.cus_id = C.cus_id
 where A.hall_reservation_id = '$id'"));
-        
+
         return view('nilesh.hallInfo')
             ->with('room',$halls);
-        
+
     }
-    
+
 
     public function getbookings(Request $request){
 
@@ -158,7 +160,7 @@ Order by A.reserve_date ASC;"));
 
         $checkout = DB::select(DB::raw("select * from HRS.ROOM_RESERVATION A
 LEFT JOIN HRS.CUSTOMER B ON A.cus_id =  B.cus_id
-WHERE A.status IN ('ACCEPTED','CHECKEDIN')
+WHERE A.status IN ('ACCEPTED','CHECKED IN')
 AND DATE_FORMAT(A.check_out,'%Y-%m-%d') = DATE_FORMAT(NOW(),'%Y-%m-%d')
 Order by A.check_out ASC;"));
 
@@ -176,6 +178,10 @@ Order by A.check_out ASC;"));
 Group by A.room_type_id"));
 
 
+        $ongoing = DB::select(DB::raw("select * from HRS.ROOM_RESERVATION A
+LEFT JOIN HRS.CUSTOMER B ON A.cus_id =  B.cus_id
+WHERE A.status = 'CHECKED IN'")); 
+
         $roomTypes = RoomType::all();
 
         return view('nilesh.dash')
@@ -184,6 +190,7 @@ Group by A.room_type_id"));
             ->with('checkout', $checkout)
             ->with('roomInfo', $roomInfo)
             ->with('roomTypes', $roomTypes)
+            ->with('ongoing', $ongoing)
             ->with('hallWeek', $hallWeek);
 
     }
@@ -193,8 +200,8 @@ Group by A.room_type_id"));
 
         $checkin = $request->input('checkin');
         $checkout = $request->input('checkout');
-        
-      $availability =  DB::select(DB::raw("Select B.type_name,
+
+        $availability =  DB::select(DB::raw("Select B.type_name,
 (select count(*) from HRS.ROOMS F where F.status = 'AVAILABLE' AND F.room_type_id = B.room_type_id) as all_rooms,
 IFNULL((select SUM(A.count) as booked 
 from HRS.RES_RMTYPE_CNT_RATE A
@@ -208,6 +215,123 @@ from HRS.ROOM_TYPES B"));
 
 
         return $availability;
+    }
+
+    public function search_hall_availability(Request $request){
+
+        $checkin = $request->input('checkin');
+
+
+        $availability =  DB::select(DB::raw(" 
+        select A.*,
+IFNULL((select count(*) as c
+from HALL_RESERVATION B 
+where B.hall_id = A.hall_id AND DATE_FORMAT(B.reserve_date,'%Y-%m-%d') = '$checkin' 
+group by B.hall_id),0) as st
+from HALLS A
+
+ "));
+
+
+        return $availability;
+    }
+
+
+    public function showBlocks(Request $request){
+
+        $id = $request->input('id');
+
+        $check = DB::select(DB::raw("select * from HRS.ROOM_RESERVATION A
+where  DATE_FORMAT(A.check_out,'%Y-%m-%d') = DATE_FORMAT(NOW(),'%Y-%m-%d')
+AND A.room_reservation_id = '$id'
+ "));
+        if(empty($check)){
+
+            return 0;
+        }else if($check->status != 'ACCEPTED'){
+
+            return 1;
+        }
+
+        $roomt = DB::select(DB::raw("Select SUM(A.count) as count , A.room_type_id, 
+        (select B.type_name from ROOM_TYPES B where B.room_type_id = A.room_type_id) as type_name
+
+        from RES_RMTYPE_CNT_RATE A where A.room_reservation_id = '$id' group by A.room_type_id"));
+
+
+        $arr = array();
+
+        foreach( $roomt as $r){
+
+            $rtid = $r->room_type_id;
+            $temp = DB::select(DB::raw("SELECT A.*, (Select B.type_name from ROOM_TYPES B where B.room_type_id = A.room_type_id) as type_name FROM ROOMS A
+Where A.status = 'AVAILABLE' and A.room_type_id = '$rtid'"));
+
+            array_push($arr,$temp);
+
+        }
+
+        return view('nilesh.blockInfo')
+            ->with('roomTypes',$roomt)
+            ->with('arr',$arr)
+            ->with('resid',$id);
+
+
+    }
+
+    public function setroomBlock(Request $request){
+
+        $arr = $request->input('arr');
+
+        //ROOM_RESERVATION_BLOCK
+
+        $id = $request->input('id');
+
+        $rs = ROOM_RESERVATION::find($id);
+        //dd($arr);
+
+        foreach($arr as $a){
+
+
+            DB::table('ROOM_RESERVATION_BLOCK')->insert(
+                ['room_id' =>  $a, 'room_reservation_id' => $id, 'adults' => $rs->adults, 'children'=> $rs->children]
+            );
+
+
+
+            $room = ROOM::find($a);
+            $room->status = "BLOCKED";
+            $room->save();
+
+        }
+
+        $rs->status = "CHECKED IN";
+        $rs->save();
+
+
+    }
+
+
+    public function checkout(Request $request){
+
+        $id = $request->input('id');
+
+        $rsb = ROOM_RESERVATION_BLOCK::where("room_reservation_id",$id);
+
+
+        foreach($rsb as $r){
+
+            $room = ROOM::find($r->room_id);
+            $room->status = 'AVAILABLE';
+
+            $room->save();
+
+        }
+
+        $rs = ROOM_RESERVATION::find($id);
+        $rs->status = "CHECKED OUT";
+        $rs->save();
+
     }
 
 }
