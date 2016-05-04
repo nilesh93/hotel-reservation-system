@@ -5,6 +5,7 @@ namespace App\Console;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 use App\BACKUP_LOG;
+use App\Notifications;
 
 class Kernel extends ConsoleKernel
 {
@@ -29,8 +30,8 @@ class Kernel extends ConsoleKernel
 
        /* $schedule->command('queue:listen')->everyMinute();*/
 
-       /* $schedule->command('inspire')
-                 ->hourly();
+        /*$schedule->command('inspire')
+                 ->hourly();*/
 
         // This scheduled task backs up the db at midnight everyday
         $serial_num = BACKUP_LOG::max('serial_num');
@@ -42,6 +43,17 @@ class Kernel extends ConsoleKernel
 
         // This shell command will be executed at Midnight everyday
         $schedule->exec('mysqldump -u'.env('DB_USERNAME').' -p'.env('DB_PASSWORD').' '.env('DB_DATABASE').' > '.env('BACKUP_PATH').$newSerial_num."_scheduled_backup_`date`".'.sql')
-            ->daily();*/
+            ->daily();
+
+        /*// This shell command will be executed at the specified time everyday
+        // Test this with php artisan schedule:run
+        $schedule->exec('mysqldump -u'.env('DB_USERNAME').' -p'.env('DB_PASSWORD').' '.env('DB_DATABASE').' > '.env('BACKUP_PATH').$newSerial_num."_scheduled_backup_`date`".'.sql')
+            ->dailyAt("14:34");*/
+
+        $newNotification = new Notifications();
+        $newNotification->notification = "Backup successful!";
+        $newNotification->body = 'Backup #'.$newSerial_num.' created.';
+        $newNotification->readStatus = '0';
+        $newNotification->save();
     }
 }

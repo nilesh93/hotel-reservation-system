@@ -8,6 +8,9 @@ use DB;
 use Illuminate\Http\Request;
 use App\Inquiry;
 use Illuminate\Support\Facades\Mail;
+use App\Notifications;
+use App\User;
+use Vinkla\Pusher\Facades\Pusher;
 
 class InquiryController extends Controller
 {
@@ -29,10 +32,10 @@ class InquiryController extends Controller
     public function __construct()
     {
         // Check if User is Authenticated
-        $this->middleware('auth', ['except' => ['blockNotice']]);
+        $this->middleware('auth', ['except' => ['saveinquiry']]);
 
         // Check if the authenticated user is an admin
-        $this->middleware('isAdmin', ['except' => ['blockNotice']]);
+        $this->middleware('isAdmin', ['except' => ['saveinquiry']]);
     }
 
 
@@ -53,22 +56,38 @@ class InquiryController extends Controller
         $inq->message = $request->input('message');
         $inq->status = '1';
 
-
-
         $inq->save();
 
+        // save notification to DB and to pusher
+        $newNotification = new Notifications();
+        $newNotification->notification = "New Customer Inquiry!";
+        $newNotification->body = 'New Customer Inquiry has been made.';
+        $newNotification->readStatus = '0';
+        $newNotification->save();
 
-        Mail::send('emails.inquiry', ['inq'=> $inq], function ($message)   {
+        Pusher::trigger('notifications', 'new_backup_notification', ['message' => 'New Customer Inquiry has been made.']);
+
+        // get admin's email
+
+        $email = User::where('role', 'admin')->first()->email;
+
+
+        Mail::send('emails.inquiry', ['inq'=> $inq], function ($message) use($email)  {
             $message->from(env('MAIL_FROM'), env('MAIL_NAME'));
 
-            $message->to("nilesh.jayanandana@yahoo.com")->subject('Amalaya Reach Inquiry');
+            //$message->to("vishandanura@hotmail.com")->subject('Amalaya Reach Inquiry');
+            $message->to($email)->subject('Amalaya Reach Inquiry');
         });
-
-
-
-
     }
 
+    public function getPage() {
+        return view('Website.cusInq');
+    }
 
+    public function getData(){
 
+        $data = Inquiry::all();
+
+        return response()->json(['count'=> count($data), 'data'=> $data]);
+    }
 }

@@ -82,22 +82,34 @@ class UserController extends Controller
      * @param Request $request
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
-    public function createNewAdmin(CreateNewAdminRequest $request)
+    public function createNewAdmin(Request $request)
     {
         $data = $request->all();
 
-        // Create new User
-        User::create([
-            'email' => $data['email'],
-            'password' => bcrypt($data['password']),
-            'role' => "admin"
-        ]);
+        $adminUser = User::where('role', 'admin')->first();
+        $admin = Admin::where('email', $adminUser->email)->first();
+
+        // Edit the admin account details
+        $admin->email = $data['email'];
+        $ts = $admin->last_login_ts;
+        $admin->delete();
+
+        // Edit admin details in the login table
+        $adminUser->email = $data['email'];
+        $adminUser->save();
 
         // Create new Admin entry for the above user
         Admin::create([
             'email' => $data['email'],
-            'last_login_ts' => ""
+            'last_login_ts' => $ts
         ]);
+
+        /*// Create new User
+        User::create([
+            'email' => $data['email'],
+            'password' => bcrypt($data['password']),
+            'role' => "admin"
+        ]);*/
 
         // Send notification mail to the newly created Admin.
         Mail::send('emails.newAdmin', [], function ($message) use ($data) {
@@ -106,7 +118,7 @@ class UserController extends Controller
             $message->to($data['email'])->subject('Welcome to the team!');
         });
 
-        return redirect('admin_users');
+        return redirect('admin_users')->with('status', 'Email Account changed.');
     }
 
     /**

@@ -328,6 +328,10 @@ Route::post('admin_about_us_edit', 'AboutUsPageController@editContent');
 // Notifications read status update
 Route::get('setReadStatus', 'BackupController@setStatus');
 
+// Inquiries routes
+Route::get('get_inquiries_page', 'InquiryController@getPage');
+Route::get('get_inquiries', 'InquiryController@getData');
+
 // Inaccessible views testing route
 Route::get('/test', function(){
     return view('errors.modelNotFound');
@@ -377,14 +381,17 @@ Route::get('admin_search/customers','SearchController@customers_search');
 Route::get('admin_customers_search','SearchController@customers_search_index');
 
 //Test email
+//Menu image upload
+Route::post('menuImageUpload','MenusController@menuImageUpload');
+//Test email
 Route::get('testmail',function(){
 
     Mail::send('emails.newAdmin', [], function ($message)  {
         $message->from(env('MAIL_FROM'), env('MAIL_NAME'));
-
         $message->to('hash.crackhead@gmail.com')->subject('Welcome to the team!');
     });
 });
+
 
 route::post('upload',function(){
     if(Input::hasFile('file')) {

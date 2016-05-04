@@ -17,10 +17,10 @@ User Management
 @endsection
 
 @section('page_buttons')
-    <div class="col-md-4 col-md-offset-8">
+    <div class="col-md-5 col-md-offset-7">
         <button type="button" class="btn btn-success waves-effect btn-block waves-light pull-right" data-toggle="modal" data-target="#addAdmin">
         <span class="btn-label pull-left"><i class="fa fa-plus"></i>
-        </span>ADD ADMIN</button>
+        </span>Edit Admin Email</button>
     </div>
 @endsection
 
@@ -85,6 +85,12 @@ User Management
             </div>
             <div class="tab-pane active" id="admin">
 
+                @if(session('status'))
+                    <ul class="list-group text-center">
+                        <li class="list-group-item list-group-item-success"><strong>{{ session('status') }}</strong></li>
+                    </ul>
+                @endif
+
 
                 <table class="table table-striped table-bordered table-hover dataTables-example" id="adt" plugin="datatable" >
                     <thead>
@@ -127,18 +133,16 @@ User Management
                         </div>
 
                         <div class="form-group">
-                            <label class="col-lg-3 control-label">Password</label>
+                            <label class="col-lg-3 control-label"> </label>
                             <div class="col-lg-9">
-                                <input type="password" class="form-control" name="password" id="password" pattern="^.{6,}$" title="6 Characters minimum" required placeholder="Password should be minimum 6 characters long">
-                                @if ($errors->has('password')) <p class="text-danger">{{ $errors->first('password') }}</p>@endif
+
                             </div>
                         </div>
 
                         <div class="form-group">
-                            <label class="col-lg-3 control-label">Confirm Password</label>
+                            <label class="col-lg-3 control-label"> </label>
                             <div class="col-lg-9">
-                                <input type="password" class="form-control" name="password_confirmation" id="password_confirmation" pattern="^.{6,}$" title="6 Characters minimum" required>
-                                @if ($errors->has('password_confirmation')) <p class="text-danger">{{ $errors->first('password_confirmation') }}</p>@endif
+
                             </div>
                         </div>
                     </div>
@@ -245,10 +249,11 @@ User Management
 
                                                 return admin;
                                             }
-                                            if(data.emp_id != getThisAdmin())
-                                                return '<button class="btn btn-danger  btn-animate btn-animate-side btn-block btn-sm" onclick="removeAdmin(' + data.emp_id + ')"> Remove </button>';
-                                            else
-                                                return '<button class="btn btn-danger  btn-animate btn-animate-side btn-block btn-sm" onclick="removeAdmin(' + data.emp_id + ')" disabled> Remove </button>';
+                                            //if(data.emp_id == getThisAdmin())
+                                                //return '<button class="btn btn-danger  btn-animate btn-animate-side btn-block btn-sm" onclick="removeAdmin(' + data.emp_id + ')"> Remove </button>';
+                                            //else
+                                                //return '<button class="btn btn-danger  btn-animate btn-animate-side btn-block btn-sm" onclick="removeAdmin(' + data.emp_id + ')" disabled> Remove </button>';
+                                            return '<a class="btn btn-danger  btn-animate btn-animate-side btn-block btn-sm" href="{{URL::to('change_password')}}"> Change Password </a>';
                                         }
                                     }
                                 ]
