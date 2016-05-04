@@ -91,7 +91,7 @@
                         </td>
                         <td>
 
-                        {{ $mail_details['hall_reservation_details']->hall_reservation_id}}
+                        {{ $res_id}}
                         </td>
                     </tr>
                 </table>
@@ -108,77 +108,10 @@
 
         <p>Dear valued customer.,<br><br>
 
-            Thank you for choosing to celebrate your event with us at the Amalya Reach Holiday Resorts. We are pleased to confirm your reservation as follows:        </p>
+            Thank you for choosing to stay with us at the Amalya Reach Holiday Resorts. We received your reservation details we will confirm you shortly.       </p>
         <br>
 
-        <table style="border: none;" cellpadding="5" width="100%">
 
-            <tr>
-                <td>
-                    Customer Name :
-                </td>
-                    {{ $mail_details['customer_details']->name }}
-                <td>
-
-                <td>
-            <tr>
-
-            <tr>
-                <td>
-                    Event Date :
-                </td>
-                    {{ strtok($mail_details['hall_reservation_details']->reserve_date, " ") }}
-                <td>
-
-                <td>
-            <tr>
-
-            <tr>
-                <td>
-                    Time Slot :
-                </td>
-                {{ $mail_details['hall_reservation_details']->time_slot }}
-                <td>
-
-                <td>
-            <tr>
-
-            <tr>
-                <td>
-                    Hall :
-                </td>
-                {{ $mail_details['hall_reservation_details']->title }}
-                <td>
-
-                <td>
-            <tr>
-
-
-
-
-        </table>
-
-
-        <hr style="height: 1px; border: none; background-color: #000000">
-        <table width="100%" id="id">
-            <tr>
-                <td>
-                    <b>Notes</b>
-                </td>
-            </tr>
-
-            <tr>
-                <td>
-                    The Advanced payment will be non-refundable
-                </td>
-            </tr>
-
-        </table>
-
-
-
-
-        <br>
 
         <hr style="height: 1px; border: none; background-color: #000000">
 

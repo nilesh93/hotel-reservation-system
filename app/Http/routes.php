@@ -23,7 +23,7 @@ use App\HALL;
 
 Route::get('/', 'PagesController@HomePage');
 Route::get('/home', 'PagesController@HomePage');
-Route::get('admin', 'PagesController@adminView');
+Route::get('admin', 'DashboardController@dash');
 Route::get('/contact', 'PagesController@contactView');
 Route::get('/gallery', function () {
 
@@ -57,6 +57,8 @@ Route::post('room_availability', 'RoomAvailabilityController@checkRoomAvailabili
 Route::get('my_past_room_reservations', 'RoomReservationController@myPastReservation');
 Route::get('delete_selected_room_type', 'RoomAvailabilityController@delSelectedRoom_type');
 Route::get('my_future_room_reservations', 'RoomReservationController@myFutureReservation');
+Route::get('promo_code_validate', 'RoomAvailabilityController@promotionValidate');
+
 
 //halls
 Route::get('halls', 'PagesController@hallsView');
@@ -84,6 +86,15 @@ Route::get('admin_get_pending_room_reservations', 'AdminReservationController@pe
 Route::get('admin_get_pending_hall_reservations', 'AdminReservationController@pendingHallReservation');
 Route::get('admin_individual_reservation', 'AdminReservationController@getIndividualReservationDetails');
 Route::get('admin_check_room','AdminReservationController@checkRoomAvailability');
+Route::get('admin_accept_update_reservation', 'AdminReservationController@updateAcceptReservation');
+Route::get('admin_reservation_general', 'AdminReservationController@reservationGeneralInfo');
+Route::get('admin_reject_room_reservation', 'AdminReservationController@updateRejectReservation');
+Route::get('admin_individual_hall_reservation', 'AdminReservationController@getIndividualHallReservationDetails');
+Route::get('admin_check_hall', 'AdminReservationController@checkHallAvailability');
+Route::get('admin_accept_hall_update_reservation', 'AdminReservationController@updateHallAcceptReservation');
+Route::get('admin_reject_hall_reservation', 'AdminReservationController@updateRejectHallReservation');
+Route::get('admin_edit_reservation_info', 'AdminReservationController@updateReservationInfo');
+
 
 
 
@@ -200,9 +211,36 @@ Route::get('submit_review','PagesController@submit_review');
 Route::get('abc','PusherController@bar');
 
 
+
+Route::get('getReservationDate','DashboardController@getReservationDates');
+
+
 Route::get('convert', 'CurrencyController@converter'); 
+
+
 Route::get('admin_dashboard', 'DashboardController@dashboard'); 
 Route::get('getEvents', 'DashboardController@getEvents'); 
+Route::get('getHallEvents', 'DashboardController@getHallEvents'); 
+Route::get('admin_reserve_room', 'DashboardController@admin_reserve_room'); 
+Route::get('admin_getbookings', 'DashboardController@getbookings');
+Route::get('admin_showBlocks', 'DashboardController@showBlocks');
+Route::get('setroomBlock', 'DashboardController@setroomBlock');
+
+Route::get('admin_checkout', 'DashboardController@checkout');
+
+
+Route::get('getHallEventInfo', 'DashboardController@getHallEventInfo'); 
+
+Route::get('admin_dash', 'DashboardController@dash');
+Route::get('admin_search_availability', 'DashboardController@search_availability');
+Route::get('admin_search_hall_availability', 'DashboardController@search_hall_availability');
+
+
+
+ 
+Route::get('admin_current_rooms', 'RoomController@current_rooms'); 
+Route::get('admin_getcurrent_rooms', 'RoomController@get_current_rooms'); 
+Route::get('admin_get_room_current', 'RoomController@get_room_current'); 
 
  
 
@@ -324,12 +362,15 @@ Route::controller('admin_menus','MenusController');
 Route::controller('admin_facilities','FacilitiesController');
 
 //Search functions for bookings search.
-Route::get('admin_search/bookings','SearchController@bookings_search');
+Route::get('admin_search_bookings','SearchController@bookings_search');
+Route::get('admin_search_bookings_get','SearchController@bookings_search_get');
 Route::get('admin_bookings_search','SearchController@bookings_search_index');
 
 //Search functions for rooms search.
 Route::get('admin_rooms_search','SearchController@rooms_search_index');
-Route::get('admin_search/rooms','SearchController@rooms_search');
+Route::get('admin_room_search_past','SearchController@rooms_search_past');
+Route::get('admin_room_search_current','SearchController@rooms_search_current');
+Route::get('admin_room_search_future','SearchController@rooms_search_future');
 
 //Search functions for customers search
 Route::get('admin_search/customers','SearchController@customers_search');

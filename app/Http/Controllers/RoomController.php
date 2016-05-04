@@ -706,5 +706,46 @@ class RoomController extends Controller
     }
 
 
+    public function get_current_rooms(){
+
+        $rooms =   DB::select(DB::raw("Select C.*, D.*, IFNULL(D.status,'AVAILABLE') as st, (Select F.type_name from HRS.ROOM_TYPES F where F.room_type_id = C.room_type_id) as type_name, C.remarks as room_remarks, C.status as st1,
+D.room_reservation_id as resid
+from HRS.ROOMS C
+Left Join (SELECT IFNULL(B.room_id,0) as rid, A.*
+FROM HRS.ROOM_RESERVATION A
+LEFT JOIN HRS.ROOM_RESERVATION_BLOCK B ON B.room_reservation_id = A.Room_reservation_id) D on D.rid = C.room_id
+
+"));
+
+        return response()->json(['count' => count($rooms), 'data' => $rooms]);
+
+
+    }
+
+    public function current_rooms(){
+
+        return view('nilesh.currentRooms');
+
+    }
+
+
+    public function get_room_current(Request $request){
+
+        $id = $request->input('rid');
+
+        $rooms =   DB::select(DB::raw("Select C.*, D.*, IFNULL(D.status,'AVAILABLE') as st, (Select F.type_name from HRS.ROOM_TYPES F where F.room_type_id = C.room_type_id) as type_name, C.remarks as room_remarks, C.status as st1, K.*
+from HRS.ROOMS C
+Left Join (SELECT IFNULL(B.room_id,0) as rid, A.*
+FROM HRS.ROOM_RESERVATION A
+LEFT JOIN HRS.ROOM_RESERVATION_BLOCK B ON B.room_reservation_id = A.Room_reservation_id) D on D.rid = C.room_id
+LEFT JOIN HRS.CUSTOMER K ON K.cus_id = D.cus_id
+WHERE C.room_id = '$id'
+
+"));
+
+        return view('nilesh.reservation_info')
+            ->with('room',$rooms);
+
+    }
 
 }

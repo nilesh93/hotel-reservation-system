@@ -91,7 +91,7 @@
                         </td>
                         <td>
 
-                        {{ $mail_details['hall_reservation_details']->hall_reservation_id}}
+                        {{ $mail_detail["reservation_details"]->room_reservation_id}}
                         </td>
                     </tr>
                 </table>
@@ -106,91 +106,12 @@
 
     <div style="width: 100%; position: absolute; top: 50%">
 
-        <p>Dear valued customer.,<br><br>
+        <p>Dear valued customer,<br><br>
+            Sorry to inform you, your reservation has been rejected due below mention reason,<br>
 
-            Thank you for choosing to celebrate your event with us at the Amalya Reach Holiday Resorts. We are pleased to confirm your reservation as follows:        </p>
-        <br>
+            <b>Reason : {{ $mail_detail['reject_reason']['value'] }}</b><br>
 
-        <table style="border: none;" cellpadding="5" width="100%">
-
-            <tr>
-                <td>
-                    Customer Name :
-                </td>
-                    {{ $mail_details['customer_details']->name }}
-                <td>
-
-                <td>
-            <tr>
-
-            <tr>
-                <td>
-                    Event Date :
-                </td>
-                    {{ strtok($mail_details['hall_reservation_details']->reserve_date, " ") }}
-                <td>
-
-                <td>
-            <tr>
-
-            <tr>
-                <td>
-                    Time Slot :
-                </td>
-                {{ $mail_details['hall_reservation_details']->time_slot }}
-                <td>
-
-                <td>
-            <tr>
-
-            <tr>
-                <td>
-                    Hall :
-                </td>
-                {{ $mail_details['hall_reservation_details']->title }}
-                <td>
-
-                <td>
-            <tr>
-
-
-
-
-        </table>
-
-
-        <hr style="height: 1px; border: none; background-color: #000000">
-        <table width="100%" id="id">
-            <tr>
-                <td>
-                    <b>Notes</b>
-                </td>
-            </tr>
-
-            <tr>
-                <td>
-                    The Advanced payment will be non-refundable
-                </td>
-            </tr>
-
-        </table>
-
-
-
-
-        <br>
-
-        <hr style="height: 1px; border: none; background-color: #000000">
-
-        <table>
-            <tr>
-
-            <td>
-            We look forward to the pleasure of having you as our guest.</td>
-
-                <br>
-            </tr>
-            <tr>
+                    Please Contact us as soon as possible.
 
             <br>
             <tr><td>-Amalya Reach Holiday Resort-</td></tr>

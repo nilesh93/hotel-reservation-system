@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Jobs\SendEmail;
 use App\HALL;
 use App\HALL_RESERVATION;
 use Request;
@@ -12,6 +13,8 @@ use App\Customer;
 use Session;
 use Mail;
 use Carbon\Carbon;
+use Vinkla\Pusher\Facades\Pusher;
+use App\Notifications;
 
 class HallReservationController extends Controller
 {
@@ -54,9 +57,11 @@ class HallReservationController extends Controller
             $hall_reservation = new HALL_RESERVATION;
 
             $hall_reservation->reserve_date = session('event_date');
+            $hall_reservation->time_slot = session('timeSlot');
             $hall_reservation->total_amount = session('total_payable');
             $hall_reservation->cus_id = $customer_id;
             $hall_reservation->hall_id = session('hall_selected');
+            $hall_reservation->status = 'PENDING';
 
             $hall_reservation->save();
 
@@ -64,20 +69,33 @@ class HallReservationController extends Controller
             $res_id = $hall_reservation->hall_reservation_id;
 
             //delete the reservation details since already stored in the db
-            Session::forget('event_date');
-            Session::forget('total_payable');
-            Session::forget('hall_selected');
-            Session::forget('CanPay');
+            Session::forget(['event_date','total_payable','hall_selected','CanPay']);
 
             //create an array in order to send the mail view with reservation details
             $data = array('res_id' => $res_id, 'hall_name' => $hall_name, 'event_date' => $event_date, 'name' => $customer_name);
 
-            //send a mail to the customer confirming his reservation details
-            Mail::send('emails.HallReservationMail', $data, function ($message) use ($customer_email) {
+            $job = (new SendEmail($data,$customer_email,"initial_reservation_mail"));
+            $this->dispatch($job);
+
+            //send a initial mail
+          /*  Mail::send('emails.InitialRoomReservationMail', $data, function ($message)use($customer_email) {
                 $message->from(env('MAIL_FROM'), env('MAIL_NAME'));
 
                 $message->to($customer_email)->subject('Welcome to Amalya Reach!');
-            });
+            });*/
+
+
+            //pusher
+
+            $newNotification = new Notifications();
+
+            $newNotification->notification = "New Reservation";
+            $newNotification->body = "Room Reservation has been made";
+            $newNotification->readStatus = '0';
+            $newNotification->save();
+
+            Pusher::trigger('notifications', 'Reservation', ['message' => 'New Hall Reservation has been made']);
+
 
             return redirect('myreserv')->with(['hreserv_status' => 'Reservation has been successfully made']);
         } catch(\Exception $e){
@@ -121,7 +139,7 @@ class HallReservationController extends Controller
         $future_reservations = HALL_RESERVATION::where('cus_id', '=', $customer_id)
             ->where('reserve_date', '>', $date)
             ->join('HALLS', 'HALLS.hall_id', '=', 'HALL_RESERVATION.hall_id')
-            ->select('HALL_RESERVATION.created_at','HALL_RESERVATION.hall_reservation_id','HALL_RESERVATION.reserve_date','HALL_RESERVATION.total_amount','HALLS.title')
+            ->select('HALL_RESERVATION.created_at','HALL_RESERVATION.hall_reservation_id','HALL_RESERVATION.reserve_date','HALL_RESERVATION.time_slot','HALL_RESERVATION.total_amount','HALLS.title')
             ->get();
 
         return response()->json(['res_id' => count($future_reservations), 'data' => $future_reservations]);

@@ -75,14 +75,14 @@
 							<br>
 
 							<!--this form is used to connect to the paypal API-->
-							<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+							<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top" >
 
 								<input type="hidden" name="cmd" value="_xclick">
 								<input type="hidden" name="business" value="rishanthakumar@gmail.com">
 								<input type="hidden" name="item_name" value="Total Payable">
 								<input type="hidden" name="no_item_price" value="0">
 								<input type="hidden" name="no_item_number" value="0">
-								<input type="hidden" name="amount" value="{{ session('total_payable')}}"><!--here the total payable amount is attached-->
+								<input type="hidden" name="amount" value="{{ session('pay_pal_total_payable')}}"><!--here the total payable amount is attached-->
 								<input type="hidden" name="no_shipping" value="0">
 								<input type="hidden" name="no_note" value="1">
 								<input type="hidden" name="currency_code" value="USD">
@@ -253,12 +253,12 @@
 									'</div><!-- /col-3 -->' +
 
 									'<div class="col-sm-2 col-md-2 col-lg-2">' +
-									'<span class="checkout-title">' + formatNumber(data.rates[i]) + '</span>' +
+									'<span class="checkout-title finance">Rs.' + formatNumber(data.rates[i]) + '</span>' +
 									'<span class="checkout-value"></span>' +
 									'</div> <!-- /col-3 -->' +
 
 									'<div class="col-sm-2 col-md-2 col-lg-2">' +
-									'<span class="checkout-title">' + formatNumber(data.rates[i] * data.no_of_rooms[i]) + '</span>' +
+									'<span class="checkout-title finance">Rs.' + formatNumber(data.rates[i] * data.no_of_rooms[i]) + '</span>' +
 									'<span class="checkout-value"></span>' +
 									'</div><!-- /col-2 -->' +
 
@@ -294,12 +294,12 @@
 								'</div><!-- /col-3 -->' +
 
 								'<div class="col-sm-2 col-md-2 col-lg-2">' +
-								'<span class="checkout-title">Rates (Rs.)</span>' +
+								'<span class="checkout-title">Rates</span>' +
 								'<span class="checkout-value"></span>' +
 								'</div><!-- /col-3 -->' +
 
 								'<div class="col-sm-2 col-md-2 col-lg-2">' +
-								'<span class="checkout-title">Line Total (Rs.)</span>' +
+								'<span class="checkout-title">Line Total</span>' +
 								'<span class="checkout-value"></span>' +
 								'</div><!-- /col-2 -->' +
 
@@ -312,21 +312,38 @@
 								'</div>' +
 								'<hr>';
 
+						var promo = "";
+						var promo_value = 0;
+
+
+								@if(session('promo_code'))
+
+
+
+						promo_value = "{{ session('promo_rate') }}";
+
+
+						promo = '<br><br><h3 align="center">Promotion Discount : <span class="finance"> Rs.' + formatNumber(total*promo_value) + '</span>  </h3>';
+
+								@endif
+
+
+
 						var end ='<div class="col-md-12"><hr>' +
 
 								'<div class="col-md-3">' +
 								'</div>' +
 
 								'<div class="col-md-6">' +
-								'<h2 align="center"><b>Total(Rs.) : ' + formatNumber(total) + '</b><h2>' +
+								'<h2 align="center"><b>Total : <span class="finance">Rs.' + formatNumber(total*(1-promo_value)) + '</span></b><h2>' +
 								'</div>' +
 
 								'<div class="col-md-3" align="right">' +
 
-								'<form method="get" action="{{ url('room_reservation') }}">' +
+								'<form id="payForm" name="payForm" method="get" action="{{ url('room_reservation') }}" >' +
 								'<input type="hidden" name="_token" value="{{ csrf_token() }}">' +
 								'<input type="hidden" name="CanPay" value="Can">' +
-								'<button type="submit" class="btn btn-primary" >Make Payments</button>' +
+								'<button type="submit" class="btn btn-primary" onclick="confirmPayment()">Make Payments</button>' +
 								'</form>' +
 
 								'</div>' +
@@ -334,7 +351,7 @@
 
 								'</div>';
 
-						document.getElementById("myBooking").innerHTML = begin + body + end;
+						document.getElementById("myBooking").innerHTML = begin + body + promo+ end;
 					}
 					else {
 						document.getElementById("myBooking").innerHTML = '';
@@ -371,12 +388,12 @@
 							'</div><!-- /col-4--->' +
 
 							'<div class="col-sm-4 col-md-4 col-lg-4">' +
-							'<span class="checkout-title">Advance Payment (Rs.)</span>' +
+							'<span class="checkout-title">Advance Payment</span>' +
 							'<span class="checkout-value"></span>' +
 							'</div><!-- /col-4--->' +
 
 							'<div class="col-sm-4 col-md-4 col-lg-4">' +
-							'<span class="checkout-title">Refundable Amount (Rs.)</span>' +
+							'<span class="checkout-title">Refundable Amount</span>' +
 							'<span class="checkout-value"></span>' +
 							'</div><!-- /col-4 -->' +
 
@@ -395,12 +412,12 @@
 							'</div><!-- /col-4 -->' +
 
 							'<div class="col-sm-4 col-md-4 col-lg-4">' +
-							'<span class="checkout-title">' + formatNumber(data.hall_detail[0].advance_payment)  + '</span>' +
+							'<span class="checkout-title finance">Rs.' + formatNumber(data.hall_detail[0].advance_payment)  + '</span>' +
 							'<span class="checkout-value"></span>' +
 							'</div><!-- /col-4 -->' +
 
 							'<div class="col-sm-4 col-md-4 col-lg-4">' +
-							'<span class="checkout-title">' + formatNumber(data.hall_detail[0].refundable_amount) + '</span>' +
+							'<span class="checkout-title finance">Rs.' + formatNumber(data.hall_detail[0].refundable_amount) + '</span>' +
 							'<span class="checkout-value"></span>' +
 							'</div><!-- /col-4 -->' +
 
@@ -413,14 +430,14 @@
 							'<div class="col-md-3"></div>' +
 
 							'<div class="col-md-6">' +
-							'<h2 align="center"><b>Total(Rs.) : ' + formatNumber(data.hall_detail[0].advance_payment) + '</b><h2>' +
+							'<h2 align="center"><b>Total : <span class="finance">Rs.' + formatNumber(data.hall_detail[0].advance_payment) + '</span></b><h2>' +
 							'</div>' +
 
 							'<div class="col-md-3" align="right">' +
-							'<form method="get" action="{!! url('hall_reserve_final') !!}">' +
+							'<form id="payForm" method="get" action="{!! url('hall_reserve_final') !!}">' +
 							'<input type="hidden" name="_token" value="{{ csrf_token() }}">' +
 							'<input type="hidden" name="CanPay" value="Can">' +
-							'<button type="submit" class="btn btn-primary" >Make Payments</button>' +
+							'<button type="submit" class="btn btn-primary" onclick="confirmPayment()">Make Payments</button>' +
 							'</form>' +
 							'</div>' +
 
@@ -436,6 +453,39 @@
 				}
 			});
 		}
+
+		function confirmPayment()
+		{
+
+			swal({
+
+						title: "Are you sure?",
+						text: "Reservation will be confirmed",
+						type: "info",
+						showCancelButton: true,
+						confirmButtonText: "OK",
+						cancelButtonText: "Cancel",
+						closeOnConfirm: false,
+						closeOnCancel: true,
+						showLoaderOnConfirm: true
+
+					},
+					function(isConfirm){
+						if (isConfirm) {
+
+							document.getElementById('payForm').submit()
+
+						}
+
+					});
+
+			document.getElementById('payForm').onsubmit = function() {
+				return false;
+			}
+		}
+
+
+
 
 	</script>
 

@@ -196,9 +196,11 @@
 			var checkout_date = document.getElementById('datepicker1').value;
 			var adults =  document.getElementById('adults').value;
 			var no_of_rooms =  document.getElementById('ono_of_rooms').value;
+			var isPromotionChecked = document.getElementById('promochk').checked;
+			var promoValue = document.getElementById('promotxt').value;
 
 
-			if(checkin_date == "" || checkout_date == "" || checkout_date == "" || adults == "Adults" || no_of_rooms == "No. of Rooms" ) {
+			if(checkin_date == "" || checkout_date == "" || checkout_date == "" || adults == "Adults" || no_of_rooms == "No. of Rooms" || (isPromotionChecked == true && promoValue == "") ) {
 				if (checkin_date == "") {
 					swal({
 						title: "<div class='alert alert-danger'> <strong>Warning! </strong> </div>",
@@ -225,13 +227,88 @@
 						text: "<span style='color:#ff2222'> Select No. of Rooms <span>",
 						html: true
 					});
+				}else if(isPromotionChecked == true && promoValue == "") {
+
+					swal({
+						title: "<div class='alert alert-danger'> <strong>Warning! </strong> </div>",
+						text: "<span style='color:#ff2222'> Provide a promotion code or uncheck it <span>",
+						html: true
+					});
 				}
 				return false;
 			}
 			else {
-				return true;
+
+				if(isPromotionChecked == true && promoValue != "")
+				{
+ 					var messageStatus = null;
+					$.ajax({
+
+						'async': false,
+						type: "get",
+						url: 'promo_code_validate',
+						data: {
+							'promo_code':promoValue
+						},
+
+						success:function(data){
+
+
+
+
+							if(data.message_type == "error")
+							{
+								swal({
+									title: "<div class='alert alert-danger'> <strong>Warning! </strong> </div>",
+									text: "<span style='color:#ff2222'>"+ data.message+ "<span>",
+									html: true
+								});
+
+								messageStatus = "error"
+
+
+							}
+							else if(data.message_type == "expired")
+							{
+								swal({
+									title: "<div class='alert alert-danger'> <strong>Warning! </strong> </div>",
+									text: "<span style='color:#ff2222'>"+ data.message+ "<span>",
+									html: true
+								})
+
+
+
+
+							}
+
+						},
+						error: function(xhr, ajaxOptions, thrownError) {
+							console.log(thrownError);
+						}
+					});
+
+					if(messageStatus == "error" || messageStatus == "expired")
+					{
+						return false;
+					}
+
+					return true;
+
+
+				}
+
+
 			}
 		}
+
+
+		function callback(data)
+		{
+
+
+		}
+
+
 
 		// script code for date picker 1
 		$("#datepicker").datepicker({

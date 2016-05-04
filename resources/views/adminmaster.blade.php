@@ -33,26 +33,28 @@
         <link href="{{URL::asset('BackEnd/assets/plugins/clockpicker/dist/jquery-clockpicker.min.css')}}" rel="stylesheet">
         <link href="{{URL::asset('BackEnd/assets/plugins/bootstrap-daterangepicker/daterangepicker.css')}}" rel="stylesheet">
 
+
         <link href="{{URL::asset('bower_components/angular-bootstrap-calendar/dist/css/angular-bootstrap-calendar.css')}}"></link>
     <link href="{{URL::asset('bower_components/angular-chart.js/dist/angular-chart.css')}}"></link>
 
 
- 
+
+
 <!-- HTML5 Shiv and Respond.js IE8 support of HTML5 elements and media queries -->
 <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
 <!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
 <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
 =======
-        <!-- HTML5 Shiv and Respond.js IE8 support of HTML5 elements and media queries -->
-        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-        <!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+<!-- HTML5 Shiv and Respond.js IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+<script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
 
-        <!--Pusher.js Client-side js-->
-        <script src="//js.pusher.com/2.2/pusher.min.js"></script>
- 
+<!--Pusher.js Client-side js-->
+<script src="//js.pusher.com/2.2/pusher.min.js"></script>
+
 
 @yield('css')
 <script src="{{URL::asset('BackEnd/assets/js/modernizr.min.js')}}"></script>
@@ -70,109 +72,110 @@
             <!-- LOGO -->
             <div class="topbar-left">
                 <div class="text-center">
-                    <a href="index.html" class="logo"><i class="icon-magnet icon-c-logo"></i><span>Admin Panel  </span></a>
+                    <a href="admin" class="logo"><i class="icon-magnet icon-c-logo"></i><span>Admin Panel  </span></a>
                 </div>
             </div>
 
-  
- 
-                <!-- Button mobile view to collapse sidebar menu -->
-                <div class="navbar navbar-default" role="navigation">
-                    <div class="container">
-                        <div class="">
-                            <div class="pull-left">
-                                <button class="button-menu-mobile open-left">
-                                    <i class="ion-navicon"></i>
-                                </button>
-                                <span class="clearfix"></span>
-                            </div>
 
-                            <form role="search" class="navbar-left app-search pull-left hidden-xs">
-                                <input type="text" placeholder="Search..." class="form-control">
-                                <a href=""><i class="fa fa-search"></i></a>
-                            </form>
 
-                            <?php
-                                $notification_count = DB::table('NOTIFICATIONS')
-                                        ->select('notification')
-                                        ->count();
-
-                                $unread_notification_count = DB::table('NOTIFICATIONS')
-                                        ->select('notification')
-                                        ->where('readStatus', '=', '0')
-                                        ->count();
-                            ?>
-                            @if($notification_count != 0)
-                            <?php
-                                $notifications = DB::table('NOTIFICATIONS')
-                                        ->select('notification', 'body', 'readStatus')
-                                        ->orderBy('created_at', 'desc')
-                                        ->get();
-                            ?>
-                            @endif
-
-                            <ul class="nav navbar-nav navbar-right pull-right">
-                                <li class="dropdown hidden-xs">
-                                    <a href="#" data-target="#" class="dropdown-toggle waves-effect waves-light" data-toggle="dropdown" aria-expanded="true" onclick="$('#notificationNum-alert').text(''); setReadStatus()">
-                                        <i class="icon-bell"></i> <span class="badge badge-xs badge-danger" id="notificationNum-alert">@if($unread_notification_count != 0) {{$unread_notification_count}} @endif</span>
-                                    </a>
-                                    <ul class="dropdown-menu dropdown-menu-lg">
-                                        <li class="notifi-title"><span id="notificationNum" class="label label-default pull-right">{{$unread_notification_count}} New</span> Notifications</li>
-                                        <li class="list-group nicescroll notification-list" id="notificationList">
-
-                                            @if($notification_count != 0)
-                                                @foreach($notifications as $notification)
-                                                    @if($notification->readStatus == 0)
-                                                        <a href="javascript:void(0);" class="list-group-item list-group-item-success">
-                                                    @else
-                                                        <a href="javascript:void(0);" class="list-group-item">
-                                                    @endif
-                                                        <div class="media">
-                                                            <div class="pull-left p-r-10">
-                                                                <em class="fa fa-cog fa-2x text-custom"></em>
-                                                            </div>
-                                                            <div class="media-body">
-                                                                <h5 class="media-heading">{{$notification->notification}}</h5>
-                                                                <p class="m-0">
-                                                                    <small>{{$notification->body}}</small>
-                                                                </p>
-                                                            </div>
-                                                        </div>
-                                                    </a>
-                                                @endforeach
-                                            @endif
-                                            
-                                        </li>
-                                        <li>
-                                            <a href="javascript:void(0);" class="list-group-item text-right">
-                                                <small class="font-600">See all notifications</small>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </li>
-                                <li class="hidden-xs">
-                                    <a href="#" id="btn-fullscreen" class="waves-effect waves-light"><i class="icon-size-fullscreen"></i></a>
-                                </li>
-
-                                <li class="dropdown">
-                                    <a href="" class="dropdown-toggle profile" data-toggle="dropdown" aria-expanded="true"><img src="BackEnd/assets/images/users/avatar-1.jpg" alt="user-img" class="img-circle"> </a>
-                                    <ul class="dropdown-menu">
-                                        <li><a href="javascript:void(0)"><i class="ti-user m-r-5"></i> Profile</a></li>
-                                        <li><a href="javascript:void(0)"><i class="ti-settings m-r-5"></i> Settings</a></li>
-                                        <li><a href="javascript:void(0)"><i class="ti-lock m-r-5"></i> Lock screen</a></li>
-                                        <li><a href="{{URL::to('auth/logout')}}"><i class="ti-power-off m-r-5"></i> Logout</a></li>
-                                    </ul>
-                                </li>
-                            </ul>
+            <!-- Button mobile view to collapse sidebar menu -->
+            <div class="navbar navbar-default" role="navigation">
+                <div class="container">
+                    <div class="">
+                        <div class="pull-left">
+                            <button class="button-menu-mobile open-left">
+                                <i class="ion-navicon"></i>
+                            </button>
+                            <span class="clearfix"></span>
                         </div>
-                        <!--/.nav-collapse -->
+
+                        <form role="search" class="navbar-left app-search pull-left hidden-xs">
+                            <input type="text" placeholder="Search..." class="form-control">
+                            <a href=""><i class="fa fa-search"></i></a>
+                        </form>
+
+                        <?php
+                        $notification_count = DB::table('NOTIFICATIONS')
+                            ->select('notification')
+                            ->count();
+
+                        $unread_notification_count = DB::table('NOTIFICATIONS')
+                            ->select('notification')
+                            ->where('readStatus', '=', '0')
+                            ->count();
+                        ?>
+                        @if($notification_count != 0)
+                        <?php
+                        $notifications = DB::table('NOTIFICATIONS')
+                            ->select('notification', 'body', 'readStatus')
+                            ->orderBy('created_at', 'desc')
+                            ->get();
+                        ?>
+                        @endif
+
+                        <ul class="nav navbar-nav navbar-right pull-right">
+                            <li class="dropdown hidden-xs">
+                                <a href="#" data-target="#" class="dropdown-toggle waves-effect waves-light" data-toggle="dropdown" aria-expanded="true" onclick="$('#notificationNum-alert').text(''); setReadStatus()">
+                                    <i class="icon-bell"></i> <span class="badge badge-xs badge-danger" id="notificationNum-alert">@if($unread_notification_count != 0) {{$unread_notification_count}} @endif</span>
+                                </a>
+                                <ul class="dropdown-menu dropdown-menu-lg">
+                                    <li class="notifi-title"><span id="notificationNum" class="label label-default pull-right">{{$unread_notification_count}} New</span> Notifications</li>
+                                    <li class="list-group nicescroll notification-list" id="notificationList">
+
+                                        @if($notification_count != 0)
+                                        @foreach($notifications as $notification)
+                                        @if($notification->readStatus == 0)
+                                        <a href="javascript:void(0);" class="list-group-item list-group-item-success">
+                                            @else
+                                            <a href="javascript:void(0);" class="list-group-item">
+                                                @endif
+                                                <div class="media">
+                                                    <div class="pull-left p-r-10">
+                                                        <em class="fa fa-cog fa-2x text-custom"></em>
+                                                    </div>
+                                                    <div class="media-body">
+                                                        <h5 class="media-heading">{{$notification->notification}}</h5>
+                                                        <p class="m-0">
+                                                            <small>{{$notification->body}}</small>
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            </a>
+                                            @endforeach
+                                            @endif
+
+                                            </li>
+                                    <li>
+                                        <a href="javascript:void(0);" class="list-group-item text-right">
+                                            <small class="font-600">See all notifications</small>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="hidden-xs">
+                                <a href="#" id="btn-fullscreen" class="waves-effect waves-light"><i class="icon-size-fullscreen"></i></a>
+                            </li>
+
+                            <li class="dropdown">
+                                <a href="" class="dropdown-toggle profile" data-toggle="dropdown" aria-expanded="true"><img src="BackEnd/assets/images/users/avatar-1.jpg" alt="user-img" class="img-circle"> </a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="javascript:void(0)"><i class="ti-user m-r-5"></i> Profile</a></li>
+                                    <li><a href="javascript:void(0)"><i class="ti-settings m-r-5"></i> Settings</a></li>
+                                    <li><a href="javascript:void(0)"><i class="ti-lock m-r-5"></i> Lock screen</a></li>
+                                    <li><a href="{{URL::to('auth/logout')}}"><i class="ti-power-off m-r-5"></i> Logout</a></li>
+                                </ul>
+                            </li>
+                        </ul>
                     </div>
+                    <!--/.nav-collapse -->
                 </div>
             </div>
-            <!-- Top Bar End -->
-           
+
+        </div>
         <!-- Top Bar End -->
-       
+
+ 
+
         <!-- ========== Left Sidebar Start ========== -->
 
         <div class="left side-menu">
@@ -181,6 +184,15 @@
                 <div id="sidebar-menu">
                     <ul>
 
+                        <li class="has_sub">
+                            <a href="#" class="waves-effect" id="management"><i class="ti-home"></i> <span> DASHBOARD</span> </a>
+                            <ul class="list-unstyled">
+                                <li id="DASH"><a href="admin_dash">Statistics</a></li>
+                                <li id="CAL"><a href="admin_dashboard">Calander</a></li>
+                         
+
+                            </ul>
+                        </li>
 
 
                         <li class="has_sub">
@@ -203,7 +215,7 @@
 
                                 <li id="BS"><a href="admin_bookings_search">Bookings Search</a></li>
                                 <li id="RS"><a href="admin_rooms_search">Room Logs</a></li>
-
+                                <li id="RS"><a href="admin_current_rooms">Rooms Current Status</a></li>
                                 <li id="PER"><a href="admin_pending_reservation">Pending Reservation </a></li>
 
                             </ul>
@@ -229,7 +241,7 @@
                         <li class="has_sub">
                             <a href="#" class="waves-effect" id="siteAdmin"><i class="ti-home"></i> <span> Gallery Management</span> </a>
                             <ul class="list-unstyled">
- 
+
 
                                 <li id="IG"><a href="admin_imageGallery">Image Gallery </a></li>
                                 <li id="WG"><a href="admin_webGallery">Web Home Gallery </a></li>
@@ -261,6 +273,7 @@
                             </ul>
                         </li>
                     </ul>
+
                     <div class="clearfix"></div>
                 </div>
                 <div class="clearfix"></div>
@@ -378,6 +391,7 @@
     <script src="{{URL::asset('BackEnd/assets/js/validation.js')}}"></script>
 
  
+ 
         <script>
             function setReadStatus() {
                 $.ajax({url: "{{URL::to('setReadStatus')}}", success: function(result){
@@ -386,7 +400,36 @@
             }
         </script>
 
+        <script>
+
+            var notification_count = $('#notificationNum-alert').text();
+
+            if($.trim($('#notification_count').html()) == ''){
+                notification_count = 0;
+            }
+
+
+            var pusher = new Pusher('a9cc4ec8de7727809a37');
+
+            var notificationsChannel = pusher.subscribe('notifications');
+
+            notificationsChannel.bind('Reservation', function(res) {
+
+                var message = res.message;
+                $('#notificationNum-alert').text(notification_count + 1);
+                $('#notificationNum').text(notification_count + 1+" New");
+                $("#notificationList").prepend('<a href="javascript:void(0);" class="list-group-item list-group-item-success"> ' +
+                        '<div class="media"> <div class="pull-left p-r-10"> ' +
+                        '<em class="fa fa-cog fa-2x text-custom"></em> </div> ' +
+                        '<div class="media-body"> <h5 class="media-heading">New Reservation</h5>' +
+                        ' <p class="m-0"> <small>'+message+'</small> </p> </div> </div> </a>');
+            });
+
+
+        </script>
+
         @yield('js')
+ 
  
 
 

@@ -5,12 +5,15 @@ namespace App\Http\Controllers;
 use App\RATE;
 use App\RES_RMTYPE_CNT_RATE;
 use App\ROOM_TYPE;
+use Carbon\Carbon;
 use Session;
 use DB;
 use App\ROOM_RESERVATION;
 use Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use App\Classes\ReservationRoom;
+use App\HotelInfo;
 
 class RoomAvailabilityController extends Controller
 {
@@ -36,10 +39,28 @@ class RoomAvailabilityController extends Controller
     function checkRoomAvailability(Request $request)
     {
         //predefined variables for the room reservation form
-        $total_rooms= config('constants.CHK_ZERO');
-        $kids_can = config('constants.KIDS_CAN');
-        $adults_can = config('constants.ADULTS_CAN');
+        $total_rooms_have = config('constants.CHK_ZERO');
+        $total_rooms=HotelInfo::value('selectable_no_of_rooms');
+        $kids_can = HotelInfo::value('no_of_kids');
+        $adults_can = HotelInfo::value('no_of_adults');
+        $room_types = ROOM_TYPE::get();
 
+
+        foreach($room_types as $room_type)
+        {
+
+
+            $total_rooms_have += DB::table('ROOMS')
+                ->where('room_type_id','=',$room_type->room_type_id)
+                ->count();
+        }
+
+
+        //check if the room count exceed the available rooms
+        if($total_rooms > $total_rooms_have)
+        {
+            $total_rooms = $total_rooms_have;
+        }
 
         //clears the hall reservation session details if there are any
         Session::forget(['hall_selected','event_date','total_payable']);
@@ -74,11 +95,11 @@ class RoomAvailabilityController extends Controller
 
         $room_types = ROOM_TYPE::get();
 
-        $room_results = $this->getAvailableRoomTypeCount($check_in,$check_out);
+        $room_results = $this->getAvailableRoomTypeCount($check_in,$check_out,"NEW",null);
 
-        $total_rooms_available = $room_results[1];
+        $total_rooms_available = $room_results['total_rooms_available'];
 
-        $room_type_available = $room_results[0];
+        $room_type_available = $room_results['room_type_available'];
 
 
 
@@ -119,6 +140,10 @@ class RoomAvailabilityController extends Controller
 
         $rate_price = RATE::where('rate_code','=',$rate_code)->value('single_rates');
 
+        //get the early rate if the selected room is already in the session
+        $early_rate_price = 0;
+
+
         $meal_type_name = RATE::join('MEAL_TYPES','RATES.meal_type_id','=','MEAL_TYPES.meal_type_id')
             ->where('RATES.rate_code','=',$rate_code)
             ->value('meal_type_name');
@@ -126,12 +151,16 @@ class RoomAvailabilityController extends Controller
         //this variable is to identify whether the selected room type already added in the session previously
         $session_have = config('constants.CHK_ZERO');
 
+
+
         //check whether session has the room type added already
         if(Session::has('room_types')) {
 
             foreach(session('room_types') as $room_type) {
                 if($room_type == $room_type_id) {
                     $session_have = config('constants.SESSION_HAVE');
+                    $early_rate_price = RATE::where('rate_code','=',session('rate_code'.$room_type_id))->value('single_rates');
+
                 }
             }
         }
@@ -144,7 +173,7 @@ class RoomAvailabilityController extends Controller
 
         //if the room type is already in the session update that session by replacing it
         if($session_have== config('constants.SESSION_HAVE')) {
-            $total_payable = $total_payable - $rate_price * session('no_of_rooms'.$room_type_id) + $rate_price*$no_of_rooms;
+            $total_payable = $total_payable - $early_rate_price * session('no_of_rooms'.$room_type_id) + $rate_price*$no_of_rooms;
 
             Session::put(['no_of_rooms'.$room_type_id=>$no_of_rooms,'rate_code'.$room_type_id=>$rate_code,'rate'.$room_type_id=>$rate_price]);
             Session::put(['meal_type'.$room_type_id=>$meal_type_name,'meal_type'.$room_type_id=>$meal_type_name,'total_payable'=>$total_payable]);
@@ -207,12 +236,7 @@ class RoomAvailabilityController extends Controller
         }
 
         //delete the room type details from the session
-        Session::forget('room_types');
-        Session::forget('room_type_name'.$room_type_id);
-        Session::forget('no_of_rooms'.$room_type_id);
-        Session::forget('rate'.$room_type_id);
-        Session::forget('meal_type'.$room_type_id);
-        Session::forget('rate_code'.$room_type_id);
+        Session::forget(['room_types','room_type_name'.$room_type_id,'no_of_rooms'.$room_type_id,'rate'.$room_type_id,'meal_type'.$room_type_id,'rate_code'.$room_type_id]);
 
         //add the updated room type list to the session
         foreach($room_types as $room_type) {
@@ -256,7 +280,7 @@ class RoomAvailabilityController extends Controller
      * @param $check_out
      * @return array
      */
-    public function getBookedRoomTypeCount($check_in,$check_out){
+    public function getBookedRoomTypeCount($check_in,$check_out,$reason,$res_id){
 
         $room_types = ROOM_TYPE::get();
 
@@ -270,13 +294,27 @@ class RoomAvailabilityController extends Controller
 
         }
 
-        //query the reservations that are that have check in or check out dates between the requested date period
-        $reservations = ROOM_RESERVATION::where('check_in','<=', $check_out)
-            ->where('check_out', '>=', $check_in)
-            ->orwhereIn('remarks', ['tendative', 'confirmed'])//change this orwhereIn after you finish booking section
-            ->select('room_reservation_id')
-            ->distinct()
-            ->get();
+
+        if($reason == "NEW") {
+            //query the reservations that are that have check in or check out dates between the requested date period
+            $reservations = ROOM_RESERVATION::where('check_in', '<=', $check_out)
+                ->where('check_out', '>=', $check_in)
+                ->orwhereIn('remarks', ['tendative', 'confirmed'])//change this orwhereIn after you finish booking section
+                ->select('room_reservation_id')
+                ->distinct()
+                ->get();
+        }else{
+
+            $reservations = ROOM_RESERVATION::where('check_in', '<=', $check_out)
+                ->where('check_out', '>=', $check_in)
+                ->where('room_reservation_id','!=',$res_id)
+                ->orwhereIn('remarks', ['tendative', 'confirmed'])//change this orwhereIn after you finish booking section
+                ->select('room_reservation_id')
+                ->distinct()
+                ->get();
+
+
+        }
 
         //for each reservation within that period get the room types booked and their total room count
         foreach ($reservations as $reservation) {
@@ -294,11 +332,11 @@ class RoomAvailabilityController extends Controller
         return  $booked_room_type_count;
     }
 
-    public function getAvailableRoomTypeCount($check_in,$check_out){
+    public function getAvailableRoomTypeCount($check_in,$check_out,$reason,$res_id){
 
 
         //an array to keep the count of rooms per room_type that are booked during the requested period
-        $booked_room_type_count = $this->getBookedRoomTypeCount($check_in,$check_out);
+        $booked_room_type_count = $this->getBookedRoomTypeCount($check_in,$check_out,$reason,$res_id);
 
         //an array to keep the available room count of the room types for the requested period
         $room_type_available = array();
@@ -310,11 +348,11 @@ class RoomAvailabilityController extends Controller
 
         //room type count will be taken from the rooms table but for now take it from the room_type table
         foreach ($room_types as $room_type) {
-            /*$room_type_room_count = DB::table('ROOMS')
-                                     ->where('room_type_id','=',1)
-                                      ->count();*/
+            $room_type_room_count =DB::table('ROOMS')
+                ->where('room_type_id','=',$room_type->room_type_id)
+                ->count();
 
-            $available_rooms = $room_type->count - $booked_room_type_count[$room_type->room_type_id];
+            $available_rooms = $room_type_room_count - $booked_room_type_count[$room_type->room_type_id];
 
             //check whether available rooms are negative
             if ($available_rooms >= config('constants.CHK_ZERO')) {
@@ -327,11 +365,51 @@ class RoomAvailabilityController extends Controller
             $total_rooms_available += $available_rooms;
         }
 
-        return [$room_type_available,$total_rooms_available];
+        return ["room_type_available"=>$room_type_available,"total_rooms_available"=>$total_rooms_available];
 
+    }
+
+    public function promotionValidate(Request $request)
+    {
+        $inputs = $request::all();
+
+        $promotion_code = $inputs['promo_code'];
+
+        $today = Carbon::now();
+
+        $promo_details = DB::table('PROMOTIONS')
+                            ->where('promotion_code','=',$promotion_code)
+                            ->select('date_from','date_to','rate')
+                            ->first();
+
+        if(empty($promo_details))
+        {
+            return response()->json(['message_type'=>'error','message'=>'Promotion code is invalid']);
+        }
+        else{
+
+
+            $date_from = $promo_details->date_from;
+            $date_to = $promo_details->date_to;
+
+            if($today < $date_from || $today > $date_to)
+            {
+                return response()->json(['message_type'=>'expired','message'=>'Sorry promotion code has been expired']);
+            }
+
+        }
+
+
+
+        Session::put(['promo_code'=>$promotion_code,'promo_rate'=>$promo_details->rate]);
+
+
+
+        return response()->json(['message_type'=>'success','message'=>"Success"]);
 
 
     }
+
 
 
 

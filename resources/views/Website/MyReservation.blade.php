@@ -278,6 +278,7 @@ $customer_id = DB::table('CUSTOMER')
                     { "data" : "created_at"},
                     { "data": "hall_reservation_id" },
                     { "data": "reserve_date"},
+                    { "data" : "time_slot"},
                     { "data": "title"},
                     { "data": null,
                         "mRender": function (data, type, full) {
@@ -315,6 +316,7 @@ $customer_id = DB::table('CUSTOMER')
                     { "data" : "created_at"},
                     { "data": "hall_reservation_id" },
                     { "data": "reserve_date"},
+                    { "data" : "time_slot"},
                     { "data": "title"},
                     { "data": null,
                         "mRender": function (data, type, full) {
@@ -360,6 +362,7 @@ $customer_id = DB::table('CUSTOMER')
                     '<th width="20%">Date</th>'+
                     '<th>ID</th>'+
                     '<th width="20%">Event Date</th>'+
+                    '<th width="20%">Time Slot</th>'+
                     '<th width="20%">Hall</th>'+
                     '<th>Amount(Rs.)</th>'+
                     '</tr>'+
