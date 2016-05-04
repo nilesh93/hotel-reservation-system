@@ -126,11 +126,17 @@ class PagesController extends Controller
 
         foreach($room_types as $room_type)
         {
-            $total_rooms_have += $room_type->count;
+
+
+            $total_rooms_have += DB::table('ROOMS')
+                                ->where('room_type_id','=',$room_type->room_type_id)
+                                 ->count();
         }
 
+
+
         //check if the room count exceed the available rooms
-        if($total_rooms > $total_rooms_have)
+       if($total_rooms > $total_rooms_have)
         {
             $total_rooms = $total_rooms_have;
         }

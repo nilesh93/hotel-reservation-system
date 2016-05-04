@@ -40,8 +40,8 @@ AND a.status NOT IN ('PENDING','CANCELLED','REJECTED')"));
      public function getHallEvents(){
 
         $halls =  DB::select(DB::raw("SELECT * FROM HRS.HALL_RESERVATION A
-Left JOIN HRS.HALL_RESERVATION B ON B.hall_id = A.hall_id
-LEFT JOIN HRS.CUSTOMER C ON A.cus_id = B.cus_id
+Left JOIN HRS.HALLS B ON B.hall_id = A.hall_id
+LEFT JOIN HRS.CUSTOMER C ON A.cus_id = A.cus_id
 where A.status not in  ('PENDING','CANCELLED','REJECTED')
 and A.reserve_date  > DATE_SUB(NOW(),INTERVAL 2 YEAR)"));
 
@@ -54,7 +54,7 @@ and A.reserve_date  > DATE_SUB(NOW(),INTERVAL 2 YEAR)"));
         
         $id = $request->input('id');
         
-        $hallres = DB::select(DB::raw("SELECT * FROM HRS.HALL_RESERVATION A
+        $halls = DB::select(DB::raw("SELECT * FROM HRS.HALL_RESERVATION A
 Left JOIN HRS.HALLS B ON B.hall_id = A.hall_id
 LEFT JOIN HRS.CUSTOMER C ON A.cus_id = C.cus_id
 where A.hall_reservation_id = '$id'"));

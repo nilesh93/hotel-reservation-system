@@ -26,10 +26,7 @@
 						<td>{{$room[0]->reserve_date}}</td>
 						</tr>
 					 
-						<tr>
-						<td class="">Promo </td>
-						<td>{{$room[0]->promo_code}}</td>
-						</tr>
+						 
 						<tr class="success">
 						<td class="">Total </td>
 						<td> Rs.{{ number_format($room[0]->total_amount,2,'.',',')}}</td>
