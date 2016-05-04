@@ -79,7 +79,7 @@
                             <div class="form-group">
                                 <label for="item" class="col-lg-5 control-label">Facility Description</label>
                                 <div class="col-lg-6">
-                                    <input class="form-control" id="facility_desc" placeholder="Description" type="text">
+                                    <textarea class="form-control" id="facility_desc" placeholder="Description" type="text"></textarea>
                                 </div>
                             </div>
                         </div>
@@ -132,7 +132,7 @@
                             <div class="form-group">
                                 <label for="item" class="col-lg-5 control-label">Facility Description</label>
                                 <div class="col-lg-6">
-                                    <input class="form-control" id="facility_desc_edit" placeholder="Description" type="text">
+                                    <textarea class="form-control" id="facility_desc_edit" placeholder="Description" type="text"></textarea>
                                 </div>
                             </div>
                         </div>

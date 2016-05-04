@@ -204,8 +204,8 @@ class RoomReservationController extends Controller
         $job = (new SendEmail($data,$customer_email,"initial_reservation_mail"));
         $this->dispatch($job);
 
-        //send mail to the customer confirming the reservation details
-        /*Mail::send('emails.InitialRoomReservationMail', $data, function ($message) use ($customer_email) {
+       /* //send mail to the customer confirming the reservation details
+        Mail::send('emails.InitialRoomReservationMail', $data, function ($message) use ($customer_email) {
             $message->from(env('MAIL_FROM'), env('MAIL_NAME'));
 
             $message->to($customer_email)->subject('Welcome to Amalya Reach!');

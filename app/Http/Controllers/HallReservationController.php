@@ -13,6 +13,8 @@ use App\Customer;
 use Session;
 use Mail;
 use Carbon\Carbon;
+use Vinkla\Pusher\Facades\Pusher;
+use App\Notifications;
 
 class HallReservationController extends Controller
 {
@@ -75,12 +77,25 @@ class HallReservationController extends Controller
             $job = (new SendEmail($data,$customer_email,"initial_reservation_mail"));
             $this->dispatch($job);
 
-           /* //send a mail to the customer confirming his reservation details
-            Mail::send('emails.HallReservationMail', $data, function ($message) use ($customer_email) {
+            //send a initial mail
+          /*  Mail::send('emails.InitialRoomReservationMail', $data, function ($message)use($customer_email) {
                 $message->from(env('MAIL_FROM'), env('MAIL_NAME'));
 
                 $message->to($customer_email)->subject('Welcome to Amalya Reach!');
             });*/
+
+
+            //pusher
+
+            $newNotification = new Notifications();
+
+            $newNotification->notification = "New Reservation";
+            $newNotification->body = "Room Reservation has been made";
+            $newNotification->readStatus = '0';
+            $newNotification->save();
+
+            Pusher::trigger('notifications', 'Reservation', ['message' => 'New Hall Reservation has been made']);
+
 
             return redirect('myreserv')->with(['hreserv_status' => 'Reservation has been successfully made']);
         } catch(\Exception $e){

@@ -43,6 +43,18 @@ class RoomAvailabilityController extends Controller
         $total_rooms=HotelInfo::value('selectable_no_of_rooms');
         $kids_can = HotelInfo::value('no_of_kids');
         $adults_can = HotelInfo::value('no_of_adults');
+        $room_types = ROOM_TYPE::get();
+
+
+        foreach($room_types as $room_type)
+        {
+
+
+            $total_rooms_have += DB::table('ROOMS')
+                ->where('room_type_id','=',$room_type->room_type_id)
+                ->count();
+        }
+
 
         //check if the room count exceed the available rooms
         if($total_rooms > $total_rooms_have)
@@ -336,11 +348,11 @@ class RoomAvailabilityController extends Controller
 
         //room type count will be taken from the rooms table but for now take it from the room_type table
         foreach ($room_types as $room_type) {
-            /*$room_type_room_count = DB::table('ROOMS')
-                                     ->where('room_type_id','=',1)
-                                      ->count();*/
+            $room_type_room_count =DB::table('ROOMS')
+                ->where('room_type_id','=',$room_type->room_type_id)
+                ->count();
 
-            $available_rooms = $room_type->count - $booked_room_type_count[$room_type->room_type_id];
+            $available_rooms = $room_type_room_count - $booked_room_type_count[$room_type->room_type_id];
 
             //check whether available rooms are negative
             if ($available_rooms >= config('constants.CHK_ZERO')) {

@@ -47,7 +47,7 @@
             <tr>
 
                 <td>
-                    <img src="<?php echo $message->embed('public/FrontEnd/img/amalya-logo.png'); ?>" width="50%">
+                    <img src="{{URL::asset('FrontEnd/img/amalya-logo.png')}}" width="50%">
                 </td>
 
                 <td>

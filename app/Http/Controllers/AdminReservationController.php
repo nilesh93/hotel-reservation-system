@@ -214,6 +214,7 @@ class AdminReservationController extends Controller
     {
         $general_info = DB::table('HOTEL_INFO')
                         ->first();
+        
         return view('Website.adminReservationGeneralInfo',['general_info'=>$general_info]);
     }
 

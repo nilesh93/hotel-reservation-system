@@ -22,7 +22,7 @@
      data.data.forEach(function(item,index){
 
       events.push({
-       title:item.room_type + "-" + item.num_of_rooms+" room(s)",
+       title:item.num_of_rooms+" room(s)",
        start:item.check_in.replace(' ','T'),
        end: item.check_out.replace(' ','T'),
        color: 'yellow',   // an option!
@@ -70,7 +70,7 @@
        start:item.reserve_date.replace(' ','T'),
        end: item.reserve_date.replace(' ','T'),
        color: 'blue',   // an option!
-       textColor: 'black',
+       textColor: 'white',
        eventInfo:{
         id: item.hall_reservation_id
        }
@@ -112,7 +112,7 @@
 
    console.log(event);
    
-   $http.get("admin_search_bookings_get?id="+event.eventInfo.id).success(function(data){
+   $http.get("getHallEventInfo?id="+event.eventInfo.id).success(function(data){
     
     document.getElementById('reserveInfo').innerHTML = data;
      
