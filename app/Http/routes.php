@@ -323,6 +323,10 @@ Route::post('admin_about_us_edit', 'AboutUsPageController@editContent');
 // Notifications read status update
 Route::get('setReadStatus', 'BackupController@setStatus');
 
+// Inquiries routes
+Route::get('get_inquiries_page', 'InquiryController@getPage');
+Route::get('get_inquiries', 'InquiryController@getData');
+
 // Inaccessible views testing route
 Route::get('/test', function(){
     return view('errors.modelNotFound');

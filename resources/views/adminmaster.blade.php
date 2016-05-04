@@ -267,6 +267,7 @@
 
                                 <li id="UM"><a href="{{URL::to('/admin_users')}}">User Management</a></li>
                                 <li id="CS"><a href="admin_customers_search">Customer Search</a></li>
+                                <li id="GI"><a href="get_inquiries_page">Customer Inquiries</a></li>
 
 
 

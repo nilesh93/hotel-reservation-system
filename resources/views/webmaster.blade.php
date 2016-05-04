@@ -178,18 +178,28 @@
 										<ul>
 
 											@if(Auth::check())
-											<li><a href="#">My Account</a>
-												<ul>
-													<li><a href="{{ URL::to('profile') }}">My Details</a></li>
-													<li><a href="{!! url('/myreserv') !!}">My Reservations</a></li>
-													<li><a href="{{ URL::to('change_password') }}">Change Password</a></li>
-													<li><a href="{{ URL::to('auth/logout') }}">Log out</a></li>
-												</ul>
-											</li>
+												@if(Auth::user()->role == "admin")
+													<li><a href="{{URL::to('admin')}}">Admin Area</a></li>
+												@else
+													@if(Auth::check())
+														<li><a href="#">My Account</a>
+															<ul>
+																<li><a href="{{ URL::to('profile') }}">My Details</a></li>
+																<li><a href="{!! url('/myreserv') !!}">My Reservations</a></li>
+																<li><a href="{{ URL::to('change_password') }}">Change Password</a></li>
+																<li><a href="{{ URL::to('auth/logout') }}">Log out</a></li>
+															</ul>
+														</li>
+													@endif
+												@endif
 											@else
-											<li><a href="{{URL::to('auth/register')}}">Register</a></li>
-											<li><a href="{{URL::to('auth/login')}}">Login</a></li>
+												<li><a href="{{URL::to('auth/register')}}">Register</a></li>
+												<li><a href="{{URL::to('auth/login')}}">Login</a></li>
+
 											@endif
+
+											<li><a href="{{URL::to('about_us')}}">About Us</a></li>
+
 											@if(Auth::check())
 
 											<li><a href="{!! url('/myreserv') !!}">  Reservations</a></li>
