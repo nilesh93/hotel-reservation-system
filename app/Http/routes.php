@@ -23,7 +23,7 @@ use App\HALL;
 
 Route::get('/', 'PagesController@HomePage');
 Route::get('/home', 'PagesController@HomePage');
-Route::get('admin', 'PagesController@adminView');
+Route::get('admin', 'DashboardController@dash');
 Route::get('/contact', 'PagesController@contactView');
 Route::get('/gallery', function () {
 
