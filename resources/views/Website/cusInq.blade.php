@@ -22,14 +22,7 @@
 
 @endsection
 
-{{--@section('page_buttons')
-    <div class="col-md-4 col-md-offset-8">
-        <button type="button" class="btn btn-success waves-effect btn-block waves-light pull-right" data-toggle="modal" data-target="#addService">
-        <span class="btn-label pull-left"><i class="fa fa-plus"></i>
-        </span>CUSTOMER INQUIRIES</button>
-    </div>
 
-@endsection--}}
 
 @section('breadcrumbs')
 
@@ -85,38 +78,6 @@
 
 
 
-    {{--<div class="modal inmodal fade" id="addService" tabindex="-1" role="dialog"  aria-hidden="true">
-        <div class="modal-dialog ">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                    <h4 class="modal-title">Reply To An Inquiry</h4>
-
-                </div>
-                <form class="form-horizontal" id="addH" onsubmit="return insertH()">
-                    <div class="modal-body">
-
-                    </div><div class="form-group">
-
-                        <label class="col-lg-3 control-label">Reply</label>
-
-                        <div class="col-lg-9">
-                            <input placeholder="Enter Hall Service Name" class="form-control" type="text" required id="name" name="name" required>
-                            <textarea placeholder="Enter the message" class="form-control" type="text" required id="name" name="name"></textarea>
-                        </div>
-                    </div>
-
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-white" data-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary">Save changes</button>
-                    </div>
-            </div>
-
-            </form>
-        </div>
-    </div>
---}}
-
 
 @endsection
 
@@ -165,70 +126,7 @@
 
         }
 
-        function reply(id, msg){
-            $.ajax({
-                type: "get",
-                url: 'reply_inquiry/'+id,
-                data: {reply:msg},
 
-                success : function(data){
-                    swal('Success','Reply Sent!', 'success');
-                    dataLoad();
-
-                },
-                error: function(xhr, ajaxOptions, thrownError) {
-                    swal("Ooops!", "Something Went Wrong! ("+thrownError+")", "error");
-                    console.log(thrownError);
-                }
-            });
-            return false;
-        }
-
-
-        /*function reply(id){
-            swal({
-                        title: "Delete?",
-                        text: "Are you sure you want to delete this rate? This might affect old business transactions.",
-                        type: "warning",
-                        showCancelButton: true,
-                        confirmButtonColor: "#DD6B55",
-                        confirmButtonText: "Delete",
-                        cancelButtonText: "Cancel",
-                        closeOnConfirm: false},
-                    function(isConfirm){
-                        if (isConfirm) {
-                            $.ajax({
-                                type: "get",
-                                url: 'deleteHallService',
-                                data: {
-                                    id:id
-                                },
-
-                                success : function(data){
-
-
-                                    swal("Deleted!", "", "success");
-                                    dataLoad();
-
-                                },
-                                error: function(xhr, ajaxOptions, thrownError) {
-                                    console.log(thrownError);
-
-                                    swal("Ooops!", "Something Went Wrong! ("+thrownError+")", "error");
-                                }
-                            });
-                        }
-                    });
-        }*/
-
-        /*function delCancel(id){
-
-         swal('Cannot delete!', 'Room type cannot be deleted because there are rooms associated with this room type. Please delete them or change them first!', 'error');
-
-
-         }
-
-         */
 
     </script>
 

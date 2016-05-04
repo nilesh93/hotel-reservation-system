@@ -82,7 +82,7 @@
             <div class="navbar navbar-default" role="navigation">
                 <div class="container">
                     <div class="">
-                         
+
 
                         <?php
                         $notification_count = DB::table('NOTIFICATIONS')
@@ -164,7 +164,7 @@
         </div>
         <!-- Top Bar End -->
 
- 
+
 
         <!-- ========== Left Sidebar Start ========== -->
 
@@ -173,28 +173,41 @@
                 <!--- Divider -->
                 <div id="sidebar-menu">
                     <ul>
-
-                        <li class="has_sub">
-                            <a href="#" class="waves-effect" id="management"><i class="ti-home"></i> <span> DASHBOARD</span> </a>
+                        <li class="text-muted menu-title">Amalya Reach </li>
+                        <li class="">
+                            <a href="#" class="waves-effect" id="management"><i class="ti-home"></i> <span> Dashboard</span> </a>
                             <ul class="list-unstyled">
                                 <li id="DASH"><a href="admin_dash">Statistics</a></li>
                                 <li id="CAL"><a href="admin_dashboard">Calander</a></li>
-                         
+
 
                             </ul>
                         </li>
 
 
                         <li class="has_sub">
-                            <a href="#" class="waves-effect" id="management"><i class="ti-home"></i> <span> Rooms/Halls</span> </a>
+                            <a href="#" class="waves-effect" id="management"><i class="ti-home"></i> <span> Rooms</span> </a>
                             <ul class="list-unstyled">
-                                <li id="RM"><a href="admin_rooms">Room Management</a></li>
                                 <li id="ARS"><a href="admin_room_services">Room Services</a></li>
-                                <li id="HM"><a href="admin_halls">Hall Management</a></li>
-                                <li id="HS"><a href="hallServices">Hall Services</a></li>
+                                <li id="RM"><a href="admin_rooms">Room Management</a></li>
+                                <li id="RS"><a href="admin_rooms_search">Room Logs</a></li>
+                                <li id="RC"><a href="admin_current_rooms">Rooms Current Status</a></li>
 
                             </ul>
                         </li>
+
+
+
+                        <li class="has_sub">
+                            <a href="#" class="waves-effect" id="Hmanagement"><i class="ti-home"></i> <span> Halls</span> </a>
+                            <ul class="list-unstyled"> 
+                                <li id="HS"><a href="hallServices">Hall Services</a></li>
+                                <li id="HM"><a href="admin_halls">Hall Management</a></li>
+
+                            </ul>
+                        </li>
+
+
 
 
 
@@ -203,9 +216,8 @@
                             <ul class="list-unstyled">
 
 
+                                <li id="RSS"><a href="admin_reservation_general">Reservation Settings</a></li>
                                 <li id="BS"><a href="admin_bookings_search">Bookings Search</a></li>
-                                <li id="RS"><a href="admin_rooms_search">Room Logs</a></li>
-                                <li id="RS"><a href="admin_current_rooms">Rooms Current Status</a></li>
                                 <li id="PER"><a href="admin_pending_reservation">Pending Reservation </a></li>
 
                             </ul>
@@ -213,13 +225,14 @@
 
 
                         <li class="has_sub">
-                            <a href="#" class="waves-effect" id="siteAdmin"><i class="ti-home"></i> <span>Rates Administration</span> </a>
+                            <a href="#" class="waves-effect" id="siteAdmin"><i class="ti-home"></i> <span>CRM Administration</span> </a>
                             <ul class="list-unstyled">
 
 
-                                <li id="PR"><a href="admin_promotions">Promotions Management</a></li>
-                                <li id="MM"><a href="admin_menus">Menus Management</a></li>
 
+                                <li id="PR"><a href="admin_promotions">Promotions  </a></li>
+                                <li id="CS"><a href="admin_customers_search">Customer Search</a></li>
+                              
 
                             </ul>
                         </li>
@@ -227,42 +240,41 @@
 
 
 
-
-                        <li class="has_sub">
-                            <a href="#" class="waves-effect" id="siteAdmin"><i class="ti-home"></i> <span> Gallery Management</span> </a>
-                            <ul class="list-unstyled">
-
-
-                                <li id="IG"><a href="admin_imageGallery">Image Gallery </a></li>
-                                <li id="WG"><a href="admin_webGallery">Web Home Gallery </a></li>
-                            </ul>
-                        </li>
 
                         <li class="has_sub">
                             <a href="#" class="waves-effect" id="siteAdmin"><i class="ti-home"></i> <span>Site Administration</span> </a>
                             <ul class="list-unstyled">
-                                <li id="BR"><a href="{{URL::to('get_backup')}}">Backup & Restore</a></li>
-                                <li id="FS"><a href="admin_facilities">Edit Hotel Facilities</a></li>
+
+                                <li id="FS"><a href="admin_facilities"> Hotel Facilities</a></li>
                                 <li id="AU"><a href="{{URL::to('admin_about_us')}}">Edit About Us</a></li>
-                                <li id="RE"><a href="{{URL::to('admin_reviews')}}">Manage Reviews</a></li>
+                                <li id="IG"><a href="admin_imageGallery">Image Gallery </a></li>
+                                <li id="WG"><a href="admin_webGallery">Web Home Gallery </a></li>
+                                <li id="MM"><a href="admin_menus">Menus Management</a></li>
                             </ul>
                         </li>
 
 
 
                         <li class="has_sub">
-                            <a href="#" class="waves-effect" id="siteAdmin"><i class="ti-home"></i> <span>Users Administration</span> </a>
+                            <a href="#" class="waves-effect" id="siteAdmin"><i class="ti-home"></i> <span>Inquiries/Reviews</span> </a>
                             <ul class="list-unstyled">
 
-
-                                <li id="UM"><a href="{{URL::to('/admin_users')}}">User Management</a></li>
-                                <li id="CS"><a href="admin_customers_search">Customer Search</a></li>
+                                <li id="RE"><a href="{{URL::to('admin_reviews')}}">Manage Reviews</a></li>
                                 <li id="GI"><a href="get_inquiries_page">Customer Inquiries</a></li>
+                            </ul>
+                        </li>
 
 
+                        <li class="has_sub">
+                            <a href="#" class="waves-effect" id="admin"><i class="ti-home"></i> <span>Administration </span> </a>
+                            <ul class="list-unstyled">
+
+                                <li id="BR"><a href="{{URL::to('get_backup')}}">Backup & Restore</a></li> 
+                                <li id="UM"><a href="{{URL::to('/admin_users')}}">User Management</a></li>
 
                             </ul>
                         </li>
+
                     </ul>
 
                     <div class="clearfix"></div>
@@ -381,47 +393,47 @@
 
     <script src="{{URL::asset('BackEnd/assets/js/validation.js')}}"></script>
 
- 
- 
-        <script>
-            function setReadStatus() {
-                $.ajax({url: "{{URL::to('setReadStatus')}}", success: function(result){
-                    console.log("Success")
-                }});
-            }
-        </script>
-
-        <script>
-
-            var notification_count = $('#notificationNum-alert').text();
-
-            if($.trim($('#notification_count').html()) == ''){
-                notification_count = 0;
-            }
 
 
-            var pusher = new Pusher('a9cc4ec8de7727809a37');
+    <script>
+        function setReadStatus() {
+            $.ajax({url: "{{URL::to('setReadStatus')}}", success: function(result){
+                console.log("Success")
+            }});
+        }
+    </script>
 
-            var notificationsChannel = pusher.subscribe('notifications');
+    <script>
 
-            notificationsChannel.bind('Reservation', function(res) {
+        var notification_count = $('#notificationNum-alert').text();
 
-                var message = res.message;
-                $('#notificationNum-alert').text(notification_count + 1);
-                $('#notificationNum').text(notification_count + 1+" New");
-                $("#notificationList").prepend('<a href="javascript:void(0);" class="list-group-item list-group-item-success"> ' +
-                        '<div class="media"> <div class="pull-left p-r-10"> ' +
-                        '<em class="fa fa-cog fa-2x text-custom"></em> </div> ' +
-                        '<div class="media-body"> <h5 class="media-heading">New Reservation</h5>' +
-                        ' <p class="m-0"> <small>'+message+'</small> </p> </div> </div> </a>');
-            });
+        if($.trim($('#notification_count').html()) == ''){
+            notification_count = 0;
+        }
 
 
-        </script>
+        var pusher = new Pusher('a9cc4ec8de7727809a37');
 
-        @yield('js')
- 
- 
+        var notificationsChannel = pusher.subscribe('notifications');
+
+        notificationsChannel.bind('Reservation', function(res) {
+
+            var message = res.message;
+            $('#notificationNum-alert').text(notification_count + 1);
+            $('#notificationNum').text(notification_count + 1+" New");
+            $("#notificationList").prepend('<a href="javascript:void(0);" class="list-group-item list-group-item-success"> ' +
+                                           '<div class="media"> <div class="pull-left p-r-10"> ' +
+                                           '<em class="fa fa-cog fa-2x text-custom"></em> </div> ' +
+                                           '<div class="media-body"> <h5 class="media-heading">New Reservation</h5>' +
+                                           ' <p class="m-0"> <small>'+message+'</small> </p> </div> </div> </a>');
+        });
+
+
+    </script>
+
+    @yield('js')
+
+
 
 
 </body>

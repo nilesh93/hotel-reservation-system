@@ -70,7 +70,8 @@ class BackupController extends Controller
         $currentSerialNum->serial_num = $newSerial_num;
         $currentSerialNum->save();
 
-        shell_exec('mysqldump -u'.env('DB_USERNAME').' -p'.env('DB_PASSWORD').' '.env('DB_DATABASE').' > '.env('BACKUP_PATH').$newSerial_num."_user_backup_`date`".'.sql');
+        //shell_exec("ln -s /Applications/MAMP/tmp/mysql/mysql.sock /tmp/mysql.sock");
+        shell_exec('/Applications/MySQLWorkbench.app/Contents/MacOS/mysqldump   -u'.env('DB_USERNAME').' -p'.env('DB_PASSWORD').' '.env('DB_DATABASE').' > '.env('BACKUP_PATH').$newSerial_num."_user_backup_`date`".'.sql');
 
         // TODO: put this in the constants file
         $path = storage_path()."/app/Backups/";
@@ -116,11 +117,20 @@ class BackupController extends Controller
         // Search for the required file. Returns matching files.
         $sqldump = File::glob($path.$serial_num.'_*.sql');
 
+        //$sqldump->getClientMimeType();
+
+
         if ($sqldump == false) {
             abort(404);
         }
         else {
-            return response()->download($sqldump[0]);
+
+           // dd($sqldump);
+
+            $headers=array('Content-Type'=>'text/x-sql');
+
+            $abc = (string)  $sqldump[0];
+            return response()->download($abc,'backup'.$serial_num.'.sql', $headers);
         }
     }
 
