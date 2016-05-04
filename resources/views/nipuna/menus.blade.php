@@ -10,13 +10,13 @@
 @section('title')
 
 
-Menus - Admin Panel
+    Menus - Admin Panel
 
 @endsection
 
 
 @section('page_title')
-Menus
+    Menus
 @endsection
 
 @section('breadcrumbs')
@@ -60,8 +60,8 @@ Menus
             </div>
         </div>
     </div>
-        
-<!--Add Menus Modal-->
+
+    <!--Add Menus Modal-->
     <div  class="modal fade" id="add_menus_modal">
         <div class="modal-dialog ">
             <div class="modal-content">
@@ -153,7 +153,7 @@ Menus
         </div>
     </div>
 
-<!-------------------------------------Update Menus MODAL-------------------------------->
+    <!-------------------------------------Update Menus MODAL-------------------------------->
 
     <div  class="modal fade" id="update_menus_modal">
         <div class="modal-dialog ">
@@ -234,7 +234,7 @@ Menus
     </div>
 
     <!-- END OF UPDATE MENUS MODAL -->
-        @endsection
+@endsection
 
 
 
