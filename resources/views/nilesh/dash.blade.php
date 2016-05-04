@@ -271,24 +271,19 @@ AMALYA REACH MANAGEMENT DASHBOARD
                     <div class="panel-body">
                         <form class="form-horizontal" id="f1" onsubmit="return searchf()">
 
-                            <div class="form-group">
-                                <label class="col-md-3"> Check In</label>
-                                <div class="col-md-9">
-                                    <input type="text" id="checkin" name="checkin" class="form-control" required>
 
-                                </div>
 
-                            </div>
 
                             <div class="form-group">
-                                <label class="col-md-3"> Check Out</label>
-                                <div class="col-md-9">
-                                    <input type="text" id="checkout" name="checkout" class="form-control" required>
-
+                                <label class="control-label col-sm-4">Date Range</label>
+                                <div class="col-sm-8">
+                                    <div class="input-daterange input-group" id="date-range">
+                                        <input type="text" name="checkin" class="form-control"  />
+                                        <span class="input-group-addon bg-custom b-0 text-white">to</span>
+                                        <input type="text" name="checkout" class="form-control"/>
+                                    </div>
                                 </div>
-
                             </div>
-
 
 
                             <div class="form-group">
@@ -319,7 +314,7 @@ AMALYA REACH MANAGEMENT DASHBOARD
                         <form class="form-horizontal" id="f2" onsubmit="return searchf2()">
 
                             <div class="form-group">
-                                <label class="col-md-3">  Date</label>
+                                <label class="col-md-3 control-label">  Date</label>
                                 <div class="col-md-9">
                                     <input type="text" id="checkin1" name="checkin" class="form-control" required>
 
@@ -338,6 +333,7 @@ AMALYA REACH MANAGEMENT DASHBOARD
 
                                 </div>
                             </div>
+
 
                         </form>
 
@@ -494,6 +490,14 @@ AMALYA REACH MANAGEMENT DASHBOARD
             format:'yyyy-mm-dd'
         });
 
+        $('#date-range').datepicker({
+            toggleActive: true,
+            keyboardNavigation: false,
+            forceParse: false,
+            calendarWeeks: true,
+            startDate:"{{date('Y-m-d')}}",
+            format:'yyyy-mm-dd'
+        });
 
 
     });
@@ -553,16 +557,16 @@ AMALYA REACH MANAGEMENT DASHBOARD
                 for(var i= 0; i<data.length;i++){
 
                     str+= "<tr><td class='text-uppercase'><center>"+data[i].title+" - "+data[i].hall_num+"</center></td>";
-                    
+
                     if(data[i].st == 0){
-                        
-                           str+= "<td class=''><center> <span class='label label-success'>   Available </span>  </center></td> </tr>";
+
+                        str+= "<td class=''><center> <span class='label label-success'>   Available </span>  </center></td> </tr>";
                     }else{
-                        
-                        
-                        
-                    str+= "<td class=''><center> <span class='label label-danger'> Not  Available </span>  </center></td> </tr>";
-                        }
+
+
+
+                        str+= "<td class=''><center> <span class='label label-danger'> Not  Available </span>  </center></td> </tr>";
+                    }
 
                 }
                 str+= "</tbody> </table>"

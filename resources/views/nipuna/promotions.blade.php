@@ -8,43 +8,45 @@
 
 
 @section('title')
-    Promotions - Admin Panel
+Promotions - Admin Panel
 @endsection
 
 
 @section('page_title')
-    Promotions
+Promotions
 @endsection
 
 
 
 @section('breadcrumbs')
-    <li>
-        <a href="#">Admin</a>
-    </li>
-    <li  class="active">
-        <a href="#">Promotions</a>
-    </li>
+<li>
+    <a href="#">Admin</a>
+</li>
+<li  class="active">
+    <a href="#">Promotions</a>
+</li>
 @endsection
 
 
 @section('page_buttons')
-    <div class="col-md-4 col-md-offset-8">
-        <button type="button" class="btn btn-primary btn-success pull-right" onclick="add_promotions_modal()"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add Promotions</button>
-    </div>
+<div class="col-md-4 col-md-offset-8">
+    <button type="button" class="btn btn-primary btn-success pull-right" onclick="add_promotions_modal()">  <span class="btn-label pull-left"><i class="fa fa-plus"></i>
+        </span> Add Promotions</button>
+
+</div>
 @endsection
 
 @section('content')
-    <div class="portlet">
+<div class="portlet">
 
-        <div class="portlet-body">
+    <div class="portlet-body">
 
 
-            <div class="" id="temptable">
-                <table class="table table-striped table-bordered table-hover dataTables-example" id="dd" plugin="datatable" >
-                    <thead>
+        <div class="" id="temptable">
+            <table class="table table-striped table-bordered table-hover dataTables-example" id="dd" plugin="datatable" >
+                <thead>
                     <tr>
-                        <th>Promotion Code</th>
+                        <th>Code</th>
                         <th>Promotion Name</th>
                         <th>Promotion Description</th>
                         <th>Date From</th>
@@ -53,175 +55,153 @@
                         <th class="col-md-1"></th>
                         <th class="col-md-1"></th>
                     </tr>
-                    </thead>
-                    <tbody>
+                </thead>
+                <tbody>
 
-                    </tbody>
+                </tbody>
 
-                </table>
+            </table>
+        </div>
+    </div>
+
+</div>
+
+<!--Add Promotions Modal-->
+<div  class="modal fade" id="add_promotions_modal">
+    <div class="modal-dialog  ">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title">Add Promotions</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal" enctype="multipart/form-data" onsubmit="" method="post">
+
+
+                    <div class="form-group">
+                        <label for="quantity" class="col-lg-5 control-label">Promotion Name</label>
+                        <div class="col-lg-7">
+                            <input class="form-control" id="prom_name" placeholder="Promotion Name" type="text">
+                        </div>
+                    </div>
+
+
+
+                    <div class="form-group">
+                        <label for="item" class="col-lg-5 control-label">Promotion Descrition</label>
+                        <div class="col-lg-7">
+                            <textarea class="form-control" id="prom_description" placeholder="Promotion Descrition" type="text"></textarea>
+                        </div>
+                    </div>
+
+
+                    <div class="form-group">
+                        <label class="control-label col-sm-5">Date Range</label>
+                        <div class="col-sm-7">
+                            <div class="input-daterange input-group" id="date-range">
+                                <input type="text" id='start_date' name="start_date" class="form-control"   />
+                                <span class="input-group-addon bg-custom b-0 text-white">to</span>
+                                <input type="text"  name="end_date" id="end_date" class="form-control"   />
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                    <div class="form-group">
+                        <label for="discount" class="col-lg-5 control-label">Rate</label>
+                        <div class="col-lg-7">
+                            <input class="form-control" id="prom_rate" placeholder="Rate" type="number">
+                        </div>
+                    </div>
+
+                    </div>
+                <div class="alert alert-dismissible alert-success" id="addedsuccessfully" hidden="true">
+                    <button type="button" class="close" data-dismiss="alert">×</button>
+                    <strong> Added Successfully!</strong>
+                </div>
+                <div class="alert alert-dismissible alert-success" id="adderror" hidden="true">
+                    <button type="button" class="close" data-dismiss="alert">×</button>
+                    <strong> Adding Fail!</strong>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" onclick="add_promotion()" class="btn btn-primary" name="submit" >Add Promotion</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </form>
             </div>
         </div>
-
     </div>
-        
-    <!--Add Promotions Modal-->
- <div  class="modal fade" id="add_promotions_modal">
-     <div class="modal-dialog modal-lg">
-         <div class="modal-content">
-             <div class="modal-header">
-                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                 <h4 class="modal-title">Add Promotions</h4>
-             </div>
-             <div class="modal-body">
-                 <form class="form-horizontal" enctype="multipart/form-data" onsubmit="" method="post">
-
-                     <div class="row">
-                         <div class="form-group">
-                             <label for="quantity" class="col-lg-5 control-label">Promotion Name</label>
-                             <div class="col-lg-6">
-                                 <input class="form-control" id="prom_name" placeholder="Promotion Name" type="text">
-                             </div>
-                         </div>
-                     </div>
-
-                     <div class="row">
-                         <div class="form-group">
-                             <label for="item" class="col-lg-5 control-label">Promotion Descrition</label>
-                             <div class="col-lg-6">
-                                 <input class="form-control" id="prom_description" placeholder="Promotion Descrition" type="text">
-                             </div>
-                         </div>
-                     </div>
-
-                     <div class="row">
-                         <div class="form-group">
-                             <label for="description" class="col-lg-5 control-label">Start Date</label>
-                             <div class='input-group date' id='datetimepicker1'>
-                                 <input disabled type='text' onchange="start_date_validate()" placeholder="MM/DD/YYYY" class="form-control" id='start_date'/>
-                                    <span class="input-group-addon">
-                                     <span class="glyphicon glyphicon-calendar"></span>
-                                    </span>
-                             </div>
-                         </div>
-                     </div>
-
-                     <div class="row">
-                         <div class="form-group">
-                             <label for="description" class="col-lg-5 control-label">End Date</label>
-                             <div class='input-group date' id='datetimepicker2'>
-                                 <input disabled type='text' onchange="end_date_validate()" placeholder="MM/DD/YYYY" class="form-control" id='end_date'/>
-                                    <span class="input-group-addon">
-                                     <span class="glyphicon glyphicon-calendar"></span>
-                                    </span>
-                             </div>
-                         </div>
-                     </div>
-
-                     <div class="row">
-                         <div class="form-group">
-                             <label for="discount" class="col-lg-5 control-label">Rate</label>
-                             <div class="col-lg-6">
-                                 <input class="form-control" id="prom_rate" placeholder="Rate" type="number">
-                             </div>
-                         </div>
-                     </div>
-             </div>
-             <div class="alert alert-dismissible alert-success" id="addedsuccessfully" hidden="true">
-                 <button type="button" class="close" data-dismiss="alert">×</button>
-                 <strong> Added Successfully!</strong>
-             </div>
-             <div class="alert alert-dismissible alert-success" id="adderror" hidden="true">
-                 <button type="button" class="close" data-dismiss="alert">×</button>
-                 <strong> Adding Fail!</strong>
-             </div>
-             <div class="modal-footer">
-                 <button type="button" onclick="add_promotion()" class="btn btn-primary" name="submit" >Add Promotion</button>
-                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                 </form>
-             </div>
-         </div>
-     </div>
- </div>
+</div>
 <!-------------------------------------END OF ADD PROMOTIONS MODAL-------------------------------->
 
- <div  class="modal fade" id="update_promotions_modal">
-     <div class="modal-dialog modal-lg">
-         <div class="modal-content">
-             <div class="modal-header">
-                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                 <h4 class="modal-title">Add Promotions</h4>
-             </div>
-             <div class="modal-body">
-                 <form class="form-horizontal" enctype="multipart/form-data" onsubmit="" method="post">
+<div  class="modal fade" id="update_promotions_modal">
+    <div class="modal-dialog  ">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title">Edit Promotions</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal" enctype="multipart/form-data" onsubmit="" method="post">
 
-                     <div class="row">
-                         <div class="form-group">
-                             <label for="quantity" class="col-lg-5 control-label">Promotion Name</label>
-                             <div class="col-lg-6">
-                                 <input class="form-control" id="prom_name_edit" placeholder="Promotion Name" type="text">
-                                 <input type="text" id="rownumber" hidden>
-                             </div>
-                         </div>
-                     </div>
+                    <div class="row">
+                        <div class="form-group">
+                            <label for="quantity" class="col-lg-5 control-label">Promotion Name</label>
+                            <div class="col-lg-7">
+                                <input class="form-control" id="prom_name_edit" placeholder="Promotion Name" type="text">
+                                <input type="text" id="rownumber" hidden>
+                            </div>
+                        </div>
+                    </div>
 
-                     <div class="row">
-                         <div class="form-group">
-                             <label for="item" class="col-lg-5 control-label">Promotion Descrition</label>
-                             <div class="col-lg-6">
-                                 <input class="form-control" id="prom_description_edit" placeholder="Promotion Descrition" type="text">
-                             </div>
-                         </div>
-                     </div>
+                    <div class="row">
+                        <div class="form-group">
+                            <label for="item" class="col-lg-5 control-label">Promotion Descrition</label>
+                            <div class="col-lg-7">
+                                <textarea class="form-control" id="prom_description_edit" placeholder="Promotion Descrition" type="text"></textarea>
+                            </div>
+                        </div>
+                    </div>
 
-                     <div class="row">
-                         <div class="form-group">
-                             <label for="description" class="col-lg-5 control-label">Start Date</label>
-                             <div class='input-group date' id='datetimepicker1_edit'>
-                                 <input disabled type='text' onchange="start_date_validate_edit()" placeholder="MM/DD/YYYY" class="form-control" id='start_date_edit'/>
-                                    <span class="input-group-addon">
-                                     <span class="glyphicon glyphicon-calendar"></span>
-                                    </span>
-                             </div>
-                         </div>
-                     </div>
 
-                     <div class="row">
-                         <div class="form-group">
-                             <label for="description" class="col-lg-5 control-label">End Date</label>
-                             <div class='input-group date' id='datetimepicker2_edit'>
-                                 <input disabled type='text' onchange="end_date_validate_edit()" placeholder="MM/DD/YYYY" class="form-control" id='end_date_edit'/>
-                                    <span class="input-group-addon">
-                                     <span class="glyphicon glyphicon-calendar"></span>
-                                    </span>
-                             </div>
-                         </div>
-                     </div>
+                    <div class="form-group">
+                        <label class="control-label col-sm-5">Date Range</label>
+                        <div class="col-sm-7">
+                            <div class="input-daterange input-group" id="date-range">
+                                <input type="text" id='start_date_edit' name="start_date_edit" class="form-control"   />
+                                <span class="input-group-addon bg-custom b-0 text-white">to</span>
+                                <input type="text"  name="end_date_edit" id="end_date_edit" class="form-control"   />
+                            </div>
+                        </div>
+                    </div>
 
-                     <div class="row">
-                         <div class="form-group">
-                             <label for="discount" class="col-lg-5 control-label">Rate</label>
-                             <div class="col-lg-6">
-                                 <input class="form-control" id="prom_rate_edit" placeholder="Rate" type="number">
-                             </div>
-                         </div>
-                     </div>
-             </div>
-             <div class="alert alert-dismissible alert-success" id="addedsuccessfully" hidden="true">
-                 <button type="button" class="close" data-dismiss="alert">×</button>
-                 <strong> Added Successfully!</strong>
-             </div>
-             <div class="alert alert-dismissible alert-success" id="adderror" hidden="true">
-                 <button type="button" class="close" data-dismiss="alert">×</button>
-                 <strong> Adding Fail!</strong>
-             </div>
-             <div class="modal-footer">
-                 <button type="button" onclick="update_promotion()" class="btn btn-primary" name="submit" >Update Promotion</button>
-                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                 </form>
-             </div>
-         </div>
-     </div>
- </div>
+                    >
+
+                    <div class="row">
+                        <div class="form-group">
+                            <label for="discount" class="col-lg-5 control-label">Rate</label>
+                            <div class="col-lg-7">
+                                <input class="form-control" id="prom_rate_edit" placeholder="Rate" type="number">
+                            </div>
+                        </div>
+                    </div>
+                    </div>
+                <div class="alert alert-dismissible alert-success" id="addedsuccessfully" hidden="true">
+                    <button type="button" class="close" data-dismiss="alert">×</button>
+                    <strong> Added Successfully!</strong>
+                </div>
+                <div class="alert alert-dismissible alert-success" id="adderror" hidden="true">
+                    <button type="button" class="close" data-dismiss="alert">×</button>
+                    <strong> Adding Fail!</strong>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" onclick="update_promotion()" class="btn btn-primary" name="submit" >Update Promotion</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </form>
+            </div>
+        </div>
+    </div>
+</div>
 @endsection
 
 
@@ -234,6 +214,15 @@
         document.getElementById("management").click();
         document.getElementById("PR").setAttribute("class","active");
         dataLoad();
+
+        $('#date-range').datepicker({
+            toggleActive: true,
+            keyboardNavigation: false,
+            forceParse: false,
+            calendarWeeks: true,
+            startDate:"{{date('Y-m-d')}}",
+            format:'yyyy-mm-dd'
+        });
     });
 
     function add_promotions_modal(){
@@ -388,41 +377,41 @@
     function update_promotion(){
 
         swal({
-                    title: "Are you sure?",
-                    text: "Are you sure you want to update?",
-                    type: "warning",
-                    showCancelButton: true,
-                    confirmButtonColor: "#DD6B55",
-                    confirmButtonText: "Update!",
-                    closeOnConfirm: false },
-                function(){
+            title: "Are you sure?",
+            text: "Are you sure you want to update?",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#DD6B55",
+            confirmButtonText: "Update!",
+            closeOnConfirm: false },
+             function(){
 
 
-                    var row = $('#rownumber').val();
-                    var promo_name=$('#prom_name_edit').val();
-                    var promo_description=$('#prom_description_edit').val();
-                    var promo_start=$('#start_date_edit').val();
-                    var promo_end=$('#end_date_edit').val();
-                    var promo_rate=$('#prom_rate_edit').val();
+            var row = $('#rownumber').val();
+            var promo_name=$('#prom_name_edit').val();
+            var promo_description=$('#prom_description_edit').val();
+            var promo_start=$('#start_date_edit').val();
+            var promo_end=$('#end_date_edit').val();
+            var promo_rate=$('#prom_rate_edit').val();
 
-                    if(promo_name == "" || promo_description == "" || promo_start == "" || promo_end == "" || promo_rate == ""){
-                        sweetAlert("Oops...", "One or more field(s) are empty!", "error");
+            if(promo_name == "" || promo_description == "" || promo_start == "" || promo_end == "" || promo_rate == ""){
+                sweetAlert("Oops...", "One or more field(s) are empty!", "error");
 
-                    }
-                    else{
-                        var data="row="+row+"&promo_name="+promo_name+"&promo_description="+promo_description+"&promo_start="+promo_start+"&promo_end="+promo_end+"&promo_rate="+promo_rate;
+            }
+            else{
+                var data="row="+row+"&promo_name="+promo_name+"&promo_description="+promo_description+"&promo_start="+promo_start+"&promo_end="+promo_end+"&promo_rate="+promo_rate;
 
-                        $.ajax({
-                            type:"get",
-                            url:"admin_promotions/updatepromotion",
-                            data:data,
-                            success:function(ss){
-                                swal("Updated!", "Your record was updated with new data.", "success");
-                                dataLoad();
-                            }
-                        });
+                $.ajax({
+                    type:"get",
+                    url:"admin_promotions/updatepromotion",
+                    data:data,
+                    success:function(ss){
+                        swal("Updated!", "Your record was updated with new data.", "success");
+                        dataLoad();
                     }
                 });
+            }
+        });
 
     }
 
@@ -449,19 +438,19 @@
                 closeOnConfirm: false,
                 showLoaderOnConfirm: true,
             },
-                    function(){
-                        $.ajax({
-                            type:"get",
-                            url:"admin_promotions/addpromotion",
-                            data:data,
-                            success:function(ss){
+                 function(){
+                $.ajax({
+                    type:"get",
+                    url:"admin_promotions/addpromotion",
+                    data:data,
+                    success:function(ss){
 
-                                dataLoad();
-                                swal("Added!", "Record Added Successfully.", "success");
+                        dataLoad();
+                        swal("Added!", "Record Added Successfully.", "success");
 
-                            }
-                        });
-                    });
+                    }
+                });
+            });
 
         }
     }
@@ -495,27 +484,27 @@
 
     function delete_promo(a){
         swal({
-                    title: "Are you sure?",
-                    text: "Are you sure you want to delete the record"+a+"?",
-                    type: "warning",   showCancelButton: true,   confirmButtonColor: "#DD6B55",
-                    confirmButtonText: "Yes, delete it!",
-                    closeOnConfirm: false },
-                function(){
-                    var data="row="+a;
-                    $.ajax({
-                        type:"get",
-                        url:"admin_promotions/deleterow",
-                        data:data,
-                        success:function(data){
-                            swal("Deleted!", "Record has been deleted.", "success");
-                            dataLoad();
-                        },
-                        complete: function (data) {
-                        },
-                        error: function(xhr, ajaxOptions, thrownError) {
-                        }
-                    });
-                });
+            title: "Are you sure?",
+            text: "Are you sure you want to delete the record"+a+"?",
+            type: "warning",   showCancelButton: true,   confirmButtonColor: "#DD6B55",
+            confirmButtonText: "Yes, delete it!",
+            closeOnConfirm: false },
+             function(){
+            var data="row="+a;
+            $.ajax({
+                type:"get",
+                url:"admin_promotions/deleterow",
+                data:data,
+                success:function(data){
+                    swal("Deleted!", "Record has been deleted.", "success");
+                    dataLoad();
+                },
+                complete: function (data) {
+                },
+                error: function(xhr, ajaxOptions, thrownError) {
+                }
+            });
+        });
     }
 
     function dataLoad(){
@@ -533,14 +522,14 @@
                 { "data": "date_to" },
                 { "data": "rate" },
                 {"data" : null,
-                    "mRender": function(data, type, full) {
-                        return '<button class="btn btn-info  btn-animate btn-animate-side btn-block btn-sm" onclick="edit('+data.promotion_code+')"> View </button>' ;
-                    }
+                 "mRender": function(data, type, full) {
+                     return '<button class="btn btn-info  btn-animate btn-animate-side btn-block btn-sm" onclick="edit('+data.promotion_code+')"> View </button>' ;
+                 }
                 },
                 {"data" : null,
-                    "mRender": function(data, type, full) {
-                        return '<button class="btn btn-danger  btn-animate btn-animate-side btn-block btn-sm" onclick="delete_promo('+data.promotion_code+')"> Delete </button>' ;
-                    }
+                 "mRender": function(data, type, full) {
+                     return '<button class="btn btn-danger  btn-animate btn-animate-side btn-block btn-sm" onclick="delete_promo('+data.promotion_code+')"> Delete </button>' ;
+                 }
                 }
             ]
         } );
