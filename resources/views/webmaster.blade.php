@@ -178,23 +178,23 @@
 										<ul>
 
 											@if(Auth::check())
-												@if(Auth::user()->role == "admin")
-													<li><a href="{{URL::to('admin')}}">Admin Area</a></li>
-												@else
-													@if(Auth::check())
-														<li><a href="#">My Account</a>
-															<ul>
-																<li><a href="{{ URL::to('profile') }}">My Details</a></li>
-																<li><a href="{!! url('/myreserv') !!}">My Reservations</a></li>
-																<li><a href="{{ URL::to('change_password') }}">Change Password</a></li>
-																<li><a href="{{ URL::to('auth/logout') }}">Log out</a></li>
-															</ul>
-														</li>
-													@endif
-												@endif
+											@if(Auth::user()->role == "admin")
+											<li><a href="{{URL::to('admin')}}">Admin Area</a></li>
 											@else
-												<li><a href="{{URL::to('auth/register')}}">Register</a></li>
-												<li><a href="{{URL::to('auth/login')}}">Login</a></li>
+											@if(Auth::check())
+											<li><a href="#">My Account</a>
+												<ul>
+													<li><a href="{{ URL::to('profile') }}">My Details</a></li>
+													<li><a href="{!! url('/myreserv') !!}">My Reservations</a></li>
+													<li><a href="{{ URL::to('change_password') }}">Change Password</a></li>
+													<li><a href="{{ URL::to('auth/logout') }}">Log out</a></li>
+												</ul>
+											</li>
+											@endif
+											@endif
+											@else
+											<li><a href="{{URL::to('auth/register')}}">Register</a></li>
+											<li><a href="{{URL::to('auth/login')}}">Login</a></li>
 
 											@endif
 
@@ -235,8 +235,8 @@
 							<!-- /col-sm-8 -->
 						</div>
 					</div><!-- /row -->
- 
- 
+
+
 
 				</div><!-- /container -->
 			</header><!-- /main-header -->
@@ -663,7 +663,7 @@
 						</div><!-- /col-md-3 -->
 						<div class="col-sm-5 col-md-5 col-lg-5">
 							<nav class="footer-nav">
-							 
+
 								<ul>
 									<li><a href="#">Home</a></li>
 									<li><a href="#">About Us</a></li>
@@ -758,7 +758,8 @@
 				if (typeof localStorage.currency === 'undefined' || localStorage.currency == 'LKR') {
 
 					console.log("do nothing");
-					
+					 
+
 				}else{
 
 					$('#currencyRate').val('USD');
@@ -986,6 +987,7 @@
 
 				var list = 	$('.finance');
 
+				 
 				var cur = $('#currencyRate').val();
 
 				localStorage.currency = cur;
@@ -1009,20 +1011,26 @@
 
 						var rate = data;
 
-						console.log(rate);
-
-						for(var i = 0; i<list.length; i++){
-
-							var temp = ((list[i].innerHTML).replace(/\D/g,''))/100;
-
+						$( ".finance" ).each(function() {
+							console.log("abc",$( this ).data('cur'));
+							
+							
+							var temp = ($( this ).data('cur'));
 							var num = parseFloat(temp);
+							
+							
+							if(cur == 'LKR'){
+							
+							 $( this ).text( sign+""+temp);
+							
+							}else{
+								
+								 $( this ).text( sign+""+(num * rate).toFixed(2));
+							}
+						});
 
-							console.log(num);
-
-							list[i].innerHTML = sign+""+(num * rate).toFixed(2) ;
-
-
-						}
+						console.log(rate);
+ 
 
 					},
 					error:function(err){

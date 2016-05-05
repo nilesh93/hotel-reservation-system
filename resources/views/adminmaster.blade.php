@@ -275,6 +275,12 @@
                             </ul>
                         </li>
 
+                          <li class="text-muted menu-title">Customer Website </li>
+                               <li class="">
+                            <a href="home" class="waves-effect" id="admin"><i class="ti-home"></i> <span class="label label-primary">WebSite </span> </a>
+                           
+                        </li>
+
                     </ul>
 
                     <div class="clearfix"></div>

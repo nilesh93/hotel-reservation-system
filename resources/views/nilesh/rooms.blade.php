@@ -31,12 +31,12 @@ ROOM MANAGEMENT
 
 @section('page_buttons')
 <div class="col-md-4 col-md-offset-4">
-    <button type="button" class="btn btn-success waves-effect btn-block waves-light pull-right" data-toggle="modal" data-target="#addRoom">
+    <button type="button" class="btn btn-success waves-effect btn-block waves-light pull-right" onclick="reset()" data-toggle="modal" data-target="#addRoom">
         <span class="btn-label pull-left"><i class="fa fa-plus"></i>
         </span> ROOMS</button>
 </div>
 <div class="col-md-4">
-    <button type="button" class="btn btn-primary waves-effect btn-block waves-light pull-right" data-toggle="modal" data-target="#addRoomT">
+    <button type="button" class="btn btn-primary waves-effect btn-block waves-light pull-right" onclick="reset()" data-toggle="modal" data-target="#addRoomT">
         <span class="btn-label pull-left"><i class="fa fa-plus"></i>
         </span>ROOM TYPES</button></div>
 @endsection
@@ -172,7 +172,7 @@ ROOM MANAGEMENT
 
                         <label class="col-lg-3 control-label">Size (SqFt)</label>
 
-                        <div class="col-lg-9"><input type="text" placeholder="Enter Room Size" class="form-control" type="text" required id="rsize" name="rsize" pattern="[-+]?[0-9]*\.?[0-9]+" title="Float value needed" >
+                        <div class="col-lg-9"><input type="text" placeholder="Enter Room Size" class="form-control" type="text" required id="rsize" name="rsize" pattern="[-+]?[0-9]*\.?[0-9]+" title="Decimal Number needed" >
 
                         </div>               
                     </div>
@@ -338,7 +338,7 @@ ROOM MANAGEMENT
                         <label class="col-lg-1 control-label">Rate</label>
 
                         <div class="col-lg-3" id="rateErr"><input placeholder="Enter Price" class="form-control" type="text"   id="rtrate" name="rtrate"   title="Float value needed" aria-describedby="helpBlock2">
-                            <span id="helpBlock2" class="help-block">A Float value is required.</span>
+                            <span id="helpBlock2" class="help-block">A Decimal is required.</span>
                         </div>
 
                         <div class="col-md-2">
@@ -346,7 +346,7 @@ ROOM MANAGEMENT
                             <button  type="button" class="btn btn-success btn-block" onclick="rateAdd()">Add</button>
                         </div>
                     </div>
-<hr>
+                    <hr>
                     <div class="form-group" id="rateTBL">
 
 
@@ -576,7 +576,7 @@ ROOM MANAGEMENT
                                 <label class="col-lg-1 control-label">Rate</label>
 
                                 <div class="col-lg-3" id="rateErr1"><input placeholder="Enter Price" class="form-control" type="text"   id="rtrate1" name="rtrate"   title="Float value needed" aria-describedby="helpBlock2">
-                                    <span id="helpBlock2" class="help-block">A Float value is required.</span>
+                                    <span id="helpBlock2" class="help-block">A Decimal Number is required.</span>
                                 </div>
 
                                 <div class="col-md-2">
@@ -710,28 +710,36 @@ ROOM MANAGEMENT
 
 <script src="{{ URL::asset('BackEnd/assets/plugins/cropping/cropper.min.js') }}"></script>
 <script src="{{ URL::asset('CustomJs/roomtypeImg.js') }}"></script>
+<script>
+    function reset(){
 
+        $('input').val('');
+        $('option').attr('disabled', false);
+
+
+    }
+</script>
 <script>
 
 
     //temp rates for room type add
     var tempRates = [];
-    
+
     //temp rates for room type edit
     var tempRatesEdit = [];
-    
+
     //img valdiation extensions
     var _validFileExtensions = [".jpg", ".jpeg", ".png"];
 
     //room codes for valdiation
     var roomNumbers = [];
-    
+
     //room type codes for validation
     var rtCodes = [];
 
     //room trigger to save validation
     var roomTrigger = false;
-    
+
     // room type trigger to save validation
     var rTrigger = false;
 
@@ -752,7 +760,7 @@ ROOM MANAGEMENT
         }
 
     } 
-    
+
     //room type code validation
     function checkRTCode(value){
 
@@ -770,7 +778,7 @@ ROOM MANAGEMENT
 
 
     } 
-    
+
     //add temprates
     function rateAdd(){
         var rate = $('#rtrate').val();
@@ -814,7 +822,7 @@ ROOM MANAGEMENT
 
         tableLoad();
     }
-    
+
     //add temp rates for edit
     function rateAddEdit(){
         var rate = $('#rtrate1').val();
@@ -858,7 +866,7 @@ ROOM MANAGEMENT
 
         tableLoadEdit();
     }
-    
+
     //load table for add rates
     function tableLoad(){
         if(tempRates.length >0 ){
@@ -880,7 +888,7 @@ ROOM MANAGEMENT
         }
 
     }
-    
+
     //load table for edit rates
     function tableLoadEdit(){
         if(tempRatesEdit.length >0 ){
@@ -902,7 +910,7 @@ ROOM MANAGEMENT
         }
 
     }
-    
+
     //delete temprate add row
     function delTemp(index,id){
 
@@ -911,7 +919,7 @@ ROOM MANAGEMENT
 
         tableLoad();
     }
-    
+
     //delete temp rate edit  row
     function delTemp1(index,id){
 
@@ -920,7 +928,7 @@ ROOM MANAGEMENT
 
         tableLoadEdit();
     }
-    
+
     //onload function
     $('document').ready(function(){
 
@@ -947,7 +955,7 @@ ROOM MANAGEMENT
         tableLoad();
 
     });
-    
+
     //initital dataload
     function dataLoad(){
 
@@ -1046,7 +1054,7 @@ ROOM MANAGEMENT
 
 
     }
-    
+
     //insert room
     function insertR(){
 
@@ -1065,11 +1073,12 @@ ROOM MANAGEMENT
 
             success : function(data){
                 $('#addRoom').modal('hide');
-                swal('Success','Successfully Added!', 'success');
+                swal('Successfully Added!','', 'success');
                 dataLoad();
 
             },
             error: function(xhr, ajaxOptions, thrownError) {
+                  swal("Room Code Already Used!","", "error");
                 console.log(thrownError);
             }	 
         });
@@ -1080,7 +1089,7 @@ ROOM MANAGEMENT
 
 
     }
-    
+
     //add image for room type
     function addimg(id){
 
@@ -1090,7 +1099,7 @@ ROOM MANAGEMENT
 
 
     }
-    
+
     //edit room type
     function editRT(id){
 
@@ -1184,7 +1193,7 @@ ROOM MANAGEMENT
 
 
     }
-    
+
     //save edited room type
     function saveEditRT(){
 
@@ -1205,6 +1214,7 @@ ROOM MANAGEMENT
             },
             error: function(xhr, ajaxOptions, thrownError) {
                 console.log(thrownError);
+                 swal("Room Type Code Already Used!","", "error");
             }	 
 
 
@@ -1213,7 +1223,7 @@ ROOM MANAGEMENT
         return false;
 
     }
-    
+
     //ajax upload of image
     function upload(){
 
@@ -1284,13 +1294,13 @@ ROOM MANAGEMENT
         return false;
 
     }  
-    
+
     //image validation
     function hasExtension(inputID, exts) {
         var fileName = document.getElementById(inputID).value;
         return (new RegExp('(' + exts.join('|').replace(/\./g, '\\.') + ')$')).test(fileName);
     }
-    
+
     //delete image
     function delImage(id,originalid){
 
@@ -1339,7 +1349,7 @@ ROOM MANAGEMENT
 
 
     }
-    
+
     //insert room type
     function insertRT(){
 
@@ -1372,6 +1382,7 @@ ROOM MANAGEMENT
                 },
                 error: function(xhr, ajaxOptions, thrownError) {
                     console.log(thrownError);
+                     swal("Room Type Code Already Used!","", "error");
                 }	 
             });
 
@@ -1384,7 +1395,7 @@ ROOM MANAGEMENT
 
 
     }
-    
+
     //load dropdown for rooms
     function loadTypes(){
 
@@ -1417,7 +1428,7 @@ ROOM MANAGEMENT
 
 
     }
-    
+
     //delete room types
     function delRT(id){
 
@@ -1452,7 +1463,7 @@ ROOM MANAGEMENT
                 error: function(xhr, ajaxOptions, thrownError) {
                     console.log(thrownError);
 
-                    swal("Ooops!", "Something Went Wrong! ("+thrownError+")", "error");   
+                    swal("Cannot Delete! Too many dependancies","", "error");
                 }	 
             });
 
@@ -1461,7 +1472,7 @@ ROOM MANAGEMENT
 
 
     }
-    
+
     //delete room
     function del(id){
 
@@ -1496,7 +1507,7 @@ ROOM MANAGEMENT
                 error: function(xhr, ajaxOptions, thrownError) {
                     console.log(thrownError);
 
-                    swal("Ooops!", "Something Went Wrong! ("+thrownError+")", "error");   
+                    swal("Cannot delete!Too many dependancies","", "error");
                 }	 
             });
 
@@ -1505,7 +1516,7 @@ ROOM MANAGEMENT
 
 
     }
-    
+
     //cannot delete error message
     function delCancel(id){
 
@@ -1513,7 +1524,7 @@ ROOM MANAGEMENT
 
 
     }
-    
+
     //autogenerate room number via ajax
     function getRoomNum(id){
 
@@ -1550,7 +1561,7 @@ ROOM MANAGEMENT
 
 
     }
-    
+
     //deprecated funciton to validate room number
     function checknum(id,element){
 
@@ -1571,7 +1582,7 @@ ROOM MANAGEMENT
         });
 
     }
-    
+
     //edit room
     function edit(id){
 
@@ -1605,7 +1616,7 @@ ROOM MANAGEMENT
 
 
     } 
-    
+
     //update room
     function updateR(){
 
@@ -1622,10 +1633,7 @@ ROOM MANAGEMENT
                 dataLoad();
             },
             error:function(err){
-
-
-                swal("Somethi went wrong!","code("+err+").","error");
-
+                 swal("Room Code Already Used!","", "error");
             }
 
 

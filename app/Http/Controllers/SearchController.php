@@ -61,12 +61,25 @@ class SearchController extends Controller
   $resid = $request->input('resid');
   $name = $request->input('name');
 
+  if( $name == ""){
+   $name = "%";
+  }
+   if( $nic == ""){
+   $nic = "%";
+  }
+   if( $resid == ""){
+   $resid = "%";
+  }
+   if( $checkin == ""){
+   $checkin = "%";
+  }
+  
   $result = DB::select(DB::raw("
 Select A.*,B.*,K.*,A.room_reservation_id as res
 FROM HRS.ROOM_RESERVATION A
 LEFT JOIN HRS.ROOM_RESERVATION_BLOCK B ON B.room_reservation_id = A.Room_reservation_id
 LEFT JOIN HRS.CUSTOMER K ON K.cus_id = A.cus_id
-WHERE K.name LIKE '$name' OR K.NIC_passport_num LIKE '$nic' OR A.room_reservation_id LIKE '$resid' OR DATE_FORMAT(A.check_in,'%Y-%m-%d') LIKE '$checkin' "));
+WHERE K.name LIKE '$name' AND K.NIC_passport_num LIKE '$nic' AND A.room_reservation_id LIKE '$resid' AND DATE_FORMAT(A.check_in,'%Y-%m-%d') LIKE '$checkin' "));
 
   return response()->json(['count' => count($result), 'data' => $result]);
  }

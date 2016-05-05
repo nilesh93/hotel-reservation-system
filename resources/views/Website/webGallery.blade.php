@@ -67,7 +67,7 @@ Contact Us
 
 			<?php $count = 1; ?>
 			@foreach($images as $i)
-			<div class="col-sm-4 col-md-4 col-lg-4 img-small"   >
+			<div class="col-sm-4 col-md-4 col-lg-4 img-small" style="padding-top:2%"  >
 				
 				<a class="fancybox" rel="group" href="{{URL::asset($i->path)}}">
 					<img  src="{{URL::asset($i->path)}}"  >

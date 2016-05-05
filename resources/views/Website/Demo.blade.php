@@ -136,7 +136,7 @@ Home
 						<div class="post-content" >
 							<span class="post-category">{{$f->category}}</span>
 							<hr>
-							<h4><a href="#" > <c class="finance">Rs&nbsp;  {{ number_format($f->price,2,".","")}} </c> Per Hour</a></h4>
+							<h4><a href="#" > <c class="finance" data-cur="{{ number_format($f->price,2,".","")}}">Rs&nbsp;  {{ number_format($f->price,2,".","")}} </c> Per Hour</a></h4>
 							<p> {{$f->description}}</p>
 						</div><!-- /post-content -->
 					</div><!-- /post-item -->

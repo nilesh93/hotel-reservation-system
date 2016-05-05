@@ -242,13 +242,13 @@ from HALLS A
         $id = $request->input('id');
 
         $check = DB::select(DB::raw("select * from HRS.ROOM_RESERVATION A
-where  DATE_FORMAT(A.check_out,'%Y-%m-%d') = DATE_FORMAT(NOW(),'%Y-%m-%d')
+where  DATE_FORMAT(A.check_in,'%Y-%m-%d') = DATE_FORMAT(NOW(),'%Y-%m-%d')
 AND A.room_reservation_id = '$id'
  "));
         if(empty($check)){
 
             return 0;
-        }else if($check->status != 'ACCEPTED'){
+        }else if($check[0]->status != 'ACCEPTED'){
 
             return 1;
         }

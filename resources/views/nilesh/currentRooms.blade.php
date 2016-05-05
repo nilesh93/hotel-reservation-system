@@ -85,24 +85,24 @@ CURRENT ROOM STATUS
                 <h4 class="modal-title">Room Information</h4>
 
             </div>
-                  <div class="modal-body">
+            <div class="modal-body">
 
-                      <div id="reserve_info"></div>
-                      
-                      
-                      
- 
+                <div id="reserve_info"></div>
 
-                </div>
 
-                <div class="modal-footer">
-                     
-                    <button type="button" class="btn btn-white" data-dismiss="modal">Close</button>
-                  
-                </div>
-                </div>
 
-             
+
+
+            </div>
+
+            <div class="modal-footer">
+
+                <button type="button" class="btn btn-white" data-dismiss="modal">Close</button>
+
+            </div>
+        </div>
+
+
     </div>
 </div>
 
@@ -134,19 +134,20 @@ CURRENT ROOM STATUS
                 { "data": "room_num" },
                 { "data": "type_name" },
                 { "data": "room_size" },
-                { "data": "room_remarks" },
+                { "data": "remarks" },
                 {"data" : null,
                  "mRender": function(data, type, full) {
 
 
 
-                     if(data.st == "AVAILABLE"){
+                     if(data.available == "0"){
 
-                         return data.st1;
+                         return  "Available";
+
                      }else{
 
-                         return data.st;
 
+                         return "Blocked";
                      }
 
 
@@ -157,14 +158,14 @@ CURRENT ROOM STATUS
                  "mRender": function(data, type, full) {
 
                      console.log(data);
-                     if(data.st != "AVAILABLE"){
+                     if(data.available != 0 ){
 
-                         return '<button class="btn btn-success btn-animate btn-animate-side btn-block btn-sm" onclick="viewReservation('+data.res_id +')"> Reservation Info </button>' ;
+                         return '<button class="btn btn-success btn-animate btn-animate-side btn-block btn-sm" onclick="viewReservation('+data.room_reservation_id +')"> Reservation Info </button>' ;
                      }else{
 
 
-                        //return '<button class="btn btn-success btn-animate btn-animate-side btn-block btn-sm" onclick="viewReservation('+data.res_id +')"> Reservation Info </button>' ;
-                          return '<button class="btn btn-success btn-animate btn-animate-side btn-block btn-sm" disabled> Reservation Info </button>' ;
+                         //return '<button class="btn btn-success btn-animate btn-animate-side btn-block btn-sm" onclick="viewReservation('+data.res_id +')"> Reservation Info </button>' ;
+                         return '<button class="btn btn-success btn-animate btn-animate-side btn-block btn-sm" disabled> Reservation Info </button>' ;
 
                      }
                  }
@@ -185,8 +186,8 @@ CURRENT ROOM STATUS
             data :{id:data},
             success:function(data){
 
-                
-                
+
+
                 $('#rView').modal('show');
                 document.getElementById("reserve_info").innerHTML = data;
             },
