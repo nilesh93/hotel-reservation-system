@@ -710,10 +710,10 @@ class RoomController extends Controller
 
         $rooms =   DB::select(DB::raw("
 select A.*, B.*, IFNULL(B.room_id,0) as available, 
-(select H.type_name from HRS.ROOM_TYPES H  where H.room_type_id = A.room_type_id) as type_name
- from HRS.ROOMS A
-LEFT JOIN (select * from HRS.ROOM_RESERVATION_BLOCK C
-where C.room_reservation_id IN (select F.room_reservation_id from HRS.ROOM_RESERVATION F
+(select H.type_name from ROOM_TYPES H  where H.room_type_id = A.room_type_id) as type_name
+ from ROOMS A
+LEFT JOIN (select * from ROOM_RESERVATION_BLOCK C
+where C.room_reservation_id IN (select F.room_reservation_id from ROOM_RESERVATION F
  where F.status IN ('CHECKED IN'))
 ) B ON B.room_id = A.room_id
 "));
@@ -734,12 +734,12 @@ where C.room_reservation_id IN (select F.room_reservation_id from HRS.ROOM_RESER
 
         $id = $request->input('rid');
 
-        $rooms =   DB::select(DB::raw("Select C.*, D.*, IFNULL(D.status,'AVAILABLE') as st, (Select F.type_name from HRS.ROOM_TYPES F where F.room_type_id = C.room_type_id) as type_name, C.remarks as room_remarks, C.status as st1, K.*
-from HRS.ROOMS C
+        $rooms =   DB::select(DB::raw("Select C.*, D.*, IFNULL(D.status,'AVAILABLE') as st, (Select F.type_name from ROOM_TYPES F where F.room_type_id = C.room_type_id) as type_name, C.remarks as room_remarks, C.status as st1, K.*
+from ROOMS C
 Left Join (SELECT IFNULL(B.room_id,0) as rid, A.*
-FROM HRS.ROOM_RESERVATION A
-LEFT JOIN HRS.ROOM_RESERVATION_BLOCK B ON B.room_reservation_id = A.Room_reservation_id) D on D.rid = C.room_id
-LEFT JOIN HRS.CUSTOMER K ON K.cus_id = D.cus_id
+FROM ROOM_RESERVATION A
+LEFT JOIN ROOM_RESERVATION_BLOCK B ON B.room_reservation_id = A.Room_reservation_id) D on D.rid = C.room_id
+LEFT JOIN CUSTOMER K ON K.cus_id = D.cus_id
 WHERE C.room_id = '$id'
 
 "));
