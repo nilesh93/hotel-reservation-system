@@ -3,10 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-
 use DB;
 use DateTime;
 
@@ -153,6 +151,19 @@ where A.room_reservation_id = '$id'
         And B.room_id = '$id'"));
   return response()->json(['count' => count($result), 'data' => $result]);
  }
+ 
+ 
+ public function halls_search_past(Request $request){
+
+  $id = $request->input('rid');
+  $result = DB::select(DB::raw("SELECT A.*,B.*,D.* FROM HRS.HALL_RESERVATION A
+LEFT JOIN HRS.HALLS B ON A.hall_id = B.hall_id
+LEFT JOIN HRS.CUSTOMER D ON A.cus_id = D.cus_id
+WHERE A.reserve_date < NOW()
+AND A.status NOT IN ('PENDING') AND A.hall_id = '$id'
+"));
+  return response()->json(['count' => count($result), 'data' => $result]);
+ }
 
  public function rooms_search_current(Request $request){
 
@@ -170,6 +181,20 @@ where A.room_reservation_id = '$id'
 
 
  }
+ 
+  public function halls_search_current(Request $request){
+
+  $id = $request->input('rid');
+  $result = DB::select(DB::raw("SELECT A.*,B.*,D.* FROM HRS.HALL_RESERVATION A
+LEFT JOIN HRS.HALLS B ON A.hall_id = B.hall_id
+LEFT JOIN HRS.CUSTOMER D ON A.cus_id = D.cus_id
+WHERE DATE_FORMAT( A.reserve_date,'%Y-%m-%d') = DATE_FORMAT( NOW(),'%Y-%m-%d') 
+AND A.status NOT IN ('PENDING') AND A.hall_id = '$id'
+"));
+   return  view('nipuna.reservation_current_hall')
+   ->with('result',$result);
+ }
+
 
  public function rooms_search_future(Request $request){
 
@@ -182,6 +207,19 @@ where A.room_reservation_id = '$id'
         And B.room_id = '$id'"));
   return response()->json(['count' => count($result), 'data' => $result]);
 
+ }
+ 
+ 
+ public function halls_search_future(Request $request){
+
+  $id = $request->input('rid');
+  $result = DB::select(DB::raw("SELECT A.*,B.*,D.* FROM HRS.HALL_RESERVATION A
+LEFT JOIN HRS.HALLS B ON A.hall_id = B.hall_id
+LEFT JOIN HRS.CUSTOMER D ON A.cus_id = D.cus_id
+WHERE A.reserve_date > NOW()
+AND A.status NOT IN ('PENDING') AND A.hall_id = '$id'
+"));
+  return response()->json(['count' => count($result), 'data' => $result]);
  }
  /**
      * Returns the search customer view.

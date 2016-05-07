@@ -203,6 +203,7 @@
                             <ul class="list-unstyled"> 
                                 <li id="HS"><a href="hallServices">Hall Services</a></li>
                                 <li id="HM"><a href="admin_halls">Hall Management</a></li>
+                                <li id="HL"><a href="admin_hall_logs">Hall Management</a></li>
 
                             </ul>
                         </li>
