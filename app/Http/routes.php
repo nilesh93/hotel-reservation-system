@@ -43,8 +43,7 @@ Route::get('/contact',function(){
 |--------------------------------------------------------------------------
 |
 |
-*/
-
+*/ 
 
 
 //rooms
@@ -242,6 +241,12 @@ Route::get('admin_current_rooms', 'RoomController@current_rooms');
 Route::get('admin_getcurrent_rooms', 'RoomController@get_current_rooms'); 
 Route::get('admin_get_room_current', 'RoomController@get_room_current'); 
 
+
+
+Route::get('admin_hall_logs', 'HallController@admin_hall_logs'); 
+
+
+
  
 
 
@@ -375,6 +380,12 @@ Route::get('admin_rooms_search','SearchController@rooms_search_index');
 Route::get('admin_room_search_past','SearchController@rooms_search_past');
 Route::get('admin_room_search_current','SearchController@rooms_search_current');
 Route::get('admin_room_search_future','SearchController@rooms_search_future');
+
+
+
+Route::get('admin_hall_search_past','SearchController@halls_search_past');
+Route::get('admin_hall_search_current','SearchController@halls_search_current');
+Route::get('admin_hall_search_future','SearchController@halls_search_future');
 
 //Search functions for customers search
 Route::get('admin_search/customers','SearchController@customers_search');

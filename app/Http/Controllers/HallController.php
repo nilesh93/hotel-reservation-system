@@ -202,7 +202,7 @@ class HallController extends Controller
 
 
     }
- 
+
     /**
      * Return view for Hall Services
      *
@@ -210,7 +210,7 @@ class HallController extends Controller
      */
     public function getHallServices()
     {
- 
+
         return view('nilesh.hallServices');
     }
 
@@ -377,6 +377,16 @@ class HallController extends Controller
         $images = HALL_IMAGE::where('hall_id',$request->input('type_id'))->get();
 
         return response()->json([ 'images'=> $images]);
+
+    }
+
+    public function admin_hall_logs(Request $request){
+
+        $halls = HALL::all();
+
+        return view('nilesh.hallLogs')
+            ->with('halls',$halls);
+
 
     }
 

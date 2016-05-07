@@ -97,9 +97,9 @@ ROOM LOG
                         <th>Check Out</th>
                         <th>Customer</th>
                         <th>Contact</th>
-                        <th>NIC</th>
+                        
                         <th>No. of Nights</th>
-                        <th>Remarks</th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -115,9 +115,9 @@ ROOM LOG
                         <th>Check Out</th>
                         <th>Customer</th>
                         <th>Contact</th>
-                        <th>NIC</th>
+                       
                         <th>No. of Nights</th>
-                        <th>Remarks</th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -128,6 +128,35 @@ ROOM LOG
 </div>
 
 
+
+<div class="modal inmodal fade" id="rView" tabindex="-1" role="dialog"  aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title">Room Information</h4>
+
+            </div>
+            <div class="modal-body">
+
+                <div id="reserve_info"></div>
+
+
+
+
+
+            </div>
+
+            <div class="modal-footer">
+
+                <button type="button" class="btn btn-white" data-dismiss="modal">Close</button>
+
+            </div>
+        </div>
+
+
+    </div>
+</div>
 
 @endsection
 
@@ -158,12 +187,16 @@ ROOM LOG
         $('#dd').DataTable( {
             "ajax": "admin_room_search_past?rid="+rid,
             "columns": [
-                { "data": "room_reservation_id" },
-                { "data": "remarks"},
-                { "data": "cus_id" },
-                { "data": "total_amount" },
-                { "data": "check_in"},
-                { "data": "created_at"}
+                { "data": "check_in" },
+                { "data": "check_out"},
+                { "data": "name" },
+                { "data": "telephone_num" },
+                { "data": "num_of_nights"},
+                {"data" : null,
+                 "mRender": function(data, type, full) {
+                     return '<button class="btn btn-primary  btn-animate btn-animate-side btn-block btn-sm" onclick="viewInfo('+data.room_reservation_id+')"> Delete </button>' ;
+                 }
+                }
             ]
         } );
 
@@ -180,7 +213,11 @@ ROOM LOG
                 { "data": "cus_id" },
                 { "data": "total_amount" },
                 { "data": "check_in"},
-                { "data": "created_at"}
+           {"data" : null,
+                 "mRender": function(data, type, full) {
+                     return '<button class="btn btn-primary  btn-animate btn-animate-side btn-block btn-sm" onclick="viewInfo('+data.room_reservation_id+')"> View </button>' ;
+                 }
+                }
             ]
         } );
 
@@ -206,10 +243,27 @@ ROOM LOG
 
     }
 
-    function dataLoadBooking(){
+    function viewInfo(id){
+
+
+      $.ajax({
+
+            url:"admin_search_bookings_get",
+            type:"get",
+            data :{id:id},
+            success:function(data){
 
 
 
+                $('#rView').modal('show');
+                document.getElementById("reserve_info").innerHTML = data;
+            },
+            error : function(err){
+                console.log(err);
+            }
+
+
+        });
     }
 
 </script>

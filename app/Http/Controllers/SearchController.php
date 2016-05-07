@@ -3,10 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-
 use DB;
 use DateTime;
 
@@ -61,12 +59,25 @@ class SearchController extends Controller
   $resid = $request->input('resid');
   $name = $request->input('name');
 
+  if( $name == ""){
+   $name = "%";
+  }
+   if( $nic == ""){
+   $nic = "%";
+  }
+   if( $resid == ""){
+   $resid = "%";
+  }
+   if( $checkin == ""){
+   $checkin = "%";
+  }
+  
   $result = DB::select(DB::raw("
 Select A.*,B.*,K.*,A.room_reservation_id as res
-FROM HRS.ROOM_RESERVATION A
-LEFT JOIN HRS.ROOM_RESERVATION_BLOCK B ON B.room_reservation_id = A.Room_reservation_id
-LEFT JOIN HRS.CUSTOMER K ON K.cus_id = A.cus_id
-WHERE K.name LIKE '$name' OR K.NIC_passport_num LIKE '$nic' OR A.room_reservation_id LIKE '$resid' OR DATE_FORMAT(A.check_in,'%Y-%m-%d') LIKE '$checkin' "));
+FROM  ROOM_RESERVATION A
+LEFT JOIN  ROOM_RESERVATION_BLOCK B ON B.room_reservation_id = A.Room_reservation_id
+LEFT JOIN  CUSTOMER K ON K.cus_id = A.cus_id
+WHERE K.name LIKE '$name' AND K.NIC_passport_num LIKE '$nic' AND A.room_reservation_id LIKE '$resid' AND DATE_FORMAT(A.check_in,'%Y-%m-%d') LIKE '$checkin' "));
 
   return response()->json(['count' => count($result), 'data' => $result]);
  }
@@ -81,23 +92,23 @@ WHERE K.name LIKE '$name' OR K.NIC_passport_num LIKE '$nic' OR A.room_reservatio
 
   $result = DB::select(DB::raw("
 Select A.*,B.*,K.*,A.room_reservation_id as res
-FROM HRS.ROOM_RESERVATION A
-LEFT JOIN HRS.ROOM_RESERVATION_BLOCK B ON B.room_reservation_id = A.Room_reservation_id
-LEFT JOIN HRS.CUSTOMER K ON K.cus_id = A.cus_id
+FROM  ROOM_RESERVATION A
+LEFT JOIN  ROOM_RESERVATION_BLOCK B ON B.room_reservation_id = A.Room_reservation_id
+LEFT JOIN  CUSTOMER K ON K.cus_id = A.cus_id
 WHERE A.room_reservation_id = '$id'"));
 
 
-  $roomInfo = DB::select(DB::raw("SELECT A.*, (select B.type_name from HRS.ROOM_TYPES B where B.room_type_id = A.room_type_id) as type_name,
-(select C.meal_type_name from HRS.MEAL_TYPES C where C.meal_type_id = F.meal_type_id) as meal
-FROM HRS.RES_RMTYPE_CNT_RATE A
-Left JOIN HRS.RATES F ON F.rate_code = A.rate_code
+  $roomInfo = DB::select(DB::raw("SELECT A.*, (select B.type_name from  ROOM_TYPES B where B.room_type_id = A.room_type_id) as type_name,
+(select C.meal_type_name from  MEAL_TYPES C where C.meal_type_id = F.meal_type_id) as meal
+FROM  RES_RMTYPE_CNT_RATE A
+Left JOIN  RATES F ON F.rate_code = A.rate_code
 WHERE A.room_reservation_id = '$id'"));
 
   
   $roomblocks = DB::select(DB::raw("SELECT A.* ,
-(Select B.room_num from HRS.ROOMS B where B.room_id = A.room_id) as room_num,
-(Select (select C.type_name from HRS.ROOM_TYPES C where C.room_type_id = B.room_type_id) from HRS.ROOMS B where B.room_id = A.room_id) as type_name
-FROM HRS.ROOM_RESERVATION_BLOCK A
+(Select B.room_num from  ROOMS B where B.room_id = A.room_id) as room_num,
+(Select (select C.type_name from  ROOM_TYPES C where C.room_type_id = B.room_type_id) from  ROOMS B where B.room_id = A.room_id) as type_name
+FROM  ROOM_RESERVATION_BLOCK A
 where A.room_reservation_id = '$id'
 
 "));
@@ -119,7 +130,7 @@ where A.room_reservation_id = '$id'
      */
  public function rooms_search_index(){
 
-  $rooms = DB::select(DB::raw("select A.*,(select B.type_name from HRS.ROOM_TYPES B where B.room_type_id = A.room_type_id) as type_name from HRS.ROOMS A"));
+  $rooms = DB::select(DB::raw("select A.*,(select B.type_name from  ROOM_TYPES B where B.room_type_id = A.room_type_id) as type_name from  ROOMS A"));
   return view('nipuna.searchroom')
    ->with('rooms', $rooms);
  }
@@ -133,11 +144,24 @@ where A.room_reservation_id = '$id'
 
   $id = $request->input('rid');
   $result = DB::select(DB::raw("Select A.*,B.*,K.*
-        FROM HRS.ROOM_RESERVATION A
-        LEFT JOIN HRS.ROOM_RESERVATION_BLOCK B ON B.room_reservation_id = A.Room_reservation_id
-        LEFT JOIN HRS.CUSTOMER K ON K.cus_id = A.cus_id
+        FROM  ROOM_RESERVATION A
+        LEFT JOIN  ROOM_RESERVATION_BLOCK B ON B.room_reservation_id = A.Room_reservation_id
+        LEFT JOIN  CUSTOMER K ON K.cus_id = A.cus_id
         WHERE A.check_out < NOW()
         And B.room_id = '$id'"));
+  return response()->json(['count' => count($result), 'data' => $result]);
+ }
+ 
+ 
+ public function halls_search_past(Request $request){
+
+  $id = $request->input('rid');
+  $result = DB::select(DB::raw("SELECT A.*,B.*,D.* FROM HRS.HALL_RESERVATION A
+LEFT JOIN HRS.HALLS B ON A.hall_id = B.hall_id
+LEFT JOIN HRS.CUSTOMER D ON A.cus_id = D.cus_id
+WHERE A.reserve_date < NOW()
+AND A.status NOT IN ('PENDING') AND A.hall_id = '$id'
+"));
   return response()->json(['count' => count($result), 'data' => $result]);
  }
 
@@ -145,9 +169,9 @@ where A.room_reservation_id = '$id'
 
   $id = $request->input('rid');
   $result = DB::select(DB::raw("Select A.*,B.*,K.*
-        FROM HRS.ROOM_RESERVATION A
-        LEFT JOIN HRS.ROOM_RESERVATION_BLOCK B ON B.room_reservation_id = A.Room_reservation_id
-        LEFT JOIN HRS.CUSTOMER K ON K.cus_id = A.cus_id
+        FROM  ROOM_RESERVATION A
+        LEFT JOIN  ROOM_RESERVATION_BLOCK B ON B.room_reservation_id = A.Room_reservation_id
+        LEFT JOIN  CUSTOMER K ON K.cus_id = A.cus_id
         WHERE A.check_out > NOW()
         AND A.check_in < NOW()
         And B.room_id = '$id'"));
@@ -157,18 +181,45 @@ where A.room_reservation_id = '$id'
 
 
  }
+ 
+  public function halls_search_current(Request $request){
+
+  $id = $request->input('rid');
+  $result = DB::select(DB::raw("SELECT A.*,B.*,D.* FROM HRS.HALL_RESERVATION A
+LEFT JOIN HRS.HALLS B ON A.hall_id = B.hall_id
+LEFT JOIN HRS.CUSTOMER D ON A.cus_id = D.cus_id
+WHERE DATE_FORMAT( A.reserve_date,'%Y-%m-%d') = DATE_FORMAT( NOW(),'%Y-%m-%d') 
+AND A.status NOT IN ('PENDING') AND A.hall_id = '$id'
+"));
+   return  view('nipuna.reservation_current_hall')
+   ->with('result',$result);
+ }
+
 
  public function rooms_search_future(Request $request){
 
   $id = $request->input('rid');
   $result = DB::select(DB::raw("Select A.*,B.*,K.*
-        FROM HRS.ROOM_RESERVATION A
-        LEFT JOIN HRS.ROOM_RESERVATION_BLOCK B ON B.room_reservation_id = A.Room_reservation_id
-        LEFT JOIN HRS.CUSTOMER K ON K.cus_id = A.cus_id
+        FROM  ROOM_RESERVATION A
+        LEFT JOIN  ROOM_RESERVATION_BLOCK B ON B.room_reservation_id = A.Room_reservation_id
+        LEFT JOIN  CUSTOMER K ON K.cus_id = A.cus_id
         WHERE  A.check_in > NOW()
         And B.room_id = '$id'"));
   return response()->json(['count' => count($result), 'data' => $result]);
 
+ }
+ 
+ 
+ public function halls_search_future(Request $request){
+
+  $id = $request->input('rid');
+  $result = DB::select(DB::raw("SELECT A.*,B.*,D.* FROM HRS.HALL_RESERVATION A
+LEFT JOIN HRS.HALLS B ON A.hall_id = B.hall_id
+LEFT JOIN HRS.CUSTOMER D ON A.cus_id = D.cus_id
+WHERE A.reserve_date > NOW()
+AND A.status NOT IN ('PENDING') AND A.hall_id = '$id'
+"));
+  return response()->json(['count' => count($result), 'data' => $result]);
  }
  /**
      * Returns the search customer view.

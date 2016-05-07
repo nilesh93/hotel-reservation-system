@@ -600,6 +600,7 @@ ROOM SERVICES
             },
             error: function(xhr, ajaxOptions, thrownError) {
                 console.log(thrownError);
+                swal('The Service Name already Exists!','', 'error');
             }	 
         });
 
@@ -628,6 +629,7 @@ ROOM SERVICES
             },
             error: function(xhr, ajaxOptions, thrownError) {
                 console.log(thrownError);
+                swal('The Furnish Name already Exists!','', 'error');
             }	 
         });
 
@@ -655,6 +657,7 @@ ROOM SERVICES
             },
             error: function(xhr, ajaxOptions, thrownError) {
                 console.log(thrownError);
+                swal('The Booking Name already Exists!','', 'error');
             }	 
         });
 
@@ -775,8 +778,8 @@ ROOM SERVICES
             },
             error: function(xhr, ajaxOptions, thrownError) {
                 console.log(thrownError);
-
-                swal("Ooops!", "Cannot generate room number! ("+thrownError+")", "error");   
+                swal('The Service Name already Exists!','', 'error');
+                //swal("Ooops!", "Cannot generate room number! ("+thrownError+")", "error");   
             }	 
         });
 
@@ -785,9 +788,9 @@ ROOM SERVICES
 
 
     }
-    
-    
-    
+
+
+
     function editBT(){
 
 
@@ -808,8 +811,8 @@ ROOM SERVICES
             },
             error: function(xhr, ajaxOptions, thrownError) {
                 console.log(thrownError);
-
-                swal("Ooops!", "Cannot generate room number! ("+thrownError+")", "error");   
+                swal('The Booking Name already Exists!','', 'error');
+                // swal("Ooops!", "Cannot generate room number! ("+thrownError+")", "error");   
             }	 
         });
 
@@ -818,8 +821,8 @@ ROOM SERVICES
 
 
     }
-    
-    
+
+
 
     //edit room functions
     function editRF(){
@@ -842,8 +845,8 @@ ROOM SERVICES
             },
             error: function(xhr, ajaxOptions, thrownError) {
                 console.log(thrownError);
-
-                swal("Ooops!", "Cannot generate room number! ("+thrownError+")", "error");   
+                swal('The Furnish  Name already Exists!','', 'error');
+                // swal("Ooops!", "Cannot generate room number! ("+thrownError+")", "error");   
             }	 
         });
 
@@ -940,8 +943,8 @@ ROOM SERVICES
 
 
     }
-    
-    
+
+
     function delBT(id){
 
 
