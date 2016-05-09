@@ -12,12 +12,20 @@ class ReviewController extends Controller
 {
 
 
+    /**
+     * view reviews
+     * @return mixed
+     */
     public function  reviews(){
 
         return view('nilesh.reviews');
 
     }
 
+    /**
+     * get reviews to the admin side
+     * @return mixed
+     */
     public function getReviews(){
 
         $reviews = REVIEW::all();
@@ -26,6 +34,10 @@ class ReviewController extends Controller
 
     }
 
+    /**
+     * publish reviews
+     * @param Request $request
+     */
     public function publish(Request $request){
 
         $review = REVIEW::find($request->input('id'));
@@ -37,6 +49,10 @@ class ReviewController extends Controller
     }
 
 
+    /**
+     * reject reviews
+     * @param Request $request
+     */
     public function reject(Request $request){
 
         $review = REVIEW::find($request->input('id'));

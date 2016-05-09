@@ -380,6 +380,11 @@ class HallController extends Controller
 
     }
 
+    /**
+     * Hall logs page
+     * @param Request $request
+     * @return mixed
+     */
     public function admin_hall_logs(Request $request){
 
         $halls = HALL::all();

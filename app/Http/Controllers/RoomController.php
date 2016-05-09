@@ -654,7 +654,10 @@ class RoomController extends Controller
 
     }
 
-
+    /**
+     * get all meal types
+     * @return mixed
+     */
     public function getRoomBookings(){
 
         $meals = MEAL_TYPE::all();
@@ -663,6 +666,10 @@ class RoomController extends Controller
 
     }
 
+    /**
+     * Add meal types to the system
+     * @param Request $request
+     */
     public function bookingAdd(Request $request){
 
         $meal = new MEAL_TYPE;
@@ -675,6 +682,11 @@ class RoomController extends Controller
     }
 
 
+    /**
+     * get meal type information
+     * @param Request $request
+     * @return mixed
+     */
     public function getBTinfo(Request $request){
 
         $meal = MEAL_TYPE::find($request->input('id'));
@@ -683,7 +695,10 @@ class RoomController extends Controller
 
     }
 
-
+    /**
+     * edit meal type info
+     * @param Request $request
+     */
     public function editBTinfo(Request $request){
 
         $meal = MEAL_TYPE::find($request->input('id'));
@@ -696,6 +711,11 @@ class RoomController extends Controller
 
     }
 
+    /**
+     *
+     * delete meal type
+     * @param Request $request
+     */
     public function delBT(Request $request){
 
         $meal = MEAL_TYPE::find($request->input('id'));
@@ -705,7 +725,10 @@ class RoomController extends Controller
 
     }
 
-
+    /**
+     * get current room status availability
+     * @return mixed
+     */
     public function get_current_rooms(){
 
         $rooms =   DB::select(DB::raw("
@@ -723,6 +746,10 @@ where C.room_reservation_id IN (select F.room_reservation_id from ROOM_RESERVATI
 
     }
 
+    /**
+     * current room status view
+     * @return mixed
+     */
     public function current_rooms(){
 
         return view('nilesh.currentRooms');
@@ -730,6 +757,11 @@ where C.room_reservation_id IN (select F.room_reservation_id from ROOM_RESERVATI
     }
 
 
+    /**
+     * get room current information for a specific room
+     * @param Request $request
+     * @return mixed
+     */
     public function get_room_current(Request $request){
 
         $id = $request->input('rid');
