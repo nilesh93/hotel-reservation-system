@@ -32,10 +32,7 @@ class SearchController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
- public function index()
- {
-  //
- }
+
 
  /**
      * Returns the bookings search view.
@@ -48,7 +45,7 @@ class SearchController extends Controller
 
  /**
      * Returns all the room reservations as a JSON response.
-     *
+     * Can search from given parameters
      * @return \Illuminate\Http\JsonResponse
      */
  public function bookings_search(Request $request){
@@ -83,9 +80,13 @@ WHERE K.name LIKE '$name' AND K.NIC_passport_num LIKE '$nic' AND A.room_reservat
  }
 
 
+ /**
+  * @param Request $request
+  * common service for reservation information
+  *
+  * @return mixed modal with reservation information
+  */
  public function bookings_search_get(Request $request){
-
-
 
   $id = $request->input('id');
 
@@ -136,7 +137,7 @@ where A.room_reservation_id = '$id'
  }
 
  /**
-     * Returns all the available rooms as a JSON response.
+     * Returns all the available roominfo as a JSON response.
      *
      * @return \Illuminate\Http\JsonResponse
      */
@@ -151,8 +152,12 @@ where A.room_reservation_id = '$id'
         And B.room_id = '$id'"));
   return response()->json(['count' => count($result), 'data' => $result]);
  }
- 
- 
+
+    /**
+     * @param Request $request
+     * search halls past information
+     * @return mixed
+     */
  public function halls_search_past(Request $request){
 
   $id = $request->input('rid');
@@ -165,6 +170,11 @@ AND A.status NOT IN ('PENDING') AND A.hall_id = '$id'
   return response()->json(['count' => count($result), 'data' => $result]);
  }
 
+    /**
+     * Returns room current information
+     * @param Request $request
+     * @return mixed
+     */
  public function rooms_search_current(Request $request){
 
   $id = $request->input('rid');
@@ -181,7 +191,12 @@ AND A.status NOT IN ('PENDING') AND A.hall_id = '$id'
 
 
  }
- 
+
+    /**
+     * returns hall current information
+     * @param Request $request
+     * @return mixed
+     */
   public function halls_search_current(Request $request){
 
   $id = $request->input('rid');
@@ -196,6 +211,11 @@ AND A.status NOT IN ('PENDING') AND A.hall_id = '$id'
  }
 
 
+    /**
+     * returns room upcoming information
+     * @param Request $request
+     * @return mixed
+     */
  public function rooms_search_future(Request $request){
 
   $id = $request->input('rid');
@@ -208,8 +228,12 @@ AND A.status NOT IN ('PENDING') AND A.hall_id = '$id'
   return response()->json(['count' => count($result), 'data' => $result]);
 
  }
- 
- 
+
+    /**
+     * returns hall upcoming information
+     * @param Request $request
+     * @return mixed
+     */
  public function halls_search_future(Request $request){
 
   $id = $request->input('rid');
@@ -240,12 +264,20 @@ AND A.status NOT IN ('PENDING') AND A.hall_id = '$id'
   return response()->json(['count' => count($result), 'data' => $result]);
  }
 
+    /**
+     * returns room logs past
+     * @return mixed
+     */
  public function roomlogspast(){
   $today = new DateTime();
   $result = DB::table('room_reservation')->where('check_in','<',$today)->get();
   return response()->json(['count' => count($result), 'data' => $result]);
  }
 
+    /**
+     * returns room log present
+     * @return mixed
+     */
  public function roomlogsfuture(){
   $today = new DateTime();
   $result = DB::table('room_reservation')->where('check_in','>',$today)->get();

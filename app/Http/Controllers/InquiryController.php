@@ -80,6 +80,7 @@ class InquiryController extends Controller
         });
     }
 
+
     public function getPage() {
         return view('Website.cusInq');
     }

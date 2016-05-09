@@ -16,6 +16,10 @@ use App\ROOM_RESERVATION_BLOCK;
 class DashboardController extends Controller
 {
 
+    /**
+     * view calendar dashboard
+     * @return mixed
+     */
     public function dashboard(){
 
         $customers = Customer::all();
@@ -26,6 +30,10 @@ class DashboardController extends Controller
     }
 
 
+    /**
+     * get events for calendar
+     * @return mixed
+     */
     public function getEvents(){
 
         $room_reservations =  DB::select(DB::raw("select a.*, (select b.type_name from ROOM_TYPES b where b.room_type_id = a.type) as room_type, c.* from ROOM_RESERVATION a 
@@ -38,7 +46,10 @@ AND a.status NOT IN ('PENDING','CANCELLED','REJECTED')"));
 
     }
 
-
+    /**
+     * get hall events for calendar
+     * @return mixed
+     */
     public function getHallEvents(){
 
         $halls =  DB::select(DB::raw("SELECT * FROM  HALL_RESERVATION A
@@ -52,6 +63,11 @@ and A.reserve_date  > DATE_SUB(NOW(),INTERVAL 2 YEAR)"));
     }
 
 
+    /**
+     * get single hall information for one hall reservation
+     * @param Request $request
+     * @return mixed
+     */
     public function getHallEventInfo(Request $request){
 
         $id = $request->input('id');
@@ -67,6 +83,11 @@ where A.hall_reservation_id = '$id'"));
     }
 
 
+    /**
+     * get the list of bookings
+     * @param Request $request
+     * @return mixed
+     */
     public function getbookings(Request $request){
 
         $bookings =  DB::select(DB::raw("SELECT A.*, (Select meal_type_name from  MEAL_TYPES B where B.meal_type_id = A.meal_type_id)  as meal_name
@@ -77,6 +98,13 @@ where A.room_type_id = ''"));
 
     }
 
+    /**
+     *
+     * get the reservation dates
+     * @param Request $request
+     * @return mixed
+     *
+     */
     public function getReservationDates(Request $request){
 
         $checkin = $request->input("checkin");
@@ -96,7 +124,11 @@ where A.room_type_id = ''"));
     }
 
 
-
+    /**
+     * reserve a room from db side
+     * deprecated
+     * @param Request $request
+     */
     public function admin_reserve_room(Request $request){
 
 
@@ -139,9 +171,11 @@ where A.room_type_id = ''"));
     }
 
 
-
+    /**
+     * dashboard view with all the statistics
+     * @return mixed
+     */
     public function dash(){
-
 
 
         $roomWeek = DB::select(DB::raw("select * from  ROOM_RESERVATION A
@@ -196,6 +230,11 @@ WHERE A.status = 'CHECKED IN'"));
     }
 
 
+    /**
+     * search vaialbility of a room
+     * @param Request $request
+     * @return mixed
+     */
     public function search_availability(Request $request){
 
         $checkin = $request->input('checkin');
@@ -217,6 +256,11 @@ from  ROOM_TYPES B"));
         return $availability;
     }
 
+    /**
+     * search availability of a hall
+     * @param Request $request
+     * @return mixed
+     */
     public function search_hall_availability(Request $request){
 
         $checkin = $request->input('checkin');
@@ -231,12 +275,15 @@ group by B.hall_id),0) as st
 from HALLS A
 
  "));
-
-
         return $availability;
     }
 
 
+    /**
+     * show room blocks
+     * @param Request $request
+     * @return int
+     */
     public function showBlocks(Request $request){
 
         $id = $request->input('id');
@@ -258,7 +305,6 @@ AND A.room_reservation_id = '$id'
 
         from RES_RMTYPE_CNT_RATE A where A.room_reservation_id = '$id' group by A.room_type_id"));
 
-
         $arr = array();
 
         foreach( $roomt as $r){
@@ -268,70 +314,61 @@ AND A.room_reservation_id = '$id'
 Where A.status = 'AVAILABLE' and A.room_type_id = '$rtid'"));
 
             array_push($arr,$temp);
-
         }
 
         return view('nilesh.blockInfo')
             ->with('roomTypes',$roomt)
             ->with('arr',$arr)
             ->with('resid',$id);
-
-
     }
 
+    /**
+     *
+     * set room blocks
+     * @param Request $request
+     */
     public function setroomBlock(Request $request){
 
         $arr = $request->input('arr');
 
         //ROOM_RESERVATION_BLOCK
-
         $id = $request->input('id');
 
         $rs = ROOM_RESERVATION::find($id);
-        //dd($arr);
 
         foreach($arr as $a){
-
 
             DB::table('ROOM_RESERVATION_BLOCK')->insert(
                 ['room_id' =>  $a, 'room_reservation_id' => $id, 'adults' => $rs->adults, 'children'=> $rs->children]
             );
 
-
-
             $room = ROOM::find($a);
             $room->status = "BLOCKED";
             $room->save();
-
         }
 
         $rs->status = "CHECKED IN";
         $rs->save();
-
-
     }
 
 
+    /**
+     * checkout reservation information
+     * @param Request $request
+     */
     public function checkout(Request $request){
-
         $id = $request->input('id');
-
         $rsb = ROOM_RESERVATION_BLOCK::where("room_reservation_id",$id);
-
-
         foreach($rsb as $r){
 
             $room = ROOM::find($r->room_id);
             $room->status = 'AVAILABLE';
-
             $room->save();
-
         }
 
         $rs = ROOM_RESERVATION::find($id);
         $rs->status = "CHECKED OUT";
         $rs->save();
-
     }
 
 }
