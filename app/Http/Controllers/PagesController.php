@@ -17,6 +17,8 @@ use App\FACILITY;
 use App\HOME_GALLERY;
 use Auth;
 use App\Customer;
+use App\REVIEW;
+use Input;
 
 class PagesController extends Controller
 {
