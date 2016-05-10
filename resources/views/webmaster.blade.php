@@ -980,7 +980,30 @@
 
 			}
 
-
+//validate review submit
+			function validateReview()
+			{
+				$('#submitBtn').click();
+			}
+			function submitReview()
+			{
+				document.getElementById("rsubmit").innerHTML = "";
+				$.ajax({
+					url:"submit_review",
+					type:"get",
+					data:$('#submitform').serialize(),
+					success:function(data){
+						var body = '<div class="alert alert-dismissible alert-success"><button type="button" class="close" data-dismiss="alert">X</button><strong>Well done!</strong> You successfully reviewed!.</div>';
+						document.getElementById("rsubmit").innerHTML = body;
+						$('#resetBtn').click();
+					},
+					error:function (err){
+						var body = '<div class="alert alert-dismissible alert-danger"><button type="button" class="close" data-dismiss="alert">X</button><strong>Oops!</strong>Something went wrong! Please try again.</div>';
+						document.getElementById("rsubmit").innerHTML = body;
+					}
+				});
+				return false;
+			}
 
 
 			function convert(){
